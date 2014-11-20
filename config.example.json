@@ -5,5 +5,9 @@
     "user": "user",
     "password": "password",
     "database": "database"
+  },
+  "target": {
+    "host": "localhost",
+    "port": 7474
   }
 }
