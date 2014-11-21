@@ -64,6 +64,8 @@ function book(next) {
     if (err) return next(err);
 
     var index = {},
+        order = 0,
+        lastParentId = null,
         book = neo4j.db.batch();
 
     // Chapters
@@ -104,10 +106,21 @@ function book(next) {
     });
 
     // Subheadings
-    var subheadings = _.filter(rows, {type: 3});
+    var subheadings = _(rows)
+      .filter({type: 3})
+      .sortBy(['parent_id', 'lft'])
+      .value();
 
+    order = 0;
+    lastParentId = null;
     subheadings.forEach(function(sub) {
       var fr = en = null;
+
+      if (sub.parent_id !== lastParentId)
+        order = 0;
+      else
+        order++;
+      lastParentId = sub.parent_id;
 
       // French
       if (sub.content_fr && sub.content_fr !== 'frenchContent') {
@@ -119,7 +132,7 @@ function book(next) {
         });
 
         if (index[sub.parent_id].fr)
-          book.relate(index[sub.parent_id].fr, 'HAS', fr);
+          book.relate(index[sub.parent_id].fr, 'HAS', fr, {order: order});
       }
 
       // English
@@ -132,7 +145,7 @@ function book(next) {
         });
 
         if (index[sub.parent_id].en)
-          book.relate(index[sub.parent_id].en, 'HAS', en);
+          book.relate(index[sub.parent_id].en, 'HAS', en, {order: order});
       }
 
       // Referencing
@@ -147,9 +160,21 @@ function book(next) {
     });
 
     // Paragraphs
-    var paragraphs = _.filter(rows, {type: 4});
+    var paragraphs = _(rows)
+      .filter({type: 4})
+      .sortBy(['parent_id', 'lft'])
+      .value();
+
+    order = 0;
+    lastParentId = null;
     paragraphs.forEach(function(paragraph) {
       var fr = en = null;
+
+      if (paragraph.parent_id !== lastParentId)
+        order = 0;
+      else
+        order++;
+      lastParentId = paragraph.parent_id;
 
       // French
       if (paragraph.content_fr && paragraph.content_fr !== 'frenchContent') {
@@ -161,7 +186,7 @@ function book(next) {
         });
 
         if (index[paragraph.parent_id].fr)
-          book.relate(index[paragraph.parent_id].fr, 'HAS', fr);
+          book.relate(index[paragraph.parent_id].fr, 'HAS', fr, {order: order});
       }
 
       // English
@@ -174,7 +199,7 @@ function book(next) {
         });
 
         if (index[paragraph.parent_id].en)
-          book.relate(index[paragraph.parent_id].en, 'HAS', en);
+          book.relate(index[paragraph.parent_id].en, 'HAS', en, {order: order});
       }
 
       // Translation edge
