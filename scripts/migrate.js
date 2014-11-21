@@ -8,8 +8,8 @@
  * It aims at being flexible enough so anyone can easily change the rules
  * of said migration.
  */
-var mysqlConnect = require('../lib/mysql/connection.js'),
-    neo4j = require('../lib/neo4j/connection.js'),
+var mysqlConnect = require('../lib/migration/mysql.js'),
+    neo4j = require('../lib/migration/neo4j.js'),
     async = require('async'),
     inquirer = require('inquirer'),
     _ = require('lodash');
@@ -100,7 +100,7 @@ function book(next) {
 
       // Translation edge
       if (fr && en)
-        book.relate(fr, 'TRANSLATES', en);
+        book.relate(en, 'TRANSLATES', fr);
     });
 
     // Subheadings
@@ -143,7 +143,7 @@ function book(next) {
 
       // Translation edge
       if (fr && en)
-        book.relate(fr, 'TRANSLATES', en);
+        book.relate(en, 'TRANSLATES', fr);
     });
 
     // Paragraphs
@@ -179,7 +179,7 @@ function book(next) {
 
       // Translation edge
       if (fr && en)
-        book.relate(fr, 'TRANSLATES', en);
+        book.relate(en, 'TRANSLATES', fr);
     });
 
     // Commit

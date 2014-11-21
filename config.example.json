@@ -1,13 +1,19 @@
 {
-  "source": {
-    "host": "localhost",
-    "port": 3306,
-    "user": "user",
-    "password": "password",
-    "database": "database"
-  },
-  "target": {
-    "host": "localhost",
-    "port": 7474
+  "dbs": {
+    "mysql": {
+      "host": "localhost",
+      "port": 3306,
+      "user": "user",
+      "password": "password",
+      "database": "database"
+    },
+    "neo4j": {
+      "host": "localhost",
+      "port": 7474
+    },
+    "mongo": {
+      "host": "localhost",
+      "port": 27017
+    }
   }
 }
