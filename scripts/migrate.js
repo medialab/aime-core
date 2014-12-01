@@ -12,15 +12,20 @@ var mysqlConnect = require('../lib/migration/mysql.js'),
     neo4j = require('../lib/migration/neo4j.js'),
     async = require('async'),
     inquirer = require('inquirer'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    rules;
 
 var mysql;
 
-/**
- * Functions
- */
+const SEQ = [
+  'book',
+  'users',
+  'vocabulary'
+];
 
-// Asking the user whether he really wants to continue
+/**
+ * Asking the user for confirmation before doing anything horrible
+ */
 function confirmation(next) {
   inquirer.prompt(
     [
@@ -36,7 +41,9 @@ function confirmation(next) {
   );
 }
 
-// Truncating the target neo4j database
+/**
+ * Truncating the target neo4j database
+ */
 function truncate(next) {
   console.log('Truncating neo4j target...');
 
@@ -48,7 +55,9 @@ function truncate(next) {
   });
 }
 
-// Setup mysql connection
+/**
+ * MySQL Connection
+ */
 function connection(next) {
   mysqlConnect(function(err, conn) {
     if (err) return next(err);
@@ -58,217 +67,12 @@ function connection(next) {
   });
 }
 
-// Deal with the book itself
-function book(next) {
-  mysql.query('SELECT * FROM tbl_items', function(err, rows) {
-    if (err) return next(err);
-
-    var index = {},
-        order = 0,
-        lastParentId = null,
-        book = neo4j.db.batch();
-
-    // Chapters
-    var chapters = _.filter(rows, {type: 2});
-
-    chapters.forEach(function(chapter) {
-      var fr = en = null;
-
-      // French
-      if (chapter.content_fr && chapter.content_fr !== 'frenchContent') {
-        fr = book.save({
-          type: 'chapter',
-          text: chapter.content_fr,
-          lang: 'fr',
-          page: chapter.page_fr
-        });
-      }
-
-      // English
-      if (chapter.content_en && chapter.content_en !== 'englishContent') {
-        en = book.save({
-          type: 'chapter',
-          text: chapter.content_en,
-          lang: 'en',
-          page: chapter.page_en
-        });
-      }
-
-      // Referencing
-      index[chapter.id] = {
-        fr: fr,
-        en: en
-      };
-
-      // Translation edge
-      if (fr && en)
-        book.relate(en, 'TRANSLATES', fr);
-    });
-
-    // Subheadings
-    var subheadings = _(rows)
-      .filter({type: 3})
-      .sortBy(['parent_id', 'lft'])
-      .value();
-
-    order = 0;
-    lastParentId = null;
-    subheadings.forEach(function(sub) {
-      var fr = en = null;
-
-      if (sub.parent_id !== lastParentId)
-        order = 0;
-      else
-        order++;
-      lastParentId = sub.parent_id;
-
-      // French
-      if (sub.content_fr && sub.content_fr !== 'frenchContent') {
-        fr = book.save({
-          type: 'subheading',
-          text: sub.content_fr,
-          lang: 'fr',
-          page: sub.page_fr
-        });
-
-        if (index[sub.parent_id].fr)
-          book.relate(index[sub.parent_id].fr, 'HAS', fr, {order: order});
-      }
-
-      // English
-      if (sub.content_en && sub.content_en !== 'englishContent') {
-        en = book.save({
-          type: 'subheading',
-          text: sub.content_en,
-          lang: 'en',
-          page: sub.page_en
-        });
-
-        if (index[sub.parent_id].en)
-          book.relate(index[sub.parent_id].en, 'HAS', en, {order: order});
-      }
-
-      // Referencing
-      index[sub.id] = {
-        fr: fr,
-        en: en
-      };
-
-      // Translation edge
-      if (fr && en)
-        book.relate(en, 'TRANSLATES', fr);
-    });
-
-    // Paragraphs
-    var paragraphs = _(rows)
-      .filter({type: 4})
-      .sortBy(['parent_id', 'lft'])
-      .value();
-
-    order = 0;
-    lastParentId = null;
-    paragraphs.forEach(function(paragraph) {
-      var fr = en = null;
-
-      if (paragraph.parent_id !== lastParentId)
-        order = 0;
-      else
-        order++;
-      lastParentId = paragraph.parent_id;
-
-      // French
-      if (paragraph.content_fr && paragraph.content_fr !== 'frenchContent') {
-        fr = book.save({
-          type: 'paragraph',
-          text: paragraph.content_fr,
-          lang: 'fr',
-          page: paragraph.page_fr
-        });
-
-        if (index[paragraph.parent_id].fr)
-          book.relate(index[paragraph.parent_id].fr, 'HAS', fr, {order: order});
-      }
-
-      // English
-      if (paragraph.content_en && paragraph.content_en !== 'englishContent') {
-        en = book.save({
-          type: 'paragraph',
-          text: paragraph.content_en,
-          lang: 'en',
-          page: paragraph.page_en
-        });
-
-        if (index[paragraph.parent_id].en)
-          book.relate(index[paragraph.parent_id].en, 'HAS', en, {order: order});
-      }
-
-      // Translation edge
-      if (fr && en)
-        book.relate(en, 'TRANSLATES', fr);
-    });
-
-    // Commit
-    console.log('Saving ' + rows.length + ' book items...');
-    book.commit(function(err, results) {
-      if (err) return next(err);
-
-      // Labels
-      async.parallel({
-        chapters: function(n) {
-          neo4j.db.label(
-            _(results).filter({type: 'chapter'}).map('id').value(),
-            ['Book', 'Chapter'],
-            n
-          );
-        },
-        subheadings: function(n) {
-          neo4j.db.label(
-            _(results).filter({type: 'subheading'}).map('id').value(),
-            ['Book', 'Subheading'],
-            n
-          );
-        },
-        paragraphs: function(n) {
-          neo4j.db.label(
-            _(results).filter({type: 'paragraph'}).map('id').value(),
-            ['Book', 'Paragraph'],
-            n
-          );
-        }
-      }, next);
-    });
-  });
-}
-
-// Deal with users
-function users(next) {
-  mysql.query('SELECT * FROM tbl_users', function(err, rows) {
-    if (err) return next(err);
-
-    // Creating batch
-    var users = neo4j.db.batch();
-    rows.forEach(function(user) {
-      users.save({
-        type: 'user',
-        email: user.email,
-        username: user.username,
-        password: user.password,
-        active: !!user.active,
-        name: user.name,
-        surname: user.surname
-      });
-    });
-
-    // Saving
-    console.log('Saving ' + rows.length + ' users...');
-    users.commit(function(err, results) {
-      if (err) return next(err);
-
-      // Adding label
-      console.log('Labeling users...');
-      neo4j.db.label(_.map(results, 'id'), 'User', next);
-    });
-  });
+/**
+ * Rules making
+ */
+function makeRules(next) {
+  rules = require('../lib/migration/rules')(mysql, neo4j);
+  next();
 }
 
 /**
@@ -278,12 +82,25 @@ async.series([
   confirmation,
   truncate,
   connection,
-  book
+  makeRules
 ], function(err) {
 
-  // Closing mysql connection
-  mysql && mysql.end();
-
   // Displaying error if any
-  if (err && err.message !== 'aborted') console.error(err);
+  if (err && err.message !== 'aborted') {
+
+    // Closing mysql connection
+    mysql && mysql.end();
+
+    console.error(err);
+    return;
+  }
+
+  // Applying rules
+  async.series(SEQ.map(function(i) {return rules[i]}), function(err) {
+
+    if (err && err.message !== 'aborted') console.error(err);
+
+    // Closing mysql connection
+    mysql && mysql.end();
+  });
 });
