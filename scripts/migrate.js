@@ -19,8 +19,8 @@ var mysql;
 
 const SEQ = [
   // 'book',
-  // 'documents',
   'uploads',
+  'documents',
   // 'users',
   // 'vocabulary'
 ];
@@ -100,7 +100,7 @@ async.series([
   // Applying rules
   async.series(SEQ.map(function(i) {return rules[i]}), function(err) {
 
-    if (err && err.message !== 'aborted') console.error(err);
+    if (err) console.error(err);
 
     // Closing mysql connection
     mysql && mysql.end();
