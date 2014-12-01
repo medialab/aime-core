@@ -18,9 +18,11 @@ var mysqlConnect = require('../lib/migration/mysql.js'),
 var mysql;
 
 const SEQ = [
-  'book',
-  'users',
-  'vocabulary'
+  // 'book',
+  // 'documents',
+  'uploads',
+  // 'users',
+  // 'vocabulary'
 ];
 
 /**
