@@ -19,8 +19,9 @@ var mysql;
 
 const SEQ = [
   // 'book',
-  'uploads',
-  'documents',
+  'contributions'
+  // 'uploads',
+  // 'documents',
   // 'users',
   // 'vocabulary'
 ];
