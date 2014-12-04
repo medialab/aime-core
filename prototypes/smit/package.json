@@ -1,0 +1,11 @@
+{
+  "name": "smit",
+  "version": "0.0.1",
+  "description": "A little viz interface to the aime-core database.",
+  "main": "js/app.js",
+  "scripts": {
+    "start": "python -m SimpleHTTPServer"
+  },
+  "author": "",
+  "license": "LGPL-3.0"
+}
