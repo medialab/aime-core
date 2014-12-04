@@ -19,12 +19,13 @@ var mysql;
 
 const SEQ = [
   'book',
-  // 'contributions',
+  'contributions',
   'uploads',
   'documents',
-  // 'users',
+  'users',
   'vocabulary',
-  'links'
+  'links',
+  'bookmarks'
 ];
 
 /**
