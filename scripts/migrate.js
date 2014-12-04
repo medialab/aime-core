@@ -18,12 +18,13 @@ var mysqlConnect = require('../lib/migration/mysql.js'),
 var mysql;
 
 const SEQ = [
-  // 'book',
-  'contributions',
-  // 'uploads',
-  // 'documents',
-  'users'
-  // 'vocabulary'
+  'book',
+  // 'contributions',
+  'uploads',
+  'documents',
+  // 'users',
+  'vocabulary',
+  'links'
 ];
 
 /**
@@ -83,7 +84,7 @@ function makeRules(next) {
  */
 async.series([
   confirmation,
-  truncate,
+  // truncate,
   connection,
   makeRules
 ], function(err) {
