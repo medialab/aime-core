@@ -30,8 +30,10 @@
     <sidebar>
       <div class="inner">
         <div class="node-types">
-          <h2>types</h2>
-          <div class="node-type" ng-repeat="label in labels" ng-click="visualise(label)">{{label}}</div>
+          <h2>Types</h2>
+          <div class="labels">
+            <div class="node-type" ng-repeat="label in labels" ng-click="visualise(label)">{{label}}</div>
+          </div>
         </div>
         <div class="details" ng-show="node">
           <h2>click on nodes to see details</h2>
