@@ -16,7 +16,12 @@ angular.module('smit')
 
 
     // 
-    $scope.labels = Neo4jFactory.labels();
+    Neo4jFactory.labels(function(res){
+      
+      $scope.labels = _.sortBy(res);
+
+      $log.info($scope.labels);
+    });
 
 
     $scope.visualise = function(label) {
