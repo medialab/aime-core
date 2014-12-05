@@ -23,6 +23,16 @@ angular.module('smit')
       link: function postLink(scope, element, attrs) {
         scope.playing = false;
 
+        var sig = new sigma({
+          container: element[0],
+          settings: {
+            // drawLabels: false,
+            minNodeSize: 2,
+            defaultEdgeColor: '#ccc',
+            font: 'NovelMonoPro-Regular'
+          }
+        });
+
         scope.togglePlay = function() {
 
           if (scope.playing)
@@ -36,25 +46,39 @@ angular.module('smit')
 
         scope.zoomIn = function() {
           $log.info('sigma.zoomIn');
+
+          var cam = sig.cameras[0];
+
+          sigma.misc.animation.camera(
+            cam,
+            { ratio: cam.ratio / 1.5 },
+            { duration: 150 }
+          );
         };
 
         scope.zoomOut = function() {
           $log.info('sigma.zoomOut');
+
+          var cam = sig.cameras[0];
+
+          sigma.misc.animation.camera(
+            cam,
+            { ratio: cam.ratio * 1.5 },
+            { duration: 150 }
+          );
         };
 
         scope.rescale = function() {
           $log.info('sigma.rescale');
-        };
 
-        var sig = new sigma({
-          container: element[0],
-          settings: {
-            // drawLabels: false,
-            minNodeSize: 2,
-            defaultEdgeColor: '#ccc',
-            font: 'NovelMonoPro-Regular'
-          }
-        });
+          var cam = sig.cameras[0];
+
+          sigma.misc.animation.camera(
+            cam,
+            {x: 0, y: 0, angle: 0, ratio: 1},
+            { duration: 150 }
+          );
+        };
 
         // Binding click
         sig.bind('clickNode', function(e) {
