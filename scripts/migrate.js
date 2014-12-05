@@ -25,8 +25,8 @@ const SEQ = [
   'users',
   'vocabulary',
   'links',
-  'bookmarks',
-  'cleanup'
+  'bookmarks'
+  // 'cleanup'
 ];
 
 /**
