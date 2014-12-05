@@ -94,12 +94,17 @@ sidebar>.inner{
 }
 
 .node-type{
-  background: #f5f5f5;
+  background-color: #f5f5f5;
   font-size: 12px;
   padding: 2px 7px;
   display: inline-block;
   margin: 4px 3px;
-  
+  transition: background-color .36s ease-in-out;
+  cursor: pointer;
+}
+
+.node-type.active{
+  background-color: #d5d5d5;
 }
 
 .detail{

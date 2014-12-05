@@ -20,7 +20,7 @@
 
     <header>
       <div class="inner">
-        <div id="logo">smit</div>
+        <div id="logo">smit {{selectedLabel}}</div>
         <div id="query">
           <textarea rows="1" placeholder="neo4j query ..." ng-model="query"></textarea>
         </div>
@@ -32,7 +32,7 @@
         <div class="node-types">
           <h2>Types</h2>
           <div class="labels">
-            <div class="node-type" ng-repeat="label in labels" ng-click="visualise(label)">{{label}}</div>
+            <div class="node-type {{selectedLabel == label?'active':''}}" ng-repeat="label in labels" ng-click="visualise(label)">{{label}}</div>
           </div>
         </div>
         <div class="details" ng-show="node">

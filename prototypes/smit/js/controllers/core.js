@@ -13,6 +13,7 @@ angular.module('smit')
 
     // the neo4j globalquery
     $scope.query = "";
+    $scope.selectedLabel = ""; // current visualised label
 
     //
     Neo4jFactory.labels(function(res){
@@ -35,7 +36,7 @@ angular.module('smit')
 
     $scope.visualise = function(label) {
       $log.info('@CoreCtrl.visualise', label);
-
+      $scope.selectedLabel = label;
       // Fetch data
       Neo4jFactory.cypher({query: cypherQueries.nodesByLabel(label)}, function(results) {
         console.log(results);
