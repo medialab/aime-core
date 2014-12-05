@@ -16,11 +16,16 @@ angular.module('smit')
 
     //
     Neo4jFactory.labels(function(res){
-
       $scope.labels = _.sortBy(res);
-
       $log.info($scope.labels);
     });
+
+    // print detail inside sidebear
+    $scope.$on('nodeDetail', function(e, node){
+      $scope.node = angular.extend(node.data, {id: node.id});
+      $scope.$apply()
+    });
+
 
     $scope.visualise = function(label) {
       $log.info('@CoreCtrl.visualise', label);

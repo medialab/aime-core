@@ -52,7 +52,7 @@ angular.module('smit')
             // drawLabels: false,
             minNodeSize: 2,
             defaultEdgeColor: '#ccc',
-            font: 'NovelMonoPro-Regular'
+            font: 'NovelSansPro-Regular'
           }
         });
 
