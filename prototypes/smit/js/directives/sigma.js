@@ -17,7 +17,7 @@ angular.module('smit')
         var render = function() {
           $log.info('sigma rendering', arguments);
         };
-        element.text('ici sigma')
+        element.text('ici sigma', scope.data)
         scope.$watch('data', render);
       }
     };
