@@ -3,6 +3,7 @@
 <head>
   <title>Smit</title>
 
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
@@ -15,8 +16,38 @@
   </style>
 
 
-  <div ng-controller="CoreCtrl">
-    <div ng-controller="PlaygroundCtrl"></div>
+  <div id="layout" ng-controller="CoreCtrl">
+
+    <header>
+      <div class="inner">
+        <div id="logo">smit</div>
+        <div id="query">
+          <textarea rows="1" placeholder="neo4j query ..." ng-model="query"></textarea>
+        </div>
+      </div>
+    </header>
+
+    <sidebar>
+      <div class="inner">
+        nodes
+
+        <div class="node-types">
+          <span class="node-type">paragraph</span>
+          <span class="node-type">paragraph</span>
+          <span class="node-type">paragraph</span>
+          <span class="node-type">paragraph</span>
+          <span class="node-type">paragraph</span>
+        </div>
+      </div>
+    </sidebar>
+
+    <div id="playground" ng-controller="PlaygroundCtrl">
+      <div class="inner">{{query}}</div>
+    </div>
+
+    <footer>
+
+    </footer>
   </div>
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular.min.js"></script>
