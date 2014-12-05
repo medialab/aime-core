@@ -32,7 +32,7 @@
         <div class="node-types">
           <h2>Types</h2>
           <div class="labels">
-            <div class="node-type {{selectedLabel == label?'active':''}}" ng-repeat="label in labels" ng-click="visualise(label)">{{label}}</div>
+            <div class="node-type {{selectedLabel == label?'active':''}}" ng-repeat="label in labels" ng-click="visualise(label)">{{label}} <i class="fa fa-circle color" ng-show="label != 'Book'" ng-style="getColor(label)"></i></div>
           </div>
         </div>
         <div class="details" ng-show="node">

@@ -34,6 +34,27 @@ angular.module('smit')
       subheading: 'text'
     };
 
+    var colors = {
+      vocabulary:   '#b77f67',
+      text:         '#d1f2a5',
+      upload:       '',
+      slide:        '#60d575',
+      user:         '#cc333f', // mattone
+      video:        '',
+      paragraph:    '#99d9df',
+      subheading:   '#00a0b0',
+      chapter:      '#004d54',
+      document:     '#edc951',
+      contribution: '#eb6841',
+      reference:    '#6a4a3c'
+    };
+
+
+    $scope.getColor = function(label) {
+      return {color: colors[label.toLowerCase()]}
+    };
+
+
     $scope.visualise = function(label) {
       $log.info('@CoreCtrl.visualise', label);
       $scope.selectedLabel = label;
@@ -50,7 +71,7 @@ angular.module('smit')
             size: 1,
             x: Math.random(),
             y: Math.random(),
-            color: '#4D453E',
+            color: colors[t.data.type],
             type: 'border'
           };
         });
@@ -65,7 +86,7 @@ angular.module('smit')
             size: 1,
             x: Math.random(),
             y: Math.random(),
-            color: '#4D453E',
+            color: colors[t.data.type],
             type: 'border'
           };
         });
