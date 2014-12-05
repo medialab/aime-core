@@ -140,9 +140,11 @@ sidebar>.inner{
 }
 
 #tools .tool .playing:before{
-  content: "\f04b";
-}
+  content: "\f04c";
+  }
 
 #tools .tool .pausing:before{
-  content: "\f04c";
+  
+  content: "\f04b";
+
 }
