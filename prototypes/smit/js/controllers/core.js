@@ -14,4 +14,9 @@ angular.module('smit')
     // the neo4j globalquery
     $scope.query = "MATCH ... ";
 
+
+    // 
+    $scope.labels = Neo4jFactory.labels(function(){
+       console.log(arguments)
+    })
   });

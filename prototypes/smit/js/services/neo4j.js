@@ -9,7 +9,7 @@
  */
 angular.module('smit')
   .factory('Neo4jFactory', function($resource) {
-    return $resource('http://localhost:7474/db/data/:path',
+    return $resource('http://10.1.239.24:7474/db/data/:path',
       {
         headers: {
           accepts: 'application/json; charset=UTF-8',
