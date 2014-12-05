@@ -15,10 +15,10 @@ angular.module('smit')
       },
       link: function postLink(scope, element, attrs) {
         var render = function() {
-          $log.info('sigma rendering');
+          $log.info('sigma rendering', arguments);
         };
         element.text('ici sigma')
-        scope.$watch('data', render, true);
+        scope.$watch('data', render);
       }
     };
   });
