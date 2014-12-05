@@ -82,6 +82,9 @@ sidebar>.inner{
   width: 100%;
 }
 
+/**
+  Playground and tools to zoom, center etc.
+*/
 #playground{
   height: 100%;
   width: 100%;
@@ -101,4 +104,45 @@ sidebar>.inner{
 
 #playground #ground{
   height: 100%;
+}
+
+#tools {
+  position:absolute;
+  bottom: 20px;
+  right: 20px;
+  
+  width: 36px;
+  min-height: 36px;
+  z-index: 1;
+  background: #f5f5f5;
+}
+
+#tools .tool{
+  height: 36px;
+  text-align: center;
+  width: 36px;
+}
+
+#tools .tool a{
+  color: #757575;
+  line-height: 36px;
+  display: block;
+  text-decoration: none;
+  transition: background-color .3s ease-in-out;
+}
+
+#tools .tool a:visited{
+  color: #757575;
+}
+
+#tools .tool a:hover{
+  background: #fff;
+}
+
+#tools .tool .playing:before{
+  content: "\f04b";
+}
+
+#tools .tool .pausing:before{
+  content: "\f04c";
 }

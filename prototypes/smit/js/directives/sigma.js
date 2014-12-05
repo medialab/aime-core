@@ -12,10 +12,33 @@ angular.module('smit')
   .directive('sigma', function($log) {
     return {
       restrict: 'A',
+      template: '<div id="tools"><div class="tool"><a class="fa {{playing?\'playing\':\'pausing\'}}" ng-click="togglePlay()" href=""></a></div><div class="tool"><a class="fa fa-plus" ng-click="zoomIn()" href=""></a></div><div class="tool"><a class="fa fa-minus" href="" ng-click="zoomOut()"></a></div><div class="tool"><a class="fa fa-dot-circle-o" href="" ng-click="rescale()"></a></div></div>',
       scope: {
-        data: '='
+        data: '=',
+        togglePlay: '&',
+        zoomIn: '&',
+        zoomOut: '&',
+        rescale: '&'
       },
       link: function postLink(scope, element, attrs) {
+        scope.playing = false;
+
+        scope.togglePlay = function() {
+          scope.playing = !scope.playing;
+          $log.info('sigma.togglePlay', scope.playing);
+        };
+        
+        scope.zoomIn = function() {
+          $log.info('sigma.zoomIn');
+        };
+        
+        scope.zoomOut = function() {
+          $log.info('sigma.zoomOut');
+        };
+
+        scope.rescale = function() {
+          $log.info('sigma.rescale');
+        };
 
         var sig = new sigma({
           container: element[0],
