@@ -14,10 +14,21 @@ angular.module('smit')
         data: '='
       },
       link: function postLink(scope, element, attrs) {
+
+        var sig = new sigma({
+          container: element[0]
+        });
+
         var render = function() {
+          if (!scope.data)
+            return;
+
           $log.info('sigma rendering', arguments);
+
+          // Cleaning graph
+          sig.graph.clear().read(scope.data);
+          sig.refresh();
         };
-        element.text('ici sigma', scope.data)
         scope.$watch('data', render);
       }
     };
