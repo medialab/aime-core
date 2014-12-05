@@ -10,8 +10,8 @@
 angular.module('smit')
   .controller('CoreCtrl', function ($scope, $log, Neo4jFactory) {
     $log.debug('CoreCtrl ready', Neo4jFactory);
-    
+
     // the neo4j globalquery
     $scope.query = "MATCH ... ";
 
-  })
+  });

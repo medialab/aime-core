@@ -9,8 +9,27 @@
  */
 angular.module('smit')
   .factory('Neo4jFactory', function($resource) {
-    return $resource('/api/:id', {}, {
-      query: {method: 'GET', isArray: false, params: {id: '@id'} },
-      remove: {method: 'DELETE', params: {id: '@id'} }
-    });
+    return $resource('http://localhost:7474/db/data/:path',
+      {
+        headers: {
+          accepts: 'application/json; charset=UTF-8',
+          dataType: 'json'
+        },
+      },
+      {
+        cypher: {
+          method: 'POST',
+          params: {
+            path: 'cypher'
+          }
+        },
+        labels: {
+          isArray: true,
+          method: 'GET',
+          params: {
+            path: 'labels'
+          }
+        }
+      }
+    );
   });
