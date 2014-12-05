@@ -8,7 +8,9 @@
    */
 
   var cypherQueries = {
-    fetchLabels: 'START n=node(*) RETURN distinct labels(n)'
+    nodesByLabel: function(label) {
+      return 'MATCH (n:' + label + ') LIMIT 25;';
+    }
   };
 
   // Exporting
