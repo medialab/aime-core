@@ -11,5 +11,7 @@ angular.module('smit')
   .controller('PlaygroundCtrl', function ($scope, $log, $location) {
     $log.debug('PlaygroundCtrl ready');
 
+    
 
+    
   })
