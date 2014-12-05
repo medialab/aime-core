@@ -27,22 +27,50 @@ angular.module('smit')
 
       // Fetch data
       Neo4jFactory.cypher({query: cypherQueries.nodesByLabel(label)}, function(results) {
-        var nodes = results.data.map(function(n) {
+        console.log(results);
+        var primaryNodes = results.data.map(function(n) {
           var t = n[0];
 
           return {
             id: t.metadata.id,
+            label: t.data.title || t.data.text,
             data: t.data,
             size: 1,
             x: Math.random(),
             y: Math.random(),
-            color: 'blue'
+            color: 'blue',
+            type: 'border'
+          };
+        });
+
+        var secondaryNodes = results.data.map(function(n) {
+          var t = n[2];
+
+          return {
+            id: t.metadata.id,
+            label: t.data.title || t.data.text,
+            data: t.data,
+            size: 1,
+            x: Math.random(),
+            y: Math.random(),
+            color: 'blue',
+            type: 'border'
+          };
+        });
+
+        var edges = results.data.map(function(e, i) {
+          var t = e[1];
+
+          return {
+            id: 'e' + i,
+            source: e[0].metadata.id,
+            target: e[2].metadata.id
           };
         });
 
         $scope.network = {
-          nodes: nodes,
-          edges: []
+          nodes: primaryNodes.concat(secondaryNodes),
+          edges: edges
         };
       });
     };
