@@ -86,7 +86,7 @@ angular.module('smit')
           // Sizing with degree
           // NOTE: probably a sigma bug here
           sig.graph.nodes().forEach(function(n) {
-            n.size = sig.graph.degree(n.id, 'out');
+            n.size = sig.graph.degree(n.id);
           });
           sig.refresh();
 
