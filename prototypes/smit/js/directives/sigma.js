@@ -24,14 +24,20 @@ angular.module('smit')
         scope.playing = false;
 
         scope.togglePlay = function() {
+
+          if (scope.playing)
+            sig.stopForceAtlas2();
+          else
+            sig.startForceAtlas2();
+
           scope.playing = !scope.playing;
           $log.info('sigma.togglePlay', scope.playing);
         };
-        
+
         scope.zoomIn = function() {
           $log.info('sigma.zoomIn');
         };
-        
+
         scope.zoomOut = function() {
           $log.info('sigma.zoomOut');
         };
@@ -45,7 +51,8 @@ angular.module('smit')
           settings: {
             // drawLabels: false,
             minNodeSize: 2,
-            defaultEdgeColor: '#ccc'
+            defaultEdgeColor: '#ccc',
+            font: 'NovelMonoPro-Regular'
           }
         });
 
@@ -80,6 +87,7 @@ angular.module('smit')
 
           // Layout
           sig.killForceAtlas2();
+          scope.playing = true;
           sig.startForceAtlas2({slowDown: 10});
 
           if (!scope.data.edges.length)

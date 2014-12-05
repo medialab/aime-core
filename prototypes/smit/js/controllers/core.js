@@ -33,7 +33,7 @@ angular.module('smit')
 
           return {
             id: t.metadata.id,
-            label: t.data.title || t.data.text,
+            label: t.data.type + ' ' + t.data.lang,
             data: t.data,
             size: 1,
             x: Math.random(),
@@ -48,7 +48,7 @@ angular.module('smit')
 
           return {
             id: t.metadata.id,
-            label: t.data.title || t.data.text,
+            label: t.data.type + ' ' + t.data.lang,
             data: t.data,
             size: 1,
             x: Math.random(),
