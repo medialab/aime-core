@@ -12,11 +12,9 @@ angular.module('smit')
     $log.debug('CoreCtrl ready', Neo4jFactory);
 
     // the neo4j globalquery
-    $scope.query = "MATCH ... ";
+    $scope.query = "";
 
 
     // 
-    $scope.labels = Neo4jFactory.labels(function(){
-       console.log(arguments)
-    })
+    $scope.labels = Neo4jFactory.labels()
   });

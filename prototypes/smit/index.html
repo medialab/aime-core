@@ -29,20 +29,16 @@
 
     <sidebar>
       <div class="inner">
-        nodes
-
         <div class="node-types">
-          <span class="node-type">paragraph</span>
-          <span class="node-type">paragraph</span>
-          <span class="node-type">paragraph</span>
-          <span class="node-type">paragraph</span>
-          <span class="node-type">paragraph</span>
+          <div class="node-type" ng-repeat="label in labels">{{label}}</div>
         </div>
       </div>
     </sidebar>
 
     <div id="playground" ng-controller="PlaygroundCtrl">
-      <div class="inner">{{query}}</div>
+      <div class="inner">
+        <div sigma data="labels"></div>
+      </div>
     </div>
 
     <footer>
@@ -63,6 +59,7 @@
   <script src="js/controllers/playground.js"></script>
   <script src="js/controllers/core.js"></script>
   <script src="js/services/neo4j.js"></script>
+  <script src="js/directives/sigma.js"></script>
 
 </body>
 </html>
