@@ -30,14 +30,14 @@
     <sidebar>
       <div class="inner">
         <div class="node-types">
-          <div class="node-type" ng-repeat="label in labels">{{label}}</div>
+          <div class="node-type" ng-repeat="label in labels" ng-click="visualise(label)">{{label}}</div>
         </div>
       </div>
     </sidebar>
 
     <div id="playground" ng-controller="PlaygroundCtrl">
       <div class="inner">
-        <div sigma data="labels"></div>
+        <div sigma data="network"></div>
       </div>
     </div>
 

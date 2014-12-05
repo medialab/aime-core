@@ -16,5 +16,15 @@ angular.module('smit')
 
 
     // 
-    $scope.labels = Neo4jFactory.labels()
+    $scope.labels = Neo4jFactory.labels();
+
+
+    $scope.visualise = function(label) {
+      $log.info('@CoreCtrl.visualise', label);
+
+      $scope.network = {
+        nodes:[],
+        edges:[]
+      };
+    };
   });
