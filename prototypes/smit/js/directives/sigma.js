@@ -20,7 +20,9 @@ angular.module('smit')
         var sig = new sigma({
           container: element[0],
           settings: {
-
+            // drawLabels: false,
+            minNodeSize: 2,
+            defaultEdgeColor: '#ccc'
           }
         });
 
@@ -44,6 +46,13 @@ angular.module('smit')
             sig.graph.addEdge(e);
           });
 
+          sig.refresh();
+
+          // Sizing with degree
+          // NOTE: probably a sigma bug here
+          sig.graph.nodes().forEach(function(n) {
+            n.size = sig.graph.degree(n.id, 'out');
+          });
           sig.refresh();
 
           // Layout

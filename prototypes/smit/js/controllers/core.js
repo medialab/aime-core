@@ -38,7 +38,7 @@ angular.module('smit')
             size: 1,
             x: Math.random(),
             y: Math.random(),
-            color: 'blue',
+            color: '#4D453E',
             type: 'border'
           };
         });
@@ -53,7 +53,7 @@ angular.module('smit')
             size: 1,
             x: Math.random(),
             y: Math.random(),
-            color: 'blue',
+            color: '#4D453E',
             type: 'border'
           };
         });
@@ -64,7 +64,8 @@ angular.module('smit')
           return {
             id: 'e' + i,
             source: e[0].metadata.id,
-            target: e[2].metadata.id
+            target: e[2].metadata.id,
+            color: '#ccc'
           };
         });
 
