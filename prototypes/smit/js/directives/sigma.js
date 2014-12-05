@@ -56,6 +56,11 @@ angular.module('smit')
           }
         });
 
+        // Binding click
+        sig.bind('clickNode', function(e) {
+          scope.$emit('nodeDetail', e.data.node);
+        });
+
         var render = function() {
           if (!scope.data)
             return;
