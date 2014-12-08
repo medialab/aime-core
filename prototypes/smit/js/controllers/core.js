@@ -29,9 +29,19 @@ angular.module('smit')
 
 
     // Mappings
+    function truncate(txt, size) {
+      return txt.slice(0, size);
+    }
+
     var labels = {
-      chapter: 'text',
-      subheading: 'text'
+      chapter: 'title',
+      subheading: 'title',
+      paragraph: function(n) {
+        return truncate(n.text, 30);
+      },
+      vocabulary: function(n) {
+        return n.title;
+      }
     };
 
     var colors = {
@@ -62,11 +72,12 @@ angular.module('smit')
       Neo4jFactory.cypher({query: cypherQueries.nodesByLabel(label)}, function(results) {
         console.log(results);
         var primaryNodes = results.data.map(function(n) {
-          var t = n[0];
+          var t = n[0],
+              label = labels[t.data.type];
 
           return {
             id: t.metadata.id,
-            label: t.data.type + ' ' + t.data.lang,
+            label: label ? (typeof label === 'function' ? label(t.data) : t.data[label]) : t.data.type,
             data: t.data,
             size: 1,
             x: Math.random(),
@@ -77,11 +88,12 @@ angular.module('smit')
         });
 
         var secondaryNodes = results.data.map(function(n) {
-          var t = n[2];
+          var t = n[2],
+              label = labels[t.data.type];
 
           return {
             id: t.metadata.id,
-            label: t.data.type + ' ' + t.data.lang,
+            label: label ? (typeof label === 'function' ? label(t) : t.data[label]) : t.data.type,
             data: t.data,
             size: 1,
             x: Math.random(),
