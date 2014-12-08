@@ -43,8 +43,24 @@ angular.module('smit')
       paragraph: function(n) {
         return truncate(n.text, 30);
       },
-      vocabulary: function(n) {
-        return n.title;
+      quote: function(n) {
+        return truncate(n.text, 30);
+      },
+      vocabulary: 'title',
+      contribution: 'title',
+      user: function(n) {
+        return n.name + ' ' + n.surname;
+      },
+      slide: function(n) {
+        return 'slide ' + n.lang;
+      },
+      media: 'kind',
+      pdf: 'title',
+      reference: function(n) {
+        return 'biblib ' + n.biblib_id;
+      },
+      video: function(n) {
+        return 'vimeo ' + n.identifier;
       }
     };
 
