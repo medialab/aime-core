@@ -9,7 +9,7 @@
 
   var cypherQueries = {
     nodesByLabel: function(label) {
-      return 'MATCH (n:`' + label + '`) WITH n LIMIT 2500 MATCH (n)-[r]-(t) RETURN n,r,t;';
+      return 'MATCH (n:`' + label + '`) WITH n LIMIT 200 MATCH (n)-[r]-(t) RETURN n,r,t;';
     }
   };
 

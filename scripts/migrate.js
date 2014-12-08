@@ -19,13 +19,13 @@ var mysql;
 
 const SEQ = [
   'book',
-  'contributions',
+  // 'contributions',
   'uploads',
   'documents',
-  'users',
+  // 'users',
   'vocabulary',
   'links',
-  'bookmarks'
+  // 'bookmarks'
   // 'cleanup'
 ];
 
@@ -86,7 +86,7 @@ function makeRules(next) {
  */
 async.series([
   confirmation,
-  // truncate,
+  truncate,
   connection,
   makeRules
 ], function(err) {

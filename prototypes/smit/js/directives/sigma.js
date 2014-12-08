@@ -29,7 +29,8 @@ angular.module('smit')
             // drawLabels: false,
             minNodeSize: 2,
             defaultEdgeColor: '#ccc',
-            font: 'NovelMonoPro-Regular'
+            font: 'NovelMonoPro-Regular',
+            singleHover: true
           }
         });
 
@@ -117,7 +118,12 @@ angular.module('smit')
           // Layout
           sig.killForceAtlas2();
           scope.playing = true;
-          sig.startForceAtlas2({slowDown: 10});
+
+          scope.rescale();
+
+          if (sig.graph.nodes().length > 4000)
+            sig.configForceAtlas2({barnesHutOptimize: true});
+          sig.startForceAtlas2();
 
           if (!scope.data.edges.length)
             setTimeout(function() {

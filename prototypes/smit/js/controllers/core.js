@@ -30,12 +30,16 @@ angular.module('smit')
 
     // Mappings
     function truncate(txt, size) {
-      return txt.slice(0, size);
+      if (txt.length > size)
+        return txt.slice(0, size) + '...';
+      else
+        return txt;
     }
 
     var labels = {
       chapter: 'title',
       subheading: 'title',
+      document: 'title',
       paragraph: function(n) {
         return truncate(n.text, 30);
       },
@@ -46,7 +50,6 @@ angular.module('smit')
 
     var colors = {
       vocabulary:   '#b77f67',
-      text:         '#d1f2a5',
       upload:       '',
       slide:        '#60d575',
       user:         '#cc333f', // mattone
@@ -93,7 +96,7 @@ angular.module('smit')
 
           return {
             id: t.metadata.id,
-            label: label ? (typeof label === 'function' ? label(t) : t.data[label]) : t.data.type,
+            label: label ? (typeof label === 'function' ? label(t.data) : t.data[label]) : t.data.type,
             data: t.data,
             size: 1,
             x: Math.random(),
