@@ -57,7 +57,10 @@ angular.module('smit')
       media: 'kind',
       pdf: 'title',
       reference: function(n) {
-        return 'biblib ' + n.biblib_id;
+        if (n.biblib_id)
+          return 'biblib ' + n.biblib_id;
+        else
+          return truncate(n.text, 30);
       },
       video: function(n) {
         return 'vimeo ' + n.identifier;

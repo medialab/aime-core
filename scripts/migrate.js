@@ -38,7 +38,7 @@ function confirmation(next) {
       {
         type: 'confirm',
         name: 'confirm',
-        message: 'Are you sure you want to migrate (this will wipe the neo4j database)?'
+        message: 'Are you sure you want to migrate (this will truncate the neo4j database)?'
       }
     ],
     function(answers) {
