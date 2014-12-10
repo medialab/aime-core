@@ -57,7 +57,7 @@ angular.module('smit')
       media: 'kind',
       pdf: 'title',
       reference: function(n) {
-        if (n.biblib_id)
+        if ('biblib_id' in n)
           return 'biblib ' + n.biblib_id;
         else
           return truncate(n.text, 30);
