@@ -25,12 +25,12 @@ function teardown() {
 }
 
 const SEQ = [
-  // 'book',
+  'book',
   // 'contributions',
   // 'uploads',
   // 'documents',
   // 'users',
-  // 'vocabulary',
+  'vocabulary',
   'modes',
   // 'links',
   // 'bookmarks',
