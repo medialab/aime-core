@@ -13,7 +13,8 @@
     },
     "mongo": {
       "host": "localhost",
-      "port": 27017
+      "port": 27017,
+      "database": "aime_crossings_prod"
     }
   }
 }

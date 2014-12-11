@@ -9,21 +9,28 @@
  * of said migration.
  */
 var mysqlConnect = require('../lib/migration/mysql.js'),
+    mongoConnect = require('../lib/migration/mongo.js'),
     neo4j = require('../lib/migration/neo4j.js'),
     async = require('async'),
     inquirer = require('inquirer'),
     _ = require('lodash'),
     rules;
 
-var mysql;
+var mysql,
+    mongo;
+
+function teardown() {
+  mysql && mysql.end();
+  mongo && mongo.close();
+}
 
 const SEQ = [
-  'book',
+  // 'book',
   // 'contributions',
   // 'uploads',
   // 'documents',
   // 'users',
-  'vocabulary',
+  // 'vocabulary',
   'modes',
   // 'links',
   // 'bookmarks',
@@ -66,7 +73,7 @@ function truncate(next) {
 /**
  * MySQL Connection
  */
-function connection(next) {
+function mysqlConnection(next) {
   mysqlConnect(function(err, conn) {
     if (err) return next(err);
 
@@ -76,10 +83,23 @@ function connection(next) {
 }
 
 /**
+ * Mongo Connection
+ */
+function mongoConnection(next) {
+  mongoConnect(function(err, conn) {
+    if (err) return next(err);
+
+    mongo = conn;
+    next();
+  });
+}
+
+
+/**
  * Rules making
  */
 function makeRules(next) {
-  rules = require('../lib/migration/rules')(mysql, neo4j);
+  rules = require('../lib/migration/rules')(mysql, neo4j, mongo);
   next();
 }
 
@@ -89,15 +109,15 @@ function makeRules(next) {
 async.series([
   confirmation,
   truncate,
-  connection,
+  mysqlConnection,
+  mongoConnection,
   makeRules
 ], function(err) {
 
   // Displaying error if any
   if (err && err.message !== 'aborted') {
 
-    // Closing mysql connection
-    mysql && mysql.end();
+    teardown();
 
     console.error(err);
     return;
@@ -108,7 +128,6 @@ async.series([
 
     if (err) console.error(err);
 
-    // Closing mysql connection
-    mysql && mysql.end();
+    teardown();
   });
 });
