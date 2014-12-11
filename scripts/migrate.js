@@ -32,6 +32,7 @@ const SEQ = [
   'users',
   'vocabulary',
   'modes',
+  'scenarii',
   // 'links',
   // 'bookmarks',
   // 'references',
