@@ -66,7 +66,8 @@ angular.module('smit')
         return 'vimeo ' + n.identifier;
       },
       mode: 'name',
-      crossing: 'name'
+      crossing: 'name',
+      scenario: 'title'
     };
 
     var colors = {
