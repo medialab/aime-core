@@ -76,12 +76,15 @@ angular.module('smit')
       slide:        '#60d575',
       user:         '#cc333f', // mattone
       video:        '',
+      mode:         '#592e43',
       paragraph:    '#99d9df',
       subheading:   '#00a0b0',
       chapter:      '#004d54',
+      scenario:     '#8b223a',
       document:     '#edc951',
       contribution: '#eb6841',
-      reference:    '#6a4a3c'
+      reference:    '#6a4a3c',
+      crossing:     '#c46564'
     };
 
 
