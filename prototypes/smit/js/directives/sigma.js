@@ -1,6 +1,6 @@
 'use strict';
 
-sigma.renderers.def = sigma.renderers.canvas;
+// sigma.renderers.def = sigma.renderers.canvas;
 
 /**
  * @ngdoc directive

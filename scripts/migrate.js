@@ -26,10 +26,10 @@ function teardown() {
 
 const SEQ = [
   'book',
-  // 'contributions',
-  // 'uploads',
-  // 'documents',
-  // 'users',
+  'contributions',
+  'uploads',
+  'documents',
+  'users',
   'vocabulary',
   'modes',
   // 'links',
