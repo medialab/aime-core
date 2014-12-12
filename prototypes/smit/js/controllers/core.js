@@ -67,7 +67,8 @@ angular.module('smit')
       },
       mode: 'name',
       crossing: 'name',
-      scenario: 'title'
+      scenario: 'title',
+      book: 'title'
     };
 
     var colors = {
