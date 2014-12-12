@@ -33,10 +33,10 @@ const SEQ = [
   'vocabulary',
   'modes',
   'scenarii',
-  // 'links',
-  // 'bookmarks',
-  // 'references',
-  // 'cleanup'
+  'links',
+  'bookmarks',
+  'references',
+  'cleanup'
 ];
 
 /**
