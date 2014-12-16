@@ -16,7 +16,7 @@
   </style>
 
 
-  <div id="layout" ng-controller="CoreCtrl">
+  <div id="layout" ng-controller="CoreCtrl" ng-cloak>
 
     <header>
       <div class="inner">
@@ -26,6 +26,16 @@
         </div>
       </div>
     </header>
+
+    <nav>
+      <div class="inner">
+        <a href="/" ><div>~</div></a>
+        <a href="/settings" class="active"><div>s</div></a>
+        <a href="/design"><div>d</div></a>
+        <a href="/agent-smith"><div>w</div></a>
+      </div>
+    </nav>
+
 
     <sidebar>
       <div class="inner">

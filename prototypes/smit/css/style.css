@@ -32,12 +32,14 @@ header{
   top: 0;
   left: 0;
   width: 100%;
-  background: #f5f5f5;
   height: 48px;
-  z-index: 3;
+  z-index: 4;
+  overflow: hidden;
+  background: #f5f5f5;
 }
 
 header>.inner{
+  margin: 0 0px 0 40px;
   padding: 0 20px;
 }
 
@@ -48,7 +50,7 @@ header #logo{
 }
 
 header #query{
-  margin-left: 200px;
+  margin-left: 268px;
   padding: 10px 20px;
 }
 
@@ -61,12 +63,56 @@ header #query textarea{
   padding: 6px 10px;
 }
 
+nav{
+  position:fixed;
+  height: 100%;
+  width: 40px;
+  z-index: 2;
+  left: 0px;
+  background: #fff;
+}
+
+nav >.inner{
+  padding-top: 68px;
+}
+
+nav a{
+  display: block;
+  text-align: center;
+  padding: 10px;
+  line-height: 20px;
+  color: #d5d5d5;
+  text-decoration: none;
+}
+
+nav a>div{
+  
+  height: 20px;
+  line-height: 20px;
+  width: 20px;
+  
+}
+
+nav a:hover>div{
+  color: #353535;
+}
+
+nav a.active>div{
+  color: white;
+}
+
+nav a.active>div{
+  background-color: #353535;
+  color: #f5f5f5;
+}
+
 
 sidebar{
   position:fixed;
   height: 100%;
   width: 300px;
-  z-index: 2;
+  z-index: 3;
+  left: 40px;
 }
 
 sidebar>.inner{
@@ -127,8 +173,8 @@ h2{
   padding: 10px;
   text-transform: uppercase;
   font-size: 11px;
-  margin-bottom :5px;
-  margin-top: 10px;
+  margin-bottom :0px;
+  margin-top: 20px;
 }
 
 #layout{
@@ -152,7 +198,7 @@ h2{
   top:0;
   left:0;
   right:0;
-  margin: 68px 20px 20px 300px;
+  margin: 68px 20px 20px 348px;
   background-color: #ebebeb;
 }
 
