@@ -35,6 +35,7 @@ const SEQ = [
   'scenarii',
   'links',
   'bookmarks',
+  'harmony',
   'references',
   'slugs',
   'cleanup'
