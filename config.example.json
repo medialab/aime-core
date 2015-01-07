@@ -1,4 +1,7 @@
 {
+  "api": {
+    "defaultLang": "en"
+  },
   "dbs": {
     "mysql": {
       "host": "localhost",
