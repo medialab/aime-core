@@ -26,17 +26,19 @@ function teardown() {
 
 const SEQ = [
   'book',
-  // 'contributions',
+  'contributions',
   'uploads',
   'documents',
-  // 'users',
+  'users',
   'vocabulary',
-  // 'modes',
-  // 'scenarii',
+  'modes',
+  'scenarii',
   'links',
-  // 'bookmarks',
-  // 'references',
-  // 'cleanup'
+  'bookmarks',
+  'harmony',
+  'references',
+  'slugs',
+  'cleanup'
 ];
 
 /**
