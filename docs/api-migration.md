@@ -8,20 +8,17 @@ The **deprecated** api results is a flatten list of text element, where chapters
 ```json
 [
 	{
-		id: "36936",
+		"id": "36936",
 		type: "1",
 		content: "new book after upload",
 		description: "",
-		...
 	},
 	{
 		id: "36937",
 		type: "2",
 		content: "plan d’ensemble",
 		description: "",
-		...
 	},
-	...
 ]
 ```
 
@@ -29,16 +26,15 @@ The current structure, parsed by a javascript parser before being sent to the te
 
 ```json
 {
-	"<chapterId>": { ... },
-	...,
-	"<chapterId>": {
-		"id"
+	"<chapterId>": { },
+	"12121": {
+		"id": 12121,
 		"content": "introduction - une question choquante",
 		"number": "&middot",
 		"page": 11,
-		"type": 2 
+		"type": 2 ,
 		subheadings:[ ... ]
-	}
+	},
 }
 ```
 where `chapterId` is the integer ID of the chapter item.
@@ -49,7 +45,7 @@ Here is the proposed structure:
 ```json
 [
 	{
-		"title": "&middot; introduction - Trusting ... ?"
+		"title": "&middot; introduction - Trusting ... ?",
 		"page": 14,
 		"type": "chapter",
 		"subheadings": [
