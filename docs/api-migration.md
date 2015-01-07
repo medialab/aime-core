@@ -9,15 +9,15 @@ The **deprecated** api results is a flatten list of text element, where chapters
 [
 	{
 		"id": "36936",
-		type: "1",
-		content: "new book after upload",
-		description: "",
+		"type": "1",
+		"content": "new book after upload",
+		"description": "",
 	},
 	{
-		id: "36937",
-		type: "2",
-		content: "plan d’ensemble",
-		description: "",
+		"id": "36937",
+		"type": "2",
+		"content": "plan d’ensemble",
+		"description": "",
 	},
 ]
 ```
@@ -33,7 +33,7 @@ The current structure, parsed by a javascript parser before being sent to the te
 		"number": "&middot",
 		"page": 11,
 		"type": 2 ,
-		subheadings:[ ... ]
+		"subheadings":[  ]
 	},
 }
 ```
