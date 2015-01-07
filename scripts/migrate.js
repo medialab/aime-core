@@ -36,6 +36,7 @@ const SEQ = [
   'links',
   'bookmarks',
   'references',
+  'slugs',
   'cleanup'
 ];
 
