@@ -7,7 +7,9 @@
 
 var config = require('../config.json').dbs.neo4j,
     seraph = require('seraph'),
+    cache = require('./cache.js'),
     queries = require('./queries.js'),
+    getIn = require('../lib/helpers.js').getIn,
     _ = require('lodash');
 
 // Launching the seraph
@@ -41,6 +43,13 @@ db.cypher = function(query, params, callback) {
 // Functions
 module.exports = {
   book: function(lang, callback) {
+
+    // Checking cache
+    var book = getIn(cache, ['book', lang]);
+    if (book)
+      return callback(null, book);
+
+    // Executing query
     db.cypher(queries.book, {lang: lang}, function(err, response) {
 
       // On typical error
@@ -70,6 +79,10 @@ module.exports = {
         })
         .value();
 
+      // Caching
+      cache.book[lang] = data;
+
+      // Returning
       return callback(null, data);
     });
   }

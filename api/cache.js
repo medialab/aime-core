@@ -11,5 +11,5 @@
  */
 
 module.exports = {
-  book: null
+  book: {}
 };
