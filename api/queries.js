@@ -26,10 +26,10 @@ db.cypher = function(query, params, callback) {
       statements: [
         {
           statement: query,
-          resultDataContents: ['row']
+          resultDataContents: ['row'],
+          parameters: params
         }
-      ],
-      parameters: params
+      ]
     }
   );
 
@@ -39,7 +39,7 @@ db.cypher = function(query, params, callback) {
 // List of cypher queries
 const queries = {
   book: [
-    'MATCH (b:Book {lang: "en"})-[rc:HAS]-(c:Chapter)-[rs:HAS]-(s:Subheading)-[rp:HAS]-(p:Paragraph)',
+    'MATCH (b:Book {lang: {lang}})-[rc:HAS]-(c:Chapter)-[rs:HAS]-(s:Subheading)-[rp:HAS]-(p:Paragraph)',
     'WITH s, c, p, rs, rc, rp, {id: id(p), properties: p} AS paragraphs ORDER BY rp.order ASC',
     'WITH c, rs, rc, {subheading: {id: id(s), properties: s}, paragraphs: collect(paragraphs)} AS subheadings ORDER BY rs.order ASC',
     'WITH rc, {chapter: {id: id(c), properties: c}, subheadings: collect(subheadings)} AS chapters ORDER BY rc.order ASC',
@@ -47,7 +47,7 @@ const queries = {
   ].join('\n')
 };
 
-db.cypher(queries.book, function(err, results) {
+db.cypher(queries.book, {lang: 'it'}, function(err, results) {
   console.log(JSON.stringify(results, null, 2));
 });
 
