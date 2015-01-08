@@ -9,7 +9,7 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     morgan = require('morgan'),
-    queries = require('./queries.js'),
+    queries = require('./model.js'),
     middlewares = require('./middlewares.js')
     validate = middlewares.validate;
 
@@ -45,9 +45,10 @@ var routes = [
   {
     url: '/book',
     action: function(req, res) {
-      queries.book('en', function(err, result) {
+      queries.book('en', function(err, book) {
         if (err) console.log(err);
-        return res.type('json').send(JSON.stringify(result, undefined, 2));
+
+        return res.json(book);
       });
     }
   }
