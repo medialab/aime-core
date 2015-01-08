@@ -8,6 +8,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
+    compress = require('compression'),
     morgan = require('morgan'),
     queries = require('./model.js'),
     middlewares = require('./middlewares.js')
@@ -29,6 +30,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+// app.use(compress());
 
 /**
  * Router
