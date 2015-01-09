@@ -53,6 +53,16 @@ var routes = [
         return res.json(book);
       });
     }
+  },
+  {
+    url: '/follow',
+    action: function(req, res) {
+      queries.follow('en', function(err, book) {
+        if (err) console.log(err);
+
+        return res.json(book);
+      });
+    }
   }
 ];
 
