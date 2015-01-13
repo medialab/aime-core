@@ -1,5 +1,44 @@
 # API migration note
 
+## Route mapping
+
+### Model Access
+
+*Models*
+
+* `/[<lang>]/book`
+* `/[<lang>]/voc`
+* `/[<lang>]/doc`
+* `/[<lang>]/res`
+* `/[<lang>]/scenars`
+
+*Actions*
+
+* `GET /[<lang>]/<model>/id`
+* `GET /[<lang>]/<model>/id,id,id`
+* `GET /[<lang>]/<model>/search`
+* `POST /<lang>/<model>`
+* `PUT /[<lang>]/<model>/id`
+* `DELETE /[<lang>]/<model>/id`
+
+*Pagination*
+
+Through GET parameters.
+
+### Relations
+
+* `GET /[<lang>]/mode`
+* `GET /[<lang>]/crossing`
+
+### Utilities
+
+* `POST /login`
+* `POST /logout`
+* `GET /[<lang>]/search`
+
+
+## Notes
+
 ### Rest, "soft" error handling and pagination
 
 Response should show useful info about the request status. The response contains a property named `result` which is either a list of objects or a single object.
@@ -31,7 +70,7 @@ GET /api/fr/voc/12345
 	"status": "ok",
 	"kind": "aime/voc",
 	result: {
-	
+
 	}
 }
 ```
@@ -63,7 +102,7 @@ GET /api/fr/voc/12345,1234
 			"code" - An application-specific error code, expressed as a string value.
 			"title" - A short, human-readable summary of the problem. It SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
 			"detail" - A human-readable explanation specific to this occurrence of the problem.
-			
+
 		}
 	]
 }
@@ -107,12 +146,12 @@ Here below you find RESERVED params
 	search={"title":"yea*"}
 	sorting=["-title","-date"]
 	q="free regexp or text query only after a search path"
-	
+
 Some useful RESERVED keywords apply to POST requests too:
 
 	indent= (if it is present, a well-indented-human-readable version of the resource will be provided)
 	verbose=
-	
+
 When the `verbose` param is present, the response is long and yes verbose showing the request params and help field for the :
 
 ```
@@ -128,7 +167,7 @@ GET /api/fr/book?verbose
 }
 
 ```
-	
+
 
 Normally pagination with page and limit does not apply to /book request.
 Useful for infinite loading:
@@ -224,7 +263,7 @@ Here is the proposed structure:
 		"page": 14,
 		"type": "chapter",
 		"items": [
-			{	
+			{
 				"title": "while we learn to ... existence.",
 				"type": "subheading",
 				"page": 19,
