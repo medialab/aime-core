@@ -1,6 +1,7 @@
 {
   "api": {
-    "defaultLang": "en"
+    "defaultLang": "en",
+    "secret": "falafel"
   },
   "dbs": {
     "mysql": {
