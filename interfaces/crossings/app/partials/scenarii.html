@@ -1,0 +1,49 @@
+
+	<li ng-if="scenars.length!=0" ng-class="{selected: !scenar}" id="tutoscenar_exploration">
+		<div class="bullet"><i class="fa fa-asterisk"></i></div>
+		<div class="snumber" ng-show="isAdmin()">({{cells.length}})</div>
+		<div class="name" ng-click="loadScenar()">{{'Explore' | t:lang}}</div>
+	</li>
+	
+	<li
+		ng-repeat="s in scenars"
+		ng-show="s.status=='published' || isAdmin()"
+		id="tutoscenar_{{$index}}"
+		class="{{s.status}}"
+		ng-class="{selected: s.sid == scenar.sid, edit: s.edit}"
+		>
+		<div class="bullet"><i class="fa fa-asterisk"></i></div>
+		<div class="snumber" ng-show="isAdmin()">({{s.items.length}})</div>
+		<div class="name" ng-show="!s.edit" ng-click="loadScenar(s)">{{s.name}}</div>
+
+		<div ng-show="isAdmin()">
+			<div class="action" ng-show="!s.edit" ng-click="editScenar(s)">[edit]</div>
+			<div ng-show="s.edit">
+				<form><input ng-model="s.name" value="{{s.name}}" size="10" autofocus/></form>
+				<div class="action" ng-click="togglePublic(s)">
+					<span ng-if="s.status=='published'">[unpublish]</span>
+					<span ng-if="s.status!='published'">[publish]</span>
+				</div>
+				<div class="action" ng-click="saveScenar(s)">[save]</div>
+				<div class="action" ng-click="deleteScenar(s)">[delete]</div>
+			</div>
+		</div>
+	</li>
+
+	<li
+		ng-show="isAdmin()"
+		class="{{newScenar.status}}"
+		ng-class="{selected: newScenar.edit, edit: s.edit}"
+		>
+		<div class="bullet"><i class="fa fa-asterisk"></i></div>
+		<div class="snumber" ng-show="newScenar">({{(cells|with:'choosen':true).length}})</div>
+		<div ng-show="newScenar">
+			<div class="name" ng-show="!newScenar.edit" ng-click="editScenar(newScenar)">{{newScenar.name}}</div>
+			<div ng-show="newScenar.edit">
+				<form><input ng-model="newScenar.name" value="{{newScenar.name}}" autofocus/></form>
+				<div class="action" ng-click="saveScenar(newScenar)">[save]</div>
+			</div>
+		</div>
+		<div class="action" ng-show="!newScenar && !editing" ng-click="addScenar()">[add scenario]</div>
+	</li>
+

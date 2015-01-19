@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  
+  <!-- please put here meta tags, twitter card, etc... -->
+
+  <title ng-bind="pagetitle">AIME</title>
+
+  <meta name="description" content="AIME - An Inquiry Into the Modes of Existence - Crossing Table"/>
+  <!-- <meta name="google-site-verification" content="ddkey"/> -->
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@AIMEproject">
+  <meta name="twitter:title" content="An Inquiry Into the Modes of Existence">
+  <meta name="twitter:description" content="AIME Pivot Table">
+  <meta name="twitter:creator" content="@AIMEproject">
+  <meta name="twitter:image:src" content="https://pbs.twimg.com/profile_images/2704645160/78a09cf02cecfec5bad05b891ee13c56_bigger.png">
+
+  <meta property="og:title" content="An Inquiry Into the Modes of Existence" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://www.modesofexistence.org" />
+  <meta property="og:image" content="https://pbs.twimg.com/profile_images/2704645160/78a09cf02cecfec5bad05b891ee13c56_bigger.png" />
+  <meta property="og:description" content="AIME Pivot Table">
+
+<!-- @if NODE_ENV == 'DEVELOPMENT' -->
+
+  <!--<script src="lib/jquery.pin/jquery.pin.min.js"></script>-->
+  <!--
+  <link href="lib/chardin/chardinjs.css" rel="stylesheet"/>
+  <script src="lib/chardin/chardinjs.min.js"></script>
+
+  <link rel="stylesheet" href="lib/hint.css/hint.css"/>
+
+  <link rel="stylesheet" type="text/css" href="lib/autofix/autofix_anything.css"/>
+  <script src="lib/autofix/jquery.autofix_anything.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="lib/swiper/dist/idangerous.swiper.css"/>
+  <script src="lib/swiper/dist/idangerous.swiper-2.4.min.js"></script>
+  <script src="lib/countUp/countUp.min.js"></script>
+  -->
+
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+  <script src="lib/jquery.shapeshift/core/jquery.shapeshift.min.js"></script>
+
+  <script src="lib/underscore/underscore.js"></script>
+
+  <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+  
+  <script src="lib/moment/min/moment.min.js"></script>
+
+  <script src="lib/typeahead.js/dist/typeahead.jquery.min.js"></script>
+
+  <link href="lib/intro.js/introjs.css" rel="stylesheet"/>
+  <script src="lib/intro.js/intro.js"></script>
+
+  <link rel="stylesheet" href="css/fonts.css"/>
+  <link rel="stylesheet/less" type="text/css" href="css/app.less"/>
+  <script src="lib/less/dist/less-1.6.1.min.js" type="text/javascript"></script>
+
+  <script src="lib/angular/angular.min.js"></script>
+  <script src="lib/angular-route/angular-route.min.js"></script>
+  <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
+  <!--<script src="lib/angular-cookies/angular-cookies.min.js"></script>-->
+  <!--<script src="lib/angular-ui/build/angular-ui.min.js"></script>-->
+  <!--<script src="lib/angular-ui-utils/ui-utils.min.js"></script>-->
+
+  <!--<script src="lib/angular-inview/angular-inview.js"></script>
+  <script src="lib/hamsterjs/hamster.js"></script>
+  <script src="lib/angular-mousewheel/mousewheel.js"></script>-->
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+
+<!-- @endif -->
+<!-- @if NODE_ENV == 'PRODUCTION' -->
+  
+  <link href="css/introjs.min.css" rel="stylesheet" type="text/css"/>
+  <link href="css/aimecrossings.css" rel="stylesheet" type="text/css"/>
+  <script src="js/aimecrossings.min.js" type="text/javascript"></script>
+
+<!-- @endif -->
+
+</head>
+<body>
+
+  <div ng-view class="ngview"></div>
+
+  <!-- @if NODE_ENV == 'PRODUCTION' -->
+  <script type="text/javascript">
+
+    // NB: a pageview is also sent from angular controller to track each page#scenar
+    
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-34970508-1', 'modesofexistence.org');
+    ga('send', 'pageview');
+
+  </script>
+  <!-- @endif -->
+
+</body>
+</html>

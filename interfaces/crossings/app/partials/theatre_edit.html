@@ -1,0 +1,34 @@
+<div
+	class="theatre {{c.cat}}"
+	ng-class="{choosen: c.choosen}"
+	ng-if="c.order-theatreCurrent.order<2 && c.order-theatreCurrent.order>-2"
+	ng-click="$event.stopPropagation();"
+	>
+
+
+	<!-- //////////////////////////////////////////////////////////////////////////////////////////////// TITLE -->
+
+	<div
+		class="theatretitle smallcaps voc"
+		ng-class="{collapsed: titleCollapsed}"
+		>
+		<input id="edittitle" placeholder="title" ng-model="editingTile.title"></input>
+	</div>
+
+	<!-- //////////////////////////////////////////////////////////////////////////////////////////////// CONTENT -->
+
+	<div class="contentscrollmask">
+		<div
+			id="content_{{c.order}}"
+			class="content voc"
+			>
+
+			<!-- /////////////////////////////////////// EDIT -->
+			<div class="media paragraph editor">
+				<textarea id="editcontent" placeholder="contribution content..." ng-model="editingTile.textarea"></textarea>
+			</div>
+
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,11 @@
+
+<span ng-show="!isAdmin()">welcome, human philosopher !</span>
+<span ng-show="isAdmin()">mes hommages, mon cher {{user}}</span>
+
+<form ng-submit="authLogIn()" method="post">
+    <input ng-model="email" size=7 type="text" name="email" placeholder="login"/>
+    <input ng-model="password" size=7 type="password" name="password"/>
+    <input ng-model="text" type="submit" value="login" ng-disabled="isAdmin()"/>
+</form>
+<button ng-click="authLogOut()" ng-disabled="!isAdmin()">logout</button>
+<button ng-click="authTest()">test</button>

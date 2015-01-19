@@ -1,0 +1,70 @@
+
+<div
+	ng-switch="c.cat"
+	class="inside {{c.cat}}"
+	>
+
+	<!-- ///////////////////////////////////////////// TITLE -->
+
+	<div class="celltitle smallcaps {{c.cat}}">
+
+		<div ng-switch-when="bsc">
+			<div class="bookmeta chapterindex">
+				<span class="index" ng-if="c.parentindex>0">{{c.parentindex}}</span> 
+			</div>
+			<div class="bookmeta chapter">
+				<div class="heading" ng-bind-html="textify(c.parenttitle,true,true,false,18)"></div>
+				<div class="subheading">
+					<span class="index">{{c.index}}</span> 
+					<span ng-bind-html="textify(c.title,true,true,false,20)"></span>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="c.cat=='Vocabulary_Voc' || c.cat=='Vocabulary_Mode' || c.cat=='Vocabulary_Cross'" ng-bind-html="textify(c.title,true,true,false,21)"></div>
+
+		<div ng-switch-when="doc" ng-bind-html="textify(c.title,true,true,false,21)"></div>
+		
+		<div ng-switch-when="cont">
+			<div class="conttitle {{c.status}}title" ng-bind-html="textify(c.title,true,true,false,20)"></div>
+			<div class="contauthor">{{c.author.name}}</div>
+		</div>
+
+	</div>
+
+	<!-- ///////////////////////////////////////////// THUMBNAIL -->
+
+	<div class="thumbnail {{c.thumbnail.type}}" ng-class="{empty:!c.thumbnail}" ng-switch="c.thumbnail.type">
+		<div ng-switch-when="txt">
+			<div ng-bind-html="textify(c.thumbnail.content,false,true,true)"></div>
+		</div>
+		<div ng-switch-when="vimeo">
+			<iframe
+				ng-src="{{getIframeSrc(c.thumbnail)}}"
+				width="100%"
+				height="100%"
+				frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+			</iframe>
+		</div>
+		<div ng-switch-when="img">
+			<img ng-src="{{c.thumbnail.content}}" alt=""/>
+		</div>
+		<div ng-switch-when="bib">
+			<div ng-bind-html="c.thumbnail.content"></div>
+		</div>
+		<div ng-switch-when="cit">
+			<div ng-bind-html="textify(c.thumbnail.content,true,true,true)"></div>
+		</div>
+	</div>
+
+	<!-- ///////////////////////////////////////////// ELLIPSIS -->
+
+	<div class="ellipsis" ng-click="$event.stopPropagation();">
+		<span ng-click="theatreEnterElement(c)">[{{ 'read more' | t:lang }}]</span>
+	</div>
+
+	<div
+		ng-if="c.thumbnail.type == 'txt' || c.thumbnail.type == 'cit' || c.thumbnail.type == 'bib'"
+		class="ellipsis fade"></div>
+
+</div>

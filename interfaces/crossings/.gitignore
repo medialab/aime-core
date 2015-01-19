@@ -1,0 +1,6 @@
+node_modules
+app/lib
+app/js/config.js
+app/css/app.css
+dist
+config.json

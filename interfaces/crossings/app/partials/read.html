@@ -1,0 +1,443 @@
+
+<div
+	ng-controller="CrossingsCtrl"
+	class="view"
+	ng-class="{editing:editing}"
+	>
+	<!-- ui-keyup="{'esc':'customKeyUp($event)'}" -->
+
+	
+	<!-- /////////////////////////////////////////////////////////////// -->
+	<div class="headerwrapper" id="tutoheaderwrapper" ng-class="{collapsed: !headerOpened}">
+
+
+		<!-- ////////////////////////////// HIDDEN HEADER -->
+
+		<div class="headertop">
+			<div class="topterms smallcaps">
+				<a href="{{conf.domain}}/#disclaimers" target="_blank">{{ 'terms of use | legal notice | support | credits' | t:lang }}</a>
+			</div>
+			<div class="topcontent">
+				<div class='toplogos'>
+					<div>
+						<a href="http://www.medialab.sciences-po.fr/" target="_blank"><img class='medialab' src='img/logos/logo_medialab.png'/></a>
+					</div>
+					<div>
+						<img class='erc' src='img/logos/logo_erc.png'/>
+						<img class='eu' src='img/logos/logo_eu.png'/>
+						<img class='sciencespo' src='img/logos/logo_sciencespo.png'/>
+					</div>
+				</div>
+
+				<div class="topmenu" id="tutomenulinks">
+					<div class="links smallcaps">
+						<ul>
+							<li><a href='{{conf.inquiryUrl}}' target='_blank'>{{'book'|t:lang}}</a></li>
+							<li><a href='{{conf.domain}}/tuto-contribution/' target='_blank'>{{'contribute'|t:lang}}</a></li>
+							<li><a href='{{conf.domain}}/' target='_blank'>{{'home'|t:lang}}</a></li>
+							<li><a href='mailto:contact@modesofexistence.org'>contact</a></li>
+						</ul>
+					</div>
+					<div class="language">
+						<div class="lang smallcaps" ng-class="{selected: lang=='fr'}" ng-click="switchLang('fr')">français</div>
+						<img src="img/display/_or.png">
+						<div class="lang smallcaps" ng-class="{selected: lang=='en'}" ng-click="switchLang('en')">english</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="redline"></div>
+
+		<!-- ////////////////////////////// SMALL HEADER -->
+
+		<div class="header" ng-class="{editing:editing}">
+			<div id="menulogo">
+				<a href="{{conf.crossingsUrl}}">
+					<img ng-if="lang=='en'" src="img/logos/logo_aime_en.png" id="logo"/>
+					<img ng-if="lang=='fr'" src="img/logos/logo_aime_fr.png" id="logo"/>
+				</a>
+			</div>
+			<div id="menutoggle" ng-click="headerOpened=!!!headerOpened">
+				<p ng-if="!headerOpened">{{ 'more' | t:lang }}</p>
+				<p ng-if="headerOpened">{{ 'less' | t:lang }}</p>
+			</div>
+			<div id="menuhelp">
+				<i class="fa fa-question" ng-click="toggleTutorial(true)"></i>
+				<div class="dropdowner">
+					<div class="dropdownContain">
+						<div class="dropOut">
+							<div class="triangleStroke"></div>
+							<div class="triangleFill"></div>
+							<ul><li ng-click="toggleTutorial(true)">{{'launch tutorial'|t:lang}}</li></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- auth login/logout Directive (template) -->
+			<div id="authblock" ng-if="isAdmin() && !editing">admin mode</div>
+			<div id="authblock" ng-if="isAdmin() && editing">editing mode (choosen tiles are the white ones)</div>
+
+				<!-- ////////////////////////////// TESTING SIMPLE AUTH FORM -->
+				<!--
+				<span ng-show="!isAdmin()">welcome, human philosopher !</span>
+				<span ng-show="isAdmin()">mes hommages, mon cher {{user}}</span>
+
+				<form ng-submit="authLogIn()" method="post">
+				    <input ng-model="email" size=7 type="text" name="email" placeholder="login"/>
+				    <input ng-model="password" size=7 type="password" name="password"/>
+				    <input ng-model="text" type="submit" value="login" ng-disabled="isAdmin()"/>
+				</form>
+				<button ng-click="authLogOut()" ng-disabled="!isAdmin()">logout</button>
+				<button ng-click="authTest()">test</button>
+				-->
+			
+		</div>
+
+		<div class="menuborder"></div>
+	</div>
+
+	<!-- /////////////////////////////////////////////////////////////// -->
+	<div
+		class="contentwrapper"
+		ng-class="{elastic: headerOpened}"
+		ng-click="headerOpened=false;"
+		>
+
+		<div class="content">
+
+			<div class="sidespace"></div>
+
+			<div class="mosaiccontainer" id="mosaiccontainer" ng-class="{loading:loading}">
+				<div class="mosaicscroller">
+
+					<!-- -->
+					<div class="mosaicprespace"></div>
+
+					<!-- ////////////////////////////// LOADING SPINNER -->
+
+					<div class="loadingspin" ng-class="{loaded:gridLoaded}"><i class="fa fa-spinner fa-spin"></i></div>
+
+					<!-- ////////////////////////////// ADMIN ACTIONS ON TILES -->
+					
+					<div
+						ng-show="isAdmin() && !scene && !editing && !scenar" 
+						class="tilesmanager"
+						ng-class="{opened:doAdd}"
+						ng-mouseenter="doAdd=true;"
+						ng-mouseleave="doAdd=false;">
+
+						<div class="mayadd" ng-hide="doAdd">
+							<i class="fa fa-plus"></i>
+						</div>
+
+						<div class="doadd" ng-show="doAdd">
+
+							<div class="row" ng-click="tileRelate=false; tileCreate();">
+								<i class="fa fa-plus"></i>
+								<div class="action choice">create a new tile</div>
+							</div>
+
+							<div class="row" ng-click="tileRelate=true;">
+								<i ng-hide="tileRelate" class="fa fa-puzzle-piece"></i>
+								<div ng-hide="tileRelate" class="action choice">relate existing tile</div>
+								<input id="typeahead" ng-show="tileRelate" type="search" name="addtile" size="35" placeholder="search tile to add...">
+								<div class="action" ng-show="tileRelate" ng-click="tileRelate=false; aheadChoice=false; $event.stopPropagation();">[cancel]</div>
+								<a class="action" ng-show="tileRelate && aheadChoice" href="{{conf.domain}}{{aheadChoice.link}}" target="_blank">[preview]</a>
+								<div class="action" ng-show="tileRelate && aheadChoice" ng-click="aheadSubmit()">[add tile]</div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<!-- ////////////////////////////// MOSAIC GRID -->
+
+					<div class="mosaic">
+						<div
+							ng-show="c.choosen || scenar.status=='unpublished'"
+							ng-repeat="c in cells | orderBy:'order'"
+							id="{{c.id}}"
+							class="mosaiccell {{c.cat}} tutomosaic_{{c.order}}"
+							ng-class="{choosen:c.choosen}"
+							data-i="{{c.i}}"
+							data-order="{{c.order}}"
+							ng-click="clickMosaicCell(c,$event)"
+							>
+						</div>
+						<!-- on-finish-render="mosaCellsDone" -->
+					</div>
+
+
+				</div>
+			</div>
+
+			<div class="sidebar" ng-class="{ontriangle:onTriangle}">
+				<div class="sidebarscroller">
+
+					<div class="switch">
+
+						<!-- ////////////////////////////// SWITCHER -->
+						<div class="switcher" ng-class="{ontriangle:onTriangle}" id="tutoswitcher" ng-click="toggleToTriangle()">
+							<!-- <i class="fa fa-exchange fa-2x"></i> -->
+							<span ng-if="!onTriangle" >{{'switch mode or crossing'|t:lang}}</span>
+							<span ng-if="onTriangle && !scene" >{{'back to selected'|t:lang}}</span>
+						</div>
+
+
+						<!-- ////////////////////////////// LEFT PANEL -->
+						<div class="about" id="tutoabout" ng-class="{hidden:onTriangle, transparent:scene}">
+						
+							<div class="title">
+								<div class="modecross" id="modecross">[<span class="smallcaps">{{modecross | middot}}</span>]</div>
+							</div>
+
+							<ul class="scenarii" id="tutoscenarii" ng-class="{loading:loading}"></ul>
+
+							<div class="description" id="description" ng-class="{loading:loading}" ng-bind-html="textify(description,true,true,true,null,true)"></div>
+
+							<div class="questionscontainer" id="questions" ng-class="{loading:loading}">
+								<div
+									ng-repeat="q in questions"
+									class="questionblock"
+									ng-click="onQuestion=$index"
+									>
+									<div class="question">{{q.question}}</div>
+									<div class="answer" ng-class="{collapsed:onQuestion!=$index}" ng-bind-html="textify(q.answer,true,true,true,null,true)"></div>
+								</div>
+							</div>
+
+							<div class="contributton">
+								<a href="{{conf.domain}}/ime/{{lang}}/{{current.id | replace:'_':'/'}}" target="_blank" ng-bind-html="'click here to enter the book and contribute'|t:lang"></a>
+							</div>
+						</div>
+
+						<!-- ////////////////////////////// RIGHT PANEL -->
+						<div
+							id="tutomatrix"
+							class="matrixwrapper"
+							ng-class="{hidden:!onTriangle}"
+							>
+
+							<!-- <div class="bypivot">{{'click the triangle to display tiles related to a specific mode or crossing'|t:lang}}</div> -->
+
+							<!-- ng-click="onTriangle = false;" -->
+							<div class="matrixcontainer">
+
+								<div
+									class="matrix"
+									data-hovermodecross="{{hovermodecross}}"
+									data-mode1="{{ hovermodecross | split:'-':0 }}"
+									data-mode2="{{ hovermodecross | split:'-':1 }}"
+									style="width:{{ matrixW }}px; height:{{ matrixW * 1.2 }}px"
+									>
+
+									<div
+										ng-repeat="(name,m) in modecrosses"
+										class="matrixcell {{ m.name | split:'-':0 }} {{ m.name | split:'-':1 }}"
+										ng-class="{selected: m.name==modecross, small: m.count<=2, big: m.count>=10, scenared: m.scenars>0}"
+										id="{{m.name}}"
+										style="left:{{m.x}}px;top:{{m.y}}px;"
+										>
+									</div>
+
+									<div class="matrixlegends">
+										<div
+											ng-repeat="m in legend"
+											id="legend_{{m.name}}"
+											class="matrixlegend smallcaps"				
+											style="left:{{m.x}}px;top:{{m.y}}px;"
+											ng-click="goToModecross(m.name,true)"
+											ng-mouseenter="hoverMatrixCell(m.name,true)"
+											>
+											{{m.name}}
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- ////////////////////////////// 4 BUBBLES BYTYPE -->
+							<div class="bytype">
+								<div class="sidebartitle">{{'click below to display all the tiles of the inquiry'|t:lang}}</div>
+								<div class="type" ng-class="{active:modecross=='BOOK'}" ng-click="goToModecross('BOOK',false)">
+									<div class="circle"></div>
+									<div class="name">t</div>
+									<div class="tip">{{'text'|t:lang}}</div>
+								</div>
+								<div class="type" ng-class="{active:modecross=='VOC'}" ng-click="goToModecross('VOC',false)">
+									<div class="circle"></div>
+									<div class="name">v</div>
+									<div class="tip">{{'vocabulary entries'|t:lang}}</div>
+								</div>
+								<div class="type" ng-class="{active:modecross=='DOC'}" ng-click="goToModecross('DOC',false)">
+									<div class="circle"></div>
+									<div class="name">d</div>
+									<div class="tip">{{'documents'|t:lang}}</div>
+								</div>
+								<div class="type" ng-class="{active:modecross=='CONT'}" ng-click="goToModecross('CONT',false)">
+									<div class="circle"></div>
+									<div class="name">c</div>
+									<div class="tip">{{'contributions'|t:lang}}</div>
+								</div>
+							</div>
+
+							<!-- ////////////////////////////// SEARCH FIELD -->
+
+							<div class="sidebartitle" ng-if="isAdmin()">{{'or display tiles based on a search query'|t:lang}}</div>
+							<div id="search" ng-if="isAdmin()">
+								<input id="search-query" type="search" name="search" ng-enter="launchSearch" placeholder="search terms ...">
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- /////////////////////////////////////////////////////////////// -->
+	<div class="lightbox" ng-class="{active:lightboxed, withref:lightboxed.ref}" ng-click="toggleLightbox();">
+		<!-- <div class="imgclose" ng-click="toggleLightbox();">x</div> -->
+		<div class="imgshadow"></div>
+		<div class="imgback" style="background-image:url('{{lightboxed.url}}');"></div>
+		<div class="imgbib" ng-if="lightboxed.ref" ng-bind-html="lightboxed.ref"></div>
+		<!--<div ng-if="lightboxed" class="imgbox"><img ng-src="{{lightboxed.url}}"/></div>-->
+	</div>
+
+	<!-- /////////////////////////////////////////////////////////////// -->
+	<div
+		id="theatrecontainer"
+		class="theatrecontainer"
+		ng-class="{active:theatreCurrent}"
+		ng-click="headerOpened=false"
+		>
+		
+		<!-- ////////////////////////////// BUTTON choose/unchoose -->
+		<div
+			ng-if="editing"
+			class="topbutton leftwing"
+			ng-class="{
+				collapsed: titleCollapsed,
+				orange:theatreCurrent.choosen
+			}"
+			ng-click="theatreCurrent.choosen=!!!theatreCurrent.choosen;"
+			title="shorcut: S"
+			ng-init="iconchecked = theatreCurrent.choosen;"
+			ng-mouseenter="iconchecked = !theatreCurrent.choosen;"
+			ng-mouseleave="iconchecked = theatreCurrent.choosen;"
+			>
+				<i class="fa" ng-class="{'fa-check-circle-o':iconchecked, 'fa-circle-o':!iconchecked}"></i>
+
+				<div ng-if="theatreCurrent.choosen" class="subtitle">{{'exclude from scenario'|t:lang}}</div>
+				<div ng-if="!theatreCurrent.choosen" class="subtitle">{{'include in scenario'|t:lang}}</div>
+		</div>
+
+
+		<!-- ////////////////////////////// BUTTON close/cancel -->
+		<div
+			class="topbutton rightwing middle"
+			ng-class="{collapsed: titleCollapsed}"
+			ng-click="theatreExitElement()"
+			title="shorcut: ESC"
+			>
+				<i ng-if="!editingTile" class="fa fa-times"></i>
+				<i ng-if="editingTile" class="fa fa-undo"></i>
+
+				<div ng-if="!editingTile" class="subtitle">{{'close'|t:lang}}</div>
+				<div ng-if="editingTile" class="subtitle">{{'undo'|t:lang}}</div>
+		</div>
+
+
+		<!-- ////////////////////////////// BUTTON edit/save -->
+		<div
+			ng-if="isAdmin() && theatreCurrent.origin=='crossings_platform'"
+			class="topbutton rightwing right"
+			ng-class="{
+				collapsed: titleCollapsed,
+				red: editingTile.textarea=='',
+			}"
+			ng-click="editingTile ? theatreSaveElement(editingTile) : theatreEditElement(theatreCurrent)"
+			>
+				<i ng-if="!editingTile" class="fa fa-edit"></i>
+				<i ng-if="editingTile && editingTile.textarea!=''" class="fa fa-save"></i>
+				<i ng-if="editingTile.textarea==''" class="fa fa-trash-o"></i>
+
+				<div ng-if="!editingTile" class="subtitle">{{'edit'|t:lang}}</div>
+				<div ng-if="editingTile && editingTile.textarea!=''" class="subtitle">{{'save'|t:lang}}</div>
+				<div ng-if="editingTile.textarea==''" class="subtitle">{{'delete'|t:lang}}</div>
+		</div>
+
+
+		<!-- ////////////////////////////// BUTTON un/publish -->
+		<div
+			ng-if="isAdmin() && theatreCurrent.origin=='crossings_platform'"
+			class="topbutton rightwing rightright orange"
+			ng-class="{collapsed: titleCollapsed}"
+			ng-click="togglePublish(theatreCurrent)"
+			ng-switch="theatreCurrent.status"
+			ng-init="iconlok = theatreCurrent.status=='private';"
+			ng-mouseenter="iconlok = theatreCurrent.status=='public';"
+			ng-mouseleave="iconlok = theatreCurrent.status=='private';"
+			>
+				<i class="fa" ng-class="{'fa-group':!iconlok, 'fa-lock':iconlok}"></i>
+
+				<div ng-switch-when="private" class="subtitle">{{'make public'|t:lang}}</div>
+				<div ng-switch-when="public" class="subtitle">{{'keep private'|t:lang}}</div>
+		</div>
+
+
+		<!-- ////////////////////////////// BUTTON navigation -->
+		<nav ng-hide="editingTile" class="theatrenav">
+			<div class="zone prev" ng-click="theatrePrev()">
+				<div class="arrow" title="shorcut: LEFT"><i class="fa fa-chevron-left"></i></div>
+			</div>
+			<div class="zone next" ng-click="theatreNext()">
+				<div class="arrow" title="shorcut: RIGHT"><i class="fa fa-chevron-right"></i></div>
+			</div>
+		</nav>
+
+		
+		<!-- QAD switch between admin-editable list / normal-only-viewable list -->
+
+		<!-- ////////////////////////////// FULLSCREEN REPEAT VIEW -->
+		<div ng-if="!isAdmin()">
+		<div
+			ng-repeat="c in cells | orderBy:'order'"
+			ng-if="c.choosen || scenar.status=='unpublished'"
+			id="theatre_{{c.order}}"
+			element-id="{{c.id}}"
+			class="theatrecell templatedsimple"
+			mode="{{editingTile.id==c.id ? 'edit' : 'view'}}"
+			ng-class="{
+				center: c.order==theatreCurrent.order,
+				left: c.order==theatreCurrent.order-1,
+				right: c.order==theatreCurrent.order+1
+			}"
+			ng-click="theatreExitElement()"
+			>
+		</div>
+		</div>
+
+		<!-- ////////////////////////////// FULLSCREEN REPEAT EDITABLE -->
+		<div ng-if="isAdmin()">
+		<div
+			ng-repeat="c in cells | orderBy:'order'"
+			ng-if="c.choosen || scenar.status=='unpublished'"
+			id="theatre_{{c.order}}"
+			element-id="{{c.id}}"
+			class="theatrecell templatededitable"
+			mode="{{editingTile.id==c.id ? 'edit' : 'view'}}"
+			ng-class="{
+				center: c.order==theatreCurrent.order,
+				left: c.order==theatreCurrent.order-1,
+				right: c.order==theatreCurrent.order+1
+			}"
+			ng-click="theatreExitElement()"
+			>
+		</div>
+		</div>
+
+	</div>
+
+</div>

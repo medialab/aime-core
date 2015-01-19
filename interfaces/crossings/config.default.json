@@ -1,0 +1,20 @@
+{
+  "settings": {
+    "dev": {
+      "domain":"http://aime.medialab.sciences-po.fr",
+      "inquiryUrl":"http://aime.medialab.sciences-po.fr/inquiry_dev",
+      "crossingsUrl":"http://aime.medialab.sciences-po.fr/crossings_dev/dist",
+      "apiUrl":"http://aime.medialab.sciences-po.fr/crossings_dev_server",
+      "pdfUrl":"http://aime.medialab.sciences-po.fr/crossings_dev/dist/Viewer.js/#../../../../inquiry_dev/storage?url=",
+      "adminIfFreeForAll": true
+    },
+    "prod": {
+      "domain":"http://www.modesofexistence.org",
+      "inquiryUrl":"http://www.modesofexistence.org/inquiry",
+      "crossingsUrl":"http://www.modesofexistence.org/crossings",
+      "apiUrl":"http://www.modesofexistence.org/crossings_server",
+      "pdfUrl":"http://www.modesofexistence.org/crossings/Viewer.js/#../../../inquiry/storage?url=",
+      "adminIfFreeForAll": false
+    }
+  }
+}

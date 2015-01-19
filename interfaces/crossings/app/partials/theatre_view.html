@@ -1,0 +1,219 @@
+<div
+	class="theatre {{c.cat}}"
+	ng-class="{choosen: c.choosen}"
+	ng-if="c.order-theatreCurrent.order<2 && c.order-theatreCurrent.order>-2"
+	ng-click="$event.stopPropagation();"
+	>
+
+
+	<!-- //////////////////////////////////////////////////////////////////////////////////////////////// TITLE -->
+
+	<div
+		ng-if="c.cat=='bsc'"
+		class="theatretitle bsc"
+		ng-class="{collapsed: titleCollapsed}"
+		>
+		<div class="bookmeta chapterindex">
+			<span class="index" ng-if="c.parentindex>0">{{c.parentindex}}</span> 
+		</div>
+		<div class="bookmeta chapter">
+			<div class="heading smallcaps" ng-bind-html="textify(c.parenttitle,true,true)"></div>
+			<div class="subheading smallcaps">
+				<span class="index">{{c.index}}</span> 
+				<span ng-bind-html="textify(c.title,true,true)"></span>
+			</div>
+		</div>
+	</div>
+
+	<div
+		ng-if="c.cat=='Vocabulary_Voc' || c.cat=='Vocabulary_Mode' || c.cat=='Vocabulary_Cross'"
+		class="theatretitle smallcaps voc"
+		ng-class="{collapsed: titleCollapsed}"
+		ng-bind-html="textify(c.title,true,true)"
+		>
+	</div>
+
+	<div
+		ng-if="c.cat=='doc'"
+		class="theatretitle smallcaps doc"
+		ng-class="{collapsed: titleCollapsed}"
+		ng-bind-html="textify(c.title,true,true)">
+	</div>
+
+	<div
+		ng-if="c.cat=='cont'"
+		class="theatretitle cont"
+		ng-class="{collapsed: titleCollapsed}"
+		>
+		<div class="title smallcaps">
+			<div class="{{c.status}}title" ng-bind-html="textify(c.title,true,true,null,null,null,true)"></div>
+		</div>
+		<div class="author">{{c.author.name}} - {{c.date|formatdate}}</div>
+	</div>
+
+
+
+	<!-- //////////////////////////////////////////////////////////////////////////////////////////////// CONTENT -->
+
+	<div class="contentscrollmask">
+	<div
+		id="content_{{c.order}}"
+		class="content {{c.cat}}"
+		ng-class="{voc:c.cat=='Vocabulary_Voc' || c.cat=='Vocabulary_Mode' || c.cat=='Vocabulary_Cross'}"
+		msd-wheel="mouseWheeling($event, $delta, $deltaX, $deltaY)"
+		in-view-container
+		>
+
+
+		<!-- /////////////////////////////////////// BSC -->
+		<div
+			ng-if="c.cat=='bsc'"
+			ng-repeat="p in c.paragraphs" class="media paragraph" in-view="mediaInView($element,$inview,$inviewpart)"
+			>
+			<span class="number">- {{$index+1}} -</span>
+			<div class="text" ng-bind-html="textify(p.text,true,true,true,null,true)"></div>
+		</div>
+
+
+		<!-- /////////////////////////////////////// VOC -->
+		<div
+			ng-if="c.cat=='Vocabulary_Voc' || c.cat=='Vocabulary_Mode' || c.cat=='Vocabulary_Cross'"
+			ng-repeat="p in c.paragraphs" class="media paragraph" in-view="mediaInView($element,$inview,$inviewpart)"
+			>
+			<span class="number">- {{$index+1}} -</span>
+			<div class="text" ng-bind-html="textify(p.text,true,true,true,null,true)"></div>
+		</div>
+
+
+		<!-- /////////////////////////////////////// DOC -->
+		<div
+			ng-if="c.cat=='doc'"
+			ng-repeat="m in c.slides_medias_flattened"
+			ng-switch="m.type"
+			id="media_{{m.id}}"
+			class="media doc {{m.type}}"
+			in-view="mediaInView($element,$inview,$inviewpart)"
+			>
+
+			<div ng-switch-when="txt" class="paragraph">	
+				<span class="number">- {{m.pindex}} -</span>
+				<div class="text" ng-bind-html="textify(m.content,true,true,true)"></div>
+			</div>
+
+			<div ng-switch-when="cit" class="paragraph cit">
+				<span class="number">- {{m.pindex}} -</span>
+				<div class="text" ng-bind-html="textify(m.content,true,true,true)"></div>
+			</div>
+
+			<div ng-switch-when="bib" class="paragraph bib">
+				<div class="text" ng-bind-html="textify(m.content,false,true)"></div>
+			</div>
+
+			<div ng-switch-when="img" class="row shadow"></div>
+			<div ng-switch-when="img" class="row">
+				<div class="lightboxbutton" ng-click="toggleLightbox(m.lightboxcontent)"><i class="fa fa-search"></i></div>
+				<div class="paragraph">
+					<img id="{{m.id}}" ng-src="{{conf.domain}}/{{m.content}}" class="draggableimage"/>
+				</div>
+			</div>
+
+			<div ng-switch-when="vimeo" class="row">
+				<div class="paragraph">
+					<iframe
+						ng-if="c.id==theatreCurrent.id"
+						ng-src="{{getIframeSrc(m)}}"
+						width="100%"
+						height="100%"
+						frameborder="0"
+						webkitallowfullscreen mozallowfullscreen allowfullscreen>
+					</iframe>
+				</div>
+			</div>
+
+			<div ng-switch-when="pdf" class="paragraph">
+				<iframe
+					ng-if="c.id==theatreCurrent.id"
+					ng-src="{{getIframeSrc(m)}}"
+					sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+					id="viewer_{{$index}}"
+					width='100%'
+					height='450'
+					allowfullscreen mozallowfullscreen webkitallowfullscreen>
+				</iframe>
+			</div>
+		</div>
+
+
+		<!-- /////////////////////////////////////// CONT -->
+		<!-- first slide is a content txt, always visible -->
+		<div
+			ng-if="c.cat=='cont'"
+			class="media" in-view="mediaInView($element,$inview,$inviewpart)">
+			<span class="number">- 1 -</span>
+			<div class="paragraph">
+				<div class="text" ng-bind-html="textify(c.text,true,true,true,null,true)"></div>
+			</div>
+		</div>
+		<!-- followings -->
+		<div
+			ng-if="c.cat=='cont'"
+			ng-repeat="s in c.slides_medias_flattened"
+			class="media {{s.document.type}}"
+			in-view="mediaInView($element,$inview,$inviewpart)"
+			>
+			
+			<div ng-if="s.text">
+				<span class="number">- {{s.pindex + 1}} -</span>
+				<div class="paragraph">
+					<div class="text" ng-bind-html="textify(s.text,true,true,true,null,true)"></div>
+				</div>
+			</div>
+
+			<div ng-if="s.document.type=='img'" class="row shadow"></div>
+			<div ng-if="s.document.type=='img'" class="row">
+				<div class="lightboxbutton" ng-click="toggleLightbox(s.lightboxcontent)"><i class="fa fa-search"></i></div>
+				<div class="paragraph">
+					<img id="contrib_img_id?noneed" ng-src="{{s.document.url}}" class="draggableimage"/>
+				</div>
+			</div>
+
+			<!-- simple <a> links, or plain <iframe> like scribd objects -->
+			<div ng-if="s.document.type=='link'" class="paragraph link">
+				<div ng-bind-html="updateTrustHtml(s.document.html)"></div>
+			</div>
+
+			<div ng-if="s.document.type=='pdf'" class="paragraph link">
+				<iframe
+					ng-if="c.id==theatreCurrent.id"
+					ng-src="{{getIframeSrc(s.document)}}"
+					sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+					id="viewer_{{$index}}"
+					width='100%'
+					height='450'
+					allowfullscreen mozallowfullscreen webkitallowfullscreen>
+				</iframe>
+			</div>
+
+			<div ng-if="s.document.type=='video'" class="row shadow"></div>
+			<div ng-if="s.document.type=='video'" class="row">
+				<div class="paragraph" ng-bind-html="updateTrustHtml(s.document.html)"></div>
+			</div>
+
+			<div ng-if="s.document.type=='iframe'" class="row shadow"></div>
+			<div ng-if="s.document.type=='iframe'" class="row">
+				<div class="paragraph" ng-bind-html="updateTrustHtml(s.document.html)"></div>
+			</div>
+
+			<div ng-if="s.ref">
+				<div class="paragraph ref">
+					<div class="text" ng-bind-html="textify(s.ref,true,true,true)"></div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="media paragraph respiration"></div>
+
+	</div>
+	</div>
+</div>

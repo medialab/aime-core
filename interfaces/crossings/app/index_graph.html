@@ -1,0 +1,132 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	
+	<script src="lib/underscore/underscore-min.js" type="text/javascript"></script>
+	<script src="lib/zepto/zepto.min.js" type="text/javascript"></script>
+	<script src="lib/sigma/sigma.min.js" type="text/javascript"></script>
+	<script src="lib/sigma/plugins/sigma.layout.forceAtlas2.min.js"></script>
+	<script src="lib/handlebars/handlebars.min.js" type="text/javascript"></script>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+      #graph-container {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 40%;
+        position: absolute;
+        background: #1D1E19;
+      }
+      #info {
+        top: 0;
+        bottom: 0;
+        left: 60%;
+        right: 0;
+        position: absolute;
+        padding:20px;
+        /*border-left:lightgray 2px solid;*/
+
+        font-family: 'Verdana', sans-serif;
+      }
+    </style>
+
+</head>
+
+<body ng-app="angapp">
+
+	<div id="graph-container"></div>
+	<div id="info">
+		<a href="{{shortlink}}" target="_blank">{{shortlink}}</a>
+		<h2>{{label}}</h2>
+		<h3>{{cat}}</h3>
+		<hr/>
+		<div>{{content}}</div>
+	</div>
+
+</body>
+
+<script>
+
+	var g,s;
+
+	// get book graph
+	var bookDataUrl = "http://aime.medialab.sciences-po.fr/crossings_dev_server/api/graph/";
+	
+	$(document).ready(function() {
+
+		$.get(bookDataUrl, function (graph) {
+		
+			var source   = $("#info").html();
+			var template = Handlebars.compile(source);
+			
+			g = graph;
+
+			console.log("NODES = "+g.nodes.length);
+			console.log("EDGES = "+g.edges.length);
+
+      //var nn = [];
+      //var ee = [];
+
+			_.each(g.nodes, function(d) {
+        //nn.push(d.id);
+				d.x = Math.random();
+				d.y = Math.random();
+				d.size = 1;
+				return d;
+			});
+
+			// _.map(g.edges, function(d) {
+			// 	d.size = 3+Math.random();
+			// 	return d;
+			// });
+
+			console.log(g);
+
+			s = new sigma({
+				graph: g,
+				container: 'graph-container',
+				settings: {
+          drawLabels: true,
+          defaultLabelSize: 11,
+          defaultLabelColor: '#F0F0F0',
+          minNodeSize: 3,
+          maxNodeSize: 3,
+					drawEdges: false
+				}
+			});
+
+			s.bind('overNode outNode clickNode', function(e) {
+				if(e.type=='clickNode') {
+					var html = template(e.data.node);
+					$("#info").html(html);
+					console.log(e.data.node);
+				}
+			});
+
+			// Start the ForceAtlas2 algorithm:
+			s.startForceAtlas2();
+
+      $(document).keydown( function(e) {
+        if(e.keyCode==69)
+          s.settings({drawEdges:true});
+      });
+      $(document).keyup( function(e) {
+        if(e.keyCode==69)
+          s.settings({drawEdges:false});
+      });
+
+		});
+	});
+
+</script>
+
+</html>

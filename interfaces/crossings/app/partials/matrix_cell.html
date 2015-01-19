@@ -1,0 +1,33 @@
+
+<div 
+	class="{{hover}} {{m.modecross}}"
+	ng-click="goToModecross(m.modecross,true)"
+	ng-mouseenter="hoverMatrixCell(m.name,true)"
+	ng-mouseleave="hoverMatrixCell(m.name,false)"
+	title="{{m.count}}"
+	>
+
+	<div 
+		class="hexagon left back"
+		>
+	    <div class="hexagon-in1">
+	        <div class="hexagon-in2"></div>
+	    </div>
+	</div>
+
+	<div 
+		class="hexagon left"
+		style="
+			-webkit-transform: scale({{m.size}});
+		     -moz-transform: scale({{m.size}});
+		      -ms-transform: scale({{m.size}});
+		       -o-transform: scale({{m.size}});
+		          transform: scale({{m.size}});
+			"
+		>
+	    <div class="hexagon-in1">
+	        <div class="hexagon-in2"></div>
+	    </div>
+	</div>
+
+</div>
