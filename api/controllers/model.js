@@ -13,7 +13,7 @@ module.exports = [
       model.book('en', function(err, book) {
         if (err) console.log(err);
 
-        return res.json(book);
+        return res.ok(book);
       });
     }
   },
@@ -23,7 +23,7 @@ module.exports = [
       model.follow('en', function(err, book) {
         if (err) console.log(err);
 
-        return res.json(book);
+        return res.ok(book);
       });
     }
   }

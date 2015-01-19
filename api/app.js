@@ -18,6 +18,16 @@ var controllers = {
 };
 
 /**
+ * Extending application's responses
+ */
+express.response.ok = function(result) {
+  return this.json({
+    status: 'ok',
+    result: result
+  });
+};
+
+/**
  * Application definition
  */
 var app = express();
