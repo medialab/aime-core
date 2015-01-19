@@ -7,6 +7,8 @@
 var model = require('../model/users.js');
 
 module.exports = [
+
+  // Log a user into the system
   {
     url: '/login',
     validate: {
@@ -27,6 +29,20 @@ module.exports = [
 
         return res.ok(user);
       });
+    }
+  },
+
+  // Log a user out of the system
+  {
+    url: '/logout',
+    methods: ['GET', 'POST'],
+    action: function(req, res) {
+
+      // Deleting session
+      delete req.session.user;
+      delete req.session.authenticated;
+
+      return res.ok();
     }
   }
 ];
