@@ -14,7 +14,7 @@
     "jquery": "~2.0.3",
     "jquery-ui": "1.10.x",
     "jquery.shapeshift": "2.0",
-    "less": "latest",
+    "less": "1.6.1",
     "intro.js": "~0.7.0",
     "Viewer.js_source": "https://github.com/kogmbh/Viewer.js/archive/master.zip",
     "Viewer.js": "http://viewerjs.org/releases/ViewerJS-latest.zip",
