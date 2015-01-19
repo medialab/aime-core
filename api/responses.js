@@ -44,12 +44,47 @@ module.exports = function(express) {
     });
   };
 
-  express.response.notFound = function() {
-    this.status(404).json({
+  express.response.notFound = function(reason) {
+    var response = {
       status: 'error',
       error: {
         code: 404,
         title: 'Not Found'
+      }
+    };
+
+    if (reason)
+      response.error.reason = reason;
+
+    this.status(404).json(response);
+  };
+
+  express.response.serverError = function(err) {
+    this.status(500).json({
+      status: 'error',
+      error: {
+        code: 500,
+        title: 'Internal Server Error'
+      }
+    });
+  };
+
+  express.response.forbidden = function() {
+    this.status(403).json({
+      status: 'error',
+      error: {
+        code: 403,
+        title: 'Forbidden'
+      }
+    });
+  };
+
+  express.response.unauthorized = function() {
+    this.status(401).json({
+      status: 'error',
+      error: {
+        code: 401,
+        title: 'Unauthorized'
       }
     });
   };

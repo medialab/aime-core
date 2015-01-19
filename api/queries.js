@@ -39,6 +39,6 @@ module.exports = {
   /**
    * Find a user with mail address and hashed password
    */
-  user: 'MATCH (n:User {email: {email}, password: {hash}}) RETURN n;'
+  user: 'MATCH (n:User {email: {email}, password: {hash}, active: {active}}) RETURN n;'
 };
 

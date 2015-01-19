@@ -67,12 +67,7 @@ loadController(loginRouter, controllers.login);
  * Authenticated Routes
  */
 var authenticatedRouter = express.Router();
-
-// TODO: authentification
-authenticatedRouter.use(function(req, res, next) {
-  next();
-});
-
+authenticatedRouter.use(middlewares.authenticate);
 loadController(authenticatedRouter, controllers.model);
 
 /**

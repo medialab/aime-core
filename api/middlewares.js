@@ -7,6 +7,12 @@
 var types = require('typology');
 
 module.exports = {
+  authenticate: function(req, res, next) {
+    if (!req.session.authenticated)
+      return res.unauthorized();
+    else
+      return next();
+  },
   checkMethod: function(allowed) {
     return function(req, res, next) {
       if (!~allowed.indexOf(req.method))
