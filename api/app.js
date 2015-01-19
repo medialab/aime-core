@@ -10,6 +10,7 @@ var express = require('express'),
     session = require('express-session'),
     compress = require('compression'),
     morgan = require('morgan'),
+    cors = require('cors'),
     config = require('../config.json').api,
     responses = require('./responses.js'),
     middlewares = require('./middlewares.js')
@@ -41,6 +42,13 @@ function loadController(router, routes) {
  * Application definition
  */
 var app = express();
+
+// Cross origin
+app.use(cors({
+  origin: function(origin, next) {
+    return next(null, !!~config.allowedOrigins.indexOf(origin));
+  }
+}));
 
 // Log
 app.use(morgan('dev'));

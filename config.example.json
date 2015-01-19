@@ -1,5 +1,6 @@
 {
   "api": {
+    "allowedOrigins": ["localhost"],
     "defaultLang": "en",
     "secret": "falafel"
   },
