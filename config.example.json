@@ -20,5 +20,9 @@
       "port": 27017,
       "database": "aime_crossings_prod"
     }
+  },
+  "mail": {
+    "host": "localhost",
+    "port": 25
   }
 }
