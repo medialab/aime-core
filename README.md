@@ -6,9 +6,11 @@ This repository holds the code driving the new core of the AIME project.
 
 * `api` - API relevant files.
 * `docs` - Miscellaneous documents such as the database schema.
+* `interfaces` - The inquiry's user interfaces.
 * `lib` - Generic files serving several purposes (migration notably).
 * `prototypes` - Various interface prototypes.
 * `scripts` - Core scripts such as migration.
+* `test` - Unit testing files.
 
 ## Scripts
 

@@ -10,9 +10,12 @@ var express = require('express'),
     session = require('express-session'),
     compress = require('compression'),
     morgan = require('morgan'),
-    queries = require('./model.js'),
     middlewares = require('./middlewares.js')
     validate = middlewares.validate;
+
+var controllers = {
+  model: require('./controllers/model.js')
+};
 
 /**
  * Application definition
@@ -33,48 +36,24 @@ app.use(session({
 // app.use(compress());
 
 /**
- * Router
+ * Authenticated Routes
  */
-var router = express.Router();
+var authenticatedRouter = express.Router();
 
 // TODO: authentification
-router.use(function(req, res, next) {
+authenticatedRouter.use(function(req, res, next) {
   next();
 });
 
-// Route definitions
-var routes = [
-  {
-    url: '/book',
-    action: function(req, res) {
-      queries.book('en', function(err, book) {
-        if (err) console.log(err);
-
-        return res.json(book);
-      });
-    }
-  },
-  {
-    url: '/follow',
-    action: function(req, res) {
-      queries.follow('en', function(err, book) {
-        if (err) console.log(err);
-
-        return res.json(book);
-      });
-    }
-  }
-];
-
 // Loading routes
-routes.forEach(function(route) {
-  router[(route.method || 'GET').toLowerCase()](route.url, route.action);
+controllers.model.forEach(function(route) {
+  authenticatedRouter[(route.method || 'GET').toLowerCase()](route.url, route.action);
 });
 
 /**
  * Registration
  */
-app.use(router);
+app.use(authenticatedRouter);
 
 /**
  * Exporting
