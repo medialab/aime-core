@@ -34,6 +34,11 @@ module.exports = {
     'WITH {chapter: {id: id(c), properties: c}, subheadings: collect(sub)} as chapter, cr',
     'ORDER BY length(cr)',
     'RETURN chapter'
-  ].join('\n')
+  ].join('\n'),
+
+  /**
+   * Find a user with mail address and hashed password
+   */
+  user: 'MATCH (n:User {email: {email}, password: {hash}}) RETURN n;'
 };
 

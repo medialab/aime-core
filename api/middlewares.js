@@ -7,6 +7,14 @@
 var types = require('typology');
 
 module.exports = {
+  checkMethod: function(allowed) {
+    return function(req, res, next) {
+      if (!~allowed.indexOf(req.method))
+        return res.wrongMethod(allowed, req.method);
+      else
+        return next();
+    }
+  },
   validate: function(def) {
     return function(req, res, next) {
 
@@ -16,10 +24,14 @@ module.exports = {
         data[k] = req.param(k);
 
       // Validating params
-      if (!types.check(data, def))
-        return res.status(400).send('Bad Request');
-      else
-        return next();
+      try {
+        types.check(data, def, true);
+      }
+      catch (e) {
+        return res.badRequest(e, def);
+      }
+
+      return next();
     };
   }
 };

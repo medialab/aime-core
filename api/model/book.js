@@ -1,8 +1,7 @@
 /**
- * AIME-core Model
- * ================
+ * AIME-core Book Model
+ * =====================
  *
- * Model in charge of data-retrieval from the Neo4j database.
  */
 var db = require('../connection.js'),
     cache = require('../cache.js'),
