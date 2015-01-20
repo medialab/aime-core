@@ -110,7 +110,7 @@ function makeRules(next) {
  * Sequence
  */
 async.series([
-  confirmation,
+  // confirmation,
   truncate,
   mysqlConnection,
   mongoConnection,
