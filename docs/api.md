@@ -13,8 +13,8 @@ The following API is fully RESTful and returns responses in a JSON format.
 ```json
 {
 	"status": "ok",
-	"results": {...}
-	"warning": {...}
+	"results": {}
+	"warning": {}
 }
 ```
 
