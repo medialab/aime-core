@@ -105,18 +105,6 @@ $(document).ready(function() {
   maze.timer = {};
 
   maze.init = function(){
-    maze.columns.text = maze.columns[ maze.TEXT ] = $('#column-text .box');
-    maze.columns.voc = maze.columns[ maze.VOC ] = $('#column-voc .box');
-    maze.columns.doc = maze.columns[ maze.DOC ] = $('#column-doc .box');
-    maze.columns.com = maze.columns[ maze.COMM ] = maze.columns.comm = maze.columns.contr = $('#column-comm .box');
-
-    maze.rangy.init();
-    maze.domino.init();
-  };
-
-  // load settings
-  $.getJSON('config.json', function(res) {
-    maze.settings = res;
 
     if( /^#crossings/.test(window.location.hash) ) {
       var crossUrl = window.location.hash.replace("#crossings","");
@@ -139,10 +127,22 @@ $(document).ready(function() {
     */
 
     // update maze.urls
-
     maze.urls.get_references = maze.settings.biblib_host;
     maze.urls.get_crossings = maze.settings.crossings_modecrossids_host;
 
+    //
+    maze.columns.text = maze.columns[ maze.TEXT ] = $('#column-text .box');
+    maze.columns.voc = maze.columns[ maze.VOC ] = $('#column-voc .box');
+    maze.columns.doc = maze.columns[ maze.DOC ] = $('#column-doc .box');
+    maze.columns.com = maze.columns[ maze.COMM ] = maze.columns.comm = maze.columns.contr = $('#column-comm .box');
+
+    maze.rangy.init();
+    maze.domino.init();
+  };
+
+  // load settings
+  $.getJSON('config.json', function(res) {
+    maze.settings = res;
     maze.init();
   })
 
