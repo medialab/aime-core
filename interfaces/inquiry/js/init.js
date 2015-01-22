@@ -74,18 +74,7 @@ $(document).ready(function() {
   };
   
 
-  $("#terms-popup").appendTo("body");
-  $("#legal-popup").appendTo("body");
-  $("#soutien-popup").appendTo("body");
-  $("#credits-popup").appendTo("body");
-
-  $(".scrollable").slimScroll({
-    height: "400px",
-    position: "right",
-    railVisible: true,
-    alwaysVisible: false,
-    start: "top"
-  });
+  
 
   
 
@@ -117,6 +106,20 @@ $(document).ready(function() {
     maze.verbose = maze.settings.debug || true;
     domino.settings('verbose', true);
 
+    $("#header").replaceWith(maze.engine.template.header());
+
+    $("#terms-popup").appendTo("body");
+    $("#legal-popup").appendTo("body");
+    $("#soutien-popup").appendTo("body");
+    $("#credits-popup").appendTo("body");
+
+    $(".scrollable").slimScroll({
+      height: "400px",
+      position: "right",
+      railVisible: true,
+      alwaysVisible: false,
+      start: "top"
+    });
     /*
     Cheak auth, GET user information, then init();
     maze.user = "'.$user->name.'";

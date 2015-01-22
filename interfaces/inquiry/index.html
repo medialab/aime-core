@@ -7,8 +7,6 @@
   <title>An Inquiry into Modes of Existence</title>
   
   <link rel="stylesheet" type="text/css" href="build/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.runtime.min.js"></script>
-
 </head>
 
 <body>
@@ -19,8 +17,216 @@
       <div class="remove fa fa-times"></div>
       <div class="contribute fa fa-comment"></div>
     </div>
-    <header id="header" meta-status='closed'><header>
+    <header id="header" meta-status='closed'></header>
 
+    <section>
+    <table>
+      <tr>
+
+        <!-- TXT -->
+
+        <td id='column-text' data-column='TEXT' class="column">
+          <div class='container'>
+
+            <div class='coltitle'>
+              <div class='background'>
+                <div class='container'>
+                  <div class='circle'></div>
+                  <div class='name'>t</div>
+                </div>
+              </div>
+            </div>
+
+            <div class='box' >
+              <div class="wrapper" style="opacity:0;"></div>
+            </div>
+
+            <div class='icon-loading'></div>
+            <div class='nodata'>no data available</div>
+
+            <div id="static-text" class="static-sticky" >
+              <div class="chapter" data-id="">
+                <div class="title" style="position:relative;">
+                  <div class="table">
+                    <div id="static-chapter-number" class="number toggle-preview"></div>
+                    <div id="static-chapter-title" class="text toggle-preview"></div>
+                  </div>
+                  <div class="chapter-shadow"></div>
+                </div>
+              </div>
+              <div id="static-subheading" data-id="" class="subtitle">
+                <div class='table'>
+                  <div class="text toggle-preview" id="static-subheading-title" ></div>
+                  <!-- <div class="icon icon-toggle-preview toggle-preview"></div> -->
+                            <!-- <div class="action set-leader"><i class="fa fa-thumb-tack"></i></div> -->
+                </div>
+                <div class="subtitle-shadow"></div>
+              </div>
+              <div class="shadow" style="z-index:2"></div>
+            </div>
+
+            <div class='column-footer'>
+              <div class="wrapper">
+                <div class="shadow hide"></div>
+                <div class="content">
+                  <div><input type='number' id="page-number" placeholder='---'/></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </td>
+
+        <!-- END TXT -->
+
+        <!-- VOC -->
+
+        <td id='column-voc' data-column='VOC' class="column">
+          <div class='container'>
+
+            <div class='coltitle'>
+              <div class='background'>
+                <div class='container'>
+                  <div class='circle'></div>
+                  <div class='name'>v</div>
+                </div>
+              </div>
+            </div>
+
+            <div class='box'><div class="wrapper"></div></div>
+
+            <div class='icon-loading'></div>
+            <div class='nodata'>no data available</div>
+
+            <div id="static-term" class="static-sticky">
+              <div class="term">
+                <div class="subtitle" data-id="">
+                  <div class="table">
+                    <div class="text toggle-preview" id="static-term-title"><p></p></div>
+                              <!-- div class="action set-leader"><i class="fa fa-thumb-tack"></i></div -->
+                  </div>
+                </div>
+              </div>
+              <div class="shadow"></div>
+            </div>
+
+            <div class='column-footer'>
+              <div class="wrapper">
+                <div class="shadow hide"></div>
+                <div class="content"></div>
+              </div>
+            </div>
+
+          </div>
+        </td>
+
+        <!-- END VOC -->
+
+        <!-- DOC -->
+
+        <td id='column-doc' data-column='DOC' class="column">
+          <div class='container'>
+
+            <div class='coltitle'>
+              <div class='background'>
+                <div class='container'>
+                  <div class='circle'></div>
+                  <div class='name'>d</div>
+                </div>
+              </div>
+            </div>
+
+            <div class='box'><div class="wrapper"></div></div>
+
+            <div class='icon-loading'></div>
+            <div class='nodata'>no data available</div>
+
+            <div id="static-document" class="static-sticky">
+              <div class="document">
+                <div class="subtitle" data-id="">
+                  <div class="table">
+                    <div class="text toggle-preview" id="static-document-title"></div>
+                              <!-- div class="action set-leader"><i class="fa fa-thumb-tack"></i></div -->
+                    <!-- div class="icon toggle-preview fa icon-pdf"></div>
+                    <div class="icon toggle-preview fa icon-video"></div>
+                    <div class="icon toggle-preview fa icon-img"></div -->
+                              <div class="icon toggle-preview fa fa-paperclip icon-img"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="shadow"></div>
+            </div>
+
+            <div class='column-footer'>
+              <div class="wrapper">
+                <!-- div id="static-document-nav" style="top:0" class="static-nav">
+                  <div class="nav">
+                    <div class="left"><i class="fa fa-angle-left"></i></div>
+                    <div class="right"><i class="fa fa-angle-right"></i></div>
+                    <div class="nav-wrapper">
+                      <div class="placeholders">
+                        <div class="placeholder" data-index="0" style="position:absolute;display:block;left:0%;width:100%;"></div>
+                      </div>
+                      <div class="cursor" style="width:50%;"></div>
+                    </div>
+
+                  </div>
+                </div -->
+
+                <div class="shadow hide"></div>
+                <div class="content"></div>
+              </div>
+            </div>
+
+          </div>
+        </td>
+        <!-- END DOC -->
+
+        <!-- CON -->
+        <td id='column-comm' data-column='COM' class="column">
+          <div class='container'>
+
+            <div class='coltitle'>
+              <div class='background'>
+                <div class='container'>
+                  <div class='circle'></div>
+                  <div class='name'>c</div>
+                </div>
+              </div>
+            </div>
+
+            <div class='box'><div class="wrapper"></div></div>
+
+            <div class='icon-loading'></div>
+            <div class='nodata'>no data available</div>
+
+            <div id="static-contribution" class="static-sticky">
+              <div class="contribution">
+                <div class="subtitle" data-id="">
+                  <div class="table">
+                    <div class="text toggle-preview" id="static-contribution-title"></div>
+                    <div class="icon toggle-preview fa icon-private"></div>
+                    <div class="icon toggle-preview fa icon-mediated"></div>
+                    <div class="icon toggle-preview fa fa-paperclip icon-img"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="shadow"></div>
+            </div>
+
+            <div class='column-footer'>
+              <div class="wrapper">
+                <div class="shadow hide"></div>
+                <div class="content"></div>
+              </div>
+            </div>
+
+          </div>
+        </td>
+        <!-- END CON -->
+      </tr>
+    </table>
+  </section>
 
   </div>
 
@@ -38,7 +244,7 @@
   <script type="text/javascript" src="js/lib/rangy-selectionsaverestore.js"></script>
   <script type="text/javascript" src="js/lib/rangy-serializer.js"></script>
   <script type="text/javascript" src="js/lib/rangy-textrange.js"></script>
-
+  <script type="text/javascript" src="js/lib/handlebars.runtime.min.js"></script>
  
 
   <!-- domino init -->
@@ -77,7 +283,8 @@
   <script type="text/javascript" src="js/maze.move.voc.js"></script>
   <script type="text/javascript" src="js/maze.rangy.js"></script>
 
-  <!-- handlebars templates -->
+  <!-- handlebars helpers and handlebars templates -->
+  <script src="js/handlebars.helpers.js"></script>
   <script src="build/templates.js"></script>
 
   <!-- dirty scripts -->
