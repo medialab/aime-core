@@ -1,0 +1,43 @@
+/*  
+      _______
+     /       \        
+    /  · A ·  \      
+   (   E   I   )
+    \  · M ·  /      
+     \_______/        
+
+
+*/
+
+.transition( @property, @duration:.6s, @easing:ease-in-out){
+  -webkit-transition: @property @duration @easing;
+  -moz-transition: @property @duration @easing;
+  -ms-transition: @property @duration @easing;
+  -o-transition: @property @duration @easing;
+  transition: @property @duration @easing;
+}
+
+.no-transition {
+    -moz-transition: none;
+    -webkit-transition: none;
+    -o-transition: color 0 ease-in;
+    transition: none;
+}
+
+.font-feature() {
+  font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
+  -moz-font-feature-settings: "smcp", "onum", "liga", "ss01", "ss03";
+  -ms-font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
+  -webkit-font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
+  -o-font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
+  text-rendering: optimizeLegibility;
+}
+
+.font-feature-no-smcp() {
+  font-feature-settings: "onum", "ss01", "ss03", "liga", "kern";
+  -moz-font-feature-settings: "onum", "liga", "ss01", "ss03";
+  -ms-font-feature-settings: "onum", "ss01", "ss03", "liga", "kern";
+  -webkit-font-feature-settings: "onum", "ss01", "ss03", "liga", "kern";
+  -o-font-feature-settings: "onum", "ss01", "ss03", "liga", "kern";
+  text-rendering: optimizeLegibility;
+}
