@@ -3,7 +3,8 @@ var gulp = require('gulp'),
     handlebars = require('gulp-handlebars'),
     wrap = require('gulp-wrap'),
     concat = require('gulp-concat'),
-    uglify = require('gulp-uglify');
+    uglify = require('gulp-uglify'),
+    declare = require('gulp-declare');
 
 // Paths
 var styleFiles = './css/style.less',
@@ -21,6 +22,10 @@ gulp.task('templates', function() {
   return gulp.src(templateFiles)
     .pipe(handlebars())
     .pipe(wrap('Handlebars.template(<%= contents %>);'))
+    .pipe(declare({
+      namespace: 'maze.engine.template',
+      noRedeclare: true
+    }))
     .pipe(concat('templates.js'))
     .pipe(uglify())
     .pipe(gulp.dest('build'));
