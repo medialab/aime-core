@@ -1,0 +1,73 @@
+/*  
+      _______
+     /       \        
+    /  · A ·  \      
+   (   E   I   )
+    \  · M ·  /      
+     \_______/        
+
+
+*/
+
+@headerHeight: 50px;
+@footerHeight: 23px;
+
+@red: #C0171D;
+@black: rgb(29, 29, 29, 1);
+@black_alpha: rgb(29, 29, 29, .8);
+@gray: rgb( 5, 5, 5, 1);
+@gray_alpha: rgb( 5, 5, 5, .05);
+@gold: rgb(255,215,0, .2);
+@cyan: rgb(29, 112, 183, 1);
+@cyan_alpha: rgb(29, 112, 183, .2);
+
+@magenta: rgb(192, 96, 27, 1);
+@magenta_alpha: rgb(192, 96, 27, .2);
+@green: rgb(96, 192, 27, 1);
+@green_alpha: rgb(96, 192, 27, .2);
+
+@gray_i: rgb(250, 250, 250);
+@gray_o: rgb(240, 240, 240);
+@gray_oo: #fff;
+@gray_ooo: #eee;
+@gray_oooo: #ddd;
+@gray_ooooo: rgb(170, 170, 170);
+
+@import 'fonts.less';
+@import 'mixins.less';
+
+
+// Prevent overscroll
+html, body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  font: 13px/25px 'NovelSansPro-Regular', sans-serif;
+}
+
+body > #wrapper{
+  height:100%;
+}
+
+p{
+  margin:0;
+}
+
+ul > li{
+  cursor:pointer;
+  display: inline-block;
+}
+
+#wrapper {
+  min-height: 100%;
+  min-width: 800px;
+  position: relative;
+  height: auto !important;
+  margin: 0 auto -@footerHeight;
+  overflow: hidden;
+}
