@@ -32,7 +32,7 @@ gulp.task('templates', function() {
 });
 
 // Watching
-gulp.task('work', function() {
+gulp.task('work', ['style', 'templates'], function() {
   gulp.watch(styleFiles, ['style']);
 });
 
