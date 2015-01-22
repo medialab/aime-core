@@ -1,0 +1,43 @@
+{
+  "name": "aime-inquiry-interface",
+  "version": "1.0.0",
+  "description": "The main AIME project user interface.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/medialab/aime-core"
+  },
+  "contributors": [
+    {
+      "name": "Paul Girard",
+      "url": "https://github.com/paulgirard"
+    },
+    {
+      "name": "Daniele Guido",
+      "url": "https://github.com/danieleguido"
+    },
+    {
+      "name": "Alexis Jacomy",
+      "url": "https://github.com/jacomyal"
+    },
+    {
+      "name": "Pierre Jullian de la Fuente",
+      "url": "https://github.com/pierrejdlf"
+    },
+    {
+      "name": "Guillaume Plique",
+      "url": "https://github.com/Yomguithereal"
+    }
+  ],
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/medialab/aime-core/issues"
+  },
+  "homepage": "https://github.com/medialab/aime-core",
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-handlebars": "^3.0.1",
+    "gulp-less": "^2.0.1"
+  }
+}
