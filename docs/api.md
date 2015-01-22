@@ -78,6 +78,7 @@ Note that when the lang is not specified, the API will assume you want the defau
 
 * `POST /login`
 * `POST /logout`
+* `POST /register`
 * `GET /[<lang>]/search`
 
 ## Legacy endpoint
