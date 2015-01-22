@@ -40,7 +40,6 @@
   },
   "license": "LGPL-3.0",
   "devDependencies": {
-    "gulp-declare": "^0.3.0",
     "mocha": "^2.0.1",
     "supertest": "^0.15.0"
   },
