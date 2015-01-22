@@ -1,6 +1,9 @@
 var gulp = require('gulp'),
     less = require('gulp-less'),
-    handlebars = require('gulp-handlebars');
+    handlebars = require('gulp-handlebars'),
+    wrap = require('gulp-wrap'),
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify');
 
 // Paths
 var styleFiles = './css/style.less',
@@ -17,6 +20,9 @@ gulp.task('style', function() {
 gulp.task('templates', function() {
   return gulp.src(templateFiles)
     .pipe(handlebars())
+    .pipe(wrap('Handlebars.template(<%= contents %>);'))
+    .pipe(concat('templates.js'))
+    .pipe(uglify())
     .pipe(gulp.dest('build'));
 });
 
@@ -26,4 +32,4 @@ gulp.task('work', function() {
 });
 
 // Macro-task
-gulp.task('default', ['style']);
+gulp.task('default', ['style', 'templates']);
