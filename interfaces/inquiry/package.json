@@ -4,7 +4,7 @@
   "description": "The main AIME project user interface.",
   "main": "index.js",
   "scripts": {
-    "start": "gulp work"
+    "start": "http-server -p 8000 & gulp work && fg"
   },
   "repository": {
     "type": "git",
@@ -44,6 +44,7 @@
     "gulp-handlebars": "^3.0.1",
     "gulp-less": "^2.0.1",
     "gulp-uglify": "^1.1.0",
-    "gulp-wrap": "^0.10.0"
+    "gulp-wrap": "^0.10.0",
+    "http-server": "^0.7.4"
   }
 }
