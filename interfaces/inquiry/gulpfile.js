@@ -13,7 +13,7 @@ var styleFiles = './css/style.less',
 // Compiling style
 gulp.task('style', function() {
   return gulp.src(styleFiles)
-    .pipe(less())
+    .pipe(less().on('error', function(e) { console.error(e); }))
     .pipe(gulp.dest('build'));
 });
 
