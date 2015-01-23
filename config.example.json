@@ -2,7 +2,13 @@
   "api": {
     "allowedOrigins": ["localhost"],
     "defaultLang": "en",
-    "secret": "falafel"
+    "secret": "falafel",
+    "slugs": {
+      "document": "doc",
+      "vocabulary": "voc",
+      "resource": "res",
+      "reference": "ref"
+    }
   },
   "dbs": {
     "mysql": {
