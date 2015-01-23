@@ -27,6 +27,13 @@
     });
 
     /*
+      FOrmat a timestamp to a wellparsed date
+    */
+    Handlebars.registerHelper("date", function(timestamp) {
+      return new Date(timestamp).toString('yyyy/MM/dd')
+    });
+
+    /*
       correct the iframe woith with width = 100%
       using a dummy regexp replace
     */
