@@ -106,7 +106,12 @@ $(document).ready(function() {
     maze.verbose = maze.settings.debug || true;
     domino.settings('verbose', true);
 
-    $("#header").replaceWith(maze.engine.template.header());
+    $("#header").replaceWith(maze.engine.template.header({
+      settings: maze.settings,
+      user:{
+        username: 'agent smith'
+      }
+    }));
 
     $("#terms-popup").appendTo("body");
     $("#legal-popup").appendTo("body");

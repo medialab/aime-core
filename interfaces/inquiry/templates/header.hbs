@@ -10,5 +10,168 @@
         </div>
       </div>
 
-      
+    <div class='bottom'>
+      <div class='content'>
+        <div class='logos'>
+          <div>
+            <img class='medialab' src='images/logo_medialab.png' />
+          </div>
+          <div>
+            <img class='erc' src='images/logo_erc.png' />
+            <img class='eu' src='images/logo_eu.png' />
+            <img class='sciencespo' src='images/logo_sciencespo.png' />
+          </div>
+        </div>
+
+        <!-- TWITTER -->
+
+        <div class='twitter'>
+          <div class='container'>
+            <div class="up"></div>
+            <div class="down"></div>
+            <div class="tweets"></div>
+          </div>
+        </div>
+
+        <!-- TOP MENU -->
+
+        <div class='menu'>
+          <div class="links">
+            <ul>
+              <!-- link to the crossings platform with current lang -->
+              <li><a href='{{settings.crossings_home}}/#/{{settings.language}}' target='_blank'>{{t 'croisements'}}</a></li>
+              <li><a href='http://modesofexistence.org/' target='_blank'>{{t 'accueil'}}</a></li>
+              <li><a href='mailto:contact@modesofexistence.org'>contact</a></li>
+            </ul>
+          </div>
+          <div class="language">
+            <!-- php
+            // echo Yii::app()->language;
+            $this->widget('application.widgets.LangBox');
+             -->
+            <ul style='display:none;'>
+              <li><span style='opacity:.2;cursor:default;'>font size</span></li>
+              <li style='opacity:.2;cursor:default;'>
+                <img class='' src='images/a-plus.png' />100%
+                <img class='' src='images/a-minus.png' />
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class='redbig'></div>
+
+    <!-- REAL MENU -->
+
+    <nav>
+      <div class="menu">
+        <div class="logo">
+          <a href="{{settings.base_url}}">
+            <img src='images/menu_logo.png'/>
+          </a>
+        </div>
+
+        <!-- SEARCH -->
+
+        <div class="filter">
+          <div>
+            <input id="search-query" type="search" name="search">
+            <input id="search-button" type="button">
+          </div>
+        </div>
+
+        <!-- USER NAME / PROFILE -->
+
+        <div class="name">
+          <p><span class="fl-b">&nbsp;</span>{{user.username}}<span class="fl-i">'</span>s<span class="fl-si">&nbsp;</span><span>workspace</span></p>
+        </div>
+
+        <!-- PHOTO / SETTINGS -->
+
+
+        
+        <div class="photo">
+          <a href="" target="_blank"><!-- user profile link -->
+          <div>
+            <div class="dropdownContain">
+              <div class="dropOut">
+                <div class="triangleStroke"></div>
+                <div class="triangleFill"></div>
+                <ul>
+                  <li>{{t 'données personnelles'}}</li>
+                </ul>
+              </div>
+            </div>
+            <img src=''/><!-- user image will be here -->
+          </div>
+          </a>
+        </div>
+
+
+        <!-- NOTEBOOK -->
+
+        <div class="notebook">
+          <a href="{{settings.base_url}}/#a=NOTEBOOK' ?>">
+          <div>
+            <div class="dropdownContain">
+              <div class="dropOut">
+                <div class="triangleStroke"></div>
+                <div class="triangleFill"></div>
+                <ul>
+                  <li>{{t 'calepin'}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          </a>
+        </div>
+
+        <!-- LOGOUT -->
+
+        <div class="signout">
+          <a href="{{settings.base_url}}/logout">
+          <div>
+            <div class="dropdownContain">
+              <div class="dropOut">
+                <div class="triangleStroke"></div>
+                <div class="triangleFill"></div>
+                <ul>
+                  <li>{{t 'se déconnecter'}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          </a>
+        </div>
+
+        <!-- HELP -->
+
+        <div class="help">
+          <a href="{{settings.base_url}}/help" target="_blank"><!-- link to http://www.modesofexistence.org/tuto-contribution/ -->
+          <div>
+            <div class="dropdownContain">
+              <div class="dropOut">
+                <div class="triangleStroke"></div>
+                <div class="triangleFill"></div>
+                <ul>
+                  <li>{{t 'aide'}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          </a>
+        </div>
+
+        <!-- MENU TOGGLE -->
+
+        <div class="toggle_menu">
+          <p>more</p>
+        </div>
+
+      </div>
+    </nav>
+
 </header>
