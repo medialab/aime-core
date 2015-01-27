@@ -99,4 +99,11 @@ describe('Tokenizer', function() {
       ['Hello.', 'I am a "falsy string.']
     );
   });
+
+  it('should work with silly characters such as … .', function() {
+    assert.deepEqual(
+      tokenizer('Hello horse… What do you do?'),
+      ['Hello horse…', 'What do you do?']
+    );
+  });
 });
