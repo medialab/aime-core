@@ -106,4 +106,16 @@ describe('Tokenizer', function() {
       ['Hello horse…', 'What do you do?']
     );
   });
+
+  it('should handle parenthesis.', function() {
+    assert.deepEqual(
+      tokenizer('Hello (horse). What is your name?'),
+      ['Hello (horse).', 'What is your name?']
+    );
+
+    assert.deepEqual(
+      tokenizer('Hello (First item. Second item). So?'),
+      ['Hello (First item. Second item).', 'So?']
+    );
+  });
 });
