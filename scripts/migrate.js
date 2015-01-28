@@ -25,22 +25,22 @@ function teardown() {
 }
 
 const SEQ = [
-  // 'indexation',
-  // 'book',
-  // 'contributions',
-  // 'uploads',
-  // 'documents',
-  // 'users',
-  // 'vocabulary',
-  // 'modes',
-  // 'scenarii',
-  // 'links',
-  // 'bookmarks',
-  // 'harmony',
-  // 'references',
-  // 'slugs',
+  'indexation',
+  'book',
+  'contributions',
+  'uploads',
+  'documents',
+  'users',
+  'vocabulary',
+  'modes',
+  'scenarii',
+  'links',
+  'bookmarks',
+  'harmony',
+  'references',
+  'slugs',
   'markdown',
-  // 'cleanup'
+  'cleanup'
 ];
 
 /**
@@ -112,8 +112,8 @@ function makeRules(next) {
  * Sequence
  */
 async.series([
-  // confirmation,
-  // truncate,
+  confirmation,
+  truncate,
   mysqlConnection,
   mongoConnection,
   makeRules
