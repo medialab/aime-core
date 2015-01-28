@@ -118,4 +118,34 @@ describe('Tokenizer', function() {
       ['Hello (First item. Second item).', 'So?']
     );
   });
+
+  it('should handle some markdown cases.', function() {
+    assert.deepEqual(
+      tokenizer('Hello, this is *horse.* What now?'),
+      ['Hello, this is *horse.*', 'What now?']
+    );
+
+    assert.deepEqual(
+      tokenizer('Hello, this is **horse.** What now?'),
+      ['Hello, this is **horse.**', 'What now?']
+    );
+
+    assert.deepEqual(
+      tokenizer('Hello, this is _horse._ What now?'),
+      ['Hello, this is _horse._', 'What now?']
+    );
+
+    assert.deepEqual(
+      tokenizer('Hello, this is __horse.__ What now?'),
+      ['Hello, this is __horse.__', 'What now?']
+    );
+  });
+
+  it('should handle weirdos.', function() {
+
+    assert.deepEqual(
+      tokenizer('How on earth {did this happen}? Horse? Anyone?'),
+      ['How on earth {did this happen}?', 'Horse?', 'Anyone?']
+    );
+  });
 });
