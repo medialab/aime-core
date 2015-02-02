@@ -45,6 +45,7 @@ var app = express();
 
 // Cross origin
 app.use(cors({
+  credentials: true,
   origin: function(origin, next) {
     return next(null, !!~config.allowedOrigins.indexOf(origin));
   }
@@ -58,6 +59,7 @@ app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(cookieParser());
 app.use(session({
+  name: 'aime.sid',
   secret: config.secret,
   trustProxy: false,
   resave: true,
