@@ -56,7 +56,7 @@ $(document).ready(function() {
     infinite_vocabulary: 'vocabItems/items',
     save_vocabulary: 'vocabItems/items',
 
-    get_book: 'bookItems/items',
+    get_book: '/book',
     search_book: 'bookItems/items',
     fetch_book: 'bookItems/items',
     save_book: 'bookItems/items',
@@ -155,13 +155,14 @@ $(document).ready(function() {
     });
   };
 
-  // load settings
-  $.getJSON('config.json', function(res) {
-    maze.settings = res;
-    maze.init();
-  })
+  // load settings from var
+  maze.settings = CONFIG;
 
-
+  // enrich maze.urls 
+  for(i in maze.urls){
+    maze.urls[i] = maze.settings.endpoint + maze.urls[i];
+  }
+  maze.init();
   
   
 });

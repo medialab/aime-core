@@ -95,11 +95,11 @@
 	};
 
 	maze.api.init = function(){
-		maze.vars.csrftoken = maze.fn.get_cookie('csrftoken');
-		$.ajaxSetup({
-			crossDomain: false, // obviates need for sameOrigin test
-			beforeSend: function(xhr, settings) { if (!(/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type))){ xhr.setRequestHeader("X-CSRFToken", maze.vars.csrftoken);}}
-		});maze.log("[maze.api.init]");
+		// maze.vars.csrftoken = maze.fn.get_cookie('csrftoken');
+		// $.ajaxSetup({
+		// 	crossDomain: false, // obviates need for sameOrigin test
+		// 	beforeSend: function(xhr, settings) { if (!(/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type))){ xhr.setRequestHeader("X-CSRFToken", maze.vars.csrftoken);}}
+		// });maze.log("[maze.api.init]");
 	}
 
 	maze.api.process = function( result, callback, namespace ){
