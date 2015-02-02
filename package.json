@@ -53,6 +53,7 @@
     "express-session": "^1.10.0",
     "inquirer": "^0.8.0",
     "lodash": "^2.4.1",
+    "marked": "^0.3.3",
     "mongodb": "^1.4.23",
     "morgan": "^1.5.1",
     "mysql": "^2.5.3",
