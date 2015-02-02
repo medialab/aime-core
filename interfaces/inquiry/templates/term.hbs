@@ -1,0 +1,48 @@
+<div class="term item {{#if_eq type compare="match"}}match{{/if_eq}} {{#if crossing}}crossing{{/if}}" id="vocab-{{id}}" data-interlinks="{{#each links}}{{this}} {{/each}}" data-int-id="{{id}}">
+  <div class="subtitle">
+    <div class="table">
+      <div class="text toggle-preview"><p>{{{decorate name}}}</p></div>
+      {{!-- <div class="action set-leader"><i class="fa fa-thumb-tack"></i></div> --}}
+    </div>
+  </div>
+  <div class="paragraphs">
+    <div class="pusher"></div>
+    {{#foreach paragraphs}}
+      <div class="paragraph {{#if $first}}first{{/if}} {{#if $last}}last{{/if}} {{#if_eq type compare="match"}}match{{/if_eq}}" id="tp-{{id}}">
+        <span class="number">- {{number}} -</span>
+        <div class="content">{{#if slices.length }}{{{parse slices}}}{{else}}{{{decorate content}}}{{/if}}</div>
+      </div>
+    {{/foreach}}
+    <div class="pusher"></div>
+    <div class="actions slave-keep leader-keep">
+      <div class="shadow"></div>
+      <div class="wrapper">
+        <div class="action left">
+          <p class="read-more">{{t "preview" }}</p>
+          <p class="read-less">{{t "collapse" }}</p>
+        </div>
+        <div class="action right">
+          <p class="set-leader">{{t "explore"}}</p>
+        </div>
+        <div class="action left slave-keep">
+          <p class="read-more">{{t "preview" }}</p>
+          <p class="read-less">{{t "collapse" }}</p>
+        </div>
+        <div class="action right slave-keep">
+          <p class="set-leader">{{t "explore" }}</p>
+        </div>
+        <div class="action middle leader-keep">
+          <p class="set-leader">{{t "explore" }}</p>
+        </div>
+        {{#if crossing}}
+        <div class="action middle">
+          <a href="{{crossing.url}}" target="_blank" class="crossing">{{t "explore_scenarios" }}</a>
+        </div>
+        <div class="action middle slave-keep leader-keep">
+          <a href="{{crossing.url}}" target="_blank" class="crossing">{{t "explore_scenarios" }}</a>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>

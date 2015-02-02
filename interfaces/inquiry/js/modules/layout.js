@@ -313,10 +313,7 @@
             delay:100
           });
           _columns.doc.empty({
-            delay:200
-          });
-          _columns.com.empty({
-            delay:300,
+            delay:200,
             callback: columnify,
             args:[{
               callback: function() {

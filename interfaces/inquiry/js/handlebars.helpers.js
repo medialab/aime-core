@@ -1,7 +1,7 @@
 
 
     Handlebars.registerHelper('chapter_number', function( number ) {
-      return new Handlebars.SafeString(number);
+      return new Handlebars.SafeString(number || '&middot;');
     });
 
     Handlebars.registerHelper('slides_navigation', function( length ) {

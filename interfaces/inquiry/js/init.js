@@ -158,10 +158,16 @@ $(document).ready(function() {
   // load settings from var
   maze.settings = CONFIG;
 
+  // check auth cookie and send it automatically
+
+  
+  
+
   // enrich maze.urls 
   for(i in maze.urls){
     maze.urls[i] = maze.settings.endpoint + maze.urls[i];
   }
+
   maze.init();
   
   

@@ -2,27 +2,27 @@
   <div class="title">
     <div class="table">
       <div class="number toggle-preview">{{{chapter_number number}}}</div>
-      <div class="text toggle-preview"><p>{{content}}</p></div>
+      <div class="text toggle-preview"><p>{{title}}</p></div>
     </div>
   </div>
   <div class="subtitles">
-  {{#each subheadings}}
+  {{#each children}}
     <div class="subtitle" id="{{id}}" data-page="{{page}}">
       <div class="table">
-        <div class="text toggle-preview"><p>{{{decorate content}}}</p></div>
+        <div class="text toggle-preview"><p>{{{decorate title}}}</p></div>
         {{!-- <div class="icon icon-toggle-preview toggle-preview"></div> --}}
         {{!-- <div class="action set-leader"><i class="fa fa-thumb-tack"></i></div> --}}
       </div>
       <div class="paragraphs">
-        <div class="pusher"></div>
-        {{#each paragraphs}}
+        <div class="pusher grab"></div>
+        {{#each children}}
           <div class="paragraph" id="{{id}}" data-page="{{page}}">
           <span class="number">- {{number}} -</span>
           <div class="ex-actions">
           <div class="anchor"><i class="icon-link"></i></div>
           </div>
           <div class="bookmarklet"><i class="icon-bookmark"></i></div>
-          <div class="content">{{#if slices.length }}{{{parse slices}}}{{else}}{{{decorate content}}}{{/if}}</div></div>
+          <div class="content">{{{decorate markdown}}}</div></div>
         {{/each}}
         <div class="pusher"></div>
         <!-- div class="ellipsis">

@@ -149,7 +149,7 @@
           id: 'data_bookIdsArray',
           description: 'The array of the IDs of the chapters.',
           dispatch: 'data_book_updated',
-          type: [ 'string' ],
+          type: [ 'number' ],
           value: []
         },
 
@@ -1289,7 +1289,7 @@
           }
         },
         {
-          triggers: 'fill_startup', // search and notebook
+          triggers: 'fill_startup', // startup, search and notebook
           method: function(e) {
             var services = [
               {
@@ -1299,18 +1299,17 @@
               {
                 service: 'get_documents',
                 limit: 20
-              },
-              {
-                service: 'get_contributions',
-                limit: 20
               }
+              
             ];
 
-             maze.domino.controller.request(services, {
+            // override just for testing purposes
+            maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
+            /* maze.domino.controller.request(services, {
               success: function() {
                 maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
               }
-            });
+            });*/
           }
         },
         {
@@ -1474,21 +1473,16 @@
       */
       services: [
         { id: 'get_book',
-          type: 'POST',
+          type: 'GET',
           dataType: 'json',
           url: maze.urls.get_book, //'/aime/js/display/items.json',// @todo replace with maze.urls.get_book,
           description: 'The service that deals with chapters, subheadings and paragraphs given as hiearachical trees. IdsArray store chapter objects',
-          /*before: function(params) {
-            var p = params || {};
-
-            if (+p.offset > 0 && !this.get('data_bookIdsArray').length)
-              return false;
-          },*/
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
           data: function(params) {
             var p = params || {},
-                data = {
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken')
-                };
+                data = {};
 
             if (p.ids)
               data.ids = p.ids;
@@ -1510,15 +1504,17 @@
                 result = maze.engine.parser.book(data),
                 idsArray = [],
                 contents = {};
-
-            result.chapters.shift();
+            
+            
+            //data.result.chapters.shift();
 
             if (+p.offset > 0) {
               idsArray = this.get('data_bookIdsArray');
               contents = this.get('data_bookContents');
             }
 
-            result.chapters.forEach(function(o) {
+            data.result.forEach(function(o) {
+              console.log(o);
               idsArray.push(o.id);
               contents[o.id] = o;
             });
