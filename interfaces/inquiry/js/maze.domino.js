@@ -1474,9 +1474,9 @@
         maze.domino.controller.request('login', {data: {email: '***@**.**', password: '******'}})
       */
       services: [
-        {
-          id: 'login',
+        { id: 'login',
           type: 'POST',
+          dataType: 'json',
           before: function(params, xhr) {
             xhr.withCredentials = true;
           },
@@ -1569,13 +1569,15 @@
           dataType: 'json',
           url: maze.urls.get_vocabulary,
           description: 'The service that deals with vocabulary.',
-          before: function(params) {
-            var p = params || {};
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+            // INFINIT SCROLLING needed
+            // var p = params || {};
 
-            if (+p.offset > this.get('data_vocIdsArray').length + 1)
-              return false;
+            // if (+p.offset > this.get('data_vocIdsArray').length + 1)
+            //   return false;
 
-            this.update('infinite_voc', maze.STATUS_BUSY );
+            // this.update('infinite_voc', maze.STATUS_BUSY );
           },
           data: function(params) {
             var p = params || {},
