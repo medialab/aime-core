@@ -1,38 +1,20 @@
+'use strict';
+	
 ( function( $, w, undefined ){
-	'use strict';
-	maze = w.maze || {};
-	maze.engine = {};
+	maze                 = w.maze || {};
+	maze.engine          = {};
 	maze.engine.template = {};
-	maze.engine.parser ={};
+	maze.engine.parser   = {};
 	maze.engine.elements = {};
 
-	maze.engine.init = function( ){ maze.log("[engine.init]");
+	maze.engine.init = function() {
+		maze.log("[engine.init]");
+		maze.currentUserId = $('#wrapper').data('userid'); // currently connected userid
 
-		// currently connected userid
-		maze.currentUserId = $('#wrapper').data('userid');
-		//maze.log("Current user id:"+maze.currentUserId); 
-		
 		maze.engine.elements.documents = new maze.engine.Collection({ column:maze.DOC });
 		maze.engine.elements.vocabulary = new maze.engine.Collection({ column:maze.VOC });
 		maze.engine.elements.book = new maze.engine.Collection({ column:maze.TEXT });
 		maze.engine.elements.comments = new maze.engine.Collection({ column:maze.COMM });
-
-		//maze.engine.template.paragraph = Handlebars.compile( $("#paragraph-template").html() );
-		//maze.engine.template.chapter = Handlebars.compile( $("#chapter-template").html() );
-		//maze.engine.template.term = Handlebars.compile( $("#term-template").html() );
-		//maze.engine.template.document = Handlebars.compile( $("#document-template").html() );
-		//maze.engine.template.contribution = Handlebars.compile( $("#comment-template").html() );
-		//maze.engine.template.reference = Handlebars.compile( $("#reference-template").html() );
-		//maze.engine.template.editor =  Handlebars.compile( $("#contribution-editor-template").html() );
-		//maze.engine.template.slide = Handlebars.compile( $("#contribution-slide-template").html() ); // contribution slide EDITOR
-		//maze.engine.template.omissis = Handlebars.compile( '<span class="omissis"> [...] </span>' );
-		// maze.engine.template.matched_paragraph = Handlebars.compile( $("#matched_paragraph-template").html() );
-
-		//maze.on( maze.events.engine.sync, maze.controllers.engine.sync );
-		//maze.on( maze.events.engine.loaded, maze.controllers.engine.loaded );
-
-
-
 	};
 
 	maze.engine.replace = function( object, template, $list ){
