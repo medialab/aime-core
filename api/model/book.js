@@ -10,7 +10,7 @@ var db = require('../connection.js'),
     _ = require('lodash');
 
 module.exports = {
-  book: function(lang, callback) {
+  getAll: function(lang, callback) {
 
     // Checking cache
     var book = getIn(cache, ['book', lang]);
