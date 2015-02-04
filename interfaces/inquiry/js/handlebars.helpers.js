@@ -8,6 +8,12 @@
       return +number + 1;
     });
     
+    Handlebars.registerHelper('basename', function( text ) {
+      if( typeof text == "undefined" )
+        return '';
+      return text.split('.').shift()
+    });
+
 
     Handlebars.registerHelper('slides_navigation', function( length ) {
       return (length > 1) ? 'block' : 'none';
@@ -74,6 +80,26 @@
       "La littérature est immense, en commençant par le Derrida commentant Husserl jusqu’au livre capital de Netz sur la géométrie grecque {Netz, 2003 #187}, l’anthropologie de Jack Goody dont la {Goody, 1979 #194} a eu une grande influence, sans oublier l’excellent {Dagognet, 1973 #476} {Dagognet, 1974 #477}.".replace(/{([^#]*)#(\d+)[^}]}/g,function(a,title,id){
           return '<span class="link doc" data-id="ref-'+ id.replace(/\s/,'') +'">' + title.replace(/\s$/,'') + '</span>';
       });
+      T
+    */
+    Handlebars.registerHelper('decorate_lite', function(text) {
+      if(typeof text == "undefined")
+        return '';
+      return MarkdownParser(text)
+        .replace(/\[[^\]]*\]/g,function(s){
+          return "<span class='modes'>" + s.replace(/[^\w\[·\.\-\]]/g,'').replace(/[·\.\-]/g,'&middot;') + "</span>"
+        }).replace(/[A-ZÀÁÂÈÉÊÌÍÎÏÇÒÓÔŒÙÚÛ][A-ZÀÁÂÈÉÊÌÍÎÏÇÒÓÔŒÙÚÛ]+/g,function(s){
+          return "<span class='smallcaps'>" + s + "</span>"
+        });
+    });
+    /**
+      Example for brackets and uppercase
+      NASA [REF] [ATT·DC] [1977]
+      E.g
+      "La littérature est immense, en commençant par le Derrida commentant Husserl jusqu’au livre capital de Netz sur la géométrie grecque {Netz, 2003 #187}, l’anthropologie de Jack Goody dont la {Goody, 1979 #194} a eu une grande influence, sans oublier l’excellent {Dagognet, 1973 #476} {Dagognet, 1974 #477}.".replace(/{([^#]*)#(\d+)[^}]}/g,function(a,title,id){
+          return '<span class="link doc" data-id="ref-'+ id.replace(/\s/,'') +'">' + title.replace(/\s$/,'') + '</span>';
+      });
+      T
     */
     Handlebars.registerHelper('decorate', function( text ) {
       if( typeof text == "undefined" )

@@ -1,7 +1,7 @@
 <div class="document item {{#if_eq type compare="match"}}match{{/if_eq}} {{media.pdf}} {{media.video}} {{media.img}}" data-status="{{#if force_open}}force-open{{/if}}" id="doc-{{id}}" data-cursor="0" data-size="{{slides_opened.length}}" data-int-id="{{id}}" data-ref-ids="{{#each references}}{{this}} {{/each}}">
   <div class="subtitle">
     <div class="table">
-      <div class="text toggle-preview"><p>{{#if title.slices.length }}{{{parse title.slices}}}{{else}}{{{decorate title.content}}}{{/if}}</p></div>
+      <div class="text toggle-preview"><p>{{{decorate_lite title}}}</p></div>
       {{!-- <div class="action set-leader"><i class="fa fa-thumb-tack"></i></div> --}}
       <!-- div class="icon toggle-preview fa icon-pdf"></div>
       <div class="icon toggle-preview fa icon-video"></div>
@@ -17,6 +17,38 @@
         <p>Turo Burlano - 07/08/13</p>
       </div>
     </div -->
+    {{#if preview}}
+      {{#each preview.children}}
+        <div class='paragraph'><!-- type: {{type}}, kind: {{kind}}  -->
+          
+          {{#if_eq type compare='paragraph'}}
+            {{{decorate markdown}}}
+          {{/if_eq}}
+
+          {{#if_eq type compare='reference'}}
+            <span class="number unselectable">- 1 -</span>
+            <div class="ref unselectable" data-id="{{biblib_id}}"><div class="content unselectable" data-ref="ref-{{biblib_id}}"></div></div>
+          {{/if_eq}}
+
+
+          {{#if_eq type compare='media'}}
+            {{#if_eq kind compare='html'}}
+              <span class="number">- {{$index}} -</span>
+              <div class="citation"><div class="content">{{{html}}}</div>
+            {{/if_eq}}
+            {{#if_eq kind compare='image'}}
+            <span class="number unselectable">- {{$index}} -</span>
+            <div class="media unselectable">
+              <div><img class="image" data-src="http://www.modesofexistence.org/inquiry/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
+            </div>
+            {{/if_eq}}
+
+          {{/if_eq}}
+        </div>
+      {{/each}}
+    {{/if}}
+
+
     {{#each slides_preview}}
       {{#each content}}<div class='paragraph {{#if annotated}}annotated{{/if}}' {{#if annotated}}data-notes='{{annotated}}'{{/if}} id="dp-{{id}}">
 

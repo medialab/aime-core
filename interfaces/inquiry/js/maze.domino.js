@@ -190,7 +190,7 @@
           id: 'data_docIdsArray',
           description: 'The array of the IDs of the documents and descriptions.',
           dispatch: 'data_doc_updated',
-          type: [ 'string' ],
+          type: [ 'number' ],
           value: []
         },
 
@@ -1307,10 +1307,10 @@
                 service: 'get_vocabulary',
                 limit: 20
               },
-              // {
-              //   service: 'get_documents',
-              //   limit: 20
-              // }
+              {
+                service: 'get_documents',
+                limit: 20
+              }
 
             ];
 
@@ -1653,23 +1653,24 @@
           }
         },
         { id: 'get_documents',
-          type: 'POST',
+          type: 'GET',
           dataType: 'json',
           url: maze.urls.get_documents,
-          description: 'The service that deals with chapters, subheadings and paragraphs.',
-          before: function(params) {
-            var p = params || {};
+          description: 'The service that deals with every kind of documents',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+            // INFINIT SCROLLING needed
+            
+            // var p = params || {};
 
-            if (+p.offset > this.get('data_docIdsArray').length + 1)
-              return false;
+            // if (+p.offset > this.get('data_docIdsArray').length + 1)
+            //   return false;
 
-            this.update('infinite_doc', maze.STATUS_BUSY );
+            // this.update('infinite_doc', maze.STATUS_BUSY );
           },
           data: function(params) {
             var p = params || {},
-                data = {
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken')
-                };
+                data = {};
 
             if (p.ids)
               data.ids = p.ids;
@@ -1688,9 +1689,28 @@
           },
           success: function(data, params) {
             var p = params || {},
-                result = maze.engine.parser.documents(data),
+                result = data.result,
                 idsArray = [],
                 contents = {};
+
+            /*
+              Transform document children in two subgroups
+              in order to fit the document template
+            */
+            result = result.map(function(d) {
+              if(!d.children.length)
+                return d;
+
+              d.references = [];
+              
+              for(var i in d.children)
+                for(var j in d.children[i].children)
+                  if(d.children[i].children[j].type == 'reference')
+                    d.references.push(d.children[i].children[j].biblib_id);
+              d.preview = d.children.shift();
+
+              return d;
+            });
 
             this.update('infinite_doc', maze.STATUS_READY );
 
@@ -1699,7 +1719,7 @@
               contents = this.get('data_docContents');
             }
 
-            result.documents.forEach(function(o) {
+            result.forEach(function(o) {
               idsArray.push(o.id);
               contents[o.id] = o;
             });

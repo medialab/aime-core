@@ -25,6 +25,9 @@
 
 	}
 
+	
+
+
 	/*
 		@return a dictionary of listing information.
 	*/
@@ -1013,9 +1016,7 @@
 		return maze.engine.parser.items( objects, 'contributions');
 	}
 
-	maze.engine.parser.documents = function( objects ){
-		return maze.engine.parser.items( objects, 'documents');
-	}
+
 
 
 

@@ -40,25 +40,29 @@ $(document).ready(function() {
   maze.urls = {
     login: '/login',
 
+    get_book: '/book',
+    get_vocabulary: '/voc',
+    get_documents: '/doc',
+
     list_comments: 'documentItems/items',
     get_comments: 'documentItems/items',
     fetch_comments: 'documentItems/items',
     infinite_comments: 'documentItems/items',
 
     list_documents: 'documentItems/items',
-    get_documents: 'documentItems/items',
+    
     fetch_documents: 'documentItems/items',
     infinite_documents: 'documentItems/items',
     save_document: 'documentItems/items',
 
     list_vocabulary: 'vocabItems/items',
-    get_vocabulary: '/voc',
+    
     fetch_vocabulary: 'vocabItems/items',
     search_vocabulary: 'vocabItems/items',
     infinite_vocabulary: 'vocabItems/items',
     save_vocabulary: 'vocabItems/items',
 
-    get_book: '/book',
+    
     search_book: 'bookItems/items',
     fetch_book: 'bookItems/items',
     save_book: 'bookItems/items',
