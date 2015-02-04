@@ -16,15 +16,5 @@ module.exports = [
         return res.ok(book);
       });
     }
-  },
-  {
-    url: '/follow',
-    action: function(req, res) {
-      model.follow('en', function(err, book) {
-        if (err) console.log(err);
-
-        return res.ok(book);
-      });
-    }
   }
 ];
