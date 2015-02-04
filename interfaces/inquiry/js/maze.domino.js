@@ -383,8 +383,8 @@
         { id:'scene_page',
           description: 'The current page - column text, inside the input text field.',
           dispatch: ['scene_page_updated', 'scene_stored'],
-          type: '?string',
-          value:''
+          type: '?number',
+          value:0
         },
         { id:'scene_query',
           description: 'The query as written inside the "search" input text field',

@@ -78,6 +78,12 @@
     Handlebars.registerHelper('decorate', function( text ) {
       if( typeof text == "undefined" )
         return '';
+      return MarkdownParser(text)
+        .replace(/\[[^\]]*\]/g,function(s){
+          return "<span class='modes'>" + s.replace(/[^\w\[·\.\-\]]/g,'').replace(/[·\.\-]/g,'&middot;') + "</span>"
+        }).replace(/[A-ZÀÁÂÈÉÊÌÍÎÏÇÒÓÔŒÙÚÛ][A-ZÀÁÂÈÉÊÌÍÎÏÇÒÓÔŒÙÚÛ]+/g,function(s){
+          return "<span class='smallcaps'>" + s + "</span>"
+        });
       // return window['Hypher']['languages']['fr'].hyphenateText(text)
       return text
         .replace(/{([^#]*)#(\d+)}/g,function(a,title,id){

@@ -414,7 +414,7 @@
 
             var subheadings = controller.get('data_bookContents')[ chapters[i] ].children;
             for( var j in subheadings ){
-                var subheading = $( document.getElementById( 's-' + subheadings[j].id ) ),
+                var subheading = $( document.getElementById( subheadings[j].id ) ),
                     ts = subheading.position().top;
 
                 if( (action == maze.ACTION_SEARCH || is_slave) && !subheading.hasClass('match') ){
@@ -567,7 +567,7 @@
           maze.log('columnText: quit text_extract_inlinks trigger, wrong Scene');
           return;
         }
-
+        
         for( var i in chapters ){
             var chapter = $( document.getElementById( chapters[i] ) ),
                 t = chapter.position().top;
@@ -580,7 +580,7 @@
             if( t + h <= 0 )
                 continue;
 
-            var subheadings = controller.get('data_bookContents')[ chapters[i] ].subheadings;
+            var subheadings = controller.get('data_bookContents')[ chapters[i] ].children;
             for( var j in subheadings ){
                 var subheading = $( document.getElementById( subheadings[j].id ) ),
                     ts = subheading.position().top;
