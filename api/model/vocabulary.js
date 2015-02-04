@@ -4,7 +4,7 @@
  *
  */
 var db = require('../connection.js'),
-    queries = require('../queries.js'),
+    queries = require('../queries.js').vocabulary,
     _ = require('lodash');
 
 // TODO: compile queries

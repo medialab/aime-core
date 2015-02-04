@@ -5,7 +5,7 @@
  */
 var db = require('../connection.js'),
     cache = require('../cache.js'),
-    queries = require('../queries.js'),
+    queries = require('../queries.js').book,
     getIn = require('../../lib/helpers.js').getIn,
     _ = require('lodash');
 
@@ -18,7 +18,7 @@ module.exports = {
       return callback(null, book);
 
     // Executing query
-    db.rows(queries.book, {lang: lang}, function(err, response) {
+    db.rows(queries.getAll, {lang: lang}, function(err, response) {
 
       // On typical error
       if (err) return callback(err);

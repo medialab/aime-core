@@ -4,7 +4,7 @@
  *
  */
 var db = require('../connection.js'),
-    queries = require('../queries.js'),
+    queries = require('../queries.js').user,
     hash = require('../../lib/encryption.js').hash,
     _ = require('lodash');
 
@@ -18,7 +18,7 @@ module.exports = {
       'id'
     ];
 
-    db.query(queries.user, {email: email, hash: hash(password), active: true}, function(err, results) {
+    db.query(queries.login, {email: email, hash: hash(password), active: true}, function(err, results) {
       if (err) return callback(err);
 
       return callback(
