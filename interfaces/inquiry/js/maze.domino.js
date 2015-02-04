@@ -174,7 +174,7 @@
           id: 'data_vocIdsArray',
           description: 'The array of the IDs of the terms.',
           dispatch: 'data_voc_updated',
-          type: [ 'string' ],
+          type: [ 'number' ],
           value: []
         },
 
@@ -1295,20 +1295,20 @@
                 service: 'get_vocabulary',
                 limit: 20
               },
-              {
-                service: 'get_documents',
-                limit: 20
-              }
+              // {
+              //   service: 'get_documents',
+              //   limit: 20
+              // }
 
             ];
 
             // override just for testing purposes
-            maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
-            /* maze.domino.controller.request(services, {
+            //maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
+            maze.domino.controller.request(services, {
               success: function() {
                 maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
               }
-            });*/
+            });
           }
         },
         {
@@ -1468,8 +1468,20 @@
         How to test services:
         var d = domino.instances('maze');
         d.request('service_name',{offset:10, limit:20, query:'query search'})
+
+        or 
+
+        maze.domino.controller.request('login', {data: {email: '***@**.**', password: '******'}})
       */
       services: [
+        { id: 'login',
+          type: 'POST',
+          dataType: 'json',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.login
+        },
         { id: 'get_book',
           type: 'GET',
           dataType: 'json',
@@ -1553,17 +1565,19 @@
           }
         },
         { id: 'get_vocabulary',
-          type: 'POST',
+          type: 'GET',
           dataType: 'json',
           url: maze.urls.get_vocabulary,
           description: 'The service that deals with vocabulary.',
-          before: function(params) {
-            var p = params || {};
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+            // INFINIT SCROLLING needed
+            // var p = params || {};
 
-            if (+p.offset > this.get('data_vocIdsArray').length + 1)
-              return false;
+            // if (+p.offset > this.get('data_vocIdsArray').length + 1)
+            //   return false;
 
-            this.update('infinite_voc', maze.STATUS_BUSY );
+            // this.update('infinite_voc', maze.STATUS_BUSY );
           },
           data: function(params) {
             var p = params || {},
@@ -1587,8 +1601,9 @@
 
           },
           success: function(data, params) {
+            
             var p = params || {},
-                result = maze.engine.parser.vocabulary(data, this.get('data_crossings')),
+                result = data.result,//maze.engine.parser.vocabulary(data, this.get('data_crossings')),
                 idsArray = [],
                 contents = {};
             // even if no results update the data (aka empty search results !)
@@ -1598,7 +1613,7 @@
                 contents = this.get('data_vocContents');
               }
 
-              result.terms.forEach(function(o) {
+              result.forEach(function(o) {
                 idsArray.push(o.id);
                 contents[o.id] = o;
               });

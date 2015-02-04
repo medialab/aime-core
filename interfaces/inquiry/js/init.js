@@ -38,6 +38,8 @@ $(document).ready(function() {
   maze.i18n.lang = "en";
 
   maze.urls = {
+    login: '/login',
+
     list_comments: 'documentItems/items',
     get_comments: 'documentItems/items',
     fetch_comments: 'documentItems/items',
@@ -50,7 +52,7 @@ $(document).ready(function() {
     save_document: 'documentItems/items',
 
     list_vocabulary: 'vocabItems/items',
-    get_vocabulary: 'vocabItems/items',
+    get_vocabulary: '/voc',
     fetch_vocabulary: 'vocabItems/items',
     search_vocabulary: 'vocabItems/items',
     infinite_vocabulary: 'vocabItems/items',
@@ -157,11 +159,6 @@ $(document).ready(function() {
 
   // load settings from var
   maze.settings = CONFIG;
-
-  // check auth cookie and send it automatically
-
-  
-  
 
   // enrich maze.urls 
   for(i in maze.urls){

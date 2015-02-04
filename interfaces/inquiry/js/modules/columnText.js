@@ -86,7 +86,8 @@
     };
 
 
-    this.sticky_subheading_adjust = function(data) {//console.log('%cadjusting subheading', 'background-color:gold', data.offset)
+    this.sticky_subheading_adjust = function(data) {
+    // console.log('%cadjusting subheading', 'background-color:gold', data.offset)
       if( typeof data.offset != "undefined")
         _self.subheading.css({
           top: data.offset
@@ -411,9 +412,9 @@
             //continue
                 // TODO performance check
 
-            var subheadings = controller.get('data_bookContents')[ chapters[i] ].subheadings;
+            var subheadings = controller.get('data_bookContents')[ chapters[i] ].children;
             for( var j in subheadings ){
-                var subheading = $( document.getElementById( subheadings[j].id ) ),
+                var subheading = $( document.getElementById( 's-' + subheadings[j].id ) ),
                     ts = subheading.position().top;
 
                 if( (action == maze.ACTION_SEARCH || is_slave) && !subheading.hasClass('match') ){

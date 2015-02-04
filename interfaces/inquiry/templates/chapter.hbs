@@ -1,13 +1,13 @@
 <div class="chapter" id="{{id}}" data-int-id="{{id}}" data-page="{{page}}">
   <div class="title">
     <div class="table">
-      <div class="number toggle-preview">{{{chapter_number number}}}</div>
+      <div class="number toggle-preview">{{{chapter_number displayNumber}}}</div>
       <div class="text toggle-preview"><p>{{title}}</p></div>
     </div>
   </div>
   <div class="subtitles">
   {{#each children}}
-    <div class="subtitle" id="{{id}}" data-page="{{page}}">
+    <div class="subtitle" id="s-{{id}}" data-page="{{page}}">
       <div class="table">
         <div class="text toggle-preview"><p>{{{decorate title}}}</p></div>
         {{!-- <div class="icon icon-toggle-preview toggle-preview"></div> --}}
@@ -16,8 +16,8 @@
       <div class="paragraphs">
         <div class="pusher grab"></div>
         {{#each children}}
-          <div class="paragraph" id="{{id}}" data-page="{{page}}">
-          <span class="number">- {{number}} -</span>
+          <div class="paragraph" id="p-{{id}}" data-page="{{page}}">
+          <span class="number">- {{paragraph_number @index}} -</span>
           <div class="ex-actions">
           <div class="anchor"><i class="icon-link"></i></div>
           </div>

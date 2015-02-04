@@ -9,8 +9,7 @@
         _columns = {
           text: controller.addModule(maze.domino.modules.ColumnText),
           voc: controller.addModule(maze.domino.modules.ColumnVoc),
-          doc: controller.addModule(maze.domino.modules.ColumnDoc),
-          com: controller.addModule(maze.domino.modules.ColumnComm)
+          doc: controller.addModule(maze.domino.modules.ColumnDoc)
         };
 
     var columnify = maze.domino.factory(function( options, complete ){
@@ -336,10 +335,7 @@
               delay:100
             });
              _columns.doc.empty({
-              delay:200
-            });
-            _columns.com.empty({
-              delay:300,
+              delay:200,
               callback:columnify,
               args:[{
                 callback:function(){
@@ -358,10 +354,7 @@
               delay:100
             });
             _columns.doc.empty({
-              delay:200
-            });
-            _columns.com.empty({
-              delay:300,
+              delay:200,
               callback:columnify,
               args:[{
                 callback:function(){
@@ -388,9 +381,7 @@
           _columns.doc.empty({
             delay:200
           });
-          _columns.com.empty({
-            delay:300
-          });
+          
           _self.dispatchEvent('sticky_hide');
 
           _columns.text.hide({
@@ -435,10 +426,7 @@
           _columns.text.hide({});
           _self.dispatchEvent('sticky_hide');
           _columns.doc.empty({
-            delay:100
-          });
-          _columns.com.empty({
-            delay:200,
+            delay:100,
             callback: columnify,
             args:[{
               callback: _columns.voc.exempt,
@@ -480,9 +468,6 @@
 
           _columns.voc.empty({
             delay:100
-          });
-          _columns.com.empty({
-            delay:300
           });
           _columns.text.hide({
             callback: columnify,
@@ -529,74 +514,7 @@
           // remove except, set element to open
           break;
 
-        case maze.ACTION_SET_COMM_LEADER:
-          var cont = controller.get('scene_item').id,
-              cont_id = cont.replace(/[^\d]/g,''),
-              slide = controller.get('scene_slide'),
-              item = controller.get('data_contContents')[cont_id];
-
-          // update scene if needed with the RIGHT column
-          if(item.inlinks.from_voc.length)
-            maze.domino.controller.update('scene_column',{
-              leading: maze.COMM,
-              slave: maze.VOC
-            });
-          else if(item.inlinks.from_doc.length)
-            maze.domino.controller.update('scene_column',{
-              leading: maze.COMM,
-              slave: maze.DOC
-            });
-
-          _columns.voc.empty({
-            delay:200
-          });
-          _columns.doc.empty({
-            delay:400
-          });
-          _columns.text.hide({
-            callback: columnify,
-            args:[{
-              callback: _columns.com.exempt,
-              args:[{
-                column: maze.COMM,
-                namespace: 'cont',
-                item: cont.replace('#',''),
-                selectors: [cont.substring(1)],
-                callback: maze.move.scrollto,
-                args:[ cont,{
-                  callback: maze.move.unmatch,
-                  args:[ cont,{
-                    callback: maze.move.open,
-                    args:[cont, {
-                      callback: maze.move.inject,
-                      args:[ cont,{
-                        callback:function(){
-
-                          _self.dispatchEvent( 'extract_inlinks' );//extract_inlinks' );
-                          //_self.dispatchEvent( 'setup_doc_as_leader' );
-                          _self.dispatchEvent( 'slider_init',{
-                            selector:cont,
-                            slide: slide,
-                            type:'contribution'
-                          });
-                          _self.dispatchEvent('slider_to',{
-                            selector: cont,
-                            index: 0
-                          });
-                          _self.dispatchEvent( 'text_match_highlight', {
-                            selector:cont
-                          });
-                          _columns.text.show({});
-                          _self.dispatchEvent('sticky_show unlock');
-                       }
-                      }]
-                    }]
-                  }]
-                }]
-              }]
-            }]
-          });
-          break;
+        
       }
 
       _columns.text.toggle_shadow();

@@ -1,38 +1,20 @@
+'use strict';
+	
 ( function( $, w, undefined ){
-	'use strict';
-	maze = w.maze || {};
-	maze.engine = {};
+	maze                 = w.maze || {};
+	maze.engine          = {};
 	maze.engine.template = {};
-	maze.engine.parser ={};
+	maze.engine.parser   = {};
 	maze.engine.elements = {};
 
-	maze.engine.init = function( ){ maze.log("[engine.init]");
+	maze.engine.init = function() {
+		maze.log("[engine.init]");
+		maze.currentUserId = $('#wrapper').data('userid'); // currently connected userid
 
-		// currently connected userid
-		maze.currentUserId = $('#wrapper').data('userid');
-		//maze.log("Current user id:"+maze.currentUserId); 
-		
 		maze.engine.elements.documents = new maze.engine.Collection({ column:maze.DOC });
 		maze.engine.elements.vocabulary = new maze.engine.Collection({ column:maze.VOC });
 		maze.engine.elements.book = new maze.engine.Collection({ column:maze.TEXT });
 		maze.engine.elements.comments = new maze.engine.Collection({ column:maze.COMM });
-
-		//maze.engine.template.paragraph = Handlebars.compile( $("#paragraph-template").html() );
-		//maze.engine.template.chapter = Handlebars.compile( $("#chapter-template").html() );
-		//maze.engine.template.term = Handlebars.compile( $("#term-template").html() );
-		//maze.engine.template.document = Handlebars.compile( $("#document-template").html() );
-		//maze.engine.template.contribution = Handlebars.compile( $("#comment-template").html() );
-		//maze.engine.template.reference = Handlebars.compile( $("#reference-template").html() );
-		//maze.engine.template.editor =  Handlebars.compile( $("#contribution-editor-template").html() );
-		//maze.engine.template.slide = Handlebars.compile( $("#contribution-slide-template").html() ); // contribution slide EDITOR
-		//maze.engine.template.omissis = Handlebars.compile( '<span class="omissis"> [...] </span>' );
-		// maze.engine.template.matched_paragraph = Handlebars.compile( $("#matched_paragraph-template").html() );
-
-		//maze.on( maze.events.engine.sync, maze.controllers.engine.sync );
-		//maze.on( maze.events.engine.loaded, maze.controllers.engine.loaded );
-
-
-
 	};
 
 	maze.engine.replace = function( object, template, $list ){
@@ -237,83 +219,12 @@
 	maze.ITALICS = "7"; // not used, cfr paragraph object
 	maze.language= "fr";
 
-
-	maze.engine.parser.book = function( objects){
-		var i,
-			__book = {},
-			__chapter = {},
-			__subheading = {},
-			__paragraph = {},
-			counter=0,
-			objects = objects[0],
-			chapter_numbers = [ "&middot","&middot",1,2,3,4,5,6,7,8,9,10,"&middot",11,12,13,14,15,16,"&middot" ],
-			statichapter = 0;
-
-		for( i in objects ){
-			var obj = objects[i]
-			counter++;
-			// obj.id == 36979? maze.log( i, obj ):'';
-
-
-			switch(objects[i].type){
-
-				case maze.BOOK:
-					__book = {"title":objects[i].content, "chapters":[]}
-					break;
-
-				case maze.CHAPTER:
-					__chapter = {
-						"page": objects[i]['page'],
-						"content": objects[i].content,
-						"number": chapter_numbers[__book.chapters.length],//objects[i].counter,
-						"id": objects[i].id,
-						"type": maze.CHAPTER,
-						"subheadings": []
-					}
-
-					// Set staticwrapper
-					if (statichapter < 2) {
-						$('.statichapter .number').html(chapter_numbers[__book.chapters.length]);
-						$('.statichapter .text p').html(objects[i].content);
-						$('.statichapter .chapter').attr('data-int-id', objects[i].id);
-						statichapter++;
-					}
-
-					__book.chapters.push( __chapter );
-					break;
-
-				case maze.SUBHEADING :
-					__subheading = {
-						"page": objects[i]['page'],
-						"content": objects[i].content,
-						"number": objects[i].counter,
-						"id":objects[i].id,
-						"type":maze.SUBHEADING,
-						"paragraphs":[]
-					}
-					__chapter.subheadings.push( __subheading );
-					break;
-
-				case maze.PARAGRAPH :
-					__paragraph = maze.engine.helpers.paragraph( objects[i] );
-					__paragraph.number = __subheading.paragraphs.length+1;
-					__subheading.paragraphs.push( __paragraph );
-				break;
-
-				default:
-					//maze.log(objects[i]);
-				break;
-			}
-
-			//obj.id == 36979? maze.log( i, __subheading ):'';
-			// break;
-		} // endfor
-
-		// complete list
-		// maze.log( "BOOK EME", __book);
-
-		return __book
-	}
+	/*
+		DEPRECATED function
+	*/
+	maze.engine.parser.book = function(objects) {
+		return objects;
+	};
 
 	maze.engine.helpers = {}
 	maze.engine.helpers.contributions = function( object ){
