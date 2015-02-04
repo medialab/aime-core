@@ -760,11 +760,10 @@
           method: function(e) {
             var services = [
               {
-                service: 'get_crossings',
+                service: 'get_crossings'
               },
               {
-                service: 'get_book',
-                ids: "36936"
+                service: 'get_book'
               }
             ];
 
@@ -777,7 +776,7 @@
             });
 
             // maze.domino.controller.request('get_crossings', {});
-    // maze.domino.controller.request('get_book', {ids: 36936});
+    // maze.domino.controller.request('get_book');
           }
         },
         {
@@ -1300,7 +1299,7 @@
                 service: 'get_documents',
                 limit: 20
               }
-              
+
             ];
 
             // override just for testing purposes
@@ -1318,8 +1317,7 @@
             var services = [
               {
                 service: 'search_book',
-                query: e.data.query,
-                ids: 36936
+                query: e.data.query
               },
               {
                 service: 'get_vocabulary',
@@ -1504,8 +1502,8 @@
                 result = maze.engine.parser.book(data),
                 idsArray = [],
                 contents = {};
-            
-            
+
+
             //data.result.chapters.shift();
 
             if (+p.offset > 0) {
@@ -2560,7 +2558,7 @@
     maze.engine.init();
 
     maze.domino.controller.dispatchEvent(['resize', 'scene__initialize']);
-    
+
   };
 
 })(window, jQuery, domino);
