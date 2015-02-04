@@ -1,10 +1,10 @@
 /**
- * AIME-core Vocabulary Model
- * ===========================
+ * AIME-core Document Model
+ * =========================
  *
  */
 var db = require('../connection.js'),
-    queries = require('../queries.js').vocabulary,
+    queries = require('../queries.js').document,
     _ = require('lodash');
 
 // TODO: compile queries
@@ -14,7 +14,7 @@ module.exports = {
   getAll: function(lang, callback) {
 
     // Executing query
-    db.rows(queries.vocabulary, {lang: lang}, function(err, response) {
+    db.rows(queries.document, {lang: lang}, function(err, response) {
 
       // On typical error
       if (err) return callback(err);
@@ -25,14 +25,20 @@ module.exports = {
       // Treating incoming data
       var data = _(response.results[0].data)
         .map(function(line) {
-          var v = line.row[0],
-              rv = _.extend({id: v.id}, v.properties);
+          var d = line.row[0],
+              rd = _.extend({id: d.id}, d.properties);
 
-          rv.children = line.row[1].map(function(p) {
-            return _.extend({id: p.id}, p.properties);
+          rd.children = line.row[1].map(function(s) {
+            var rs = _.extend({id: s.slide.id}, s.slide.properties);
+
+            rs.children = s.children.map(function(e) {
+              return _.extend({id: e.id}, e.properties);
+            });
+
+            return rs;
           });
 
-          return rv;
+          return rd;
         })
         .value();
 

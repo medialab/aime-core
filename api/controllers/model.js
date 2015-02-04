@@ -5,7 +5,8 @@
  * Defining the application routes able to return the inquiry's data.
  */
 var book = require('../model/book.js'),
-    voc = require('../model/vocabulary.js');
+    voc = require('../model/vocabulary.js'),
+    doc = require('../model/document.js');
 
 module.exports = [
   {
@@ -22,6 +23,16 @@ module.exports = [
     url: '/voc',
     action: function(req, res) {
       voc.getAll('en', function(err, result) {
+        if (err) console.log(err);
+
+        return res.ok(result);
+      });
+    }
+  },
+  {
+    url: '/doc',
+    action: function(req, res) {
+      doc.getAll('en', function(err, result) {
         if (err) console.log(err);
 
         return res.ok(result);

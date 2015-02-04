@@ -1,6 +1,7 @@
 {
   "api": {
     "allowedOrigins": ["http://localhost:8000"],
+    "cache": true,
     "defaultLang": "en",
     "secret": "falafel",
     "slugs": {
