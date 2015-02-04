@@ -4,6 +4,11 @@
       return new Handlebars.SafeString(number || '&middot;');
     });
 
+    Handlebars.registerHelper('paragraph_number', function( number ) {
+      return +number + 1;
+    });
+    
+
     Handlebars.registerHelper('slides_navigation', function( length ) {
       return (length > 1) ? 'block' : 'none';
     });
