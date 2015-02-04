@@ -1468,8 +1468,20 @@
         How to test services:
         var d = domino.instances('maze');
         d.request('service_name',{offset:10, limit:20, query:'query search'})
+
+        or 
+
+        maze.domino.controller.request('login', {data: {email: '***@**.**', password: '******'}})
       */
       services: [
+        {
+          id: 'login',
+          type: 'POST',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.login
+        },
         { id: 'get_book',
           type: 'GET',
           dataType: 'json',

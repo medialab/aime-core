@@ -7,7 +7,7 @@
   </div>
   <div class="paragraphs">
     <div class="pusher"></div>
-    {{#foreach paragraphs}}
+    {{#foreach children}}
       <div class="paragraph {{#if $first}}first{{/if}} {{#if $last}}last{{/if}} {{#if_eq type compare="match"}}match{{/if_eq}}" id="tp-{{id}}">
         <span class="number">- {{number}} -</span>
         <div class="content">{{#if slices.length }}{{{parse slices}}}{{else}}{{{decorate content}}}{{/if}}</div>

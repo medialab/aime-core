@@ -38,6 +38,8 @@ $(document).ready(function() {
   maze.i18n.lang = "en";
 
   maze.urls = {
+    login: '/login',
+
     list_comments: 'documentItems/items',
     get_comments: 'documentItems/items',
     fetch_comments: 'documentItems/items',
@@ -157,11 +159,6 @@ $(document).ready(function() {
 
   // load settings from var
   maze.settings = CONFIG;
-
-  // check auth cookie and send it automatically
-
-  
-  
 
   // enrich maze.urls 
   for(i in maze.urls){
