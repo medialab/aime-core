@@ -502,10 +502,23 @@
          * ******************
          */
         {
+          triggers: 'auth_open_login',
+          description: 'Popup the login panel'
+        },
+        {
+          triggers: 'auth_success',
+          description: 'Close the login panel and start over'
+        },
+        {
+          triggers: 'auth_failed',
+          description: 'show login and the error message'
+        },
+        {
           triggers: 'auth_require',
           description: 'Ask the server for validation',
-          method: function() {
-            
+          method: function(res) {
+            console.log(res.data);
+            this.request('login', {data: res.data});
           }
         },
 
@@ -1492,7 +1505,14 @@
           before: function(params, xhr) {
             xhr.withCredentials = true;
           },
-          url: maze.urls.login
+          url: maze.urls.login,
+          success: function(data, params) {
+            console.log('login success', message, xml, params);
+          },
+          error: function(message, xml, params) {
+            console.log('login failed', message, xml, params);
+            maze.domino.controller.dispatchEvent('auth_failed');
+          }
         },
         { id: 'get_book',
           type: 'GET',
@@ -1520,6 +1540,10 @@
 
             return data;
 
+          },
+          error: function(message, xml, params) {
+            console.log('get_book failed', message, xml, params);
+            maze.domino.controller.dispatchEvent('auth_open_login');
           },
           success: function(data, params) {
             var p = params || {},
@@ -1707,7 +1731,7 @@
                 for(var j in d.children[i].children)
                   if(d.children[i].children[j].type == 'reference')
                     d.references.push(d.children[i].children[j].biblib_id);
-                  
+
               // get the first slide as "document preview"
               d.preview = d.children.shift();
 
