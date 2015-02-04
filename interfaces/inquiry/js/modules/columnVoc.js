@@ -51,7 +51,7 @@
 
         
         maze.log(glossary.length);
-        for(var i=0; i<glossary.length; i++) {
+        for(var i=0; i < glossary.length; i++) {
           var options = {};
 
           if(i == glossary.length - 2){

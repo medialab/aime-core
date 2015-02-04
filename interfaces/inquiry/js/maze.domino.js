@@ -497,6 +497,18 @@
         }
       ],
       hacks: [
+        /**
+         * LOGIN HACKS
+         * ******************
+         */
+        {
+          triggers: 'auth_require',
+          description: 'Ask the server for validation',
+          method: function() {
+            
+          }
+        },
+
         {
           triggers: 'data_book_updated',
           description: 'Initialize stuff when book is loaded.',
@@ -2549,6 +2561,8 @@
         instantiate Domino modules
         ---
     */
+    maze.domino.controller.addModule( maze.domino.modules.Login,null, {id:'login'});
+    
     maze.domino.controller.addModule( maze.domino.modules.StickyText,null, {id:'sticky_text'});
     maze.domino.controller.addModule( maze.domino.modules.Location, null, {id:'location'});
     maze.domino.controller.addModule( maze.domino.modules.Resizor, null, {id:'resizor'});
