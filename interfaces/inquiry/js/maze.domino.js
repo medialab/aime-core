@@ -1701,12 +1701,14 @@
               if(!d.children.length)
                 return d;
 
-              d.references = [];
-              
+              d.references = []; // search for biblib references to prefetch     
+
               for(var i in d.children)
                 for(var j in d.children[i].children)
                   if(d.children[i].children[j].type == 'reference')
                     d.references.push(d.children[i].children[j].biblib_id);
+                  
+              // get the first slide as "document preview"
               d.preview = d.children.shift();
 
               return d;

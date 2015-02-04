@@ -12,11 +12,11 @@
   </div>
   <div class='paragraphs'>
     <div class="pusher"></div>
-    <!-- div class='paragraph'>
+    <div class='paragraph'>
       <div class='author'>
         <p>Turo Burlano - 07/08/13</p>
       </div>
-    </div -->
+    </div>
     {{#if preview}}
       {{#each preview.children}}
         <div class='paragraph'><!-- type: {{type}}, kind: {{kind}}  -->
@@ -49,45 +49,14 @@
     {{/if}}
 
 
-    {{#each slides_preview}}
-      {{#each content}}<div class='paragraph {{#if annotated}}annotated{{/if}}' {{#if annotated}}data-notes='{{annotated}}'{{/if}} id="dp-{{id}}">
 
-          {{#if text}}
-            <span class="number">- {{text.number}} -</span>
-            <div class="text content">{{#if text.content.slices.length }}{{{parse text.content.slices}}}{{else}}{{{decorate text.content.content}}}{{/if}}</div>
-          {{/if}}
-          {{#if citation}}
-            <span class="number">- {{citation.number}} -</span>
-            <div class="citation"><div class="content">{{#if citation.content.slices.length }}{{{parse citation.content.slices}}}{{else}}{{{decorate citation.content.content}}}{{/if}}</div></div>
-          {{/if}}
-          {{#if image}}
-            <span class="number unselectable">- {{image.number}} -</span>
-            <div class="media unselectable"><div><img class=image data-src="{{image.content}}" /></div></div>
-          {{/if}}
-          {{#if vimeo}}
-            <span class="number unselectable">- {{vimeo.number}} -</span>
-            <div class="media unselectable"><div><iframe class="vimeo" data-src="http://player.vimeo.com/video/{{vimeo.content}}?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div></div>
-          {{/if}}
-          {{#if issuu}}
-            <span class="number unselectable">- {{issuu.number}} -</span>
-            <div class="media pdf unselectable" id="pdf-{{issuu.number}}" data-pdf="{{issuu.content}}"></div>
-            <!-- div class="media">
-              <div><iframe class="issuuembed" data-src="//e.issuu.com/embed.html#{{issuu.content}}" frameborder="0" allowfullscreen></iframe></div>
-            </div -->
-          {{/if}}
-          {{#if reference}}
-            <span class="number unselectable">- {{reference.number}} -</span>
-            <div class="ref unselectable" data-id="{{reference.content}}"><div class="content unselectable" data-ref="ref-{{reference.content}}"></div></div>
-          {{/if}}
-        </div>{{/each}}
 
-    {{/each}}
 
     <div class='slides-matches'>
       {{#each slides_matches}}
         <div class='slide-match'>
           {{#each content}}
-            <div class='paragraph {{#if_eq type compare="match"}}match{{/if_eq}}' data-slide-index="{{../index}}"" id="dp-m-{{id}}">
+            <div class='paragraph {{#if_eq type compare="match"}}match{{/if_eq}}' data-slide-index="{{../index}}" id="dp-m-{{id}}">
               {{#if text}}
                 <span class="number">- {{text.number}} -</span>
                 <div class="text content"><p>{{#if text.content.slices.length }}{{{parse text.content.slices}}}{{else}}{{{decorate text.content.content}}}{{/if}}</p></div>
@@ -119,9 +88,9 @@
       {{/each}}
     </div>
 
-    {{#if slides_opened.length}}
 
 
+    {{#if children.length}}
     <div class='slides-box'>
       <div class="slides-nav">
         <div class="left"><i class="fa fa-angle-left"></i></div>
@@ -135,13 +104,13 @@
           </div>
         </div>
       </div>
-      <div class='slides-wrapper {{#if_gt slides_opened.length compare=1}}with-navigation{{/if_gt}}' data-length="{{slides_opened.length}}">
+      <div class='slides-wrapper {{#if_gt children.length compare=1}}with-navigation{{/if_gt}}' data-length="{{children.length}}">
         
 
-        {{#foreach slides_opened}}
+        {{#foreach children}}
           <div class='slide' data-index="{{$index}}" style='left: {{multiply $index 100}}%;'>
             {{#each content}}<div class='paragraph {{#if annotated}}annotated{{/if}}' {{#if annotated}}data-notes='{{annotated}}'{{/if}} id="dp-{{id}}">
-
+                {{type}}
                 {{#if text}}
                   <span class="number">- {{text.number}} -</span>
                   <div class="text content">{{#if text.content.slices.length }}{{{parse text.content.slices}}}{{else}}{{{decorate text.content.content}}}{{/if}}</div>
