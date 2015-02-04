@@ -174,7 +174,7 @@
           id: 'data_vocIdsArray',
           description: 'The array of the IDs of the terms.',
           dispatch: 'data_voc_updated',
-          type: [ 'string' ],
+          type: [ 'number' ],
           value: []
         },
 
@@ -1295,20 +1295,20 @@
                 service: 'get_vocabulary',
                 limit: 20
               },
-              {
-                service: 'get_documents',
-                limit: 20
-              }
+              // {
+              //   service: 'get_documents',
+              //   limit: 20
+              // }
 
             ];
 
             // override just for testing purposes
-            maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
-            /* maze.domino.controller.request(services, {
+            //maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
+            maze.domino.controller.request(services, {
               success: function() {
                 maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
               }
-            });*/
+            });
           }
         },
         {
@@ -1565,7 +1565,7 @@
           }
         },
         { id: 'get_vocabulary',
-          type: 'POST',
+          type: 'GET',
           dataType: 'json',
           url: maze.urls.get_vocabulary,
           description: 'The service that deals with vocabulary.',
@@ -1601,8 +1601,9 @@
 
           },
           success: function(data, params) {
+            
             var p = params || {},
-                result = maze.engine.parser.vocabulary(data, this.get('data_crossings')),
+                result = data.result,//maze.engine.parser.vocabulary(data, this.get('data_crossings')),
                 idsArray = [],
                 contents = {};
             // even if no results update the data (aka empty search results !)
@@ -1612,7 +1613,7 @@
                 contents = this.get('data_vocContents');
               }
 
-              result.terms.forEach(function(o) {
+              result.forEach(function(o) {
                 idsArray.push(o.id);
                 contents[o.id] = o;
               });

@@ -1,7 +1,7 @@
 <div class="term item {{#if_eq type compare="match"}}match{{/if_eq}} {{#if crossing}}crossing{{/if}}" id="vocab-{{id}}" data-interlinks="{{#each links}}{{this}} {{/each}}" data-int-id="{{id}}">
   <div class="subtitle">
     <div class="table">
-      <div class="text toggle-preview"><p>{{{decorate name}}}</p></div>
+      <div class="text toggle-preview"><p>{{{decorate title}}}</p></div>
       {{!-- <div class="action set-leader"><i class="fa fa-thumb-tack"></i></div> --}}
     </div>
   </div>
@@ -9,8 +9,8 @@
     <div class="pusher"></div>
     {{#foreach children}}
       <div class="paragraph {{#if $first}}first{{/if}} {{#if $last}}last{{/if}} {{#if_eq type compare="match"}}match{{/if_eq}}" id="tp-{{id}}">
-        <span class="number">- {{number}} -</span>
-        <div class="content">{{#if slices.length }}{{{parse slices}}}{{else}}{{{decorate content}}}{{/if}}</div>
+        <span class="number">- {{paragraph_number $index}} -</span>
+        <div class="content">{{{decorate markdown}}}</div>
       </div>
     {{/foreach}}
     <div class="pusher"></div>

@@ -52,7 +52,7 @@ $(document).ready(function() {
     save_document: 'documentItems/items',
 
     list_vocabulary: 'vocabItems/items',
-    get_vocabulary: 'vocabItems/items',
+    get_vocabulary: '/voc',
     fetch_vocabulary: 'vocabItems/items',
     search_vocabulary: 'vocabItems/items',
     infinite_vocabulary: 'vocabItems/items',

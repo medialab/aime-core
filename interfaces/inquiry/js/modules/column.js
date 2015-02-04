@@ -310,13 +310,14 @@
         if( item.hasClass('editor') )
           return true;
 
-        if( ids.indexOf( item.attr('data-int-id') ) == -1 ) {
+        if( ids.indexOf( +item.attr('data-int-id') ) == -1 ) {
           if(item.attr('data-enable-slider'))
                 _self.dispatchEvent('slider_leave_target', {id: item.attr('id')});
               
           maze.move.swipeout( item,{
             delay:settings.delay,
             callback:function(){
+              
               item.remove();
               
               //_self.dispatchEvent('scrolling_voc');
@@ -326,6 +327,7 @@
             settings.delay += 70;
         }
       });
+
 
       if(settings.is_editing)
         return;
@@ -411,7 +413,7 @@
           difference; // difference between NUMBER OF candidates and actual elements stored.
 
       for(var i in options.selectors){ // id to be saved
-        var id = options.selectors[i].replace(/[^\d]/g,'');
+        var id = +options.selectors[i].replace(/[^\d]/g,'');
         candidates.push(id);
         candidates_contents[id] = stored[id]
       };
