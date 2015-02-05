@@ -1538,7 +1538,27 @@
           },
           url: maze.urls.login,
           success: function(data, params) {
-            console.log('login success', data, params);
+            if(data.status="ok")
+              this.update('authorization', maze.AUTHORIZATION_AUTHORIZED);
+
+            console.log('%c login success ', 'background: green; color: white');
+            // reload user... header module
+          },
+          error: maze.domino.errorHandler
+        },
+        { id: 'logout',
+          type: 'POST',
+          dataType: 'json',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.logout,
+          success: function(data, params) {
+            console.log('%c logout success ', 'background: green; color: white');
+            if(data.status != "ok")
+              console.log('logout error during logout');
+            // logout anyway
+            this.update('authorization', maze.AUTHORIZATION_REQUIRED);
 
           },
           error: maze.domino.errorHandler
