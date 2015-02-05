@@ -11,16 +11,13 @@ module.exports = {
   getAll: function(lang, callback) {
 
     // Executing query
-    db.rows(queries.getAll, {lang: lang}, function(err, response) {
+    db.rows(queries.getAll, {lang: lang}, function(err, result) {
 
       // On typical error
       if (err) return callback(err);
 
-      // On REST error
-      if (response.errors.length) return callback(response.errors[0]);
-
       // Treating incoming data
-      var data = _(response.results[0].data)
+      var data = _(result)
         .map(function(line) {
           var d = line.row[0],
               rd = _.extend({id: d.id}, d.properties);

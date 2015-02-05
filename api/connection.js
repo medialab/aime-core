@@ -33,12 +33,26 @@ function makeHelper(dataContent) {
       }
     );
 
-    db.call(operation, callback);
+    db.call(operation, function(err, response) {
+      if (err) return callback(err);
+
+      var error = response.errors[0],
+          data = response.results[0].data;
+
+      if (error) {
+        var e = new Error('rest-error');
+        e.original = error;
+        return callback(e);
+      }
+
+      return callback(null, data);
+    });
   };
 }
 
 // Defining our own ways to invoke the api
 db.rows = makeHelper('row');
 db.graph = makeHelper('graph');
+db.rest = makeHelper('rest');
 
 module.exports = db;
