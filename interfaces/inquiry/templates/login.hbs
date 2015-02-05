@@ -1,0 +1,32 @@
+<div id="login">
+  <div class="wrapper">
+    <form>
+    <h2>{{t 'connect_to_aime'}}</h2>
+    <div class="line"></div>
+      <p>
+        <label>{{t 'login'}}</label>
+        <input id="email" type="email" placeholder="email address">
+      </p>
+      <p>
+        <label>{{t 'password'}}</label>
+        <input id="password" type="password" placeholder="password">
+      </p>
+      
+      <!-- button>{{t 'forgotten_password'}}</button -->
+      <div class="actions">
+        <div class="line"></div>
+
+          <table cellspacing="0">
+            <tr>
+              <td class="left">
+                <button data-action="authenticate">{{t 'connect'}}</button>
+              </td>
+              <td class="right">
+                <!-- button>{{t 'sign_up'}}</button -->
+              </td>
+            </tr>
+          </table>
+        </div>
+      </form>
+    </div>
+</div>
