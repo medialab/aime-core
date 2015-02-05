@@ -34,6 +34,7 @@ gulp.task('templates', function() {
 // Watching
 gulp.task('work', ['style', 'templates'], function() {
   gulp.watch(styleFiles, ['style']);
+  gulp.watch(templateFiles, ['templates']);
 });
 
 // Macro-task

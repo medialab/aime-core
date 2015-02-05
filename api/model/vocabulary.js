@@ -7,14 +7,11 @@ var db = require('../connection.js'),
     queries = require('../queries.js').vocabulary,
     _ = require('lodash');
 
-// TODO: compile queries
-// TODO: better model abstraction
-// TODO: with fracking cache
 module.exports = {
   getAll: function(lang, callback) {
 
     // Executing query
-    db.rows(queries.vocabulary, {lang: lang}, function(err, response) {
+    db.rows(queries.getAll, {lang: lang}, function(err, response) {
 
       // On typical error
       if (err) return callback(err);

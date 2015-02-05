@@ -10,6 +10,16 @@
  * of this.
  */
 
+// Exposing structure
 module.exports = {
-  book: {}
+  en: {
+    book: null,
+    vocabulary: null,
+    documents: null
+  },
+  fr: {
+    book: null,
+    vocabulary: null,
+    documents: null
+  }
 };

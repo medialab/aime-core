@@ -4,18 +4,11 @@
  *
  */
 var db = require('../connection.js'),
-    cache = require('../cache.js'),
     queries = require('../queries.js').book,
-    getIn = require('../../lib/helpers.js').getIn,
     _ = require('lodash');
 
 module.exports = {
   getAll: function(lang, callback) {
-
-    // Checking cache
-    var book = getIn(cache, ['book', lang]);
-    if (book)
-      return callback(null, book);
 
     // Executing query
     db.rows(queries.getAll, {lang: lang}, function(err, response) {
@@ -46,9 +39,6 @@ module.exports = {
           return rc;
         })
         .value();
-
-      // Caching
-      cache.book[lang] = data;
 
       // Returning
       return callback(null, data);

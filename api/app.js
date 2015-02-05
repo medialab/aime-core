@@ -32,6 +32,9 @@ function loadController(router, routes) {
     if (route.validate)
       args.push(middlewares.validate(route.validate));
 
+    if (route.cache)
+      args.push(middlewares.cache(route.cache));
+
     args.push(route.action);
 
     router.all.apply(router, args);
