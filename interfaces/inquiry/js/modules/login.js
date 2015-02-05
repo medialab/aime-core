@@ -11,6 +11,11 @@
     $('#login').replaceWith(maze.engine.template.login());
     var box = $('#login');
 
+    // prevent form submission
+    $('#loginForm').submit(function(e){
+      e.preventDefault();
+    });
+
     /*
       [authenticate] events handling
     */
@@ -37,6 +42,10 @@
         case maze.AUTHORIZATION_FAILED:
           maze.toast('error please try again');
           box.show();
+          break;
+        case maze.AUTHORIZATION_AUTHORIZED:
+          _self.dispatchEvent('scene__initialize');
+          box.hide();
           break;
         default:
           box.hide();

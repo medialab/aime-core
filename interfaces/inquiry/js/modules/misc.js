@@ -35,8 +35,10 @@
     header.on('click', '.toggle_menu', this.triggers.events.toggle );
     
     // activate logout
-    header.on('click', '.logout', function(e) {
-      _self.dispatchEvent('authorization', maze.AUTHORIZATION_REQUIRED);
+    header.on('click', '.signout', function(e) {
+      e.preventDefault();
+      maze.domino.controller.request('logout');
+
     });
 
   };

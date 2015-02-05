@@ -1559,7 +1559,7 @@
               console.log('logout error during logout');
             // logout anyway
             this.update('authorization', maze.AUTHORIZATION_REQUIRED);
-
+            location.href = '/';
           },
           error: maze.domino.errorHandler
         },
