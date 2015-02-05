@@ -11,5 +11,7 @@
  */
 
 module.exports = {
-  book: {}
+  book: {},
+  vocabulary: {},
+  document: {}
 };
