@@ -8,6 +8,9 @@
 module.exports = function(express) {
 
   express.response.ok = function(result) {
+    if (this.cache)
+      this.cache = result;
+
     return this.json({
       status: 'ok',
       result: result
