@@ -92,7 +92,7 @@
     Handlebars.registerHelper('decorate_lite', function(text) {
       if(typeof text == "undefined")
         return '';
-      return MarkdownParser(text)
+      return text
         .replace(/\[[^\]]*\]/g,function(s){
           return "<span class='modes'>" + s.replace(/[^\w\[·\.\-\]]/g,'').replace(/[·\.\-]/g,'&middot;') + "</span>"
         }).replace(/[A-ZÀÁÂÈÉÊÌÍÎÏÇÒÓÔŒÙÚÛ][A-ZÀÁÂÈÉÊÌÍÎÏÇÒÓÔŒÙÚÛ]+/g,function(s){
