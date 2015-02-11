@@ -11,6 +11,10 @@
       "reference": "ref"
     }
   },
+  "biblib": {
+    "host": "http://biblio_manager",
+    "corpus": "aime_prod"
+  },
   "dbs": {
     "mysql": {
       "host": "localhost",
