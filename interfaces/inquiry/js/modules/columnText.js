@@ -154,7 +154,7 @@
 
     */
     this.triggers.events.text_matches_highlight = function( controller, event ){
-        var matches = event.data,
+        var matches = event.data.ids,
             contents = controller.get('data_bookContents'),
             query = controller.get('scene_query'),
             paragraph,
@@ -165,6 +165,26 @@
 
         maze.log('text_matches_highlight:', matches.length, 'matches found');
 
+        for(var i=0; i < matches.length; i++){
+            var el = $(document.getElementById(matches[i]));
+            if(!el.length)
+                continue;
+            // console.log('elemento', el, el.length);
+            if(el.hasClass('paragraph')) {
+                var subtitle = el.addClass('match')
+                    .closest(".subtitle").addClass("match");
+
+                subtitle.closest(".chapter").addClass("match");
+
+                console.log('el position', el.index(), el.siblings('.paragraph').length, subtitle[0].id)
+                // if( typeof _omissis[ subheading.attr('id') ] == "undefined" )
+                //         _omissis[ subheading.attr('id') ] = subheading.find(".paragraph");
+
+            }
+
+        }
+        _self.show({delay:50});
+        return;
         for( var i in matches ){
             var el = $( document.getElementById( matches[i].id ) ),
                 content = maze.fn.grab( contents, function(e){ return e.id == matches[i].id; }).content,

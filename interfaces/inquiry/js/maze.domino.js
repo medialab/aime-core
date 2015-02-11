@@ -193,7 +193,7 @@
           id: 'data_search_bookIdsArray',
           description: 'The array of the IDs of the chapters matching current scene_query',
           dispatch: 'data_bookIdsMatches_updated',
-          type: [ 'string' ],
+          type: [ 'number' ],
           value: []
         },
 
@@ -1371,41 +1371,10 @@
           triggers: 'fill_search', // search ONLY
           method: function(e) {
             console.log('%c query ', 'background-color: gold', e.data.query)
-            var services = [
-              {
-                service: 'search_book',
-                shortcuts:{
-                  query: e.data.query
-                }
-              },
-              // {
-              //   service: 'get_vocabulary',
-              //   query: e.data.query
-              // },
-              // {
-              //   service: 'get_documents',
-              //   query: e.data.query
-              // },
-              // {
-              //   service: 'get_contributions',
-              //   query: e.data.query,
-              //   //limit: 20
-              // }
-            ];
 
-            this.request(services, {
-              success: function() {
-                maze.domino.controller.dispatchEvent('unlock');
-
-                if(   maze.domino.controller.get('data_search_bookIdsArray').length +
-                      maze.domino.controller.get('data_vocIdsArray').length +
-                      maze.domino.controller.get('data_contIdsArray').length +
-                      maze.domino.controller.get('data_docIdsArray').length == 0 ){
-                  maze.toast( maze.i18n.translate('no results found' ),{stayTime:3000} );
-                  this.log( 'no results found' );
-                }
-
-                maze.domino.controller.dispatchEvent('scrolling_text sticky_show');
+            this.request('search_book', {
+              shortcuts:{
+                query: e.data.query
               }
             });
           }
@@ -1626,27 +1595,24 @@
           url: maze.urls.search_book,
           description: 'The service that search for matching chapter. Note that both a query param must be present!! THis will NOT modify IdsArray for chapter',
           before: function(params, xhr) {
-            if ( typeof params.query != "string" ){
-              return false;
-            };
             xhr.withCredentials = true;
           },
-          data: function(params) {
-            var p = params || {},
-                data = {
-                  
-                  query: p.query
-                };
+          success: function(data, params) {
+            this.update('data_search_bookIdsArray', data.result.book);
 
-            return data;
-          }, success: function(data, params) {
-            var idsArray = [];
-            // data_search_bookIdsArray
-            for( var i in data ){
-              idsArray.push( data[i].id );
-            }
-            this.update( 'data_search_bookIdsArray', idsArray );
-            maze.domino.controller.dispatchEvent('text_matches_highlight', data);
+            setTimeout(function(){
+              maze.domino.controller.dispatchEvent('text_matches_highlight', {ids: data.result.book});
+
+              if( maze.domino.controller.get('data_search_bookIdsArray').length +
+                  maze.domino.controller.get('data_vocIdsArray').length +
+                  maze.domino.controller.get('data_contIdsArray').length +
+                  maze.domino.controller.get('data_docIdsArray').length == 0 ){
+                    maze.toast( maze.i18n.translate('no results found' ),{stayTime:3000} );
+                    maze.domino.controller.log( 'no results found' );
+                  }
+              maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
+            }, 100);  
+
           }
         },
         { id: 'get_vocabulary',
