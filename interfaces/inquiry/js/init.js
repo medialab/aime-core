@@ -11,6 +11,7 @@ $(document).ready(function() {
     get_book: '/book',
     get_vocabulary: '/voc',
     get_documents: '/doc',
+    search_book: '/inquiry/search/::query',
 
     list_comments: 'documentItems/items',
     get_comments: 'documentItems/items',
@@ -31,7 +32,7 @@ $(document).ready(function() {
     save_vocabulary: 'vocabItems/items',
 
     
-    search_book: 'bookItems/items',
+    // search_book: 'bookItems/items',
     fetch_book: 'bookItems/items',
     save_book: 'bookItems/items',
 
