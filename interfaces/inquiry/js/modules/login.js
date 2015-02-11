@@ -11,6 +11,11 @@
     $('#login').replaceWith(maze.engine.template.login());
     var box = $('#login');
 
+    // prevent form submission
+    $('#loginForm').submit(function(e){
+      e.preventDefault();
+    });
+
     /*
       [authenticate] events handling
     */
@@ -26,13 +31,30 @@
     /*
       listening on login requests
     */
-    this.triggers.events.auth_open_login = function(controller) {
-      console.log('there is a auth_required', box);
-      $('#login').css({display: 'block'})//();
-    };
 
-    this.triggers.events.auth_failed = function(controller) {
-      maze.toast('error, error');
+    this.triggers.events.authorization__updated = function(controller, res) {
+      var level = controller.get('authorization');
+
+      switch(level) {
+        case maze.AUTHORIZATION_REQUIRED:
+          box.show();
+          break;
+        case maze.AUTHORIZATION_FAILED:
+          maze.toast('error please try again');
+          box.show();
+          break;
+        case maze.AUTHORIZATION_AUTHORIZED:
+          _self.dispatchEvent('scene__initialize');
+          box.hide();
+          break;
+        default:
+          box.hide();
+          break;
+      }
+      
+      console.log(res);
+
+      
     }
   };
 })();

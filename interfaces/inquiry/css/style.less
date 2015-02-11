@@ -34,9 +34,10 @@
 @gray_oooo: #ddd;
 @gray_ooooo: rgb(170, 170, 170);
 
+
 @import 'fonts.less';
 @import 'mixins.less';
-
+@import 'font-awesome.less';
 
 // Prevent overscroll
 html, body{
@@ -451,94 +452,7 @@ ul > li{
         }
       }
     }
-    // Arrows
-    // .arrows {
-
-    //  opacity: 0;
-    //  height: 0;
-    //  .transition(opacity, .35s);
-
-    //  .arrow {
-    //    position: absolute;
-    //    top: 40%;
-    //    width: 30px; height: 30px;
-    //    -moz-border-radius: 16px; border-radius: 16px;
-    //    cursor: display;
-    //    color: lighten(@gray, 40%);
-    //    background: @gray_alpha;
-
-    //    cursor: pointer;
-    //    text-align: center;
-    //    line-height: 30px;
-
-    //    font-family: FontAwesome;
-    //    -webkit-font-smoothing: antialiased;
-    //    font-weight: normal;
-    //    font-style: normal;
-    //    font-size: 24px;
-
-    //    &.left {
-    //      display: none;
-    //      left: 5px;
-    //      &:before {
-    //        content: "\f104";
-    //      }
-    //    }
-
-    //    &.right {
-    //      display: block;
-    //      right: 5px;
-    //      &:before {
-    //        content: "\F105";
-    //      }
-    //    }
-
-    //  }
-    // }
-
-    // Navigation
-    // .nav {
-    //  .nav-wrapper {
-    //    position:relative;
-    //    height: 3px;
-    //    top: -3px;
-
-    //    .placeholders {
-    //      .placeholder {
-    //        display: inline-block;
-    //        position: absolute;
-    //        width: 100%;
-    //        cursor: pointer;
-    //        height: 1px;
-    //        background-color: lighten(@gray, 50%);
-    //        background-image: url('../../images/dot-double-white.png'), url('../../images/dot-double-white.png');
-    //        background-position: left top, right top;
-    //        background-repeat: repeat-y, repeat-y;
-    //        &:hover {
-    //          background-color: @gray;
-    //          background-image: url('../../images/dot-double-white.png'), url('../../images/dot-double-white.png');
-    //          background-position: left top, right top;
-    //          background-repeat: repeat-y, repeat-y;
-    //        }
-    //        .transition(all, .35s);
-    //      }
-    //      .transition(all, .35s);
-    //    }
-
-    //    .cursor {
-    //      position:absolute;
-    //      opacity: 1 !important;
-    //      height: 1px;
-    //      left: 0;
-    //      width: 100%;
-
-    //      background-color: @red;
-    //      background-image: url('../../images/dot-double-white.png'), url('../../images/dot-double-white.png');
-    //      background-position: left top, right top;
-    //      background-repeat: repeat-y, repeat-y;
-    //    }
-    //  }
-    // }
+    
 
     // Style
     .paragraph {
@@ -555,6 +469,7 @@ ul > li{
         -webkit-font-feature-settings: "ss01", "ss03", "liga", "kern";
         -o-font-feature-settings: "ss01", "ss03", "liga", "kern";
       }
+
       &.annotated .content.unselectable,
       &.annotated .media.unselectable div{
         background-color: @cyan_alpha !important;
@@ -1018,7 +933,8 @@ ul > li{
       .paragraph {
         display: block;
         >div {
-          padding: 5px 0 11px 0;
+          padding: 0px 0 8px 0;
+          margin-bottom: 10px;
           background: url('../../images/dot-single-red.png') left bottom repeat-x;
         }
         >span {

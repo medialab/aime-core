@@ -1,45 +1,13 @@
 $(document).ready(function() {
   var maze = window.maze || {};
 
-  maze.ACTION_NOTEBOOK = 'NOTEBOOK';
-  maze.ACTION_SET_COMM_LEADER = 'CONTRIB';
-
-  maze.ACTION_CONTRIBUTION_BOOKMARK = 'bookmark';
-  maze.ACTION_CONTRIBUTION_GET = 'get';
-  maze.ACTION_CONTRIBUTION_ADD = 'add';
-  maze.ACTION_CONTRIBUTION_EDIT = 'edit';
-  maze.ACTION_CONTRIBUTION_REMOVE = 'remove';
-  maze.ACTION_CONTRIBUTION_MAKE_PUBLIC = 'make-public';
-  maze.ACTION_CONTRIBUTION_ADD_SLIDE = 'add-slide';
-
-  maze.TYPE_CONTRIBUTION_TITLE = 0;
-  maze.TYPE_CONTRIBUTION_SLIDE = 1;
-  maze.TYPE_CONTRIBUTION_OBJECTION = 2;
-  maze.TYPE_CONTRIBUTION_CITATION = 3;
-
-  maze.TYPE_NOTEBOOK_STAR = 'STAR';
-  maze.TYPE_NOTEBOOK_ADD = 'ADD';
-  maze.TYPE_NOTEBOOK_EDIT = 'EDIT';
-  maze.TYPE_NOTEBOOK_DELETE = 'DELETE';
-
-  maze.DELAY_MAX = 800;
-  maze.DELAY_BETWEEN_SWIPE = 70;
-
-  maze.STATUS_STARTUP = 'STARTUP';
-  maze.STATUS_CALLING = 'CALLING';
-  maze.STATUS_READY = 'READY';
-  maze.STATUS_BUSY = 'BUSY';
-
-
-  maze.user = 'anonymous';
-  maze.today = Date();
-  maze.role = 'guest';
-  maze.reference_corpus = 'biblib';
-  maze.i18n.lang = "en";
-
+  // load settings from var
+  maze.settings = CONFIG;
+  
+  // maze urls
   maze.urls = {
     login: '/login',
-
+    logout: '/logout',
     get_book: '/book',
     get_vocabulary: '/voc',
     get_documents: '/doc',
@@ -79,25 +47,12 @@ $(document).ready(function() {
     storage: '/storage'
   };
   
+  // enrich maze.urls 
+  for(i in maze.urls){
+    maze.urls[i] = maze.settings.endpoint + maze.urls[i];
+  };
 
   
-
-  
-
-  maze.columns = {};
-
-  /*
-  The hash for the "current" element id
-  (e.g. on scroll)
-  */
-  maze.cursor = {};
-  maze.cursor.chapter = false;
-  maze.cursor.subheading = false;
-
-  /*
-  The hash for timeout sequences
-  */
-  maze.timer = {};
 
   maze.init = function(){
 
@@ -161,13 +116,7 @@ $(document).ready(function() {
     });
   };
 
-  // load settings from var
-  maze.settings = CONFIG;
 
-  // enrich maze.urls 
-  for(i in maze.urls){
-    maze.urls[i] = maze.settings.endpoint + maze.urls[i];
-  }
 
   maze.init();
   

@@ -12,6 +12,26 @@
     clone: false
   });
 
+  // error handling helper for domino services
+  // 401 (launch event connect to)
+  maze.domino.errorHandler = function(message, xhr, params) {
+    console.log('maze.domino.errorHandler', message, params, xhr.status);
+    switch(xhr.status) {
+      case 401:
+        maze.domino.controller.update('authorization', maze.AUTHORIZATION_REQUIRED);
+        break;
+      case 403:
+        maze.domino.controller.update('authorization', maze.AUTHORIZATION_FAILED);
+        break;
+      default:
+        maze.toast('connection error', {sticky:true}); 
+        break;
+    }
+  }
+
+
+  
+
   maze.domino.factory = function(fn){
     return function(options) {
       var self = this,  // TODO check SCOPE
@@ -42,6 +62,20 @@
           maze.STATUS_CALLING,
           maze.STATUS_READY,
           maze.STATUS_BUSY
+        ].indexOf(v);
+      }
+    });
+
+  if (!domino.struct.isValid('maze.authorization'))
+    domino.struct.add({
+      id: 'maze.authorization',
+      struct: function(v) {
+        return !!~[
+          maze.AUTHORIZATION_UNKNOWN,
+          maze.AUTHORIZATION_REQUIRED,
+          maze.AUTHORIZATION_AUTHORIZED,
+          maze.AUTHORIZATION_FAILED,
+          maze.AUTHORIZATION_SIGNUP,
         ].indexOf(v);
       }
     });
@@ -114,10 +148,11 @@
          * **********************
          */
         {
-          id: 'api_YiiCRSFToken',
-          description: 'The API token.',
-          type: 'string',
-          value: maze.YII_CSRF_TOKEN
+          id: 'authorization',
+          description: 'The authorization level: LIMBO, AUTHORIZED, UNAUTHORIZED, SIGNING_UP',
+          dispatch: 'authorization__updated',
+          type: 'maze.authorization',
+          value: maze.AUTHORIZATION_UNKNOWN
         },
 
         /**
@@ -501,10 +536,6 @@
          * LOGIN HACKS
          * ******************
          */
-        {
-          triggers: 'auth_open_login',
-          description: 'Popup the login panel'
-        },
         {
           triggers: 'auth_success',
           description: 'Close the login panel and start over'
@@ -1507,12 +1538,30 @@
           },
           url: maze.urls.login,
           success: function(data, params) {
-            console.log('login success', message, xml, params);
+            if(data.status="ok")
+              this.update('authorization', maze.AUTHORIZATION_AUTHORIZED);
+
+            console.log('%c login success ', 'background: green; color: white');
+            // reload user... header module
           },
-          error: function(message, xml, params) {
-            console.log('login failed', message, xml, params);
-            maze.domino.controller.dispatchEvent('auth_failed');
-          }
+          error: maze.domino.errorHandler
+        },
+        { id: 'logout',
+          type: 'POST',
+          dataType: 'json',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.logout,
+          success: function(data, params) {
+            console.log('%c logout success ', 'background: green; color: white');
+            if(data.status != "ok")
+              console.log('logout error during logout');
+            // logout anyway
+            this.update('authorization', maze.AUTHORIZATION_REQUIRED);
+            location.href = '/';
+          },
+          error: maze.domino.errorHandler
         },
         { id: 'get_book',
           type: 'GET',
@@ -1541,10 +1590,7 @@
             return data;
 
           },
-          error: function(message, xml, params) {
-            console.log('get_book failed', message, xml, params);
-            maze.domino.controller.dispatchEvent('auth_open_login');
-          },
+          error: maze.domino.errorHandler,
           success: function(data, params) {
             var p = params || {},
                 result = maze.engine.parser.book(data),
@@ -1585,7 +1631,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken'),
+                  
                   query: p.query
                 };
 
@@ -1618,7 +1664,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken')
+                  
                 };
 
             if (p.ids)
@@ -1674,7 +1720,8 @@
               if (p.callback)
                 setTimeout(p.callback, 0);
             //}
-          }
+          },
+          error: maze.domino.errorHandler,
         },
         { id: 'get_documents',
           type: 'GET',
@@ -1771,7 +1818,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken')
+                  
                 };
 
             if (p.id)
@@ -1848,7 +1895,7 @@
                   action: 'add-bookmark',
                   ref_id: selection.id.replace(/[^\d]/g,''),
                   ref_content: Base64.encode(selection.content),
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken')
+                  
                 };
 
             if( selection.column == maze.TEXT )
@@ -1980,7 +2027,7 @@
                 id = p.id ||
                   this.die('"undefined" contribution id'),
                 data = {
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken'),
+                  
                   action: 'edit-objection',
                   objection: Base64.encode(p.objection),
                   content: Base64.encode(p.content),
@@ -2038,7 +2085,7 @@
             var data = {
                   action:'remove',
                   id: params.id,
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken')
+                  
                 };
 
             if (!('id' in params))
@@ -2222,7 +2269,7 @@
             var p = params || {},
                 data = {
                   action: 'publish',
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken'),
+                  
                   id: p.id || this.die('missing parameter "id"')
                 };
 
@@ -2250,7 +2297,7 @@
             var p = params || {},
                 data = {
                   action: 'unpublish',
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken'),
+                  
                   id: p.id || this.die('missing parameter "id"')
                 };
 
@@ -2278,7 +2325,7 @@
             var p = params || {},
                 data = {
                   action: 'makepublic',
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken'),
+                  
                   id: p.id || this.die('missing parameter "id"')
                 };
 
@@ -2306,7 +2353,7 @@
             var p = params || {},
                 data = {
                   action: 'makemoderated',
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken'),
+                  
                   id: p.id || this.die('missing parameter "id"')
                 };
 
@@ -2334,7 +2381,7 @@
             var p = params || {},
                 data = {
                   action: 'add-slide',
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken'),
+                  
                   id: p.id || this.die('missing parameter "id"')
                 };
 
@@ -2367,7 +2414,7 @@
 
             var data = {
               action: 'edit-slide',
-              YII_CSRF_TOKEN: this.get('api_YiiCRSFToken'),
+              
               id: p.id || this.die('missing parameter "id"'),
               content: Base64.encode(p.content || ""), //this.die('missing parameter "content"')),
               ref_url: p.ref_url || "",
@@ -2404,7 +2451,7 @@
             var p = params || {},
                 data = {
                   action: 'remove-slide',
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken'),
+                  
                   id: p.id || this.die('missing parameter "id"')
                 };
 
@@ -2432,7 +2479,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken')
+                  
                 };
 
             return data;
@@ -2449,7 +2496,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken')
+                  
                 };
 
             return data;
@@ -2492,7 +2539,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken')
+                  
                 };
 
             return data;
@@ -2536,7 +2583,7 @@
             var p = params || {},
               // here we will ask to only get 'notebook' contribs, aka those bookmarked
                 data = {
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken')
+                  
                 };
 
             return data;
@@ -2578,7 +2625,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  YII_CSRF_TOKEN: this.get('api_YiiCRSFToken'),
+                  
                   lang: maze.i18n.lang
                 };
 

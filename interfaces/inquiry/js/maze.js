@@ -2,6 +2,64 @@
 	'use strict';
 
 	window.maze = window.maze || {};
+
+
+  maze.ACTION_NOTEBOOK = 'NOTEBOOK';
+  maze.ACTION_SET_COMM_LEADER = 'CONTRIB';
+
+  maze.ACTION_CONTRIBUTION_BOOKMARK = 'bookmark';
+  maze.ACTION_CONTRIBUTION_GET = 'get';
+  maze.ACTION_CONTRIBUTION_ADD = 'add';
+  maze.ACTION_CONTRIBUTION_EDIT = 'edit';
+  maze.ACTION_CONTRIBUTION_REMOVE = 'remove';
+  maze.ACTION_CONTRIBUTION_MAKE_PUBLIC = 'make-public';
+  maze.ACTION_CONTRIBUTION_ADD_SLIDE = 'add-slide';
+
+  maze.TYPE_CONTRIBUTION_TITLE = 0;
+  maze.TYPE_CONTRIBUTION_SLIDE = 1;
+  maze.TYPE_CONTRIBUTION_OBJECTION = 2;
+  maze.TYPE_CONTRIBUTION_CITATION = 3;
+
+  maze.TYPE_NOTEBOOK_STAR = 'STAR';
+  maze.TYPE_NOTEBOOK_ADD = 'ADD';
+  maze.TYPE_NOTEBOOK_EDIT = 'EDIT';
+  maze.TYPE_NOTEBOOK_DELETE = 'DELETE';
+
+  maze.DELAY_MAX = 800;
+  maze.DELAY_BETWEEN_SWIPE = 70;
+
+  maze.STATUS_STARTUP = 'STARTUP';
+  maze.STATUS_CALLING = 'CALLING';
+  maze.STATUS_READY = 'READY';
+  maze.STATUS_BUSY = 'BUSY';
+
+  maze.AUTHORIZATION_UNKNOWN = 'AUTHORIZATION_UNKNOWN';
+  maze.AUTHORIZATION_AUTHORIZED = 'AUTHORIZATION_AUTHORIZED';
+  maze.AUTHORIZATION_REQUIRED = 'AUTHORIZATION_REQUIRED';
+  maze.AUTHORIZATION_FAILED = 'AUTHORIZATION_FAILED';
+  maze.AUTHORIZATION_SIGNUP = 'AUTHORIZATION_SIGNUP';
+
+  maze.user = 'anonymous';
+  maze.today = Date();
+  maze.role = 'guest';
+  maze.reference_corpus = 'biblib';
+  
+
+  maze.columns = {};
+
+  /*
+  The hash for the "current" element id
+  (e.g. on scroll)
+  */
+  maze.cursor = {};
+  maze.cursor.chapter = false;
+  maze.cursor.subheading = false;
+
+  /*
+  The hash for timeout sequences
+  */
+  maze.timer = {};
+
 	maze.vars = maze.vars || {};
 	maze.urls = maze.urls || {};
 	maze.timers = {};
@@ -317,7 +375,17 @@
 	};
 
 	maze.fn.get_cookie = function (e){
-		var t=null;if(document.cookie&&document.cookie!=""){var n=document.cookie.split(";");for(var r=0;r<n.length;r++){var i=jQuery.trim(n[r]);if(i.substring(0,e.length+1)==e+"="){t=decodeURIComponent(i.substring(e.length+1));break}}}return t
+		var t=null;
+		if(document.cookie&&document.cookie!=""){
+			var n=document.cookie.split(";");
+			for(var r=0;r< n.length;r++) {
+				var i=jQuery.trim(n[r]);
+				if(i.substring(0,e.length+1)==e+"=") {
+					t=decodeURIComponent(i.substring(e.length+1));
+					break}
+				}
+			}
+		return t;
 	};
 
 	maze.fn.wait = function( fn, options ){
@@ -381,7 +449,7 @@
 	    ====
 
 	*/
-	maze.i18n = { lang:'fr'};
+	maze.i18n = { lang:'en'};
 	maze.i18n.translate = function( key, lang ){
 		if( typeof lang != "undefined" )
 			maze.i18n.lang = lang;
