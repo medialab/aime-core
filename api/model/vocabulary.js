@@ -5,33 +5,39 @@
  */
 var db = require('../connection.js'),
     queries = require('../queries.js').vocabulary,
+    nested = require('../helpers.js').nested,
     _ = require('lodash');
 
 module.exports = {
-  getAll: function(lang, callback) {
+  getByIds: function(ids, lang, callback) {
+
+    // Casting to int for cypher to work
+    ids = ids.map(function(id) {
+      return +id;
+    });
 
     // Executing query
-    db.rows(queries.getAll, {lang: lang}, function(err, response) {
+    db.rows(queries.getByIds, {ids: ids}, function(err, result) {
 
       // On typical error
       if (err) return callback(err);
 
-      // On REST error
-      if (response.errors.length) return callback(response.errors[0]);
+      // Treating incoming data
+      var data = nested(result);
+
+      return callback(null, data);
+    });
+  },
+  getAll: function(lang, callback) {
+
+    // Executing query
+    db.rows(queries.getAll, {lang: lang}, function(err, result) {
+
+      // On typical error
+      if (err) return callback(err);
 
       // Treating incoming data
-      var data = _(response.results[0].data)
-        .map(function(line) {
-          var v = line.row[0],
-              rv = _.extend({id: v.id}, v.properties);
-
-          rv.children = line.row[1].map(function(p) {
-            return _.extend({id: p.id}, p.properties);
-          });
-
-          return rv;
-        })
-        .value();
+      var data = nested(result);
 
       return callback(null, data);
     });

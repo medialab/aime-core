@@ -14,6 +14,9 @@ var host = 'http://' + config.host + ':' + config.port,
 // Helper Forge
 function makeHelper(dataContent) {
   return function(query, params, callback) {
+    if (!query)
+      throw Error('api.connection.' + [dataContent] + ': inexistant query.');
+
     if (typeof params === 'function') {
       callback = params;
       params = params || {};
@@ -33,12 +36,29 @@ function makeHelper(dataContent) {
       }
     );
 
-    db.call(operation, callback);
+    db.call(operation, function(err, response) {
+      if (err) return callback(err);
+
+      var error = response.errors[0];
+
+      if (error) {
+        var e = new Error('rest-error');
+        e.original = error;
+        return callback(e);
+      }
+
+      var data = response.results[0].data.map(function(d) {
+        return d[dataContent];
+      });
+
+      return callback(null, data);
+    });
   };
 }
 
 // Defining our own ways to invoke the api
 db.rows = makeHelper('row');
 db.graph = makeHelper('graph');
+db.rest = makeHelper('rest');
 
 module.exports = db;
