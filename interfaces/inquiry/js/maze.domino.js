@@ -1370,24 +1370,27 @@
         {
           triggers: 'fill_search', // search ONLY
           method: function(e) {
+            console.log('%c query ', 'background-color: gold', e.data.query)
             var services = [
               {
                 service: 'search_book',
-                query: e.data.query
+                shortcuts:{
+                  query: e.data.query
+                }
               },
-              {
-                service: 'get_vocabulary',
-                query: e.data.query
-              },
-              {
-                service: 'get_documents',
-                query: e.data.query
-              },
-              {
-                service: 'get_contributions',
-                query: e.data.query,
-                //limit: 20
-              }
+              // {
+              //   service: 'get_vocabulary',
+              //   query: e.data.query
+              // },
+              // {
+              //   service: 'get_documents',
+              //   query: e.data.query
+              // },
+              // {
+              //   service: 'get_contributions',
+              //   query: e.data.query,
+              //   //limit: 20
+              // }
             ];
 
             this.request(services, {
@@ -1618,15 +1621,15 @@
           }
         },
         { id: 'search_book',
-          type: 'POST',
+          type: 'GET',
           dataType: 'json',
-          url: maze.urls.get_book,
+          url: maze.urls.search_book,
           description: 'The service that search for matching chapter. Note that both a query param must be present!! THis will NOT modify IdsArray for chapter',
-          before: function( params ){
+          before: function(params, xhr) {
             if ( typeof params.query != "string" ){
-              // TODO ERROR GRAVISSIMO. What are you doing?
-              return false
-            }
+              return false;
+            };
+            xhr.withCredentials = true;
           },
           data: function(params) {
             var p = params || {},
