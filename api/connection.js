@@ -14,6 +14,9 @@ var host = 'http://' + config.host + ':' + config.port,
 // Helper Forge
 function makeHelper(dataContent) {
   return function(query, params, callback) {
+    if (!query)
+      throw Error('api.connection.' + [dataContent] + ': inexistant query.');
+
     if (typeof params === 'function') {
       callback = params;
       params = params || {};
@@ -37,7 +40,9 @@ function makeHelper(dataContent) {
       if (err) return callback(err);
 
       var error = response.errors[0],
-          data = response.results[0].data;
+          data = response.results[0].data.map(function(d) {
+            return d[dataContent];
+          });
 
       if (error) {
         var e = new Error('rest-error');

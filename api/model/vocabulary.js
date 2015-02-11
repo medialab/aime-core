@@ -5,9 +5,16 @@
  */
 var db = require('../connection.js'),
     queries = require('../queries.js').vocabulary,
+    nested = require('../helpers.js').nested,
     _ = require('lodash');
 
 module.exports = {
+  getByIds: function(ids) {
+
+    db.rows(queries.getByIds, {ids: ids.join(',')}, function(err, result) {
+
+    });
+  },
   getAll: function(lang, callback) {
 
     // Executing query
@@ -17,18 +24,7 @@ module.exports = {
       if (err) return callback(err);
 
       // Treating incoming data
-      var data = _(result)
-        .map(function(line) {
-          var v = line.row[0],
-              rv = _.extend({id: v.id}, v.properties);
-
-          rv.children = line.row[1].map(function(p) {
-            return _.extend({id: p.id}, p.properties);
-          });
-
-          return rv;
-        })
-        .value();
+      var data = nested(result);
 
       return callback(null, data);
     });

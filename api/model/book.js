@@ -5,6 +5,7 @@
  */
 var db = require('../connection.js'),
     queries = require('../queries.js').book,
+    nested = require('../helpers.js').nested,
     _ = require('lodash');
 
 module.exports = {
@@ -17,25 +18,7 @@ module.exports = {
       if (err) return callback(err);
 
       // Treating incoming data
-      var data = _(result)
-        .map(function(line) {
-          var c = line.row[0].chapter,
-              rc = _.extend({id: c.id}, c.properties);
-
-          rc.children = line.row[0].subheadings.map(function(sub) {
-            var s = sub.subheading,
-                rs = _.extend({id: s.id}, s.properties);
-
-            rs.children = sub.paragraphs.map(function(p) {
-              return _.extend({id: p.id}, p.properties);
-            });
-
-            return rs;
-          });
-
-          return rc;
-        })
-        .value();
+      var data = nested(result);
 
       // Returning
       return callback(null, data);

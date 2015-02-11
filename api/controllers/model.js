@@ -6,7 +6,8 @@
  */
 var book = require('../model/book.js'),
     voc = require('../model/vocabulary.js'),
-    doc = require('../model/document.js');
+    doc = require('../model/document.js'),
+    misc = require('../model/misc.js');
 
 module.exports = [
   {
@@ -39,6 +40,19 @@ module.exports = [
         if (err) return res.serverError();
 
         return res.ok(result);
+      });
+    }
+  },
+  {
+    url: '/search',
+    validate: {
+      query: 'string'
+    },
+    action: function(req, res) {
+      misc.search(req.param('query'), function(err, ids) {
+        if (err) return res.serverError();
+
+        return res.ok(ids);
       });
     }
   }
