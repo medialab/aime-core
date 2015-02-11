@@ -6,8 +6,8 @@ RETURN {vocabulary: {id: id(v), properties: v}, children: collect(paragraphs)} A
 ORDER BY item.vocabulary.properties.title;
 
 // name: getByIds
-// Retrieve a single vocabulary entry by id
+// Retrieve one or more vocabulary entries by id
 START n=node({ids})
 MATCH (n)-[r:HAS]-(p:Paragraph)
 WITH n, r, {id: id(p), properties: p} AS paragraphs ORDER BY r.order
-RETURN {vocabulary: {id: id(v), properties: v}, children: collect(paragraphs)}
+RETURN {vocabulary: {id: id(n), properties: n}, children: collect(paragraphs)}

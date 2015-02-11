@@ -39,16 +39,17 @@ function makeHelper(dataContent) {
     db.call(operation, function(err, response) {
       if (err) return callback(err);
 
-      var error = response.errors[0],
-          data = response.results[0].data.map(function(d) {
-            return d[dataContent];
-          });
+      var error = response.errors[0];
 
       if (error) {
         var e = new Error('rest-error');
         e.original = error;
         return callback(e);
       }
+
+      var data = response.results[0].data.map(function(d) {
+        return d[dataContent];
+      });
 
       return callback(null, data);
     });

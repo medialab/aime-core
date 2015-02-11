@@ -6,8 +6,7 @@
  */
 var book = require('../model/book.js'),
     voc = require('../model/vocabulary.js'),
-    doc = require('../model/document.js'),
-    misc = require('../model/misc.js');
+    doc = require('../model/document.js');
 
 module.exports = [
   {
@@ -15,7 +14,7 @@ module.exports = [
     cache: 'book',
     action: function(req, res) {
       book.getAll('en', function(err, result) {
-        if (err) return res.serverError();
+        if (err) return res.serverError(err);
 
         return res.ok(result);
       });
@@ -26,9 +25,19 @@ module.exports = [
     cache: 'vocabulary',
     action: function(req, res) {
       voc.getAll('en', function(err, result) {
-        if (err) return res.serverError();
+        if (err) return res.serverError(err);
 
         return res.ok(result);
+      });
+    }
+  },
+  {
+    url: '/voc/:ids',
+    action: function(req, res) {
+      voc.getByIds(req.param('ids').split(','), 'en', function(err, vocs) {
+        if (err) return res.serverError(err);
+
+        return res.ok(vocs.length > 1 ? vocs : vocs[0]);
       });
     }
   },
@@ -37,22 +46,9 @@ module.exports = [
     cache: 'documents',
     action: function(req, res) {
       doc.getAll('en', function(err, result) {
-        if (err) return res.serverError();
+        if (err) return res.serverError(err);
 
         return res.ok(result);
-      });
-    }
-  },
-  {
-    url: '/search',
-    validate: {
-      query: 'string'
-    },
-    action: function(req, res) {
-      misc.search(req.param('query'), function(err, ids) {
-        if (err) return res.serverError();
-
-        return res.ok(ids);
       });
     }
   }

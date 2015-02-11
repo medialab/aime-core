@@ -9,7 +9,7 @@ var db = require('../connection.js'),
     _ = require('lodash');
 
 module.exports = {
-  search: function(query, callback) {
+  inquirySearch: function(query, callback) {
 
     // Formatting query
     query = "(?i).*" + query + ".*";
@@ -18,9 +18,9 @@ module.exports = {
     db.rows(queries.searchAllModels, {query: query}, function(err, result) {
       if (err) return callback(err);
 
-      return callback(null, result.map(function(e) {
-        return e[0];
-      }))
+      return callback(null, result.map(function(r) {
+        return r[0];
+      }));
     });
   }
 };

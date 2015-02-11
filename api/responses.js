@@ -67,7 +67,8 @@ module.exports = function(express) {
       status: 'error',
       error: {
         code: 500,
-        title: 'Internal Server Error'
+        title: 'Internal Server Error',
+        source: err
       }
     });
   };

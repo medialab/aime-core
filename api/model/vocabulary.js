@@ -9,10 +9,23 @@ var db = require('../connection.js'),
     _ = require('lodash');
 
 module.exports = {
-  getByIds: function(ids) {
+  getByIds: function(ids, lang, callback) {
 
-    db.rows(queries.getByIds, {ids: ids.join(',')}, function(err, result) {
+    // Casting to int for cypher to work
+    ids = ids.map(function(id) {
+      return +id;
+    });
 
+    // Executing query
+    db.rows(queries.getByIds, {ids: ids}, function(err, result) {
+
+      // On typical error
+      if (err) return callback(err);
+
+      // Treating incoming data
+      var data = nested(result);
+
+      return callback(null, data);
     });
   },
   getAll: function(lang, callback) {
