@@ -8,6 +8,19 @@ var model = require('../model/users.js');
 
 module.exports = [
 
+  // Register
+  {
+    url: '/register',
+    validate: {
+      email: 'string',
+      password: 'string'
+    },
+    methods: ['POST'],
+    action: function(req, res) {
+
+    }
+  },
+
   // Log a user into the system
   {
     url: '/login',
