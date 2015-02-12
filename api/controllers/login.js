@@ -13,7 +13,14 @@ module.exports = [
     url: '/register',
     validate: {
       email: 'string',
-      password: 'string'
+      password: 'string',
+      name: 'string',
+      surname: 'string',
+      institution: '?string',
+      department: '?string',
+      discipline: '?string',
+      interest: '?string',
+      avatar: '?string'
     },
     methods: ['POST'],
     action: function(req, res) {

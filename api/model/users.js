@@ -26,5 +26,8 @@ module.exports = {
         results.length ? _.pick(results[0], keep) : null
       );
     });
+  },
+  create: function(params, callback) {
+
   }
 };
