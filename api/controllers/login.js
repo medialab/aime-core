@@ -24,7 +24,19 @@ module.exports = [
     },
     methods: ['POST'],
     action: function(req, res) {
+      return res.ok({not: 'implemented'});
+    }
+  },
 
+  // Activate a user
+  {
+    url: '/activate',
+    validate: {
+      token: 'string'
+    },
+    methods: ['POST'],
+    action: function(req, res) {
+      return res.ok({not: 'implemented'});
     }
   },
 
@@ -63,6 +75,27 @@ module.exports = [
       delete req.session.authenticated;
 
       return res.ok();
+    }
+  },
+
+  // Request for password retrieval
+  {
+    url: '/retrieve',
+    methods: ['POST'],
+    action: function(req, res) {
+      return res.ok({not: 'implemented'});
+    }
+  },
+
+  // Reset a user password
+  {
+    url: '/reset',
+    validate: {
+      token: 'string'
+    },
+    methods: ['POST'],
+    action: function(req, res) {
+      return res.ok({not: 'implemented'});
     }
   }
 ];
