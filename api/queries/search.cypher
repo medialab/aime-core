@@ -3,5 +3,5 @@
 MATCH (n)
 WHERE
   (n:Chapter OR n:Subheading OR (:Subheading)-[:HAS]-(n:Paragraph)) AND
-  n.markdown =~ {query}
+  n.text =~ {query}
 RETURN id(n);
