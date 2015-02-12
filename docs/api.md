@@ -60,7 +60,7 @@ Note that when the lang is not specified, the API will assume you want the defau
 * `GET /[<lang>]/<model>` - Get every items.
 * `GET /[<lang>]/<model>/id` - Get a single item.
 * `GET /[<lang>]/<model>/id,id,id` - Get a discrete list of items.
-* `GET /[<lang>]/<model>/search` - Search through items.
+* `GET /[<lang>]/<model>/search/<query>` - Search through items.
 * `POST /<lang>/<model>` - Create an item.
 * `PUT /[<lang>]/<model>/id` - Update an item.
 * `DELETE /[<lang>]/<model>/id` - Delete an item.
@@ -79,7 +79,11 @@ Note that when the lang is not specified, the API will assume you want the defau
 * `POST /login`
 * `POST /logout`
 * `POST /register`
-* `GET /[<lang>]/search`
+* `GET /[<lang>]/search/<query>`
+
+## UI-specific endpoints
+
+Sometimes, both aime interfaces might require custom routes to achieve what they need. They will be, in that case, mounted upon a precise endpoint such as `inquiry` or `crossings`.
 
 ## Legacy endpoint
 
