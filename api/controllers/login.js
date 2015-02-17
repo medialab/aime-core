@@ -91,10 +91,22 @@ module.exports = [
 
   // Request for password retrieval
   {
-    url: '/retrieve',
+    url: '/retrieve/:id',
+    validate: {
+      id: 'string'
+    },
     methods: ['POST'],
     action: function(req, res) {
-      return res.ok({not: 'implemented'});
+      var userId = +req.params.id;
+
+      model.createResetToken(userId, function(err, token) {
+        if (err) return res.serverError(err);
+
+        if (!token)
+          return res.notFound();
+        else
+          return res.ok(token);
+      });
     }
   },
 

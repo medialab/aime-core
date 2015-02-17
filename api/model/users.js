@@ -29,15 +29,15 @@ module.exports = {
       );
     });
   },
-  create: function(params, callback) {
-    var params = _.extend({}, params, {
+  create: function(properties, callback) {
+    properties = _.extend({}, properties, {
       active: false,
       type: 'user',
       token: uuid.v4(),
-      password: hash(params.password)
+      password: hash(properties.password)
     });
 
-    db.query(queries.create, {properties: params}, function(err, results) {
+    db.query(queries.create, {properties: properties}, function(err, results) {
       if (err) return callback(err);
 
       return callback(
@@ -48,6 +48,20 @@ module.exports = {
   },
   activate: function(token, callback) {
     db.query(queries.activate, {token: token}, function(err, result) {
+      if (err) return callback(err);
+
+      return callback(null, result[0]);
+    });
+  },
+  createResetToken: function(id, callback) {
+    db.query(queries.update, {id: id, properties: {reset_token: uuid.v4()}}, function(err, result) {
+      if (err) return callback(err);
+
+      return callback(null, (result[0] || {}).reset_token);
+    })
+  },
+  update: function(id, properties, callback) {
+    db.query(queries.update, {id: id, properties: properties}, function(err, result) {
       if (err) return callback(err);
 
       return callback(null, result[0]);

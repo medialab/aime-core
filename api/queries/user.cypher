@@ -13,3 +13,10 @@ MATCH (u:User {token: {token}})
 SET u.active = true
 REMOVE u.token
 RETURN u;
+
+// name: update
+// Update a single user
+MATCH (u:User)
+WHERE id(u) = {id}
+SET u += {properties}
+RETURN u;
