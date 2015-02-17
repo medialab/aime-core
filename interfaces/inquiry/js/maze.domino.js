@@ -552,7 +552,20 @@
             this.request('login', {data: res.data});
           }
         },
-
+        {
+          triggers: 'signup_require',
+          description: 'open signup process',
+          method: function() {
+            this.update('authorization', maze.AUTHORIZATION_SIGNUP);
+          }
+        },
+        {
+          triggers: 'signup_dismiss',
+          description: 'close signup process and go back to login',
+          method: function() {
+            this.update('authorization', maze.AUTHORIZATION_REQUIRED);
+          }
+        },
         {
           triggers: 'data_book_updated',
           description: 'Initialize stuff when book is loaded.',
@@ -2624,7 +2637,7 @@
         ---
     */
     maze.domino.controller.addModule( maze.domino.modules.Login,null, {id:'login'});
-    
+    maze.domino.controller.addModule( maze.domino.modules.SignUp,null, {id:'signup'});
     maze.domino.controller.addModule( maze.domino.modules.StickyText,null, {id:'sticky_text'});
     maze.domino.controller.addModule( maze.domino.modules.Location, null, {id:'location'});
     maze.domino.controller.addModule( maze.domino.modules.Resizor, null, {id:'resizor'});
