@@ -43,7 +43,7 @@ module.exports = [
       model.activate(req.params.token, function(err, user) {
         if (err) return res.serverError(err);
 
-        if (user)
+        if (!user)
           return res.notFound();
         else
           return res.ok();

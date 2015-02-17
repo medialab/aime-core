@@ -9,7 +9,7 @@ RETURN u;
 
 // name: activate
 // Activate a single user by token
-MATCH (u:User, {token: {token}})
+MATCH (u:User {token: {token}})
 SET u.active = true
 REMOVE u.token
 RETURN u;

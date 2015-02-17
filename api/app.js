@@ -23,9 +23,12 @@ responses(express);
 /**
  * Helpers
  */
-function loadController(router, routes) {
+function loadController(router, routes, auth) {
   routes.forEach(function(route) {
     var args = [route.url];
+
+    if (auth)
+      args.push(middlewares.authenticate);
 
     args.push(middlewares.checkMethod(route.methods || ['GET']));
 
@@ -80,9 +83,8 @@ loadController(loginRouter, controllers.login);
  * Authenticated Routes
  */
 var authenticatedRouter = express.Router();
-authenticatedRouter.use(middlewares.authenticate);
-loadController(authenticatedRouter, controllers.model);
-loadController(authenticatedRouter, controllers.inquiry);
+loadController(authenticatedRouter, controllers.model, true);
+loadController(authenticatedRouter, controllers.inquiry, true);
 
 /**
  * Registration

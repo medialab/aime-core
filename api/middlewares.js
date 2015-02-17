@@ -49,6 +49,9 @@ module.exports = {
 
   // Checking the given method so we can return a 405 if needed
   checkMethod: function(allowed) {
+    if (!(allowed instanceof Array))
+      allowed = [allowed];
+
     return function(req, res, next) {
       if (!~allowed.indexOf(req.method))
         return res.wrongMethod(allowed, req.method);
