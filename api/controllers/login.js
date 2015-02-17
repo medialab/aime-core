@@ -24,7 +24,7 @@ module.exports = [
     },
     methods: ['POST'],
     action: function(req, res) {
-      return model.create(req.body, function(err, user) {
+      model.create(req.body, function(err, user) {
         if (err) return res.serverError(err);
 
         return res.json(user);
@@ -34,13 +34,20 @@ module.exports = [
 
   // Activate a user
   {
-    url: '/activate',
+    url: '/activate/:token',
     validate: {
       token: 'string'
     },
     methods: ['POST'],
     action: function(req, res) {
-      return res.ok({not: 'implemented'});
+      model.activate(req.params.token, function(err, user) {
+        if (err) return res.serverError(err);
+
+        if (user)
+          return res.notFound();
+        else
+          return res.ok();
+      });
     }
   },
 
@@ -53,9 +60,9 @@ module.exports = [
     },
     methods: ['POST'],
     action: function(req, res) {
-      var email = req.param('email');
+      var email = req.body.email;
 
-      model.authenticate(email, req.param('password'), function(err, user) {
+      model.authenticate(email, req.body.password, function(err, user) {
         if (err) return res.serverError(err);
         if (!user) return res.forbidden();
 

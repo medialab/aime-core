@@ -1,8 +1,15 @@
 // name: login
 // Attempt to log a user through an email and a password hash
-MATCH (n:User {email: {email}, password: {hash}, active: {active}}) RETURN n;
+MATCH (u:User {email: {email}, password: {hash}, active: {active}}) RETURN u;
 
 // name: create
 // Creates a single user and returns it
-CREATE (n:User {properties})
-RETURN n;
+CREATE (u:User {properties})
+RETURN u;
+
+// name: activate
+// Activate a single user by token
+MATCH (u:User, {token: {token}})
+SET u.active = true
+REMOVE u.token
+RETURN u;

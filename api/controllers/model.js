@@ -34,7 +34,7 @@ module.exports = [
   {
     url: '/voc/:ids',
     action: function(req, res) {
-      voc.getByIds(req.param('ids').split(','), 'en', function(err, vocs) {
+      voc.getByIds(req.params.ids.split(','), 'en', function(err, vocs) {
         if (err) return res.serverError(err);
 
         return res.ok(vocs.length > 1 ? vocs : vocs[0]);

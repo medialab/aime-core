@@ -45,5 +45,12 @@ module.exports = {
         results.length ? _.pick(results[0], keep) : null
       );
     });
+  },
+  activate: function(token, callback) {
+    db.query(queries.activate, {token: token}, function(err, result) {
+      if (err) return callback(err);
+
+      return callback(null, result[0]);
+    });
   }
 };

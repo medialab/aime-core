@@ -8,6 +8,17 @@ var types = require('typology'),
     cache = require('./cache.js'),
     config = require('../config.json').api;
 
+// Helpers
+function param(req, key) {
+  if (key in req.body)
+    return req.body[key];
+  if (key in req.query)
+    return req.query[key];
+  if (key in req.params)
+    return req.params[key];
+};
+
+// Export
 module.exports = {
 
   // Verify the user's authentication before proceeding
@@ -21,7 +32,7 @@ module.exports = {
   // Checking cache before anything
   cache: function(name) {
     return function(req, res, next) {
-      var lang = req.param('lang') || config.defaultLang;
+      var lang = req.params.lang || config.defaultLang;
 
       if (cache[lang][name])
         return res.ok(cache[lang][name]);
@@ -53,7 +64,7 @@ module.exports = {
       // Retrieving params
       var data = {};
       for (var k in def)
-        data[k] = req.param(k);
+        data[k] = param(req, k);
 
       // Validating params
       try {
