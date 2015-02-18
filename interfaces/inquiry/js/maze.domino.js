@@ -29,7 +29,17 @@
     }
   }
 
+  maze.domino.parseQueryString = function(s) {
+    var data = {};
 
+    s.split('&').forEach(function(item) {
+      var pair = item.split('=');
+      data[decodeURIComponent(pair[0])] =
+        pair[1] ? decodeURIComponent(pair[1]) : true;
+    });
+
+    return data;
+  };
   
 
   maze.domino.factory = function(fn){
@@ -91,7 +101,8 @@
           maze.ACTION_SET_VOC_LEADER,
           maze.ACTION_SET_DOC_LEADER,
           maze.ACTION_SET_COMM_LEADER,
-          maze.ACTION_NOTEBOOK
+          maze.ACTION_NOTEBOOK,
+          maze.ACTION_ACTIVATE_ACCOUNT
         ].indexOf(v);
       }
     });
@@ -155,6 +166,13 @@
           value: maze.AUTHORIZATION_UNKNOWN
         },
 
+        {
+          id: 'user',
+          description: 'The authentified user, with all the fields we need',
+          dispatch: 'user__updated',
+          type: 'object',
+          value: {}
+        },
         /**
          * DATA RELATED PROPERTIES
          * ***********************
@@ -567,6 +585,13 @@
           }
         },
         {
+          triggers: 'signup_register',
+          description: 'send signup data',
+          method: function(res) {
+            this.request('signup', {data: res.data});
+          }
+        },
+        {
           triggers: 'data_book_updated',
           description: 'Initialize stuff when book is loaded.',
           method: function() {
@@ -827,6 +852,7 @@
           triggers: 'scene__initialize',
           description: 'load the very book and the corossings, then allow people to discover aime paltform...',
           method: function(e) {
+            
             var services = [
               {
                 service: 'get_crossings'
@@ -835,6 +861,7 @@
                 service: 'get_book'
               }
             ];
+
 
             console.log('%c@scene__initialize', 'color: green');
 
@@ -846,6 +873,17 @@
 
             // maze.domino.controller.request('get_crossings', {});
     // maze.domino.controller.request('get_book');
+          }
+        },
+        {
+          triggers: 'user__activate',
+          description: 'if there is a activation rquest via GET param, this method deals with the accoiunt activation',
+          method: function(e) {
+            this.request('activate', {
+              shortcuts:{
+                token: e.data.token
+              }
+            })
           }
         },
         {
@@ -1548,6 +1586,38 @@
           },
           error: maze.domino.errorHandler
         },
+        {
+          id: 'signup',
+          type: 'POST',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.signup,
+          success: function(data, params) {
+            console.log(arguments)
+          },
+          error: function() {
+            // start over the signup
+            console.log(arguments)
+          }
+        },
+        {
+          id: 'activate',
+          type: 'POST',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.activate,
+          success: function(data, params) {
+            if(data.user) {
+              location.search ='';
+              //this.dispatchEvent(['resize', 'scene__initialize']);
+            }
+          },
+          error: function(message, xhr, params) {
+            console.log('activate user failed with ', message, xhr.status);
+          }
+        },
         { id: 'get_book',
           type: 'GET',
           dataType: 'json',
@@ -1582,7 +1652,8 @@
                 idsArray = [],
                 contents = {};
 
-
+            this.update('user', data.user); // this is the user
+              
             //data.result.chapters.shift();
 
             if (+p.offset > 0) {
@@ -2661,7 +2732,17 @@
     */
     maze.engine.init();
 
-    maze.domino.controller.dispatchEvent(['resize', 'scene__initialize']);
+    //check location search
+    var activation = maze.domino.parseQueryString(location.search.split('?').pop());
+    
+    if(activation.token && activation.activate)
+      maze.domino.controller.dispatchEvent('user__activate', activation);
+    else
+      maze.domino.controller.dispatchEvent(['resize', 'scene__initialize']);
+    
+
+
+   
 
   };
 

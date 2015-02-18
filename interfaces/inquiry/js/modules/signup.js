@@ -22,6 +22,41 @@
         top: -step * 100 + '%'
       });
     };
+
+    /*
+      Clean and Verify registration.
+    */
+    var is_valid = function() {
+      // steps
+      var user = {
+        email:        $('#signup-email').val(),
+        password:     $('#signup-password').val(),
+        name:         $('#signup-name').val(),
+        surname:      $('#signup-surname').val(),
+
+        institution:  $('#signup-institution').val(),
+        department:   $('#signup-department').val(),
+        discipline:   $('#signup-discipline').val(),
+      };
+
+      //if(field.attr('required'))
+      for(var i in fields) {
+
+      }
+
+      var is_defined = user.email && user.password && user.name && user.surname;
+      
+      if(!is_defined){
+        maze.toast('some values missing');
+        return false;
+      }
+        
+
+      var has_values = user.email.length && user.password.length && user.name.length && user.surname.length;
+      
+      return has_values;
+
+    }
     /*
       [authenticate] events handling
     */
@@ -53,6 +88,29 @@
       step = Math.min(step, limit);
       browse();
     });
+
+    box.on('click', '[data-action=validate]', function(e) {
+      e.preventDefault();
+      
+      
+
+      // console.log(user)
+      // return;
+      if(is_valid()) {
+        _self.dispatchEvent('signup_register', {
+          email:    user.email,
+          password: user.password,
+          name:     user.name,
+          surmame:  user.surname, 
+        });
+      };
+
+      //box.hide();
+      
+    });
+
+
+    
 
     /*
       showing popup on signinrequired, and corresponding atuh level

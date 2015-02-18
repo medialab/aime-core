@@ -1468,6 +1468,13 @@ p {
     margin: 9px 0 0 0;
   }
 
+  label{
+    color: #c0171d;
+    font-size: 13px;
+    text-align: center;
+    .font-feature()
+  }
+
   input {
     margin-top: 8px;
     width: 100%;
@@ -1476,6 +1483,13 @@ p {
     text-align: left;
     font: 12px/20px 'NovelMonoPro-Regular';
     border: 1px solid #d9d9d9;
+  }
+
+  p.invalid{
+    label{
+      color: white;
+      background: #c0171d;
+    }
   }
 
   .actions table{
@@ -1531,6 +1545,17 @@ p {
   margin: 0 0 0 -270px;
   width: 500px;
 
+  button.close{
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    background: none;
+    border: 0px transparent;
+    color: #c0171d;
+  }
+
+
+
   >.wrapper{
     position: absolute;
     top: 110px;
@@ -1556,7 +1581,7 @@ p {
   overflow: hidden;
   left: 20px;
   top: 60px;
-  bottom: 70px;
+  bottom: 120px;
   right: 20px;
 
   >.wrapper{
@@ -2785,9 +2810,9 @@ footer {
       line-height: 26px;
       text-align: center;
 
-      &.invalid {
+      /*&.invalid {
         border: 5px solid @red;
-      }
+      }*/
     }
 
   }
@@ -2930,7 +2955,7 @@ footer {
 
 
 
-
+/*
 p.invalid{
   background-color: fade( #cc1400, 20%);
   border: 1px solid #cc1400;
@@ -2942,7 +2967,7 @@ p.invalid{
 input.invalid, textarea.invalid{
   border: 1px solid #cc1400;
 }
-
+*/
 
 
 

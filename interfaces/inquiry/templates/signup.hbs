@@ -1,8 +1,9 @@
 <div id="signup">
   <div class="wrapper">
-    <form id="loginForm" action=''>
-      <h2>{{t 'sign up'}}</h2>
+    <form id="signupForm" action=''>
       <button type="button" class="close" data-action="close"><i class="fa fa-close"></i></button>
+      <h2>{{t 'sign up'}}</h2>
+      
 
       <div class="slider">
         <div class="wrapper">
@@ -10,30 +11,56 @@
           <div class="slide">
             <div class="line"></div>
             <h3>step 1 of 5</h3>
-            <label>{{t 'last name'}}</label>
-            <input type="text" placeholder="{{t 'last name'}}">
 
-            <label>{{t 'first name'}}</label>
-            <input type="text">
+            <p class="">
+              <label>{{t 'first name'}}</label>
+              <input type="text" id="signup-name" placeholder="{{t 'first name'}}" required>
+            </p>
 
-            <label>{{t 'your email'}}</label>
-            <input type="text">
-
-            <label>{{t 'confirm your email'}}</label>
-            <input type="text">
-
+            <p>
+              <label>{{t 'last name'}}</label>
+              <input type="text" id="signup-surname" name="signup-surname" required placeholder="{{t 'last name'}}">
+            </p>
+            
+            <p>
+              <label>{{t 'your email'}}</label>
+              <input type="email" id="signup-email" name="signup-email" placeholder="{{t 'email address'}}" required>
+            </p>
+            
+            <p>
+              <label>{{t 'confirm your email'}}</label>
+              <input type="email" id="signup-email-confirm" required>
+            </p>
+            
+            <p>
             <input type="checkbox">
-             
+              {{t 'I agree to the'}} <span>{{t 'Terms of Use'}}</span> and the terms of the Data Protection Declaration  <span>{{t 'Mention CNIL'}}</span>
+            </p>
+
           </div>
 
           <div class="slide" style="top:100%">
             <div class="line"></div>
             <h3>step 2 of 5</h3>
+            <label>{{t 'password'}}</label>
+            <input type="password" id="signup-password" required>
+
+            <label>{{t 'confirm your password'}}</label>
+            <input type="password" id="signup-password-confirm" required>
 
           </div>
           <div class="slide" style="top:200%">
             <div class="line"></div>
             <h3>step 3 of 5</h3>
+            
+            <label>{{t 'institution'}}</label>
+            <input type="text" id="signup-institution">
+
+            <label>{{t 'department'}}</label>
+            <input type="text" id="signup-department">
+
+            <label>{{t 'discipline'}}</label>
+            <input type="text" id="signup-discipline">
 
           </div>
           <div class="slide" style="top:300%">
@@ -70,6 +97,11 @@
             <td class="right">
               <button data-action="next">{{t 'next'}}</button>
               <!-- button>{{t 'sign_up'}}</button -->
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <button type="submit" data-action="validate">{{t 'submit'}}</button>
             </td>
           </tr>
         </table>
