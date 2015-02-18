@@ -1144,9 +1144,15 @@
                   if (item && item.id && this.get('scene_column').leading === maze.VOC)
                     a.push(item.id.substr(7));
 
+
                   services.push({
-                    service: 'get_vocabulary',
-                    ids: a
+                    service: 'get_vocabulary_item',
+                    shortcuts:{
+                      ids: a.map(function(d) {
+                    return 'voc_' + d
+                  }).join()
+                    }
+                    
                   });
                 } else if( type == "doc" ) {
                   if (item && item.id && this.get('scene_column').leading === maze.DOC)
@@ -1160,10 +1166,10 @@
                   //if (item && item.id && this.get('scene_column').leading === maze.DOC)
                   //  a.push(item.id.substr(4));
 
-                  services.push({
-                    service: 'get_contributions',
-                    ids: a
-                  });
+                  // services.push({
+                  //   service: 'get_contributions',
+                  //   ids: a
+                  // });
                 }
               }
             }
@@ -1698,6 +1704,54 @@
             }, 100);  
 
           }
+        },
+        { id: 'get_vocabulary_item',
+          type: 'GET',
+          dataType: 'json',
+          url: maze.urls.get_vocabulary,
+          description: 'The service that deals with SPECIFIED vocabulary items, via ids shortcut.',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          error: maze.domino.errorHandler,
+          success: function(data, params) {
+            var p = params || {},
+                result = data.result,//maze.engine.parser.vocabulary(data, this.get('data_crossings')),
+                idsArray = [],
+                contents = {};
+            // even if no results update the data (aka empty search results !)
+            //if (result.terms.length) {
+              if (+p.offset > 0) {
+                idsArray = this.get('data_vocIdsArray');
+                contents = this.get('data_vocContents');
+              }
+
+              result.forEach(function(o) {
+                idsArray.push(o.id);
+                contents[o.id] = o;
+              });
+
+              this.update({
+                data_vocIdsArray: idsArray,
+                data_vocContents: contents
+              });
+
+              this.update('infinite_voc', maze.STATUS_READY );
+
+              // pierre added that to do as the following 'get_documents'
+              // pierre didn't know why the 2 calls were differents
+              // pierre wanted to solve bug of voc-data-not-empty after an empty results search !
+              this.dispatchEvent('data_update',{
+                namespace: 'voc',
+                ids: idsArray,
+                contents: contents
+              });
+
+              // HACK: Just added this to avoid success overriding...
+              if (p.callback)
+                setTimeout(p.callback, 0);
+          }
+
         },
         { id: 'get_vocabulary',
           type: 'GET',
