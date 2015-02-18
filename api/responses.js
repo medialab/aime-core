@@ -11,10 +11,16 @@ module.exports = function(express) {
     if (this.cache)
       this.cache = result;
 
-    return this.json({
+    var data = {
       status: 'ok',
       result: result
-    });
+    };
+
+    var session = this.req.session;
+    if (session && session.authenticated && session.user)
+      data.user = session.user;
+
+    return this.json(data);
   };
 
   express.response.badRequest = function(reason, expecting) {

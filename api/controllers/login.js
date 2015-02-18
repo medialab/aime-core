@@ -43,10 +43,17 @@ module.exports = [
       model.activate(req.params.token, function(err, user) {
         if (err) return res.serverError(err);
 
-        if (!user)
+        if (!user) {
           return res.notFound();
-        else
+        }
+        else {
+
+          // Storing user session
+          req.session.user = user;
+          req.session.authenticated = true;
+
           return res.ok();
+        }
       });
     }
   },
@@ -66,11 +73,11 @@ module.exports = [
         if (err) return res.serverError(err);
         if (!user) return res.forbidden();
 
-        // Storing user sessions
+        // Storing user session
         req.session.user = user;
         req.session.authenticated = true;
 
-        return res.ok(user);
+        return res.ok();
       });
     }
   },
