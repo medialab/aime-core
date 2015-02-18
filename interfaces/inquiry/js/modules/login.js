@@ -28,6 +28,12 @@
 
     });
 
+    box.on('click', '[data-action=signup]', function(e) {
+      box.hide();
+      _self.dispatchEvent('signup_require');
+
+    });
+
     /*
       listening on login requests
     */

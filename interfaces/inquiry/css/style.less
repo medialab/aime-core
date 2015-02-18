@@ -1435,14 +1435,14 @@ p {
 //  -o-transition: opacity 3s ease-in-out;
 // }
 
-#login{
+#signup, #login{
   position: fixed;
   top: 50%;
   left: 50%;
   margin-top: -160px;
-  margin-left: -200px;
+  margin-left: -210px;
   height: 360px;
-  width: 400px;
+  width: 420px;
   z-index: 135;
   display: none;
   
@@ -1468,6 +1468,13 @@ p {
     margin: 9px 0 0 0;
   }
 
+  label{
+    color: #c0171d;
+    font-size: 13px;
+    text-align: center;
+    .font-feature()
+  }
+
   input {
     margin-top: 8px;
     width: 100%;
@@ -1475,7 +1482,14 @@ p {
     box-sizing: border-box;
     text-align: left;
     font: 12px/20px 'NovelMonoPro-Regular';
-    border: 0;
+    border: 1px solid #d9d9d9;
+  }
+
+  p.invalid{
+    label{
+      color: white;
+      background: #c0171d;
+    }
   }
 
   .actions table{
@@ -1523,6 +1537,88 @@ p {
     background-image: url('../../images/dot-single-red-horizontal.png');
   }
 }
+
+
+#signup{
+  top: 0;
+  height: 100%;
+  margin: 0 0 0 -270px;
+  width: 500px;
+
+  button.close{
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    background: none;
+    border: 0px transparent;
+    color: #c0171d;
+  }
+
+
+
+  >.wrapper{
+    position: absolute;
+    top: 110px;
+    bottom: 50px;
+    width: 100%;
+  }
+
+  .actions{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+  }
+
+  form{
+    height: 100%;
+  }
+}
+
+
+#signup .slider{
+  position: absolute;
+  overflow: hidden;
+  left: 20px;
+  top: 60px;
+  bottom: 120px;
+  right: 20px;
+
+  >.wrapper{
+    position: absolute;
+    height: 100%;
+    top: 0%;
+    width: 100%;
+    .transition(top, 0.35s);
+  }
+
+  .slide{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .line{
+      margin-top: 5px;
+    }
+  }
+
+  h3{
+    margin: 0;
+    font-size: 12px;
+    color: #000;
+    line-height: 30px;
+    .font-feature();
+    text-align: center;
+    background-position: center bottom;
+    background-repeat: repeat-x;
+    background-image: url('../../images/dot-single-red-horizontal.png');
+  
+  }
+}
+
+
 
 #wrapper {
 
@@ -2714,9 +2810,9 @@ footer {
       line-height: 26px;
       text-align: center;
 
-      &.invalid {
+      /*&.invalid {
         border: 5px solid @red;
-      }
+      }*/
     }
 
   }
@@ -2859,7 +2955,7 @@ footer {
 
 
 
-
+/*
 p.invalid{
   background-color: fade( #cc1400, 20%);
   border: 1px solid #cc1400;
@@ -2871,7 +2967,7 @@ p.invalid{
 input.invalid, textarea.invalid{
   border: 1px solid #cc1400;
 }
-
+*/
 
 
 

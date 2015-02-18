@@ -8,8 +8,12 @@ $(document).ready(function() {
   maze.urls = {
     login: '/login',
     logout: '/logout',
+    signup: '/register',
+    activate: '/activate/::token',
+
     get_book: '/book',
     get_vocabulary: '/voc',
+    get_vocabulary: '/voc/::ids',
     get_documents: '/doc',
     search_book: '/inquiry/search/::query',
 

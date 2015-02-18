@@ -29,7 +29,17 @@
     }
   }
 
+  maze.domino.parseQueryString = function(s) {
+    var data = {};
 
+    s.split('&').forEach(function(item) {
+      var pair = item.split('=');
+      data[decodeURIComponent(pair[0])] =
+        pair[1] ? decodeURIComponent(pair[1]) : true;
+    });
+
+    return data;
+  };
   
 
   maze.domino.factory = function(fn){
@@ -91,7 +101,8 @@
           maze.ACTION_SET_VOC_LEADER,
           maze.ACTION_SET_DOC_LEADER,
           maze.ACTION_SET_COMM_LEADER,
-          maze.ACTION_NOTEBOOK
+          maze.ACTION_NOTEBOOK,
+          maze.ACTION_ACTIVATE_ACCOUNT
         ].indexOf(v);
       }
     });
@@ -155,6 +166,13 @@
           value: maze.AUTHORIZATION_UNKNOWN
         },
 
+        {
+          id: 'user',
+          description: 'The authentified user, with all the fields we need',
+          dispatch: 'user__updated',
+          type: 'object',
+          value: {}
+        },
         /**
          * DATA RELATED PROPERTIES
          * ***********************
@@ -552,7 +570,27 @@
             this.request('login', {data: res.data});
           }
         },
-
+        {
+          triggers: 'signup_require',
+          description: 'open signup process',
+          method: function() {
+            this.update('authorization', maze.AUTHORIZATION_SIGNUP);
+          }
+        },
+        {
+          triggers: 'signup_dismiss',
+          description: 'close signup process and go back to login',
+          method: function() {
+            this.update('authorization', maze.AUTHORIZATION_REQUIRED);
+          }
+        },
+        {
+          triggers: 'signup_register',
+          description: 'send signup data',
+          method: function(res) {
+            this.request('signup', {data: res.data});
+          }
+        },
         {
           triggers: 'data_book_updated',
           description: 'Initialize stuff when book is loaded.',
@@ -814,6 +852,7 @@
           triggers: 'scene__initialize',
           description: 'load the very book and the corossings, then allow people to discover aime paltform...',
           method: function(e) {
+            
             var services = [
               {
                 service: 'get_crossings'
@@ -822,6 +861,7 @@
                 service: 'get_book'
               }
             ];
+
 
             console.log('%c@scene__initialize', 'color: green');
 
@@ -833,6 +873,17 @@
 
             // maze.domino.controller.request('get_crossings', {});
     // maze.domino.controller.request('get_book');
+          }
+        },
+        {
+          triggers: 'user__activate',
+          description: 'if there is a activation rquest via GET param, this method deals with the accoiunt activation',
+          method: function(e) {
+            this.request('activate', {
+              shortcuts:{
+                token: e.data.token
+              }
+            })
           }
         },
         {
@@ -1093,9 +1144,15 @@
                   if (item && item.id && this.get('scene_column').leading === maze.VOC)
                     a.push(item.id.substr(7));
 
+
                   services.push({
-                    service: 'get_vocabulary',
-                    ids: a
+                    service: 'get_vocabulary_item',
+                    shortcuts:{
+                      ids: a.map(function(d) {
+                    return 'voc_' + d
+                  }).join()
+                    }
+                    
                   });
                 } else if( type == "doc" ) {
                   if (item && item.id && this.get('scene_column').leading === maze.DOC)
@@ -1109,10 +1166,10 @@
                   //if (item && item.id && this.get('scene_column').leading === maze.DOC)
                   //  a.push(item.id.substr(4));
 
-                  services.push({
-                    service: 'get_contributions',
-                    ids: a
-                  });
+                  // services.push({
+                  //   service: 'get_contributions',
+                  //   ids: a
+                  // });
                 }
               }
             }
@@ -1535,6 +1592,38 @@
           },
           error: maze.domino.errorHandler
         },
+        {
+          id: 'signup',
+          type: 'POST',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.signup,
+          success: function(data, params) {
+            console.log(arguments)
+          },
+          error: function() {
+            // start over the signup
+            console.log(arguments)
+          }
+        },
+        {
+          id: 'activate',
+          type: 'POST',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.activate,
+          success: function(data, params) {
+            if(data.user) {
+              location.search ='';
+              //this.dispatchEvent(['resize', 'scene__initialize']);
+            }
+          },
+          error: function(message, xhr, params) {
+            console.log('activate user failed with ', message, xhr.status);
+          }
+        },
         { id: 'get_book',
           type: 'GET',
           dataType: 'json',
@@ -1569,7 +1658,8 @@
                 idsArray = [],
                 contents = {};
 
-
+            this.update('user', data.user); // this is the user
+              
             //data.result.chapters.shift();
 
             if (+p.offset > 0) {
@@ -1614,6 +1704,54 @@
             }, 100);  
 
           }
+        },
+        { id: 'get_vocabulary_item',
+          type: 'GET',
+          dataType: 'json',
+          url: maze.urls.get_vocabulary,
+          description: 'The service that deals with SPECIFIED vocabulary items, via ids shortcut.',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          error: maze.domino.errorHandler,
+          success: function(data, params) {
+            var p = params || {},
+                result = data.result,//maze.engine.parser.vocabulary(data, this.get('data_crossings')),
+                idsArray = [],
+                contents = {};
+            // even if no results update the data (aka empty search results !)
+            //if (result.terms.length) {
+              if (+p.offset > 0) {
+                idsArray = this.get('data_vocIdsArray');
+                contents = this.get('data_vocContents');
+              }
+
+              result.forEach(function(o) {
+                idsArray.push(o.id);
+                contents[o.id] = o;
+              });
+
+              this.update({
+                data_vocIdsArray: idsArray,
+                data_vocContents: contents
+              });
+
+              this.update('infinite_voc', maze.STATUS_READY );
+
+              // pierre added that to do as the following 'get_documents'
+              // pierre didn't know why the 2 calls were differents
+              // pierre wanted to solve bug of voc-data-not-empty after an empty results search !
+              this.dispatchEvent('data_update',{
+                namespace: 'voc',
+                ids: idsArray,
+                contents: contents
+              });
+
+              // HACK: Just added this to avoid success overriding...
+              if (p.callback)
+                setTimeout(p.callback, 0);
+          }
+
         },
         { id: 'get_vocabulary',
           type: 'GET',
@@ -2624,7 +2762,7 @@
         ---
     */
     maze.domino.controller.addModule( maze.domino.modules.Login,null, {id:'login'});
-    
+    maze.domino.controller.addModule( maze.domino.modules.SignUp,null, {id:'signup'});
     maze.domino.controller.addModule( maze.domino.modules.StickyText,null, {id:'sticky_text'});
     maze.domino.controller.addModule( maze.domino.modules.Location, null, {id:'location'});
     maze.domino.controller.addModule( maze.domino.modules.Resizor, null, {id:'resizor'});
@@ -2648,7 +2786,17 @@
     */
     maze.engine.init();
 
-    maze.domino.controller.dispatchEvent(['resize', 'scene__initialize']);
+    //check location search
+    var activation = maze.domino.parseQueryString(location.search.split('?').pop());
+    
+    if(activation.token && activation.activate)
+      maze.domino.controller.dispatchEvent('user__activate', activation);
+    else
+      maze.domino.controller.dispatchEvent(['resize', 'scene__initialize']);
+    
+
+
+   
 
   };
 

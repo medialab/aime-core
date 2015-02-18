@@ -26,7 +26,7 @@
 	maze.ACTION_SET_TEXT_LEADER = "SET TEXT LEADER";
 	maze.ACTION_SET_VOC_LEADER = "SET VOC LEADER";
 	maze.ACTION_SET_DOC_LEADER = "SET DOC LEADER";
-
+	maze.ACTION_ACTIVATE_ACCOUNT = "activate";
 
 	maze.events.story = {
 		"columnify":"MAZE_EVENTS_STORY_COLUMNIFY",
