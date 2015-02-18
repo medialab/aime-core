@@ -8,6 +8,13 @@ ORDER BY item.vocabulary.properties.title;
 // name: getByIds
 // Retrieve one or more vocabulary entries by id
 START n=node({ids})
-MATCH (n)-[r:HAS]-(p:Paragraph)
+MATCH (n:Vocabulary)-[r:HAS]-(p:Paragraph)
+WITH n, r, {id: id(p), properties: p} AS paragraphs ORDER BY r.order
+RETURN {vocabulary: {id: id(n), properties: n}, children: collect(paragraphs)}
+
+// name: getBySlugIds
+// Retrieve one or more vocabulary entries by slug_id
+MATCH (n:Vocabulary)-[r:HAS]-(p:Paragraph)
+WHERE n.slug_id IN {slug_ids}
 WITH n, r, {id: id(p), properties: p} AS paragraphs ORDER BY r.order
 RETURN {vocabulary: {id: id(n), properties: n}, children: collect(paragraphs)}
