@@ -13,7 +13,7 @@ The following API is fully RESTful and returns responses in a JSON format.
 ```json
 {
 	"status": "ok",
-	"results": {},
+	"result": {},
 	"warning": {}
 }
 ```
@@ -83,8 +83,4 @@ Note that when the lang is not specified, the API will assume you want the defau
 
 ## UI-specific endpoints
 
-Sometimes, both aime interfaces might require custom routes to achieve what they need. They will be, in that case, mounted upon a precise endpoint such as `inquiry` or `crossings`.
-
-## Legacy endpoint
-
-For backward compatibility reasons, a legacy endpoint exists on this API so that ye olde interfaces may still work. Legacy routes are prefixed with `legacy` to distinguish them from the standard ones.
+Sometimes, both aime interfaces might require custom routes to achieve what they need. They will be, in that case, mounted upon a precise path such as `inquiry` or `crossings`.

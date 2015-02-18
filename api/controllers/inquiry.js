@@ -13,7 +13,7 @@ module.exports = [
       query: 'string'
     },
     action: function(req, res) {
-      misc.inquirySearch(req.param('query'), function(err, ids) {
+      misc.inquirySearch(req.params.query, function(err, ids) {
         if (err) return res.serverError(err);
 
         return res.ok({book: ids});

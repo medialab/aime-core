@@ -24,19 +24,30 @@ module.exports = [
     },
     methods: ['POST'],
     action: function(req, res) {
-      return res.ok({not: 'implemented'});
+      model.create(req.body, function(err, user) {
+        if (err) return res.serverError(err);
+
+        return res.json(user);
+      });
     }
   },
 
   // Activate a user
   {
-    url: '/activate',
+    url: '/activate/:token',
     validate: {
       token: 'string'
     },
     methods: ['POST'],
     action: function(req, res) {
-      return res.ok({not: 'implemented'});
+      model.activate(req.params.token, function(err, user) {
+        if (err) return res.serverError(err);
+
+        if (!user)
+          return res.notFound();
+        else
+          return res.ok();
+      });
     }
   },
 
@@ -49,9 +60,9 @@ module.exports = [
     },
     methods: ['POST'],
     action: function(req, res) {
-      var email = req.param('email');
+      var email = req.body.email;
 
-      model.authenticate(email, req.param('password'), function(err, user) {
+      model.authenticate(email, req.body.password, function(err, user) {
         if (err) return res.serverError(err);
         if (!user) return res.forbidden();
 
@@ -80,10 +91,22 @@ module.exports = [
 
   // Request for password retrieval
   {
-    url: '/retrieve',
+    url: '/retrieve/:id',
+    validate: {
+      id: 'string'
+    },
     methods: ['POST'],
     action: function(req, res) {
-      return res.ok({not: 'implemented'});
+      var userId = +req.params.id;
+
+      model.createResetToken(userId, function(err, token) {
+        if (err) return res.serverError(err);
+
+        if (!token)
+          return res.notFound();
+        else
+          return res.ok(token);
+      });
     }
   },
 
