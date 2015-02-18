@@ -32,6 +32,7 @@ module.exports = {
   create: function(properties, callback) {
     properties = _.extend({}, properties, {
       active: false,
+      role: 'user',
       type: 'user',
       token: uuid.v4(),
       password: hash(properties.password)
@@ -47,7 +48,7 @@ module.exports = {
     });
   },
   activate: function(token, callback) {
-    db.query(queries.activate, {token: token}, function(err, result) {
+    db.query(queries.activate, {token: token}, function(err, results) {
       if (err) return callback(err);
 
       return callback(null, results.length ? _.pick(results[0], keep) : null);

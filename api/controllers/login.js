@@ -52,7 +52,7 @@ module.exports = [
           req.session.user = user;
           req.session.authenticated = true;
 
-          return res.ok(user);
+          return res.ok();
         }
       });
     }
@@ -77,7 +77,7 @@ module.exports = [
         req.session.user = user;
         req.session.authenticated = true;
 
-        return res.ok(user);
+        return res.ok();
       });
     }
   },
