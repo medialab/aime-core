@@ -50,7 +50,7 @@ module.exports = {
     db.query(queries.activate, {token: token}, function(err, result) {
       if (err) return callback(err);
 
-      return callback(null, result[0]);
+      return callback(null, results.length ? _.pick(results[0], keep) : null);
     });
   },
   createResetToken: function(id, callback) {
