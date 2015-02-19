@@ -17,9 +17,10 @@
     var _self  = this,
         header = $('#header');
 
-    this.triggers.events.session__initialized = function() {
+    this.triggers.events.session__initialized = function(controller) {
       $('#header').replaceWith(maze.engine.template.header({
-        settings: maze.settings
+        settings: maze.settings,
+        user: controller.get('user')
       }));
       header = $('#header');
 
