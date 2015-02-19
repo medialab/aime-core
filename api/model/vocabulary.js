@@ -9,7 +9,7 @@ var db = require('../connection.js'),
     _ = require('lodash');
 
 module.exports = {
-  getByIds: function(ids, lang, callback) {
+  getByIds: function(ids, callback) {
 
     // Casting to int for cypher to work
     ids = ids.map(function(id) {
@@ -28,14 +28,13 @@ module.exports = {
       return callback(null, data);
     });
   },
-  getBySlugIds: function(ids, lang, callback) {
+  getBySlugIds: function(ids, callback) {
 
     // Casting to int for cypher to work
     ids = ids.map(function(id) {
       return +id.replace(/\w+_/, '');
     });
 
-    console.log(ids);
     // Executing query
     db.rows(queries.getBySlugIds, {slug_ids: ids}, function(err, result) {
 
