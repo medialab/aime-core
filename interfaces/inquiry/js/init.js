@@ -15,6 +15,7 @@ $(document).ready(function() {
     get_vocabulary: '/voc',
     get_vocabulary_item: '/voc/::ids',
     get_documents: '/doc',
+    get_documents_item: '/doc/::ids',
     search_book: '/inquiry/search/::query',
 
     list_comments: 'documentItems/items',
