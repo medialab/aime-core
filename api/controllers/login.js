@@ -64,7 +64,7 @@ module.exports = [
           req.session.user = user;
           req.session.authenticated = true;
 
-          return res.ok();
+          return res.ok(user);
         }
       });
     }
@@ -90,7 +90,7 @@ module.exports = [
         req.session.user = user;
         req.session.authenticated = true;
 
-        return res.ok();
+        return res.ok(user);
       });
     }
   },
