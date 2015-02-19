@@ -49,6 +49,7 @@ module.exports = [
         else {
 
           // Storing user session
+          req.session.lang = req.lang;
           req.session.user = user;
           req.session.authenticated = true;
 
@@ -74,6 +75,7 @@ module.exports = [
         if (!user) return res.forbidden();
 
         // Storing user session
+        req.session.lang = req.lang;
         req.session.user = user;
         req.session.authenticated = true;
 
@@ -126,6 +128,24 @@ module.exports = [
     methods: ['POST'],
     action: function(req, res) {
       return res.ok({not: 'implemented'});
+    }
+  },
+
+  // Change the session's lang
+  {
+    url: '/lang/:lang',
+    validate: {
+      lang: 'lang'
+    },
+    methods: ['POST'],
+    action: function(req, res) {
+      if (!req.session) {
+        return res.unauthorized();
+      }
+      else {
+        req.session.lang = req.params.lang;
+        return res.ok({lang: req.params.lang});
+      }
     }
   }
 ];

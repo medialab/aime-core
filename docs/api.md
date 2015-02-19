@@ -14,6 +14,8 @@ The following API is fully RESTful and returns responses in a JSON format.
 {
 	"status": "ok",
 	"result": {},
+	"user": {},
+	"lang": "en|fr"
 	"warning": {}
 }
 ```

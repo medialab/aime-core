@@ -4,9 +4,12 @@
  *
  * Compilation of middlewares used throughout the express application.
  */
-var types = require('typology'),
+var types = require('./typology.js'),
     cache = require('./cache.js'),
-    config = require('../config.json').api;
+    config = require('../config.json').api,
+    accept = require('accept-language');
+
+accept.languages(['en', 'fr']);
 
 // Helpers
 function param(req, key) {
@@ -58,6 +61,26 @@ module.exports = {
       else
         return next();
     }
+  },
+
+  // Checking request language
+  language: function(req, res, next) {
+
+    // If session has a language
+    if (req.session.lang) {
+      req.lang = req.session.lang;
+      return next();
+    }
+
+    // Trying to assert it form the headers
+    var header = req.headers['accept-language'];
+
+    if (header)
+      req.lang = accept.get(header) || config.defaultLang;
+    else
+      req.lang = config.defaultLang;
+
+    return next();
   },
 
   // Validate the parameters of the query

@@ -20,6 +20,9 @@ module.exports = function(express) {
     if (session && session.authenticated && session.user)
       data.user = session.user;
 
+    if (session && session.lang)
+      data.lang = session.lang;
+
     return this.json(data);
   };
 

@@ -16,6 +16,9 @@ module.exports = new Typology({
     }
   },
   ids: ['integer'],
+  lang: function(v) {
+    return v === 'en' || v === 'fr';
+  },
   slugs: function(v) {
     return (v instanceof Array) &&
       v.every(function(e) {

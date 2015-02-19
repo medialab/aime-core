@@ -72,6 +72,7 @@ app.use(session({
   saveUninitialized: true
 }));
 // app.use(compress());
+app.use(middlewares.language);
 
 /**
  * Login Routes
