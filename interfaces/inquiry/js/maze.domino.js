@@ -24,7 +24,7 @@
         maze.domino.controller.update('authorization', maze.AUTHORIZATION_FAILED);
         break;
       default:
-        maze.toast('connection error', {sticky:true}); 
+        maze.toast('connection error', {sticky:true, cleanup:true}); 
         break;
     }
   }
@@ -1149,18 +1149,21 @@
                     service: 'get_vocabulary_item',
                     shortcuts:{
                       ids: a.map(function(d) {
-                    return 'voc_' + d
-                  }).join()
+                        return 'voc_' + d
+                      }).join()
                     }
-                    
                   });
                 } else if( type == "doc" ) {
                   if (item && item.id && this.get('scene_column').leading === maze.DOC)
                     a.push(item.id.substr(5));
 
                   services.push({
-                    service: 'get_documents',
-                    ids: a
+                    service: 'get_documents_item',
+                    shortcuts:{
+                      ids: a.map(function(d) {
+                        return 'doc_' + d
+                      }).join()
+                    }
                   });
                 } else if( type == "star" ) {
                   //if (item && item.id && this.get('scene_column').leading === maze.DOC)
@@ -1829,6 +1832,41 @@
             //}
           },
           error: maze.domino.errorHandler,
+        },
+        { id: 'get_documents_item',
+          type: 'GET',
+          dataType: 'json',
+          url: maze.urls.get_documents_item,
+          description: 'The service that deals with SPECIFIED vocabulary items, via ids shortcut.',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          error: maze.domino.errorHandler,
+          success: function(data, params) {
+            var p = params || {},
+                result = data.result,
+                idsArray = [],
+                contents = {};
+
+            if (+p.offset > 0) {
+              idsArray = this.get('data_docIdsArray');
+              contents = this.get('data_docContents');
+            }
+
+            result.forEach(function(o) {
+              idsArray.push(o.id);
+              contents[o.id] = o;
+            });
+            this.update('infinite_doc', maze.STATUS_READY );
+            this.dispatchEvent('data_update',{
+              namespace: 'doc',
+              ids: idsArray,
+              contents: contents
+            });
+            // HACK: Just added this to avoid success overriding...
+            if (p.callback)
+              setTimeout(p.callback, 0);
+          }
         },
         { id: 'get_documents',
           type: 'GET',
