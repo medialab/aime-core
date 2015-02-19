@@ -47,10 +47,14 @@ module.exports = {
       return callback(null, data);
     });
   },
-  getAll: function(lang, callback) {
+  getAll: function(lang, params, callback) {
+    params = _.extend({}, {lang: lang}, {
+      offset: +params.offset || 0,
+      limit: +params.limit || 100000
+    });
 
     // Executing query
-    db.rows(queries.getAll, {lang: lang}, function(err, result) {
+    db.rows(queries.getAll, params, function(err, result) {
 
       // On typical error
       if (err) return callback(err);

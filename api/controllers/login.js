@@ -8,6 +8,17 @@ var model = require('../model/users.js');
 
 module.exports = [
 
+  // Retrieve session info
+  {
+    url: '/session',
+    action: function(req, res) {
+      return res.ok({
+        lang: req.lang,
+        user: req.session.user
+      });
+    }
+  },
+
   // Register
   {
     url: '/register',
@@ -127,7 +138,7 @@ module.exports = [
     },
     methods: ['POST'],
     action: function(req, res) {
-      return res.ok({not: 'implemented'});
+      return res.notImplemented();
     }
   },
 

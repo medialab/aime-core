@@ -7,7 +7,8 @@
 var types = require('./typology.js'),
     cache = require('./cache.js'),
     config = require('../config.json').api,
-    accept = require('accept-language');
+    accept = require('accept-language'),
+    _ = require('lodash');
 
 accept.languages(['en', 'fr']);
 
@@ -35,18 +36,29 @@ module.exports = {
   // Checking cache before anything
   cache: function(name) {
     return function(req, res, next) {
-      var lang = req.params.lang || config.defaultLang;
+      var lang = req.lang,
+          target = cache[lang][name],
+          limit = req.query.limit,
+          offset = req.query.offset || 0,
+          data;
 
-      if (cache[lang][name])
-        return res.ok(cache[lang][name]);
-      else {
+      if (target) {
+        if (limit)
+          data = target.slice(offset);
+        else
+          data = _.take(target.slice(offset), limit);
+
+        return res.ok(data);
+      }
+      else if (!limit && !offset) {
         res.cache = true;
         res.on('finish', function() {
           cache[lang][name] = res.cache;
           res.cache = null;
         });
-        return next();
       }
+
+      return next();
     };
   },
 

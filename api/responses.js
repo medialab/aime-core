@@ -16,13 +16,6 @@ module.exports = function(express) {
       result: result
     };
 
-    var session = this.req.session;
-    if (session && session.authenticated && session.user)
-      data.user = session.user;
-
-    if (session && session.lang)
-      data.lang = session.lang;
-
     return this.json(data);
   };
 
@@ -98,6 +91,16 @@ module.exports = function(express) {
       error: {
         code: 401,
         title: 'Unauthorized'
+      }
+    });
+  };
+
+  express.response.notImplemented = function() {
+    this.status(501).json({
+      status: 'error',
+      error: {
+        code: 501,
+        title: 'Not Implemented'
       }
     });
   };

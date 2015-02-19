@@ -24,9 +24,13 @@ module.exports = [
   },
   {
     url: '/voc',
+    validate: {
+      limit: '?integer',
+      offset: '?integer'
+    },
     cache: 'vocabulary',
     action: function(req, res) {
-      voc.getAll(req.lang, function(err, result) {
+      voc.getAll(req.lang, req.query, function(err, result) {
         if (err) return res.serverError(err);
 
         return res.ok(result);
@@ -58,9 +62,13 @@ module.exports = [
   },
   {
     url: '/doc',
+    validate: {
+      limit: '?integer',
+      offset: '?integer'
+    },
     cache: 'documents',
     action: function(req, res) {
-      doc.getAll(req.lang, function(err, result) {
+      doc.getAll(req.lang, req.query, function(err, result) {
         if (err) return res.serverError(err);
 
         return res.ok(result);

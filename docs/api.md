@@ -83,6 +83,11 @@ Note that when the lang is not specified, the API will assume you want the defau
 * `POST /register`
 * `GET /[<lang>]/search/<query>`
 
+## Parameters
+
+* `limit`: max number of entities to return.
+* `offset`: query offset.
+
 ## UI-specific endpoints
 
 Sometimes, both aime interfaces might require custom routes to achieve what they need. They will be, in that case, mounted upon a precise path such as `inquiry` or `crossings`.
