@@ -45,10 +45,13 @@
             </ul>
           </div>
           <div class="language">
-            <!-- php
-            // echo Yii::app()->language;
-            $this->widget('application.widgets.LangBox');
-             -->
+            <div class="langBloc" data-lang="fr">{{t 'french'}}</div>
+          <img src="http://www.modesofexistence.org/inquiry/images/_or.png">
+            <div class="langBloc" data-lang="en">
+    {{t 'english'}} </div>
+          </div>
+  
+
             <ul style='display:none;'>
               <li><span style='opacity:.2;cursor:default;'>font size</span></li>
               <li style='opacity:.2;cursor:default;'>
@@ -86,7 +89,11 @@
         <!-- USER NAME / PROFILE -->
 
         <div class="name">
-          <p><span class="fl-b">&nbsp;</span>{{user.username}}<span class="fl-i">'</span>s<span class="fl-si">&nbsp;</span><span>workspace</span></p>
+          <p>
+            <span class="fl-b">&nbsp;</span>
+            <span class="username">anonymo</span>
+            <span class="fl-i">'</span>s<span class="fl-si">&nbsp;</span><span>workspace</span>
+          </p>
         </div>
 
         <!-- PHOTO / SETTINGS -->
@@ -105,7 +112,8 @@
                 </ul>
               </div>
             </div>
-            <img src=''/><!-- user image will be here -->
+
+            <img src='http://www.modesofexistence.org/inquiry/images/uploaded/{{basename user.avatar}}/36x36-{{user.avatar}}'/><!-- user image will be here -->
           </div>
           </a>
         </div>
@@ -157,7 +165,7 @@
                 <div class="triangleStroke"></div>
                 <div class="triangleFill"></div>
                 <ul>
-                  <li>{{t 'aide'}}</li>
+                  <li>{{t 'help'}}</li>
                 </ul>
               </div>
             </div>
@@ -168,7 +176,7 @@
         <!-- MENU TOGGLE -->
 
         <div class="toggle_menu">
-          <p>more</p>
+          <p>{{t 'more'}}</p>
         </div>
 
       </div>

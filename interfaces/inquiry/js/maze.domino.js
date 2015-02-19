@@ -168,10 +168,17 @@
 
         {
           id: 'user',
-          description: 'The authentified user, with all the fields we need',
+          description: 'The authentified user, with all the fields we need. Check "More" domino module.',
           dispatch: 'user__updated',
           type: 'object',
           value: {}
+        },
+        {
+          id: 'lang',
+          description: 'The favourite language, set by each requests. Check "More" domino module. when changed, it should refresh the ui',
+          dispatch: 'lang__updated',
+          type: 'string',
+          value: 'en'
         },
         /**
          * DATA RELATED PROPERTIES
@@ -551,6 +558,31 @@
       ],
       hacks: [
         /**
+         * SESSION HACKS
+         * ******************
+         */
+        {
+          triggers: 'session__initialize',
+          description: 'call session service to get the current user if any and the current language',
+          method: function() {
+            this.request('session');
+          }
+        },
+
+        {
+          triggers: 'session__initialized',
+          description: 'call session service to get the current user if any and the current language',
+          method: function() { //check location search. IS IT THE LAST HANDLER?
+            var activation = maze.domino.parseQueryString(location.search.split('?').pop());
+            
+            if(activation.token && activation.activate)
+              maze.domino.controller.dispatchEvent('user__activate', activation);
+            else
+              maze.domino.controller.dispatchEvent(['resize', 'scene__initialize']);
+            
+          }
+        },
+        /**
          * LOGIN HACKS
          * ******************
          */
@@ -568,6 +600,21 @@
           method: function(res) {
             console.log(res.data);
             this.request('login', {data: res.data});
+          }
+        },
+        {
+          triggers: 'lang_change',
+          description: 'change language at session level',
+          method: function(e) {
+            console.log('change language', this.get('lang'), e.data);
+            
+            if(this.get('lang') != e.data.lang) {
+              this.request('lang',{
+                shortcuts: {
+                  lang: e.data.lang
+                }
+              })
+            };
           }
         },
         {
@@ -1627,6 +1674,41 @@
             console.log('activate user failed with ', message, xhr.status);
           }
         },
+        {
+          id: 'lang',
+          type: 'POST',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.lang,
+          success: function(data, params) {
+            location.reload();
+            //console.log('language', data)
+          },
+          error: function(message, xhr, params) {
+            console.log('activate user failed with ', message, xhr.status);
+          }
+        },
+        {
+          id: 'session',
+          type: 'GET',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.session,
+          success: function(data, params) { // launch init here
+            this.update('lang', data.result.lang);
+            maze.i18n.lang = data.result.lang;
+
+            if(data.result.user) {
+              this.update('user', data.result.user); // this is the user
+            }
+            this.dispatchEvent('session__initialized');
+          },
+          error: function(message, xhr, params) {
+            console.log('This request cannot fail! activate user failed with ', message, xhr.status);
+          }
+        },
         { id: 'get_book',
           type: 'GET',
           dataType: 'json',
@@ -1661,7 +1743,6 @@
                 idsArray = [],
                 contents = {};
 
-            this.update('user', data.user); // this is the user
               
             //data.result.chapters.shift();
 
@@ -2824,14 +2905,7 @@
     */
     maze.engine.init();
 
-    //check location search
-    var activation = maze.domino.parseQueryString(location.search.split('?').pop());
-    
-    if(activation.token && activation.activate)
-      maze.domino.controller.dispatchEvent('user__activate', activation);
-    else
-      maze.domino.controller.dispatchEvent(['resize', 'scene__initialize']);
-    
+    maze.domino.controller.dispatchEvent('session__initialize');
 
 
    

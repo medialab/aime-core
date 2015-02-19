@@ -1,4 +1,4 @@
-{
+maze.i18n.dict.en = {
   "no results found": "no results found",
   "page not found": "page not found",
   "connection error": "connection error",

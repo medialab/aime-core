@@ -6,33 +6,35 @@
   maze.domino.modules.Login = function() {
     domino.module.call(this);
 
-    var _self = this;
-
-    $('#login').replaceWith(maze.engine.template.login());
-    var box = $('#login');
-
-    // prevent form submission
-    $('#loginForm').submit(function(e){
-      e.preventDefault();
-    });
+    var _self = this, 
+        box;  
 
     /*
-      [authenticate] events handling
+      [authenticate] events handling once the UI is ready
     */
-    box.on('click', '[data-action=authenticate]', function(e) {
-      console.log('launching procedure');
-      _self.dispatchEvent('auth_require', {
-        email: $('#email').val(),
-        password: $('#password').val()
+    this.triggers.events.session__initialized = function() {
+      console.log('login', '@session__initialized');
+      $('#login').replaceWith(maze.engine.template.login());
+      box = $('#login');
+      $('#loginForm').submit(function(e){
+        e.preventDefault();
+      });
+      box.on('click', '[data-action=authenticate]', function(e) {
+        console.log('launching procedure');
+        _self.dispatchEvent('auth_require', {
+          email: $('#email').val(),
+          password: $('#password').val()
+        });
+
       });
 
-    });
+      box.on('click', '[data-action=signup]', function(e) {
+        box.hide();
+        _self.dispatchEvent('signup_require');
 
-    box.on('click', '[data-action=signup]', function(e) {
-      box.hide();
-      _self.dispatchEvent('signup_require');
-
-    });
+      });
+      
+    };
 
     /*
       listening on login requests
@@ -40,7 +42,7 @@
 
     this.triggers.events.authorization__updated = function(controller, res) {
       var level = controller.get('authorization');
-
+      
       switch(level) {
         case maze.AUTHORIZATION_REQUIRED:
           box.show();
@@ -57,10 +59,11 @@
           box.hide();
           break;
       }
+      console.log('login', '@authorization__updated with', level, box);
       
-      console.log(res);
+    };
+
 
       
-    }
   };
 })();

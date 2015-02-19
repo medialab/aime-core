@@ -6,10 +6,12 @@ $(document).ready(function() {
   
   // maze urls
   maze.urls = {
+    session: '/session',
     login: '/login',
     logout: '/logout',
     signup: '/register',
     activate: '/activate/::token',
+    lang: '/lang/::lang',
 
     get_book: '/book',
     get_vocabulary: '/voc',
@@ -73,12 +75,7 @@ $(document).ready(function() {
     maze.verbose = maze.settings.debug || true;
     domino.settings('verbose', true);
 
-    $("#header").replaceWith(maze.engine.template.header({
-      settings: maze.settings,
-      user:{
-        username: 'agent smith'
-      }
-    }));
+    
 
     $("#terms-popup").appendTo("body");
     $("#legal-popup").appendTo("body");
@@ -114,12 +111,7 @@ $(document).ready(function() {
     maze.rangy.init();
     maze.domino.init();
 
-    // ask for status
-    $.getJSON('http://aime.medialab.sciences-po.fr/tweets-aime.json', function(res) {
-      $("#twitter-box .tweets").append(res.splice(0,1).map(function(d) {
-        return maze.engine.template.tweet({tweet: d});
-      }))
-    });
+    
   };
 
 
