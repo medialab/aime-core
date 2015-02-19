@@ -43,7 +43,8 @@ module.exports = {
           data;
 
       if (target) {
-        if (limit)
+        console.log('Cache available')
+        if (!limit)
           data = target.slice(offset);
         else
           data = _.take(target.slice(offset), limit);
@@ -51,6 +52,7 @@ module.exports = {
         return res.ok(data);
       }
       else if (!limit && !offset) {
+        console.log('Should cache');
         res.cache = true;
         res.on('finish', function() {
           cache[lang][name] = res.cache;
