@@ -25,12 +25,12 @@ function teardown() {
 }
 
 const SEQ = [
-  'indexation',
+  // 'indexation',
   'book',
   'contributions',
   'uploads',
-  'users',
   'documents',
+  'users',
   'vocabulary',
   'modes',
   'scenarii',
