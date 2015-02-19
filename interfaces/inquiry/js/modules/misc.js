@@ -58,7 +58,7 @@
         }))
         header.addClass('ready')
       });
-
+      _self.log('More', '@session__initialized');
     }
       
 

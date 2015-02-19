@@ -23,7 +23,7 @@
 @cyan_alpha: rgb(29, 112, 183, .2);
 
 @magenta: rgb(192, 96, 27, 1);
-@magenta_alpha: rgb(192, 96, 27, .2);
+@magenta_alpha: rgba(192, 96, 27, .28);
 @green: rgb(96, 192, 27, 1);
 @green_alpha: rgb(222,242,208);
 
@@ -718,6 +718,9 @@ ul > li{
   }
 
   &.search {
+    .actions, .action{
+      display: none;
+    }
     .chapter, .subtitle, .term, .document, .contribution {
       color: @red;
     }
@@ -821,7 +824,7 @@ ul > li{
     .chapter.match {
       display: block;
         
-      .subtiles, .paragraphs {
+      .subtitles, .paragraphs {
         display: block;
       }
     }

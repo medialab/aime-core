@@ -2880,6 +2880,7 @@
         instantiate Domino modules
         ---
     */
+    maze.domino.controller.addModule( maze.domino.modules.More,null, {id:'more'});
     maze.domino.controller.addModule( maze.domino.modules.Login,null, {id:'login'});
     maze.domino.controller.addModule( maze.domino.modules.SignUp,null, {id:'signup'});
     maze.domino.controller.addModule( maze.domino.modules.StickyText,null, {id:'sticky_text'});
@@ -2889,7 +2890,7 @@
     maze.domino.controller.addModule( maze.domino.modules.Search, null, {id:'search'});
     maze.domino.controller.addModule( maze.domino.modules.Page, null, {id:'page'});
     maze.domino.controller.addModule( maze.domino.modules.Rangy,null, {id:'rangy'});
-    maze.domino.controller.addModule( maze.domino.modules.More,null, {id:'more'});
+    
     maze.domino.controller.addModule( maze.domino.modules.Slider,null, {id:'slider'});
 
     maze.domino.controller.addModule( maze.domino.modules.Editor,null, {id:'editor'});
