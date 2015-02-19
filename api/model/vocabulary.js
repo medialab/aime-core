@@ -28,6 +28,26 @@ module.exports = {
       return callback(null, data);
     });
   },
+  getBySlugIds: function(ids, lang, callback) {
+
+    // Casting to int for cypher to work
+    ids = ids.map(function(id) {
+      return +id.replace(/\w+_/, '');
+    });
+
+    console.log(ids);
+    // Executing query
+    db.rows(queries.getBySlugIds, {slug_ids: ids}, function(err, result) {
+
+      // On typical error
+      if (err) return callback(err);
+
+      // Treating incoming data
+      var data = nested(result);
+
+      return callback(null, data);
+    });
+  },
   getAll: function(lang, callback) {
 
     // Executing query
