@@ -15,7 +15,7 @@ module.exports = [
     url: '/book',
     cache: 'book',
     action: function(req, res) {
-      book.getAll('en', function(err, result) {
+      book.getAll(req.lang, function(err, result) {
         if (err) return res.serverError(err);
 
         return res.ok(result);
@@ -26,7 +26,7 @@ module.exports = [
     url: '/voc',
     cache: 'vocabulary',
     action: function(req, res) {
-      voc.getAll('en', function(err, result) {
+      voc.getAll(req.lang, function(err, result) {
         if (err) return res.serverError(err);
 
         return res.ok(result);
@@ -60,7 +60,7 @@ module.exports = [
     url: '/doc',
     cache: 'documents',
     action: function(req, res) {
-      doc.getAll('en', function(err, result) {
+      doc.getAll(req.lang, function(err, result) {
         if (err) return res.serverError(err);
 
         return res.ok(result);
