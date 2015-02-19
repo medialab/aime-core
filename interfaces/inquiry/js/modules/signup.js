@@ -61,14 +61,14 @@
       [authenticate] events handling once the UI is ready
     */
     this.triggers.events.session__initialized = function() {
-      console.log('this.triggers.events.session__initialized');
+      _self.log('this.triggers.events.session__initialized');
       $('#signup').replaceWith(maze.engine.template.signup());
       box = $('#signup');
       /*
         Event handlers are bound to box only
       */
       box.on('click', '[data-action=proceed]', function(e) {
-        console.log('launching signup procedure');
+        _self.log('launching signup procedure');
       });
 
       // init listeners
@@ -98,7 +98,7 @@
 
       box.on('click', '[data-action=validate]', function(e) {
         e.preventDefault();
-        // console.log(user)
+        // _self.log(user)
         // return;
         if(is_valid()) {
           _self.dispatchEvent('signup_register', {

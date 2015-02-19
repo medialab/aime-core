@@ -13,14 +13,14 @@
       [authenticate] events handling once the UI is ready
     */
     this.triggers.events.session__initialized = function() {
-      console.log('login', '@session__initialized');
+      _self.log('@session__initialized');
       $('#login').replaceWith(maze.engine.template.login());
       box = $('#login');
       $('#loginForm').submit(function(e){
         e.preventDefault();
       });
       box.on('click', '[data-action=authenticate]', function(e) {
-        console.log('launching procedure');
+        _self.log('launching procedure');
         _self.dispatchEvent('auth_require', {
           email: $('#email').val(),
           password: $('#password').val()
@@ -59,7 +59,7 @@
           box.hide();
           break;
       }
-      console.log('login', '@authorization__updated with', level, box);
+      _self.log('@authorization__updated with', level);
       
     };
 

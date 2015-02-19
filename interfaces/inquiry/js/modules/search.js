@@ -14,24 +14,28 @@
       });
     }
 
-    _input.on('keypress', function( event ){
-      var query = _input.val().trim();
-      if( query.length > 0 && event.keyCode==13)
-        _self.search( query );
-    });
+    this.triggers.events.session__initialized = function(controller) {
+      _input = $('#search-query');
+      _input.on('keypress', function( event ){
+        var query = _input.val().trim();
+        if( query.length > 0 && event.keyCode==13)
+          _self.search( query );
+      });
 
-    _input.on('change', function( event ){
-      var query = _input.val().trim();
-      if( query.length > 0 )
-        _self.search( query );
-    });
+      _input.on('change', function( event ){
+        var query = _input.val().trim();
+        if( query.length > 0 )
+          _self.search( query );
+      });
 
-    $('#search-button').on('click', function(event){
-      var query = _input.val().trim();
-      if( query.length > 0 )
-        _self.search( query );
-    }); // the html box element
+      $('#search-button').on('click', function(event){
+        var query = _input.val().trim();
+        if( query.length > 0 )
+          _self.search( query );
+      }); // the html box element
 
+      _self.log('Search', '@session__initialized');
+    };
 
     this.triggers.events.scene_query_updated = function(controller) {
       var newQuery = controller.get('scene_query');

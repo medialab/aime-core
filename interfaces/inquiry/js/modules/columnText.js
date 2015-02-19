@@ -163,7 +163,7 @@
             chapter,
             _omissis = {};
 
-        maze.log('text_matches_highlight:', matches.length, 'matches found');
+        _self.log('text_matches_highlight:', matches.length, 'matches found');
 
         for(var i=0; i < matches.length; i++){
             var el = $(document.getElementById(matches[i]));
@@ -179,7 +179,7 @@
                 console.log('el position', el.index(), el.siblings('.paragraph').length, subtitle[0].id)
                 // if( typeof _omissis[ subheading.attr('id') ] == "undefined" )
                 //         _omissis[ subheading.attr('id') ] = subheading.find(".paragraph");
-
+                el.highlight(query);
             }
 
         }
