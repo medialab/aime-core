@@ -1,4 +1,13 @@
-{
+maze.i18n.dict.fr = {
+  connect: "se connecter",
+  connect_to_aime: "se connecter sur aime",
+  english: "anglais",
+  french:  "français",
+  help:    "aide",
+  more:    "more",
+  sign_up:  "s'inscrire",
+  login:    "adresse email",
+  password: "mot de passe",
   "no results found": "votre recherche n'a donné aucun résultat",
   "page not found": "page non trouvée",
   "connection error": "Connection error",

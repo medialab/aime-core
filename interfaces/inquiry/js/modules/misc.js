@@ -14,33 +14,62 @@
   maze.domino.modules.More = function() {
     domino.module.call(this);
 
-    var _self = this;
-    var header = $('#header');
+    var _self  = this,
+        header = $('#header');
 
-    this.triggers.events.toggle = function( controller ){
-      var toggle_menu = $('.toggle_menu p');
+    this.triggers.events.session__initialized = function() {
+      $('#header').replaceWith(maze.engine.template.header({
+        settings: maze.settings
+      }));
+      header = $('#header');
 
-      if ( header.attr('meta-status') == 'closed' ) {
-        header.css({ top: 0});
-        header.attr('meta-status', 'opened');
-        toggle_menu.text('less');
-      } else {
-        header.css({ top: -200});
-        header.attr('meta-status', 'closed');
-        toggle_menu.text('more');
-      }
+      header.on('click', '.toggle_menu', function(e) {
+        var toggle_menu = $('.toggle_menu p');
+
+        if ( header.attr('meta-status') == 'closed' ) {
+          header.css({ top: 0});
+          header.attr('meta-status', 'opened');
+          toggle_menu.text('less');
+        } else {
+          header.css({ top: -200});
+          header.attr('meta-status', 'closed');
+          toggle_menu.text('more');
+        }
+      });
+    
+      // activate logout
+      header.on('click', '.signout', function(e) {
+        e.preventDefault();
+        maze.domino.controller.request('logout');
+
+      });
+
+      header.on('click', '.langBloc', function(e) {
+        var lang = $(this).attr('data-lang');
+        _self.dispatchEvent('lang_change', {lang:lang});
+      });
+
+      // and, last but not least, the tweeetters
+      // ask for status
+      $.getJSON('http://aime.medialab.sciences-po.fr/tweets-aime.json', function(res) {
+        $("#twitter-box .tweets").append(res.splice(0,1).map(function(d) {
+          return maze.engine.template.tweet({tweet: d});
+        }))
+        header.addClass('ready')
+      });
 
     }
+      
 
-    header.on('click', '.toggle_menu', this.triggers.events.toggle );
+    /*
+      Reload user profile on opdate
+    */
+    this.triggers.events.user__updated = function(controller) {
+      var user = controller.get('user');
+      header.find('.username').text(user.name || user.surname)
+    }
+
     
-    // activate logout
-    header.on('click', '.signout', function(e) {
-      e.preventDefault();
-      maze.domino.controller.request('logout');
-
-    });
-
   };
 
 

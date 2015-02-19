@@ -86,12 +86,12 @@
       var docs = d.match(/\{(doc_.*?)\}/)
       if(!docs)
         return d;
-      return '<span class="link doc" data-id="'+ docs.pop().replace('_', '-').replace(',',' ')+'">' + d + '</span>';
+      return '<span class="link doc" data-id="'+ docs.pop().replace('_', '-').replace(',',' ')+'">' + d + '</span>'; // .replace(/\{(doc_.*?)\}/,'')
     })
     
 
     //console.log('sentence', sentences)
-    return marked(sentences.join(''), {
+    return marked(sentences.join(' '), {
       renderer: renderer
     });
   };

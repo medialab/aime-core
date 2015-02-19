@@ -1636,15 +1636,19 @@ p {
   // background-color: rgba(150, 150, 150, 1);
 
   header {
-
+    display: none;
     position: absolute;
     top: -200px; // Default position
     width: 100%;
     height: @headerHeight+200;
     background-color: @gray_ooo;
     border-bottom: solid 1px white;
-    z-index: 50;
+    z-index: 150;
     .transition(top, .35s);
+
+    &.ready{
+      display: block
+    }
 
     .redbig {
       height: 4px;

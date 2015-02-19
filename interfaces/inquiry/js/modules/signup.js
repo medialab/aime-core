@@ -11,8 +11,7 @@
         step = 0,
         limit = 6; // curent step number.
 
-    $('#signup').replaceWith(maze.engine.template.signup());
-    var box = $('#signup');
+    
 
     /*
       goto current step. mode slider
@@ -57,60 +56,62 @@
       return has_values;
 
     }
+
     /*
-      [authenticate] events handling
+      [authenticate] events handling once the UI is ready
     */
-    box.on('click', '[data-action=proceed]', function(e) {
-      console.log('launching signup procedure');
-    });
+    this.triggers.events.session__initialized = function() {
+      console.log('this.triggers.events.session__initialized');
+      $('#signup').replaceWith(maze.engine.template.signup());
+      box = $('#signup');
+      /*
+        Event handlers are bound to box only
+      */
+      box.on('click', '[data-action=proceed]', function(e) {
+        console.log('launching signup procedure');
+      });
 
-    // init listeners
-    box.on('click', '[data-action=previous]', function(e) {
-      e.preventDefault();
-      // validate here step specific content. Then slide!
-      step--;
-      step = Math.max(step, 0);
-      browse();
-    });
+      // init listeners
+      box.on('click', '[data-action=previous]', function(e) {
+        e.preventDefault();
+        // validate here step specific content. Then slide!
+        step--;
+        step = Math.max(step, 0);
+        browse();
+      });
 
-    // init listeners
-    box.on('click', '[data-action=close]', function(e) {
-      e.preventDefault();
-      // abandon.
-      box.hide();
-      _self.dispatchEvent('signup_dismiss');
-    });
+      // init listeners
+      box.on('click', '[data-action=close]', function(e) {
+        e.preventDefault();
+        // abandon.
+        box.hide();
+        _self.dispatchEvent('signup_dismiss');
+      });
 
-    box.on('click', '[data-action=next]', function(e) {
-      e.preventDefault();
-      // validate here step specific content. Then slide!
-      step++;
-      step = Math.min(step, limit);
-      browse();
-    });
+      box.on('click', '[data-action=next]', function(e) {
+        e.preventDefault();
+        // validate here step specific content. Then slide!
+        step++;
+        step = Math.min(step, limit);
+        browse();
+      });
 
-    box.on('click', '[data-action=validate]', function(e) {
-      e.preventDefault();
-      
-      
+      box.on('click', '[data-action=validate]', function(e) {
+        e.preventDefault();
+        // console.log(user)
+        // return;
+        if(is_valid()) {
+          _self.dispatchEvent('signup_register', {
+            email:    user.email,
+            password: user.password,
+            name:     user.name,
+            surmame:  user.surname, 
+          });
+        };
+        //box.hide();
+      });
 
-      // console.log(user)
-      // return;
-      if(is_valid()) {
-        _self.dispatchEvent('signup_register', {
-          email:    user.email,
-          password: user.password,
-          name:     user.name,
-          surmame:  user.surname, 
-        });
-      };
-
-      //box.hide();
-      
-    });
-
-
-    
+    };
 
     /*
       showing popup on signinrequired, and corresponding atuh level
@@ -119,6 +120,11 @@
     this.triggers.events.signup_require = function(controller, res) {
       box.show();
     }
+    
+    
+  
+
+    
 
 
   };
