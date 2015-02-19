@@ -1708,7 +1708,7 @@
         { id: 'get_vocabulary_item',
           type: 'GET',
           dataType: 'json',
-          url: maze.urls.get_vocabulary,
+          url: maze.urls.get_vocabulary_item,
           description: 'The service that deals with SPECIFIED vocabulary items, via ids shortcut.',
           before: function(params, xhr) {
             xhr.withCredentials = true;

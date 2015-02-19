@@ -13,7 +13,7 @@ $(document).ready(function() {
 
     get_book: '/book',
     get_vocabulary: '/voc',
-    get_vocabulary: '/voc/::ids',
+    get_vocabulary_item: '/voc/::ids',
     get_documents: '/doc',
     search_book: '/inquiry/search/::query',
 
