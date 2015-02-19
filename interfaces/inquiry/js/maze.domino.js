@@ -1811,8 +1811,8 @@
               }
 
               result.forEach(function(o) {
-                idsArray.push(o.id);
-                contents[o.id] = o;
+                idsArray.push(o.slug_id);
+                contents[o.slug_id] = o;
               });
 
               this.update({
@@ -1887,8 +1887,8 @@
               }
 
               result.forEach(function(o) {
-                idsArray.push(o.id);
-                contents[o.id] = o;
+                idsArray.push(o.slug_id);
+                contents[o.slug_id] = o;
               });
 
               this.update({
@@ -1935,8 +1935,8 @@
             }
 
             result.forEach(function(o) {
-              idsArray.push(o.id);
-              contents[o.id] = o;
+              idsArray.push(o.slug_id);
+              contents[o.slug_id] = o;
             });
             this.update('infinite_doc', maze.STATUS_READY );
             this.dispatchEvent('data_update',{
@@ -2019,8 +2019,8 @@
             }
 
             result.forEach(function(o) {
-              idsArray.push(o.id);
-              contents[o.id] = o;
+              idsArray.push(o.slug_id);
+              contents[o.slug_id] = o;
             });
 
             this.dispatchEvent('data_update',{
