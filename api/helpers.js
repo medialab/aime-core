@@ -15,11 +15,11 @@ function treat(sub) {
 
   // Leaf level
   if (sub.id)
-    return _.extend({id: sub.id}, sub.properties);
+    return _.extend({id: sub.id}, sub.properties, _.omit(sub, ['id', 'properties']));
 
   for (k in sub) {
     if (types.check(sub[k], 'object') && sub[k].id) {
-      item = _.extend({id: sub[k].id}, sub[k].properties);
+      item = _.extend({id: sub[k].id}, sub[k].properties, _.omit(sub[k], ['id', 'properties']));
     }
     else {
       children = {};
