@@ -10,6 +10,7 @@ var db = require('../connection.js'),
     _ = require('lodash');
 
 var keep = [
+  'avatar',
   'username',
   'email',
   'name',
@@ -23,10 +24,15 @@ module.exports = {
     db.query(queries.login, {email: email, hash: hash(password), active: true}, function(err, results) {
       if (err) return callback(err);
 
-      return callback(
-        null,
-        results.length ? _.pick(results[0], keep) : null
-      );
+      if (results[0]) {
+        return callback(
+          null,
+          results.length ? _.pick(_.extend(results[0].user, {avatar: (results[0].avatar || {}).filename}), keep) : null
+        );
+      }
+      else {
+        return callback(null, null);
+      }
     });
   },
   create: function(properties, callback) {
@@ -51,7 +57,15 @@ module.exports = {
     db.query(queries.activate, {token: token}, function(err, results) {
       if (err) return callback(err);
 
-      return callback(null, results.length ? _.pick(results[0], keep) : null);
+      if (results[0]) {
+        return callback(
+          null,
+          results.length ? _.pick(_.extend(results[0].user, {avatar: (results[0].avatar || {}).filename}), keep) : null
+        );
+      }
+      else {
+        return callback(null, null);
+      }
     });
   },
   createResetToken: function(id, callback) {

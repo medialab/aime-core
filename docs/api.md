@@ -14,6 +14,8 @@ The following API is fully RESTful and returns responses in a JSON format.
 {
 	"status": "ok",
 	"result": {},
+	"user": {},
+	"lang": "en|fr"
 	"warning": {}
 }
 ```
@@ -80,6 +82,11 @@ Note that when the lang is not specified, the API will assume you want the defau
 * `POST /logout`
 * `POST /register`
 * `GET /[<lang>]/search/<query>`
+
+## Parameters
+
+* `limit`: max number of entities to return.
+* `offset`: query offset.
 
 ## UI-specific endpoints
 

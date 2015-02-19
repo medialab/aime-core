@@ -1,6 +1,8 @@
 // name: login
 // Attempt to log a user through an email and a password hash
-MATCH (u:User {email: {email}, password: {hash}, active: {active}}) RETURN u;
+MATCH (u:User {email: {email}, password: {hash}, active: {active}})
+OPTIONAL MATCH (u)<-[:AVATAR_OF]-(a:Media)
+RETURN u AS user, a AS avatar;
 
 // name: create
 // Creates a single user and returns it
@@ -10,9 +12,10 @@ RETURN u;
 // name: activate
 // Activate a single user by token
 MATCH (u:User {token: {token}, active: false})
+OPTIONAL MATCH (u)<-[:AVATAR_OF]-(a:Media)
 SET u.active = true
 REMOVE u.token
-RETURN u;
+RETURN u AS user, a AS avatar;
 
 // name: update
 // Update a single user

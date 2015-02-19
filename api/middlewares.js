@@ -4,9 +4,13 @@
  *
  * Compilation of middlewares used throughout the express application.
  */
-var types = require('typology'),
+var types = require('./typology.js'),
     cache = require('./cache.js'),
-    config = require('../config.json').api;
+    config = require('../config.json').api,
+    accept = require('accept-language'),
+    _ = require('lodash');
+
+accept.languages(['en', 'fr']);
 
 // Helpers
 function param(req, key) {
@@ -32,18 +36,31 @@ module.exports = {
   // Checking cache before anything
   cache: function(name) {
     return function(req, res, next) {
-      var lang = req.params.lang || config.defaultLang;
+      var lang = req.lang,
+          target = cache[lang][name],
+          limit = req.query.limit,
+          offset = req.query.offset || 0,
+          data;
 
-      if (cache[lang][name])
-        return res.ok(cache[lang][name]);
-      else {
+      if (target) {
+        console.log('Cache available')
+        if (!limit)
+          data = target.slice(offset);
+        else
+          data = _.take(target.slice(offset), limit);
+
+        return res.ok(data);
+      }
+      else if (!limit && !offset) {
+        console.log('Should cache');
         res.cache = true;
         res.on('finish', function() {
           cache[lang][name] = res.cache;
           res.cache = null;
         });
-        return next();
       }
+
+      return next();
     };
   },
 
@@ -58,6 +75,26 @@ module.exports = {
       else
         return next();
     }
+  },
+
+  // Checking request language
+  language: function(req, res, next) {
+
+    // If session has a language
+    if (req.session.lang) {
+      req.lang = req.session.lang;
+      return next();
+    }
+
+    // Trying to assert it form the headers
+    var header = req.headers['accept-language'];
+
+    if (header)
+      req.lang = accept.get(header) || config.defaultLang;
+    else
+      req.lang = config.defaultLang;
+
+    return next();
   },
 
   // Validate the parameters of the query

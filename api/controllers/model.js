@@ -6,14 +6,16 @@
  */
 var book = require('../model/book.js'),
     voc = require('../model/vocabulary.js'),
-    doc = require('../model/document.js');
+    doc = require('../model/document.js'),
+    types = require('../typology.js');
 
+// Refactor model access by forge
 module.exports = [
   {
     url: '/book',
     cache: 'book',
     action: function(req, res) {
-      book.getAll('en', function(err, result) {
+      book.getAll(req.lang, function(err, result) {
         if (err) return res.serverError(err);
 
         return res.ok(result);
@@ -22,9 +24,13 @@ module.exports = [
   },
   {
     url: '/voc',
+    validate: {
+      limit: '?integer',
+      offset: '?integer'
+    },
     cache: 'vocabulary',
     action: function(req, res) {
-      voc.getAll('en', function(err, result) {
+      voc.getAll(req.lang, req.query, function(err, result) {
         if (err) return res.serverError(err);
 
         return res.ok(result);
@@ -35,23 +41,60 @@ module.exports = [
     url: '/voc/:ids',
     action: function(req, res) {
       var ids = req.params.ids.split(','),
-          slugged = !!~ids[0].indexOf('_');
+          method;
 
-      voc[slugged ? 'getBySlugIds' : 'getByIds'](req.params.ids.split(','), 'en', function(err, vocs) {
+      if (types.check(ids, 'ids'))
+        method = 'getByIds';
+      else if (types.check(ids, 'slugs'))
+        method = 'getBySlugIds';
+      else
+        return res.badRequest(
+          'Wrong ids.',
+          'List of ids or slug ids separated by commas.'
+        );
+
+      voc[method](ids, function(err, vocs) {
         if (err) return res.serverError(err);
 
-        return res.ok(vocs.length > 1 ? vocs : vocs[0]);
+        return res.ok(vocs);
       });
     }
   },
   {
     url: '/doc',
+    validate: {
+      limit: '?integer',
+      offset: '?integer'
+    },
     cache: 'documents',
     action: function(req, res) {
-      doc.getAll('en', function(err, result) {
+      doc.getAll(req.lang, req.query, function(err, result) {
         if (err) return res.serverError(err);
 
         return res.ok(result);
+      });
+    }
+  },
+  {
+    url: '/doc/:ids',
+    action: function(req, res) {
+      var ids = req.params.ids.split(','),
+          method;
+
+      if (types.check(ids, 'ids'))
+        method = 'getByIds';
+      else if (types.check(ids, 'slugs'))
+        method = 'getBySlugIds';
+      else
+        return res.badRequest(
+          'Wrong ids.',
+          'List of ids or slug ids separated by commas.'
+        );
+
+      doc[method](ids, function(err, vocs) {
+        if (err) return res.serverError(err);
+
+        return res.ok(vocs);
       });
     }
   }
