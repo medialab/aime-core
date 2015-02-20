@@ -1617,9 +1617,10 @@
           },
           url: maze.urls.login,
           success: function(data, params) {
-            if(data.status="ok")
+            if(data.status="ok") {
               this.update('authorization', maze.AUTHORIZATION_AUTHORIZED);
-
+              this.update('user', data.result);
+            }
             console.log('%c login success ', 'background: green; color: white');
             // reload user... header module
           },
@@ -1811,8 +1812,8 @@
               }
 
               result.forEach(function(o) {
-                idsArray.push(o.id);
-                contents[o.id] = o;
+                idsArray.push(o.slug_id);
+                contents[o.slug_id] = o;
               });
 
               this.update({
@@ -1887,8 +1888,8 @@
               }
 
               result.forEach(function(o) {
-                idsArray.push(o.id);
-                contents[o.id] = o;
+                idsArray.push(o.slug_id);
+                contents[o.slug_id] = o;
               });
 
               this.update({
@@ -1935,8 +1936,8 @@
             }
 
             result.forEach(function(o) {
-              idsArray.push(o.id);
-              contents[o.id] = o;
+              idsArray.push(o.slug_id);
+              contents[o.slug_id] = o;
             });
             this.update('infinite_doc', maze.STATUS_READY );
             this.dispatchEvent('data_update',{
@@ -2019,8 +2020,8 @@
             }
 
             result.forEach(function(o) {
-              idsArray.push(o.id);
-              contents[o.id] = o;
+              idsArray.push(o.slug_id);
+              contents[o.slug_id] = o;
             });
 
             this.dispatchEvent('data_update',{

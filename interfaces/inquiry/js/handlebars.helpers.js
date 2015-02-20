@@ -59,6 +59,15 @@
     });
 
     /*
+      Handle date format YYYYMMDD
+    */
+    Handlebars.registerHelper("date_lite", function(date) {
+      return date.replace(/(\d{4})(\d{2})(\d{2})/, function(m, p1, p2, p3) {
+        return [p1, p2, p3].join(' / ');
+      })
+    });
+
+    /*
       correct the iframe woith with width = 100%
       using a dummy regexp replace
     */

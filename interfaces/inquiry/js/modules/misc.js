@@ -53,7 +53,7 @@
       // and, last but not least, the tweeetters
       // ask for status
       $.getJSON('http://aime.medialab.sciences-po.fr/tweets-aime.json', function(res) {
-        $("#twitter-box .tweets").append(res.splice(0,1).map(function(d) {
+        $("#twitter-box .tweets").append(res.splice(0,5).map(function(d) {
           return maze.engine.template.tweet({tweet: d});
         }))
         header.addClass('ready')
