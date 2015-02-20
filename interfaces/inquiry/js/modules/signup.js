@@ -84,7 +84,10 @@
       box.find('.slider .wrapper').css({
         top: -step * 100 + '%'
       }).parent().scrollTop(0);
-
+      if(step == limit)
+        $("[data-action=next]").text(maze.i18n.translate('done'))
+      else
+        $("[data-action=next]").text(maze.i18n.translate('next'))
     };
 
     var nextStep = function() {
@@ -94,6 +97,12 @@
       browse();
     }
 
+    // dismiss handler, on click
+    var dismiss = function() {
+      // abandon.
+      box.hide();
+      _self.dispatchEvent('signup_dismiss');
+    }
     /* goto special pages */
     var browseSpecial = function(page) {
       _self.log('slide to', page)
@@ -115,21 +124,22 @@
         _self.log('launching signup procedure');
       });
 
-      // init listeners
+      // previous slide
       box.on('click', '[data-action=previous]', function(e) {
         e.preventDefault();
-        // validate here step specific content. Then slide!
         step--;
-        step = Math.max(step, 0);
-        browse();
+        if(step < 0) {
+          step = 0;
+          dismiss();
+        } else {
+          browse();
+        }
       });
 
       // init listeners
       box.on('click', '[data-action=close]', function(e) {
         e.preventDefault();
-        // abandon.
-        box.hide();
-        _self.dispatchEvent('signup_dismiss');
+        dismiss();
       });
 
       box.on('click', '[data-action=next]', function(e) {
