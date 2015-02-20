@@ -1244,7 +1244,8 @@
           description: 'triggered right after data_doc_updated, it examines the document array and search for global bibliographic items',
           method:function( event ){
             if( event.data.ref_ids ){
-              this.request('get_references', { params:[ maze.reference_corpus, event.data.ref_ids, "mla", "html" ]});
+              debugger
+              this.request('get_references', { params:[ maze.settings.biblib_corpus, event.data.ref_ids, "mla", "html" ]});
               return;
             }
 
@@ -1255,11 +1256,11 @@
                 ref_ids = [];
 
             // collect ref ids
-            for( var i in docs ){
-              ref_ids= ref_ids.concat( docs[i].references );
+            for(var i in docs){
+              ref_ids = ref_ids.concat( docs[i].references );
             }
             ref_ids.length &&
-              this.request('get_references', { params:[ maze.reference_corpus, ref_ids, "mla", "html" ]});
+              this.request('get_references', { params:[maze.settings.biblib_corpus, ref_ids, "mla", "html" ]});
 
           }
         },
@@ -1753,7 +1754,6 @@
             }
 
             data.result.forEach(function(o) {
-              console.log(o);
               idsArray.push(o.id);
               contents[o.id] = o;
             });
@@ -2003,8 +2003,10 @@
 
               for(var i in d.children)
                 for(var j in d.children[i].children)
-                  if(d.children[i].children[j].type == 'reference')
-                    d.references.push(d.children[i].children[j].biblib_id);
+                  if(d.children[i].children[j].type == 'reference'){
+                    d.references.push(''+d.children[i].children[j].biblib_id);
+                  }
+                    
 
               // get the first slide as "document preview"
               d.preview = d.children.shift();

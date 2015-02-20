@@ -42,8 +42,6 @@
   maze.user = 'anonymous';
   maze.today = Date();
   maze.role = 'guest';
-  maze.reference_corpus = 'biblib';
-  
 
   maze.columns = {};
 

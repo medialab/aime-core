@@ -143,24 +143,15 @@
             }
           });
         else {
-          console.log('authenticate, now')
+          _self.dispatchEvent('signup_register', {
+            email:    $('#signup-email').val(),
+            password: $('#signup-password').val(),
+            name:     $('#signup-name').val(),
+          });
         }
       });
 
-      box.on('click', '[data-action=validate]', function(e) {
-        e.preventDefault();
-        // _self.log(user)
-        // return;
-        if(is_valid()) {
-          _self.dispatchEvent('signup_register', {
-            email:    user.email,
-            password: user.password,
-            name:     user.name,
-            surmame:  user.surname, 
-          });
-        };
-        //box.hide();
-      });
+      
 
     };
 
