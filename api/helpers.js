@@ -34,7 +34,19 @@ function nested(rows) {
   return rows.map(function(r) { return r[0] }).map(treat);
 }
 
+// Reorder an array following the given order
+function reorder(target, order, key) {
+  var ordered = new Array(target.length);
+
+  target.forEach(function(item) {
+    ordered[order.indexOf(item[key])] = item;
+  });
+
+  return ordered;
+}
+
 // Exporting
 module.exports = {
-  nested: nested
+  nested: nested,
+  reorder: reorder
 };

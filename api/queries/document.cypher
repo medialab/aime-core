@@ -14,6 +14,6 @@ LIMIT {limit};
 MATCH (d:Document {status: "public"})-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
 MATCH (d)-[:CREATED_BY]-(a:User)
 WHERE d.slug_id IN {slug_ids}
-WITH d, rs, s, re, {id: id(e), properties: e} AS elements ORDER BY re.order
-WITH d, rs, s, {slide: {id: id(s), properties: s}, children: collect(elements)} AS slides ORDER BY rs.order
+WITH a, d, rs, s, re, {id: id(e), properties: e} AS elements ORDER BY re.order
+WITH a, d, rs, s, {slide: {id: id(s), properties: s}, children: collect(elements)} AS slides ORDER BY rs.order
 RETURN {document: {id: id(d), properties: d, author: {name: a.name, surname: a.surname}}, children: collect(slides)} AS item;

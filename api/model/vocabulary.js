@@ -5,7 +5,7 @@
  */
 var db = require('../connection.js'),
     queries = require('../queries.js').vocabulary,
-    nested = require('../helpers.js').nested,
+    helpers = require('../helpers.js'),
     _ = require('lodash');
 
 module.exports = {
@@ -23,9 +23,9 @@ module.exports = {
       if (err) return callback(err);
 
       // Treating incoming data
-      var data = nested(result);
+      var data = helpers.nested(result);
 
-      return callback(null, data);
+      return callback(null, helpers.reorder(data, ids, 'id'));
     });
   },
   getBySlugIds: function(ids, callback) {
@@ -42,9 +42,9 @@ module.exports = {
       if (err) return callback(err);
 
       // Treating incoming data
-      var data = nested(result);
+      var data = helpers.nested(result);
 
-      return callback(null, data);
+      return callback(null, helpers.reorder(data, ids, 'slug_id'));
     });
   },
   getAll: function(lang, params, callback) {
@@ -60,7 +60,7 @@ module.exports = {
       if (err) return callback(err);
 
       // Treating incoming data
-      var data = nested(result);
+      var data = helpers.nested(result);
 
       return callback(null, data);
     });
