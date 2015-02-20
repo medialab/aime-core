@@ -1617,9 +1617,10 @@
           },
           url: maze.urls.login,
           success: function(data, params) {
-            if(data.status="ok")
+            if(data.status="ok") {
               this.update('authorization', maze.AUTHORIZATION_AUTHORIZED);
-
+              this.update('user', data.result);
+            }
             console.log('%c login success ', 'background: green; color: white');
             // reload user... header module
           },
