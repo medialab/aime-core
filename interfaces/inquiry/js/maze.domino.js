@@ -1244,7 +1244,6 @@
           description: 'triggered right after data_doc_updated, it examines the document array and search for global bibliographic items',
           method:function( event ){
             if( event.data.ref_ids ){
-              debugger
               this.request('get_references', { params:[ maze.settings.biblib_corpus, event.data.ref_ids, "mla", "html" ]});
               return;
             }
