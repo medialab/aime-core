@@ -1,6 +1,6 @@
 <div id="signup">
   <div class="wrapper">
-    <form id="signupForm" action=''>
+    <form id="signupForm" action='/'>
       <button type="button" class="close" data-action="close"><i class="fa fa-close"></i></button>
       <h2>{{t 'sign up'}}</h2>
       
@@ -14,26 +14,31 @@
 
             <p class="">
               <label>{{t 'first name'}}</label>
-              <input type="text" id="signup-name" placeholder="{{t 'first name'}}" required>
+              <div id="error-name" class="invalid"></div>
+              <input type="text" id="name" placeholder="{{t 'first name'}}" >
             </p>
 
             <p>
               <label>{{t 'last name'}}</label>
-              <input type="text" id="signup-surname" name="signup-surname" required placeholder="{{t 'last name'}}">
+              <div id="error-signup-surname" class="invalid"></div>
+              <input type="text" id="signup-surname" name="signup-surname"  placeholder="{{t 'last name'}}">
             </p>
             
             <p>
               <label>{{t 'your email'}}</label>
-              <input type="email" id="signup-email" name="signup-email" placeholder="{{t 'email address'}}" required>
+              <div id="error-signup-email" class="invalid"></div>
+              <input type="text" id="signup-email" name="signup-email" placeholder="{{t 'email address'}}" >
             </p>
             
             <p>
               <label>{{t 'confirm your email'}}</label>
-              <input type="email" id="signup-email-confirm" required>
+              <div id="error-signup-email-confirm" class="invalid"></div>
+              <input type="text" id="signup-email-confirm" >
             </p>
             
             <p>
-            <input type="checkbox">
+              <div id="error-signup-agreement" class="invalid"></div>
+            <input type="checkbox" id="signup-agreement">
               {{t 'I agree to the'}} <span>{{t 'Terms of Use'}}</span> and the terms of the Data Protection Declaration  <span>{{t 'Mention CNIL'}}</span>
             </p>
 
@@ -43,10 +48,12 @@
             <div class="line"></div>
             <h3>step 2 of 5</h3>
             <label>{{t 'password'}}</label>
-            <input type="password" id="signup-password" required>
+            <div id="error-signup-password" class="invalid"></div>
+            <input type="password" id="signup-password">
 
             <label>{{t 'confirm your password'}}</label>
-            <input type="password" id="signup-password-confirm" required>
+            <div id="error-signup-password-confirm" class="invalid"></div>
+            <input type="password" id="signup-password-confirm">
 
           </div>
           <div class="slide" style="top:200%">
@@ -95,8 +102,8 @@
               <a class="button" data-action="previous">{{t 'previous'}}</a>
             </td>
             <td class="right">
-              <a class="button" data-action="next">{{t 'next'}}</a>
-              <!-- <button data-action="validate" value="{{t 'finish'}}"/> -->
+              <button data-action="next">{{t 'next'}}</button>
+              <!-- button data-action="validate">{{t 'next'}}</button -->
               <!-- button>{{t 'sign_up'}}</button -->
             </td>
           </tr>

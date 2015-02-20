@@ -9,54 +9,98 @@
     var _self = this,
         box,
         step = 0,
-        limit = 6; // curent step number.
+        limit = 4; // curent step number.
 
-    
+    var validations =[
+      /*
+        Step: 1
+      */
+      {
+        'name': {
+          minLength: {
+            value: 2,
+            message: maze.i18n.translate('signup_name_invalid')
+          },
+          maxLength: {
+            value: 36,
+            message: maze.i18n.translate('signup_name_invalid')
+          }
+        },
+        'signup-surname': {
+          minLength: {
+            value: 2,
+            message: maze.i18n.translate('signup_surname_invalid')
+          },
+          maxLength: {
+            value: 36,
+            message: maze.i18n.translate('signup_surname_invalid')
+          }
+        },
+        'signup-email': {
+            email: {
+              message: maze.i18n.translate('email_invalid')
+            }
+        },
+        'signup-email-confirm': {
+            equal_to_field: {
+              value: '#signup-email',
+              message: maze.i18n.translate('email_not_matching')
+            }
+        },
+        'signup-agreement':{
+          checked:{
+            value: '',
+            message: maze.i18n.translate('accept_the_terms')
+          }
+        }
+      },
+      /*
+        Step: 2
+      */
+      {
+        'signup-password':{
+          minLength: {
+            value: 8,
+            message: maze.i18n.translate('password_invalid')
+          },
+        },
+        'signup-password-confirm':{
+          equal_to_field: {
+            value: '#signup-password',
+            message: maze.i18n.translate('password_not_matching')
+          }
+        }
+      },
+    ];
 
+    addCustomFormValidation('equal_to_field', function(input, data) {
+      return input.val() == $(data.value).val();
+    });
     /*
       goto current step. mode slider
     */
     var browse = function() {
+      _self.log('slide to', step)
       box.find('.slider .wrapper').css({
         top: -step * 100 + '%'
-      });
+      }).parent().scrollTop(0);
+
     };
 
-    /*
-      Clean and Verify registration.
-    */
-    var is_valid = function() {
-      // steps
-      var user = {
-        email:        $('#signup-email').val(),
-        password:     $('#signup-password').val(),
-        name:         $('#signup-name').val(),
-        surname:      $('#signup-surname').val(),
-
-        institution:  $('#signup-institution').val(),
-        department:   $('#signup-department').val(),
-        discipline:   $('#signup-discipline').val(),
-      };
-
-      //if(field.attr('required'))
-      for(var i in fields) {
-
-      }
-
-      var is_defined = user.email && user.password && user.name && user.surname;
-      
-      if(!is_defined){
-        maze.toast('some values missing');
-        return false;
-      }
-        
-
-      var has_values = user.email.length && user.password.length && user.name.length && user.surname.length;
-      
-      return has_values;
-
+    var nextStep = function() {
+      _self.log('Form sucessfully validated for step:', step);
+      step++;
+      step = Math.min(step, limit);
+      browse();
     }
 
+    /* goto special pages */
+    var browseSpecial = function(page) {
+      _self.log('slide to', page)
+      box.find('.slider .wrapper').css({
+        top: -page * 100 + '%'
+      }).parent().scrollTop(0);
+    };
     /*
       [authenticate] events handling once the UI is ready
     */
@@ -89,11 +133,18 @@
       });
 
       box.on('click', '[data-action=next]', function(e) {
-        e.preventDefault();
-        // validate here step specific content. Then slide!
-        step++;
-        step = Math.min(step, limit);
-        browse();
+        // validate before going somewhere. BEWARE!
+        if(step < limit)
+          $('#signupForm').setValidationRules(validations[step], nextStep,{
+            preventDefault: true,
+            overrideRules: true, 
+            error: function(){
+              browse();
+            }
+          });
+        else {
+          console.log('authenticate, now')
+        }
       });
 
       box.on('click', '[data-action=validate]', function(e) {
