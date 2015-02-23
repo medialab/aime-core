@@ -25,7 +25,7 @@
       $('#login').replaceWith(maze.engine.template.login());
       box = $('#login');
       // $('#loginForm').submit(function(e){
-      //   e.preventDefault();
+      //    e.preventDefault();
       // });
       $('#loginForm').setValidationRules(validation, function() {
         _self.log('Form sucessfully validated :D');
@@ -33,6 +33,8 @@
           email: $('#email').val(),
           password: $('#password').val()
         })
+      },{
+        preventDefault: true
       });
 
       
