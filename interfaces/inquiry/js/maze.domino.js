@@ -1654,6 +1654,9 @@
           url: maze.urls.signup,
           success: function(data, params) {
             console.log(arguments)
+            maze.toast(maze.i18n.translate('thank_you_and_check_your_email'), {
+              stayTime: 10000
+            });
           },
           error: function() {
             // start over the signup

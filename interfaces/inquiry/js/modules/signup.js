@@ -205,6 +205,7 @@
 
     this.triggers.events.signup_require = function(controller, res) {
       step = 0;
+      box.find('.slider').scrollTop(0);
       $('#signupForm input').val('');
       browse();
       // cleanup errors
