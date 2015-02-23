@@ -23,6 +23,19 @@ module.exports = [
     }
   },
   {
+    url: '/book/search/:query',
+    validate: {
+      query: 'string'
+    },
+    action: function(req, res) {
+      book.search(req.params.query, function(err, ids) {
+        if (err) return res.serverError(err);
+
+        return res.ok({book: ids});
+      });
+    }
+  },
+  {
     url: '/voc',
     validate: {
       limit: '?integer',

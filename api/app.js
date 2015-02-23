@@ -85,7 +85,6 @@ loadController(loginRouter, controllers.login);
  */
 var authenticatedRouter = express.Router();
 loadController(authenticatedRouter, controllers.model, true);
-loadController(authenticatedRouter, controllers.inquiry, true);
 
 /**
  * Registration

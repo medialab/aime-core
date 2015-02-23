@@ -5,7 +5,7 @@
  */
 var db = require('../connection.js'),
     queries = require('../queries.js').book,
-    nested = require('../helpers.js').nested,
+    helpers = require('../helpers.js'),
     _ = require('lodash');
 
 module.exports = {
@@ -18,10 +18,24 @@ module.exports = {
       if (err) return callback(err);
 
       // Treating incoming data
-      var data = nested(result);
+      var data = helpers.nested(result);
 
       // Returning
       return callback(null, data);
+    });
+  },
+  search: function(query, callback) {
+
+    // Formatting query
+    query = helpers.searchRegex(query);
+
+    // Executing query
+    db.rows(queries.search, {query: query}, function(err, result) {
+      if (err) return callback(err);
+
+      return callback(null, result.map(function(r) {
+        return r[0];
+      }));
     });
   }
 };

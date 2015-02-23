@@ -18,3 +18,11 @@ ORDER BY length(sr)
 WITH {chapter: {id: id(c), properties: c}, children: collect(sub)} as chapter, cr
 ORDER BY length(cr)
 RETURN chapter;
+
+// name: search
+// Search for a precise string in a LIKE manner across book items and return their ids
+MATCH (n)
+WHERE
+  (n:Chapter OR n:Subheading OR (:Subheading)-[:HAS]-(n:Paragraph)) AND
+  n.text =~ {query}
+RETURN id(n);

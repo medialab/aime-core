@@ -45,8 +45,13 @@ function reorder(target, order, key) {
   return ordered;
 }
 
+function searchRegex(query) {
+  return "(?i).*" + query + ".*";
+}
+
 // Exporting
 module.exports = {
   nested: nested,
-  reorder: reorder
+  reorder: reorder,
+  searchRegex: searchRegex
 };

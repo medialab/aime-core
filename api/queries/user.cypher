@@ -19,7 +19,6 @@ RETURN u AS user, a AS avatar;
 
 // name: update
 // Update a single user
-MATCH (u:User)
-WHERE id(u) = {id}
+START u=node({id})
 SET u += {properties}
 RETURN u;
