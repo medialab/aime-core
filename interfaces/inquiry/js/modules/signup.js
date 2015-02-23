@@ -87,6 +87,7 @@
       box.find('.slider .wrapper').css({
         top: -step * 100 + '%'
       });
+      box.find('.slider').scrollTop(0)
 
       if(step == limit)
         $("[data-action=next]").text(maze.i18n.translate('done'))
@@ -133,12 +134,18 @@
       });
 
       box.find('input').keydown(function(event){
-        if (event.keyCode === 9) {
-          //if it is the last element of its slide
-          //if($('.slide[data-step=3] input:focus'))
-
+        console.log('is last the target', $(event.target));
+        if( event.keyCode === 9 && $(event.target).hasClass('tab-last')) {
           event.preventDefault();
+          //step++;
+          // try to submit the form
+          //$('#signupForm').submit();
         }
+        // if it is not in the same step, prevent default
+        //$('.slide[data-step='+step+'] input:focus')
+        //if (event.keyCode === 9) {
+        //  event.preventDefault();
+        //}
 
         // focus different stuffs
         // cycle inside various stuffs
@@ -198,6 +205,8 @@
 
     this.triggers.events.signup_require = function(controller, res) {
       step = 0;
+      $('#signupForm input').val('');
+      browse();
       // cleanup errors
       box.show();
     }
