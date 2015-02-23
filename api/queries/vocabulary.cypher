@@ -22,4 +22,4 @@ MATCH (v:Vocabulary)-[r:HAS]-(p:Paragraph)
 WHERE v.slug_id IN {slug_ids}
 OPTIONAL MATCH (v)-[:CITES]-(bp:Paragraph)<-[:HAS]-(:Subheading)
 WITH v, r, {id: id(p), properties: p} AS paragraphs, collect(id(bp)) AS bpids ORDER BY r.order
-RETURN {vocabulary: {id: id(v), properties: v, cited_by: bpids)}, children: collect(paragraphs)}
+RETURN {vocabulary: {id: id(v), properties: v, cited_by: bpids}, children: collect(paragraphs)}
