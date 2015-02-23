@@ -16,7 +16,7 @@ maze.i18n.dict.en = {
   signup_surname_invalid: "is empty or is not valid",
   form_not_valid: "There are some errors in the form",
   accept_the_terms: "Please accept the terms of use",
-  thank_you_and_check_your_emai: "Done! Check you email and follow the activation link to login",
+  thank_you_and_check_your_email: "Done! Check you email and follow the activation link to login",
   // terms of use sentences by sentences, et oui
   "terms.head": "terms of use",
   "terms": "terms of use",
