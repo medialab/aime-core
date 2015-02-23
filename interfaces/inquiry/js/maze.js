@@ -42,8 +42,6 @@
   maze.user = 'anonymous';
   maze.today = Date();
   maze.role = 'guest';
-  maze.reference_corpus = 'biblib';
-  
 
   maze.columns = {};
 
@@ -440,6 +438,13 @@
       return arr.indexOf(e, i+1) === -1;
     }).reverse();
   };
+
+  maze.fn.arrayUnique = function(a) {
+    return a.reduce(function(p, c) {
+        if (p.indexOf(c) < 0) p.push(c);
+        return p;
+    }, []);
+	};
 
 
 	/*

@@ -9,6 +9,14 @@
     var _self = this, 
         box;  
 
+    var validation = {
+        'email': {
+            email: {
+              message: maze.i18n.translate('email_invalid')
+            }
+        }
+    };
+
     /*
       [authenticate] events handling once the UI is ready
     */
@@ -16,17 +24,20 @@
       _self.log('@session__initialized');
       $('#login').replaceWith(maze.engine.template.login());
       box = $('#login');
-      $('#loginForm').submit(function(e){
-        e.preventDefault();
-      });
-      box.on('click', '[data-action=authenticate]', function(e) {
-        _self.log('launching procedure');
+      // $('#loginForm').submit(function(e){
+      //    e.preventDefault();
+      // });
+      $('#loginForm').setValidationRules(validation, function() {
+        _self.log('Form sucessfully validated :D');
         _self.dispatchEvent('auth_require', {
           email: $('#email').val(),
           password: $('#password').val()
-        });
-
+        })
+      },{
+        preventDefault: true
       });
+
+      
 
       box.on('click', '[data-action=signup]', function(e) {
         box.hide();

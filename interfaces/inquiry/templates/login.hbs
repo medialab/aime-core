@@ -4,8 +4,12 @@
     <h2>{{t 'connect_to_aime'}}</h2>
     <div class="line"></div>
       <p>
-        <label>{{t 'login'}}</label>
-        <input id="email" type="email" placeholder="email address">
+        <label>
+          <span>{{t 'login'}}</span>
+          <span id="error-email" class="invalid"></span>
+        </label>
+        
+        <input id="email" type="text" placeholder="email address">
       </p>
       <p>
         <label>{{t 'password'}}</label>
@@ -19,10 +23,9 @@
           <table cellspacing="0">
             <tr>
               <td class="left">
-                <button data-action="signup">{{t 'sign_up'}}</button>
+                <a class="button" data-action="signup">{{t 'sign_up'}}</a>
               </td>
               <td class="right">
-                
                 <button data-action="authenticate">{{t 'connect'}}</button>
               </td>
             </tr>

@@ -1,57 +1,132 @@
 <div id="signup">
   <div class="wrapper">
-    <form id="signupForm" action=''>
-      <button type="button" class="close" data-action="close"><i class="fa fa-close"></i></button>
+    <form id="signupForm" action='/'>
+      <button type="button" class="close" data-action="close"><i class="fa fa-times-circle-o"></i></button>
       <h2>{{t 'sign up'}}</h2>
       
-
+      <div class="line" style="margin-top: 8px"></div>
       <div class="slider">
         <div class="wrapper">
+          <div class="slide special" data-step="0" style="top: 0%">
+            <h3>step 1 of 6 &ndash; {{t 'terms'}}</h3>
 
-          <div class="slide">
-            <div class="line"></div>
-            <h3>step 1 of 5</h3>
+            <h5>{{t 'terms.introduction'}}</h5>
+            <p>{{{t 'terms.introduction.content'}}}</p>
+
+            <h5>{{t 'terms.purpose'}}</h5>
+            <p>{{{t 'terms.purpose.content'}}}</p>
+
+            <h5>{{t 'terms.registration'}}</h5>
+            <p>{{{t 'terms.registration.content'}}}</p>
+
+            <h5>{{t 'terms.access'}}</h5>
+            <p>{{{t 'terms.access.content'}}}</p>
+
+            <h5>{{t 'terms.contributors'}}</h5>
+            <p>{{{t 'terms.contributors.content'}}}</p>
+
+            <h5>{{t 'terms.submissions'}}</h5>
+            <p>{{{t 'terms.submissions.content'}}}</p>
+           
+            <h5>{{t 'terms.publication'}}</h5>
+            <p>{{{t 'terms.publication.content'}}}</p>
+           
+            <h5>{{t 'terms.online'}}</h5>
+            <p>{{{t 'terms.online.content'}}}</p>
+
+            <h5>{{t 'terms.personaldata'}}</h5>
+            <p>{{{t 'terms.personaldata.content'}}}</p>
+
+            <h5>{{t 'terms.propertyrights'}}</h5>
+            <p>{{{t 'terms.propertyrights.content'}}}</p>
+
+            <h5>{{t 'terms.responsibilities'}}</h5>
+            <p>{{{t 'terms.responsibilities.content'}}}</p>
+
+            <h5>{{t 'terms.usersresponsibilities'}}</h5>
+            <p>{{{t 'terms.usersresponsibilities.content'}}}</p>
+
+            <h5>{{t 'terms.misc'}}</h5>
+            <p>{{{t 'terms.misc.content'}}}</p>
+
+            <h5>{{t 'terms.laws'}}</h5>
+            <p>{{{t 'terms.laws.content'}}}</p>
+            
+
+          </div>
+
+          <div class="slide special" data-step="1" style="top: 100%">
+            <h3>step 2 of 6 &ndash; {{t 'legal'}}</h3>
+            
+            <h5>{{t 'legal.introduction'}}</h5>
+            <p>{{{t 'legal.introduction.content'}}}</p>
+
+            <h5>{{t 'legal.privacy'}}</h5>
+            <p>{{{t 'legal.privacy.content'}}}</p>
+          </div>
+
+          <div class="slide" data-step="2" style="top: 200%">
+            <h3>step 3 of 6</h3>
 
             <p class="">
-              <label>{{t 'first name'}}</label>
-              <input type="text" id="signup-name" placeholder="{{t 'first name'}}" required>
+              <label>
+                <span>{{t 'first name'}}</span>
+                <span id="error-signup-name" class="invalid"></span>
+              </label>
+              
+              <input type="text" id="signup-name" placeholder="{{t 'first name'}}" >
             </p>
 
             <p>
-              <label>{{t 'last name'}}</label>
-              <input type="text" id="signup-surname" name="signup-surname" required placeholder="{{t 'last name'}}">
+              <label>{{t 'last name'}}
+                <span id="error-signup-surname" class="invalid"></span>
+              </label>
+              
+              <input type="text" id="signup-surname" name="signup-surname"  class="tab-last" placeholder="{{t 'last name'}}">
             </p>
             
-            <p>
-              <label>{{t 'your email'}}</label>
-              <input type="email" id="signup-email" name="signup-email" placeholder="{{t 'email address'}}" required>
-            </p>
             
-            <p>
-              <label>{{t 'confirm your email'}}</label>
-              <input type="email" id="signup-email-confirm" required>
-            </p>
             
-            <p>
-            <input type="checkbox">
-              {{t 'I agree to the'}} <span>{{t 'Terms of Use'}}</span> and the terms of the Data Protection Declaration  <span>{{t 'Mention CNIL'}}</span>
-            </p>
+            <!-- p>
+              
+            <input type="checkbox" id="signup-agreement"><span id="error-signup-agreement" class="invalid"></span>
+              {{t 'I agree to the'}} <a data-action="terms-of-use">{{t 'Terms of Use'}}</a> and the terms of the Data Protection Declaration  <span>{{t 'Mention CNIL'}}</span>
+            </p -->
 
           </div>
 
-          <div class="slide" style="top:100%">
-            <div class="line"></div>
-            <h3>step 2 of 5</h3>
-            <label>{{t 'password'}}</label>
-            <input type="password" id="signup-password" required>
+          <div class="slide"  data-step="3" style="top:300%">
+            <h3>step 4 of 6</h3>
+            <p>
+              <label>{{t 'your email'}}
+                <span id="error-signup-email" class="invalid"></span>
+              </label>
+              
+              <input type="text" id="signup-email" name="signup-email" placeholder="{{t 'email address'}}" >
+            </p>
+            
+            <p>
+              <label>{{t 'confirm your email'}}
+                <span id="error-signup-email-confirm" class="invalid"></span>
+              </label>
+              
+              <input type="text" class="tab-last" id="signup-email-confirm" >
+            </p>
+          </div>
 
-            <label>{{t 'confirm your password'}}</label>
-            <input type="password" id="signup-password-confirm" required>
+          <div class="slide"   data-step="4" style="top:400%">
+            <h3>step 5 of 6</h3>
+            <label>{{t 'password'}} <span id="error-signup-password" class="invalid"></span></label>
+            
+            <input type="password" id="signup-password">
+
+            <label>{{t 'confirm your password'}} <span id="error-signup-password-confirm" class="invalid"></span></label>
+            
+            <input type="password" id="signup-password-confirm" class="tab-last">
 
           </div>
-          <div class="slide" style="top:200%">
-            <div class="line"></div>
-            <h3>step 3 of 5</h3>
+          <div class="slide"  data-step="5" style="top:500%">
+            <h3>step 6 of 6</h3>
             
             <label>{{t 'institution'}}</label>
             <input type="text" id="signup-institution">
@@ -60,29 +135,11 @@
             <input type="text" id="signup-department">
 
             <label>{{t 'discipline'}}</label>
-            <input type="text" id="signup-discipline">
-
-          </div>
-          <div class="slide" style="top:300%">
-            <div class="line"></div>
-            <h3>step 4 of 5</h3>
-
-          </div>
-          <div class="slide" style="top:400%">
-            <div class="line"></div>
-            <h3>step 5 of 5</h3>
+            <input type="text" id="signup-discipline" class="tab-last">
 
           </div>
 
-          <div class="slide" style="top:500%">
-            <div class="line"></div>
-            <h3>{{t 'terms of use'}}</h3>
-          </div>
-
-          <div class="slide" style="top:600%">
-            <div class="line"></div>
-            <h3>Other clnil</h3>
-          </div>
+          
         </div>
       </div>
 
@@ -92,18 +149,15 @@
         <table cellspacing="0">
           <tr>
             <td class="left">
-              <button data-action="previous">{{t 'previous'}}</button>
+              <a class="button" data-action="previous">{{t 'previous'}}</a>
             </td>
             <td class="right">
               <button data-action="next">{{t 'next'}}</button>
+              <!-- button data-action="validate">{{t 'next'}}</button -->
               <!-- button>{{t 'sign_up'}}</button -->
             </td>
           </tr>
-          <tr>
-            <td colspan="2">
-              <button type="submit" data-action="validate">{{t 'submit'}}</button>
-            </td>
-          </tr>
+          
         </table>
       </div>
 

@@ -56,9 +56,10 @@
     };
 
     this.triggers.events.build_references = function(controller, event ) {
+      // @todo check document that contains this reference instead that fetching the dom.
       for( var i in event.data.references ){
-        var obj = event.data.references[i];
-        $("[data-ref=ref-"+obj.rec_id+"]").html( obj.mla );
+        var refs = $(".document [data-ref=ref-"+event.data.references[i].rec_id+"]")
+        refs.html( event.data.references[i].mla );
       }
     }
 
@@ -117,7 +118,7 @@
       var doc = $(event.currentTarget).closest('.document'),
           references = doc.attr('data-ref-ids').trim().split(' ');
 
-      if( references.length ){
+      if(!doc.hasClass('.biblib') && references.length){
         _self.dispatchEvent('fill_references',{ref_ids:references});
       }
       maze.move.toggle_preview( doc );

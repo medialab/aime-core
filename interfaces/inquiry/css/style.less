@@ -66,6 +66,7 @@ ul > li{
 }
 
 #wrapper {
+  display: none;
   min-height: 100%;
   min-width: 800px;
   position: relative;
@@ -74,6 +75,17 @@ ul > li{
   overflow: hidden;
 }
 
+#loader{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -25px;
+  margin-left: -25px;
+
+  img{
+    
+  }
+}
 
 /////////////////
 //             //
@@ -1440,9 +1452,9 @@ p {
 
 #signup, #login{
   position: fixed;
-  top: 50%;
+  top: 120px;
   left: 50%;
-  margin-top: -160px;
+  margin-top: 0;//-160px;
   margin-left: -210px;
   height: 360px;
   width: 420px;
@@ -1451,9 +1463,10 @@ p {
   
   >.wrapper{
     padding: 20px;
-    background-color: rgb(236, 236, 236);
-    border: 1px solid fade(#050505,10%);
-    .box-shadow(0px 2px 4px rgba(0,0,0,0.09));
+    background-color: white;
+    //background-color: rgb(236, 236, 236);
+    //border: 1px solid fade(#050505,10%);
+    //.box-shadow(0px 2px 4px rgba(0,0,0,0.09));
   }
 
   h2{
@@ -1488,11 +1501,16 @@ p {
     border: 1px solid #d9d9d9;
   }
 
-  p.invalid{
-    label{
-      color: white;
-      background: #c0171d;
-    }
+  input[type=checkbox]{
+    width: 32px;
+  }
+
+  .invalid{
+    //font-size: 12px;
+    color: #c0171d;
+    border-bottom: 1px solid #c0171d;
+    .font-feature();
+    
   }
 
   .actions table{
@@ -1511,11 +1529,12 @@ p {
     }
 
 
-    button{
+    button, a.button{
       display: block;
       font: 12px/17px 'NovelMonoPro-RegularIt';
       width: 100%;
-      background-color: #fff;
+      //background-color: #fff;
+      background-color: #eee;
       padding: 6px 6px;
       text-decoration: none;
       color: #1d1d1d;
@@ -1550,11 +1569,12 @@ p {
 
   button.close{
     position: absolute;
-    right: 10px;
-    top: 20px;
+    right: 16px;
+    top: 26px;
+    font-size: 14px;
     background: none;
     border: 0px transparent;
-    color: #c0171d;
+    color: #1d1d1d;
   }
 
 
@@ -1564,6 +1584,7 @@ p {
     top: 110px;
     bottom: 50px;
     width: 100%;
+    max-height: 510px;
   }
 
   .actions{
@@ -1576,6 +1597,8 @@ p {
   form{
     height: 100%;
   }
+
+  
 }
 
 
@@ -1584,7 +1607,7 @@ p {
   overflow: hidden;
   left: 20px;
   top: 60px;
-  bottom: 120px;
+  bottom: 70px;
   right: 20px;
 
   >.wrapper{
@@ -1592,6 +1615,7 @@ p {
     height: 100%;
     top: 0%;
     width: 100%;
+
     .transition(top, 0.35s);
   }
 
@@ -1604,6 +1628,22 @@ p {
 
     .line{
       margin-top: 5px;
+    }
+
+    &.special p{
+      font-size:11px;
+      line-height: 20px;
+    }
+
+    h5{
+      .font-feature();
+      color: #c0171d;
+      text-align: center;
+    }
+
+    &.special a{
+      text-decoration: none;
+      border-bottom: 1px solid;
     }
   }
 
@@ -1639,7 +1679,7 @@ p {
   // background-color: rgba(150, 150, 150, 1);
 
   header {
-    display: none;
+    //display: none;
     position: absolute;
     top: -200px; // Default position
     width: 100%;
@@ -1650,7 +1690,7 @@ p {
     .transition(top, .35s);
 
     &.ready{
-      display: block
+      //display: block
     }
 
     .redbig {

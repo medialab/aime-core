@@ -15,13 +15,44 @@
     domino.module.call(this);
 
     var _self  = this,
-        header = $('#header');
+        header = $('#header'),
+        twitterbox = $("#twitter-box .tweets"),
+        tweet_h = 170, // tweet container height
+        tweets = [],
+        tweet_index = 0;
+
+
+    var prev_tweet = function() {
+      tweet_index--;
+      tweet_index = Math.max(0,tweet_index);
+      slide_tweet()
+    };
+
+    var next_tweet = function() {
+      tweet_index++;
+      tweet_index = Math.min(tweets.length-1, tweet_index);
+      slide_tweet()
+    };
+
+    var slide_tweet = function() {
+      if(tweet_index > 0 && tweet_index < tweets.length-1)
+        $("#twitter-box .up").fadeIn()
+      $("#twitter-box .down").fadeIn()
+      if(tweet_index == 0)
+        $("#twitter-box .up").fadeOut()
+      if(tweet_index == tweets.length-1)
+        $("#twitter-box .down").fadeOut()
+      twitterbox.css('margin-top', -tweet_h * tweet_index);
+    }
 
     this.triggers.events.session__initialized = function(controller) {
       $('#header').replaceWith(maze.engine.template.header({
         settings: maze.settings,
         user: controller.get('user')
       }));
+      $("#wrapper").fadeIn();
+      $("#loader").fadeOut();
+
       header = $('#header');
 
       header.on('click', '.toggle_menu', function(e) {
@@ -50,13 +81,20 @@
         _self.dispatchEvent('lang_change', {lang:lang});
       });
 
+      twitterbox = $("#twitter-box .tweets");
       // and, last but not least, the tweeetters
       // ask for status
       $.getJSON('http://aime.medialab.sciences-po.fr/tweets-aime.json', function(res) {
-        $("#twitter-box .tweets").append(res.splice(0,5).map(function(d) {
+        tweets = res.splice(0,10)
+        
+        twitterbox.append(tweets.map(function(d) {
           return maze.engine.template.tweet({tweet: d});
         }))
-        header.addClass('ready')
+        
+        $("#twitter-box .down").on('click', next_tweet);
+        $("#twitter-box .up").on('click', prev_tweet);
+        header.addClass('ready');
+        slide_tweet();
       });
       _self.log('More', '@session__initialized');
     }
