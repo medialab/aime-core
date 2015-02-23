@@ -40,10 +40,10 @@ LIMIT {limit}
 // name: getBySlugIds
 // Retrieve one or more document by their slug ids.
 MATCH (a:User)<-[:CREATED_BY]-(d:Document {status: "public"})-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
+WHERE d.slug_id IN {slug_ids}
+
 OPTIONAL MATCH (e)<-[:DESCRIBES]-(r:Reference)
 OPTIONAL MATCH (d)<-[:CITES]-(bp:Paragraph)<-[:HAS]-(:Subheading)
-
-WHERE d.slug_id IN {slug_ids}
 
 WITH bp, d, a, s, rs, re,
 {
