@@ -62,7 +62,7 @@ var __formValidation = {
      * error div (only if exists)
      */
     if (errorDiv) {
-      errorDiv.hide();
+      //errorDiv.hide();
       errorDiv.children().remove();
     }
 
@@ -77,9 +77,9 @@ var __formValidation = {
          */
         if (errorDiv) {
           if (rules[rule].message) {
-            errorDiv.append('<div>' + rules[rule].message + '</div>');
+            errorDiv.append('<span>' + rules[rule].message + '</span>');
           }
-          errorDiv.show();
+          //errorDiv.show();
         }
         ok = false;
       }
@@ -123,15 +123,14 @@ var addCustomFormValidation = function(name, fn) {
 jQuery.prototype.setValidationRules = function(rules, callback, options) {
   var options = options || {},
       id = this.attr('id');
-      console.log('setting validation rules on ', id)
+      
   var onSubmit = function(e) {
     var _this = __formValidation.forms[$(this).attr('id')];
-    console.log('SUBMITTING');
+    
     if(options.preventDefault)
       e.preventDefault();
 
     if (__formValidation.validateAllInputs(_this.data)) {
-      console.log('validating inputs', _this.data)
       _this.fn(e);
     } else {
       e.preventDefault();

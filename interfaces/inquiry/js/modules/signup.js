@@ -9,14 +9,14 @@
     var _self = this,
         box,
         step = 0,
-        limit = 4; // curent step number.
+        limit = 5; // 0 is no special, -1 is 
 
-    var validations =[
+    var validations =[{},{},
       /*
         Step: 1
       */
       {
-        'name': {
+        'signup-name': {
           minLength: {
             value: 2,
             message: maze.i18n.translate('signup_name_invalid')
@@ -36,6 +36,18 @@
             message: maze.i18n.translate('signup_surname_invalid')
           }
         },
+        
+        // 'signup-agreement':{
+        //   checked:{
+        //     value: '',
+        //     message: maze.i18n.translate('accept_the_terms')
+        //   }
+        // }
+      },
+      /*
+        Step: 2
+      */
+      {
         'signup-email': {
             email: {
               message: maze.i18n.translate('email_invalid')
@@ -47,16 +59,7 @@
               message: maze.i18n.translate('email_not_matching')
             }
         },
-        'signup-agreement':{
-          checked:{
-            value: '',
-            message: maze.i18n.translate('accept_the_terms')
-          }
-        }
       },
-      /*
-        Step: 2
-      */
       {
         'signup-password':{
           minLength: {
@@ -83,11 +86,15 @@
       _self.log('slide to', step)
       box.find('.slider .wrapper').css({
         top: -step * 100 + '%'
-      }).parent().scrollTop(0);
+      });
+
       if(step == limit)
         $("[data-action=next]").text(maze.i18n.translate('done'))
       else
         $("[data-action=next]").text(maze.i18n.translate('next'))
+
+
+      //console.log(box.find('.slide[data-step='+step+'] input').first());
     };
 
     var nextStep = function() {
@@ -120,10 +127,24 @@
       /*
         Event handlers are bound to box only
       */
-      box.on('click', '[data-action=proceed]', function(e) {
-        _self.log('launching signup procedure');
+      box.on('click', '[data-action=terms-of-use]', function(e) {
+        _self.log('view terms of use');
+
       });
 
+      box.find('input').keydown(function(event){
+        if (event.keyCode === 9) {
+          //if it is the last element of its slide
+          //if($('.slide[data-step=3] input:focus'))
+
+          event.preventDefault();
+        }
+
+        // focus different stuffs
+        // cycle inside various stuffs
+
+
+      })
       // previous slide
       box.on('click', '[data-action=previous]', function(e) {
         e.preventDefault();
@@ -149,6 +170,7 @@
             preventDefault: true,
             overrideRules: true, 
             error: function(){
+              maze.toast(maze.i18n.translate('form_not_valid'))
               browse();
             }
           });
@@ -157,7 +179,12 @@
             email:    $('#signup-email').val(),
             password: $('#signup-password').val(),
             name:     $('#signup-name').val(),
+            surname:  $('#signup-surname').val(),
+            department: $('#signup-department').val() || '',
+            discipline: $('#signup-discipline').val() || '',
+            institution: $('#signup-institution').val() || ''
           });
+          dismiss();
         }
       });
 
@@ -170,6 +197,8 @@
     */
 
     this.triggers.events.signup_require = function(controller, res) {
+      step = 0;
+      // cleanup errors
       box.show();
     }
     

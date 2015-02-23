@@ -1463,7 +1463,8 @@ p {
   
   >.wrapper{
     padding: 20px;
-    background-color: rgb(236, 236, 236);
+    background-color: white;
+    //background-color: rgb(236, 236, 236);
     //border: 1px solid fade(#050505,10%);
     //.box-shadow(0px 2px 4px rgba(0,0,0,0.09));
   }
@@ -1500,13 +1501,16 @@ p {
     border: 1px solid #d9d9d9;
   }
 
+  input[type=checkbox]{
+    width: 32px;
+  }
+
   .invalid{
-    float: right;
-    text-align: center;
-    font-size: 12px;
-    color: white;
-    background: #c0171d;
+    //font-size: 12px;
+    color: #c0171d;
+    border-bottom: 1px solid #c0171d;
     .font-feature();
+    
   }
 
   .actions table{
@@ -1529,7 +1533,8 @@ p {
       display: block;
       font: 12px/17px 'NovelMonoPro-RegularIt';
       width: 100%;
-      background-color: #fff;
+      //background-color: #fff;
+      background-color: #eee;
       padding: 6px 6px;
       text-decoration: none;
       color: #1d1d1d;
@@ -1591,6 +1596,8 @@ p {
   form{
     height: 100%;
   }
+
+  
 }
 
 
@@ -1620,6 +1627,22 @@ p {
 
     .line{
       margin-top: 5px;
+    }
+
+    &.special p{
+      font-size:11px;
+      line-height: 20px;
+    }
+
+    h5{
+      .font-feature();
+      color: #c0171d;
+      text-align: center;
+    }
+
+    &.special a{
+      text-decoration: none;
+      border-bottom: 1px solid;
     }
   }
 
