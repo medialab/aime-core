@@ -285,37 +285,21 @@
                     var paragraph_matches = false;
                     if(!!~event.data.matching_paragraphs.indexOf(paragraph.id)){
                         $('#' + paragraph.id).addClass('match');
+                        paragraph_matches=true;
                     }
                     return paragraph_matches;
                     
                 }).length;
+                
                 if(subheading_matches){
-                    debugger
                     $('#' + subheading.id).addClass('match');
                 }
                     
-                return subheading_matches
+                return subheading_matches;
             }).length;
             if(chapter_matches) {
                 $('#' + contents[c].id).addClass('match');
             }
-
-            /*for (var i = 0, l = contents[c].children.length; i < l; i++) {
-                var matching_subheading = false;
-                    
-                for (var j = 0, k = contents[c].children[i].length; j < k; j++) {
-                    var matching_subheading = false;
-                    if(event.data.matching_paragraphs.indexOf(contents[c].children[i][j].id)) {
-                        $('#' + contents[c].children[i][j].id).addClass('match');
-                        matching_subheading = true;
-                    }
-                    if(matching_subheading)
-                        $('#' + contents[c].children[i].id).addClass('match');
-                }
-                if(matching_subheading)
-                    $('#' + contents[c].id).addClass('match');
-
-            }*/
            
         }
         

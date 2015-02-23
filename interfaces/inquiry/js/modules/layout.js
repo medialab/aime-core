@@ -491,7 +491,8 @@
                       callback: maze.move.inject,
                       args:[ doc,{
                         callback:function(){
-
+                          var matching_paragraphs = controller.get('data_docContents')[+doc_id].cited_by;
+                          
                           _self.dispatchEvent( 'fill_references extract_inlinks sticky_show' ); // scrolling_voc will be triggered by extract_inlinks trigger
                           _self.dispatchEvent( 'slider_init',{
                             selector:doc,
@@ -503,7 +504,8 @@
                             index: slide || 0
                           });
                           _self.dispatchEvent( 'text_match_highlight', {
-                            selector:doc
+                            selector:doc,
+                            matching_paragraphs: matching_paragraphs
                           });
                           _columns.text.show({});
                           _self.dispatchEvent('sticky_show unlock');

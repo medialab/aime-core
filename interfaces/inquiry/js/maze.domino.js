@@ -1209,9 +1209,9 @@
                   services.push({
                     service: 'get_documents_item',
                     shortcuts:{
-                      ids: a.map(function(d) {
+                      ids: maze.fn.arrayUnique( a.map(function(d) {
                         return 'doc_' + d
-                      }).join()
+                      })).join()
                     }
                   });
                 } else if( type == "star" ) {
@@ -1940,6 +1940,8 @@
             }
 
             result.forEach(function(o) {
+              if(!o || !o.slug_id)
+                return;
               idsArray.push(o.slug_id);
               contents[o.slug_id] = o;
             });
