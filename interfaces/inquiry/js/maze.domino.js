@@ -967,8 +967,10 @@
               !this.get('data_vocContents')[id]
             ) {
               services.push({
-                service: 'get_vocabulary',
-                ids: [id]
+                service: 'get_vocabulary_item',
+                shortcuts: {
+                  ids: ['voc_' + id]
+                }
               });
 
             // If the doc item has to be loaded:
@@ -1195,9 +1197,9 @@
                   services.push({
                     service: 'get_vocabulary_item',
                     shortcuts:{
-                      ids: a.map(function(d) {
+                      ids: maze.fn.arrayUnique( a.map(function(d) {
                         return 'voc_' + d
-                      }).join()
+                      })).join()
                     }
                   });
                 } else if( type == "doc" ) {

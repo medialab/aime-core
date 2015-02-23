@@ -440,8 +440,12 @@
                   callback: function(){
                     _columns.voc.show({});
 
+                    var matching_paragraphs = controller.get('data_vocContents')[+term_id].cited_by;
+                    
+                    
                     _self.dispatchEvent( 'setup_voc_as_leader extract_inlinks sticky_show' ); // scrolling_voc will be triggered by extract_inlinks trigger
                     _self.dispatchEvent( 'text_match_highlight', {
+                      matching_paragraphs: matching_paragraphs,
                       selector:term
                     });
 

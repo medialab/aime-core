@@ -274,9 +274,53 @@
             paragraph,
             subheading,
             chapter,
+            contents = controller.get('data_bookContents'),
             _omissis = {};
-        _self.log('searching text column for .link[data-id*="' + data_id + '"] objects...');
-        // Search at the end with a space at the end to avoid root search
+        //_self.log('searching text column for .link[data-id*="' + data_id + '"] objects...');
+        
+        for(var c in contents) { // for each chapter, does subheading contains one of the given paragraphs?
+            
+            var chapter_matches = contents[c].children.filter(function(subheading) {
+                var subheading_matches = subheading.children.filter(function(paragraph) {
+                    var paragraph_matches = false;
+                    if(!!~event.data.matching_paragraphs.indexOf(paragraph.id)){
+                        $('#' + paragraph.id).addClass('match');
+                    }
+                    return paragraph_matches;
+                    
+                }).length;
+                if(subheading_matches){
+                    debugger
+                    $('#' + subheading.id).addClass('match');
+                }
+                    
+                return subheading_matches
+            }).length;
+            if(chapter_matches) {
+                $('#' + contents[c].id).addClass('match');
+            }
+
+            /*for (var i = 0, l = contents[c].children.length; i < l; i++) {
+                var matching_subheading = false;
+                    
+                for (var j = 0, k = contents[c].children[i].length; j < k; j++) {
+                    var matching_subheading = false;
+                    if(event.data.matching_paragraphs.indexOf(contents[c].children[i][j].id)) {
+                        $('#' + contents[c].children[i][j].id).addClass('match');
+                        matching_subheading = true;
+                    }
+                    if(matching_subheading)
+                        $('#' + contents[c].children[i].id).addClass('match');
+                }
+                if(matching_subheading)
+                    $('#' + contents[c].id).addClass('match');
+
+            }*/
+           
+        }
+        
+        _self.toggle_shadow();
+        return;
 
         var links = _self.box.find('.link[data-id*="' + data_id + ' "]').each( function(i,e){
             paragraph = $(this).addClass("match")
