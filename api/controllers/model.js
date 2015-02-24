@@ -29,10 +29,10 @@ module.exports = [
       query: 'string'
     },
     action: function(req, res) {
-      book.search(req.params.query, function(err, ids) {
+      book.search(req.lang, req.params.query, function(err, ids) {
         if (err) return res.serverError(err);
 
-        return res.ok({book: ids});
+        return res.ok(ids);
       });
     }
   },
@@ -75,6 +75,19 @@ module.exports = [
     }
   },
   {
+    url: '/voc/search/:query',
+    validate: {
+      query: 'string'
+    },
+    action: function(req, res) {
+      voc.search(req.lang, req.params.query, function(err, vocs) {
+        if (err) return res.serverError(err);
+
+        return res.ok(vocs);
+      });
+    }
+  },
+  {
     url: '/doc',
     validate: {
       limit: '?integer',
@@ -106,6 +119,19 @@ module.exports = [
         );
 
       doc[method](ids, function(err, vocs) {
+        if (err) return res.serverError(err);
+
+        return res.ok(vocs);
+      });
+    }
+  },
+  {
+    url: '/doc/search/:query',
+    validate: {
+      query: 'string'
+    },
+    action: function(req, res) {
+      doc.search(req.lang, req.params.query, function(err, vocs) {
         if (err) return res.serverError(err);
 
         return res.ok(vocs);
