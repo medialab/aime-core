@@ -63,6 +63,20 @@
       }
     }
 
+    this.triggers.events.highlight_matches = function(controller) {
+      var query = controller.get('scene_query'),
+          contents = controller.get('data_docContents');
+      _self.box.highlight(query);
+      
+      _self.box.find('.highlight').each(function(d, i) {
+        $(this).closest('.paragraph').addClass('match');
+      })
+
+      // Add the matching paragraph to the slides_matches property for each matching document
+      // cfr slides_matches ...
+    };
+
+
     this.box.on('scroll', function() {
       _self.scrolling(maze.domino.controller, {
         sticky_type: 'document', // [term|document]

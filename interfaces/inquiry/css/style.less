@@ -866,6 +866,12 @@ ul > li{
 
 #column-voc.column {
 
+  &.search .term{
+    .paragraphs{
+      display: block;
+    }
+  }
+
   .term {
     margin:0px;
     position: relative;
@@ -992,6 +998,13 @@ ul > li{
       }
     }
   }
+
+  &.search .document{
+    .paragraphs{
+      display: block;
+    }
+  }
+
   &.notebook .document.match .paragraph.annotated{
     display: block;
   }
@@ -1707,7 +1720,7 @@ p {
         width: 96%;
         margin: 0 auto;
 
-        font: 12px/30px 'NovelMonoPro-ExLightIt';
+        font: 12px/30px 'NovelMonoPro-RegularIt'; //'NovelMonoPro-ExLightIt';
         color: white;
         border-bottom: 1px solid white;
 
