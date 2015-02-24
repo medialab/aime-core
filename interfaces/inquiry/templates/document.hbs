@@ -56,12 +56,12 @@
     <div class='slides-matches'>
       {{#each slides_matches}}
         <div class='slide-match'>
-          {{#each content}}
-            <div class='paragraph {{#if_eq type compare="match"}}match{{/if_eq}}' data-slide-index="{{../index}}" id="dp-m-{{id}}">
-              {{#if text}}
-                <span class="number">- {{text.number}} -</span>
-                <div class="text content"><p>{{#if text.content.slices.length }}{{{parse text.content.slices}}}{{else}}{{{decorate text.content.content}}}{{/if}}</p></div>
-              {{/if}}
+          {{#each children}}
+            <div class='paragraph match' data-slide-index="{{../display_number}}" id="dp-m-{{id}}">
+              {{#if_eq type compare='paragraph'}}
+                <span class="number">- {{display_number}} -</span>
+                <div class="text content">{{{decorate markdown}}}</div>
+              {{/if_eq}}
               {{#if citation}}
                 <span class="number">- {{citation.number}} -</span>
                 <div class="citation"><div class="content">{{#if citation.content.slices.length }}{{{parse citation.content.slices}}}{{else}}{{{decorate citation.content.content}}}{{/if}}</div></div>

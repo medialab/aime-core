@@ -2140,6 +2140,7 @@
               
               o.children.filter(function(slide, i) {
                 var paragraphs_matches = slide.children.filter(function(paragraph, j) {
+                  paragraph.display_number = j
                   return !!~paragraph.text.indexOf(maze.domino.controller.get('scene_query'));
                 })
                 if(paragraphs_matches.length)
@@ -2147,6 +2148,7 @@
                     id: slide.id,
                     lang: slide.lang,
                     type: slide.type,
+                    display_number: i,
                     children: paragraphs_matches
                   });
                 
