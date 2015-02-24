@@ -7,7 +7,8 @@
 var book = require('../model/book.js'),
     voc = require('../model/vocabulary.js'),
     doc = require('../model/document.js'),
-    types = require('../typology.js');
+    types = require('../typology.js'),
+    _ = require('lodash');
 
 // Refactor model access by forge
 module.exports = [
@@ -19,6 +20,19 @@ module.exports = [
         if (err) return res.serverError(err);
 
         return res.ok(result);
+      });
+    }
+  },
+  {
+    url: '/book/search/:query',
+    validate: {
+      query: 'string'
+    },
+    action: function(req, res) {
+      book.search(req.params.query, function(err, ids) {
+        if (err) return res.serverError(err);
+
+        return res.ok({book: ids});
       });
     }
   },
@@ -40,7 +54,7 @@ module.exports = [
   {
     url: '/voc/:ids',
     action: function(req, res) {
-      var ids = req.params.ids.split(','),
+      var ids = _.uniq(req.params.ids.split(',')),
           method;
 
       if (types.check(ids, 'ids'))
@@ -78,7 +92,7 @@ module.exports = [
   {
     url: '/doc/:ids',
     action: function(req, res) {
-      var ids = req.params.ids.split(','),
+      var ids = _.uniq(req.params.ids.split(',')),
           method;
 
       if (types.check(ids, 'ids'))
