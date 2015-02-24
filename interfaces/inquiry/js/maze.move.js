@@ -509,7 +509,14 @@
       //   url: maze.urls.storage +'?url=' + media.attr('data-pdf')
       // });
     });
-
+    
+    el.find("[data-video]").each( function( i, e ){
+    	var media = $(e);
+    	media.empty().html(media.attr('data-video'))
+      // media.pidif({
+      //   url: maze.urls.storage +'?url=' + media.attr('data-pdf')
+      // });
+    });
 
 
     complete();
