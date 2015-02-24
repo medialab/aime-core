@@ -22,22 +22,37 @@
         <div class='paragraph'><!-- type: {{type}}, kind: {{kind}}  -->
           
           {{#if_eq type compare='paragraph'}}
-            {{{decorate markdown}}}
+            <span class="number">- {{display_number}} -</span>
+            <div class="text content">{{{decorate markdown}}}</div>
           {{/if_eq}}
 
           {{#if_eq type compare='reference'}}
-            <span class="number unselectable">- 1 -</span>
+            <span class="number unselectable">- {{display_number}} -</span>
             <div class="ref unselectable" data-id="{{biblib_id}}"><div class="content unselectable" data-ref="ref-{{biblib_id}}"></div></div>
           {{/if_eq}}
 
 
           {{#if_eq type compare='media'}}
+            {{#if_eq kind compare='quote'}}
+              <span class="number">- {{display_number}} -</span>
+              <div class="citation"><div class="content">{{{text}}}</div></div>
+            {{/if_eq}}
             {{#if_eq kind compare='html'}}
-              <span class="number">- {{$index}} -</span>
-              <div class="citation"><div class="content">{{{html}}}</div>
+              <span class="number">- {{display_number}} -</span>
+              <div class="citation">
+                <div class="content">{{{html}}}</div>
+              </div>
+            {{/if_eq}}
+            {{#if_eq kind compare='pdf'}}
+              <!-- PDF media -->
+              <span class="number unselectable">- {{display_number}} -</span>
+              <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{title}}"></div>
+
+              <div class="ref unselectable" data-id="{{reference.biblib_id}}"><div class="content unselectable" data-ref="ref-{{reference.biblib_id}}"></div>
+
             {{/if_eq}}
             {{#if_eq kind compare='image'}}
-            <span class="number unselectable">- {{$index}} -</span>
+            <span class="number unselectable">- {{display_number}} -</span>
             <div class="media unselectable">
               <div><img class="image" data-src="http://www.modesofexistence.org/inquiry/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
             </div>
@@ -62,6 +77,20 @@
                 <span class="number">- {{display_number}} -</span>
                 <div class="text content">{{{decorate markdown}}}</div>
               {{/if_eq}}
+              {{#if_eq type compare='media'}}
+                {{#if_eq kind compare='quote'}}
+                  <span class="number">- {{display_number}} -</span>
+                  <div class="citation"><div class="content">{{{text}}}</div>
+                  </div>
+                {{/if_eq}}
+                {{#if_eq kind compare='html'}}
+                  <span class="number">- {{display_number}} -</span>
+                  <div class="citation">
+                    <div class="content">{{{html}}}</div>
+                  </div>
+                {{/if_eq}}
+              {{/if_eq}}
+
               {{#if citation}}
                 <span class="number">- {{citation.number}} -</span>
                 <div class="citation"><div class="content">{{#if citation.content.slices.length }}{{{parse citation.content.slices}}}{{else}}{{{decorate citation.content.content}}}{{/if}}</div></div>

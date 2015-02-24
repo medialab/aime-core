@@ -25,7 +25,33 @@
 
 	}
 
-	
+	/*
+		@return a enriched collection of documents
+	*/	
+	maze.engine.parser.documents = function(items) {
+		return items.map(function(d) {
+      if(!d.children.length)
+        return d;
+
+      d.references = []; // search for biblib references to prefetch     
+      var display_number = 0;
+      for(var i in d.children)
+        for(var j in d.children[i].children) {
+          display_number++; // increment display_number
+          d.children[i].children[j].display_number = +display_number;
+          if(d.children[i].children[j].type == 'reference'){
+            d.references.push(''+d.children[i].children[j].biblib_id);
+          } else if(d.children[i].children[j].reference) { // take reference attached to a media object
+            d.references.push(''+d.children[i].children[j].reference.biblib_id);
+          }
+        }  
+
+      // get the first slide as "document preview"
+      d.preview = d.children.shift();
+
+      return d;
+    });
+	}
 
 
 	/*
