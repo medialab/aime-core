@@ -88,6 +88,13 @@
       });
     };
 
+
+    this.triggers.events.highlight_matches = function(controller) {
+      var query = controller.get('scene_query');
+      // alert(query);
+      _self.box.highlight(query);
+      
+    }
     /*
 
       Mouse handling functions

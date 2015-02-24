@@ -18,7 +18,10 @@ $(document).ready(function() {
     get_vocabulary_item: '/voc/::ids',
     get_documents: '/doc',
     get_documents_item: '/doc/::ids',
-    search_book: '/inquiry/search/::query',
+
+    search_book: '/book/search/::query',
+    search_vocabulary: '/voc/search/::query',
+    search_documents: '/doc/search/::query',
 
     list_comments: 'documentItems/items',
     get_comments: 'documentItems/items',
@@ -34,7 +37,7 @@ $(document).ready(function() {
     list_vocabulary: 'vocabItems/items',
     
     fetch_vocabulary: 'vocabItems/items',
-    search_vocabulary: 'vocabItems/items',
+    //search_vocabulary: 'vocabItems/items',
     infinite_vocabulary: 'vocabItems/items',
     save_vocabulary: 'vocabItems/items',
 

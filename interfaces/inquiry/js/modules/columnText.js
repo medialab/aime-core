@@ -185,52 +185,52 @@
         }
         _self.show({delay:50});
         return;
-        for( var i in matches ){
-            var el = $( document.getElementById( matches[i].id ) ),
-                content = maze.fn.grab( contents, function(e){ return e.id == matches[i].id; }).content,
-                slices = [];
+        // for( var i in matches ){
+        //     var el = $( document.getElementById( matches[i].id ) ),
+        //         content = maze.fn.grab( contents, function(e){ return e.id == matches[i].id; }).content,
+        //         slices = [];
 
-            if( !content )
-              continue;
+        //     if( !content )
+        //       continue;
 
-            for( var j in matches[i].matches )
-                slices.push(
-                    content.substring(
-                        matches[i].matches[j][0],
-                        matches[i].matches[j][1]
-                    )
-                );
+        //     for( var j in matches[i].matches )
+        //         slices.push(
+        //             content.substring(
+        //                 matches[i].matches[j][0],
+        //                 matches[i].matches[j][1]
+        //             )
+        //         );
 
-            switch( matches[i].type ){
-                case maze.CHAPTER:
-                    //el.addClass("match");
-                    continue;
+        //     switch( matches[i].type ){
+        //         case maze.CHAPTER:
+        //             //el.addClass("match");
+        //             continue;
 
-                case maze.SUBHEADING:
-                    //el.addClass("match");
-                    subheading = el.addClass("match"); subheading.parent().addClass("match");
-                    chapter = subheading.closest(".chapter").addClass("match");
-                    paragraph = subheading.find(".paragraph").first().addClass("match"); paragraph.parent().addClass("match");
+        //         case maze.SUBHEADING:
+        //             //el.addClass("match");
+        //             subheading = el.addClass("match"); subheading.parent().addClass("match");
+        //             chapter = subheading.closest(".chapter").addClass("match");
+        //             paragraph = subheading.find(".paragraph").first().addClass("match"); paragraph.parent().addClass("match");
 
-                    break;
+        //             break;
 
-                case maze.PARAGRAPH:
-                    paragraph = el.addClass("match"); paragraph.parent().addClass("match");
-                    subheading = paragraph.closest(".subtitle").addClass("match"); subheading.parent().addClass("match");
-                    chapter = subheading.closest(".chapter").addClass("match");
+        //         case maze.PARAGRAPH:
+        //             paragraph = el.addClass("match"); paragraph.parent().addClass("match");
+        //             subheading = paragraph.closest(".subtitle").addClass("match"); subheading.parent().addClass("match");
+        //             chapter = subheading.closest(".chapter").addClass("match");
 
-                    if( slices.length ){
-                      for( var j in slices )
-                        paragraph.highlight( slices[j] );
-                    } else {
-                      paragraph.highlight(query);
-                    }
+        //             if( slices.length ){
+        //               for( var j in slices )
+        //                 paragraph.highlight( slices[j] );
+        //             } else {
+        //               paragraph.highlight(query);
+        //             }
 
-                    if( typeof _omissis[ subheading.attr('id') ] == "undefined" )
-                        _omissis[ subheading.attr('id') ] = subheading.find(".paragraph");
-                    break;
-            }
-        };
+        //             if( typeof _omissis[ subheading.attr('id') ] == "undefined" )
+        //                 _omissis[ subheading.attr('id') ] = subheading.find(".paragraph");
+        //             break;
+        //     }
+        // };
         //maze.log( highlights );
 
 

@@ -1128,6 +1128,10 @@
           description:'remove all ".match" css classes in <span class="link"> elements'
         },
         {
+          triggers: 'highlight_matches', // generic match higlight
+          description:'activate highlight on searched query.'
+        },
+        {
           triggers:'doc_move_to',
           description:'goto slide in the leader document'
         },
@@ -1481,9 +1485,30 @@
           method: function(e) {
             console.log('%c query ', 'background-color: gold', e.data.query)
 
-            this.request('search_book', {
-              shortcuts:{
-                query: e.data.query
+            var services = [
+              {
+                service: 'search_book',
+                shortcuts:{
+                  query: e.data.query
+                }
+              },
+              {
+                service: 'search_vocabulary',
+                shortcuts:{
+                  query: e.data.query
+                }
+              },
+              {
+                service: 'search_documents',
+                shortcuts:{
+                  query: e.data.query
+                }
+              }
+            ];
+
+            this.request(services, {
+              success: function() {
+                maze.domino.controller.dispatchEvent('highlight_matches unlock scrolling_text sticky_show');
               }
             });
           }
@@ -1777,10 +1802,10 @@
             xhr.withCredentials = true;
           },
           success: function(data, params) {
-            this.update('data_search_bookIdsArray', data.result.book);
+            this.update('data_search_bookIdsArray', data.result);
 
             setTimeout(function(){
-              maze.domino.controller.dispatchEvent('text_matches_highlight', {ids: data.result.book});
+              maze.domino.controller.dispatchEvent('text_matches_highlight', {ids: data.result});
 
               if( maze.domino.controller.get('data_search_bookIdsArray').length +
                   maze.domino.controller.get('data_vocIdsArray').length +
@@ -1789,7 +1814,7 @@
                     maze.toast( maze.i18n.translate('no results found' ),{stayTime:3000} );
                     maze.domino.controller.log( 'no results found' );
                   }
-              maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
+              // maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
             }, 100);  
 
           }
@@ -1820,10 +1845,10 @@
                 contents[o.slug_id] = o;
               });
 
-              this.update({
+              /* this.update({
                 data_vocIdsArray: idsArray,
                 data_vocContents: contents
-              });
+              }); */
 
               this.update('infinite_voc', maze.STATUS_READY );
 
@@ -1896,11 +1921,58 @@
                 contents[o.slug_id] = o;
               });
 
+              // this.update({
+              //   data_vocIdsArray: idsArray,
+              //   data_vocContents: contents
+              // });
+
+              this.update('infinite_voc', maze.STATUS_READY );
+
+              // pierre added that to do as the following 'get_documents'
+              // pierre didn't know why the 2 calls were differents
+              // pierre wanted to solve bug of voc-data-not-empty after an empty results search !
+              this.dispatchEvent('data_update',{
+                namespace: 'voc',
+                ids: idsArray,
+                contents: contents
+              });
+
+              // HACK: Just added this to avoid success overriding...
+              if (p.callback)
+                setTimeout(p.callback, 0);
+            //}
+          },
+          error: maze.domino.errorHandler,
+        },
+        { id: 'search_vocabulary',
+          type: 'GET',
+          dataType: 'json',
+          url: maze.urls.search_vocabulary,
+          description: 'The service that deals with vocabulary search.',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          success: function(data, params) {
+            var p = params || {},
+                result = data.result,
+                idsArray = [],
+                contents = {};
+            
+              if (+p.offset > 0) {
+                idsArray = this.get('data_vocIdsArray');
+                contents = this.get('data_vocContents');
+              }
+
+              result.forEach(function(o) {
+                idsArray.push(o.slug_id);
+                contents[o.slug_id] = o;
+              });
+              /*
               this.update({
                 data_vocIdsArray: idsArray,
                 data_vocContents: contents
               });
-
+            */
               this.update('infinite_voc', maze.STATUS_READY );
 
               // pierre added that to do as the following 'get_documents'
@@ -1956,6 +2028,7 @@
               setTimeout(p.callback, 0);
           }
         },
+
         { id: 'get_documents',
           type: 'GET',
           dataType: 'json',
@@ -2039,69 +2112,125 @@
             });
           }
         },
-        { id: 'get_contributions',
-          type: 'POST',
+        { id: 'search_documents',
+          type: 'GET',
           dataType: 'json',
-          url: maze.urls.get_contribution,
-          description: 'The service that deals with personal contribution.',
-          before: function(params) {
-            var p = params || {};
-
-            if (+p.offset > 0 && !this.get('data_contIdsArray').length)
-              return false;
+          url: maze.urls.search_documents,
+          description: 'search documents',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
           },
-          data: function(params) {
-            var p = params || {},
-                data = {
-                  
-                };
-
-            if (p.id)
-              data.id = [p.id];
-            else if (p.ids)
-              data.ids = p.ids;
-
-            if (p.limit)
-              data.limit = p.limit;
-
-            if (p.offset)
-              data.offset = p.offset;
-
-            if (p.query)
-              data.query = p.query;
-
-            return data;
-          },
+          error: maze.domino.errorHandler,
           success: function(data, params) {
             var p = params || {},
-                result = maze.engine.parser.contributions(data),
+                result = data.result,
                 idsArray = [],
                 contents = {};
 
-            // Check callbacks:
-            if (params.open_editor)
-              this.dispatchEvent('open_editor', {
-                contribution: result.contributions[0],
-                id: (result.contributions[0] || {}).id || data[0][0].id
-              });
-            else {
-              if (+p.offset > 0) {
-                idsArray = this.get('data_contIdsArray');
-                contents = this.get('data_contContents');
-              }
-
-              result.contributions.forEach(function(o) {
-                idsArray.push(o.id);
-                contents[o.id] = o;
-              });
-
-              this.update({
-                data_contIdsArray: idsArray,
-                data_contContents: contents
-              });
+            if (+p.offset > 0) {
+              idsArray = this.get('data_docIdsArray');
+              contents = this.get('data_docContents');
             }
+
+            result.forEach(function(o) {
+              if(!o || !o.slug_id)
+                return;
+
+              var slides_matches = [];
+              
+              o.children.filter(function(slide, i) {
+                var paragraphs_matches = slide.children.filter(function(paragraph, j) {
+                  return !!~paragraph.text.indexOf(maze.domino.controller.get('scene_query'));
+                })
+                if(paragraphs_matches.length)
+                  slides_matches.push({
+                    id: slide.id,
+                    lang: slide.lang,
+                    type: slide.type,
+                    children: paragraphs_matches
+                  });
+                
+                return paragraphs_matches.length
+              });
+              o.slides_matches = slides_matches;
+            
+              idsArray.push(o.slug_id);
+              contents[o.slug_id] = o;
+            });
+            this.update('infinite_doc', maze.STATUS_READY );
+            this.dispatchEvent('data_update',{
+              namespace: 'doc',
+              ids: idsArray,
+              contents: contents
+            });
+            // HACK: Just added this to avoid success overriding...
+            if (p.callback)
+              setTimeout(p.callback, 0);
           }
         },
+        // { id: 'get_contributions',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   url: maze.urls.get_contribution,
+        //   description: 'The service that deals with personal contribution.',
+        //   before: function(params) {
+        //     var p = params || {};
+
+        //     if (+p.offset > 0 && !this.get('data_contIdsArray').length)
+        //       return false;
+        //   },
+        //   data: function(params) {
+        //     var p = params || {},
+        //         data = {
+                  
+        //         };
+
+        //     if (p.id)
+        //       data.id = [p.id];
+        //     else if (p.ids)
+        //       data.ids = p.ids;
+
+        //     if (p.limit)
+        //       data.limit = p.limit;
+
+        //     if (p.offset)
+        //       data.offset = p.offset;
+
+        //     if (p.query)
+        //       data.query = p.query;
+
+        //     return data;
+        //   },
+        //   success: function(data, params) {
+        //     var p = params || {},
+        //         result = maze.engine.parser.contributions(data),
+        //         idsArray = [],
+        //         contents = {};
+
+        //     // Check callbacks:
+        //     if (params.open_editor)
+        //       this.dispatchEvent('open_editor', {
+        //         contribution: result.contributions[0],
+        //         id: (result.contributions[0] || {}).id || data[0][0].id
+        //       });
+        //     else {
+        //       if (+p.offset > 0) {
+        //         idsArray = this.get('data_contIdsArray');
+        //         contents = this.get('data_contContents');
+        //       }
+
+        //       result.contributions.forEach(function(o) {
+        //         idsArray.push(o.id);
+        //         contents[o.id] = o;
+        //       });
+
+        //       this.update({
+        //         data_contIdsArray: idsArray,
+        //         data_contContents: contents
+        //       });
+        //     }
+        //   }
+        // },
         { id: 'get_references',
           url: maze.urls.get_references,
           type: maze.rpc.type,
@@ -2119,593 +2248,593 @@
 
           }
         },
-        { id: 'manage_contribution.add-bookmark',
-          type: 'POST',
-          dataType: 'json',
-          url: maze.urls.manage_contribution,
-          data: function(params) {
-            var p = params || {},
-                selection = p.selection || {},
-                data = {
-                  action: 'add-bookmark',
-                  ref_id: selection.id.replace(/[^\d]/g,''),
-                  ref_content: Base64.encode(selection.content),
+        // { id: 'manage_contribution.add-bookmark',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   url: maze.urls.manage_contribution,
+        //   data: function(params) {
+        //     var p = params || {},
+        //         selection = p.selection || {},
+        //         data = {
+        //           action: 'add-bookmark',
+        //           ref_id: selection.id.replace(/[^\d]/g,''),
+        //           ref_content: Base64.encode(selection.content),
                   
-                };
+        //         };
 
-            if( selection.column == maze.TEXT )
-              data.ref_type = 'book'
-            else if( selection.column == maze.VOC )
-              data.ref_type = 'vocabulary'
-            else if( selection.column == maze.DOC )
-              data.ref_type = 'document'
-            else
-              data.ref_type = 'contributions'
+        //     if( selection.column == maze.TEXT )
+        //       data.ref_type = 'book'
+        //     else if( selection.column == maze.VOC )
+        //       data.ref_type = 'vocabulary'
+        //     else if( selection.column == maze.DOC )
+        //       data.ref_type = 'document'
+        //     else
+        //       data.ref_type = 'contributions'
 
-            return data;
-          }, success: function(data, params) {
-            if( data.status && data.status=="error" ){
-              maze.error( data );
-              maze.toast('problem occurred while saving the paragraph')
-              return;
-            }
+        //     return data;
+        //   }, success: function(data, params) {
+        //     if( data.status && data.status=="error" ){
+        //       maze.error( data );
+        //       maze.toast('problem occurred while saving the paragraph')
+        //       return;
+        //     }
 
-            var source,
-                parsedParagraph,
-                contrib,
-                p = params || {};
+        //     var source,
+        //         parsedParagraph,
+        //         contrib,
+        //         p = params || {};
 
-            source = data.item[0];
-            parsedParagraph = maze.engine.helpers.paragraph(source);
-            contrib = maze.engine.helpers.contributions(source);
+        //     source = data.item[0];
+        //     parsedParagraph = maze.engine.helpers.paragraph(source);
+        //     contrib = maze.engine.helpers.contributions(source);
 
-            switch (this.get('scene_column').leading) {
-              case maze.TEXT:
-                var bookContents,
-                    subheading;
+        //     switch (this.get('scene_column').leading) {
+        //       case maze.TEXT:
+        //         var bookContents,
+        //             subheading;
 
-                // Update the paragraph in properties:
-                bookContents = this.get('data_bookContents');
-                bookContents[source.chapter].subheadings.some(function(o) {
-                  if (o.id == source.subhead) {
-                    subheading = o;
-                    return true;
-                  } else
-                    return false;
-                });
+        //         // Update the paragraph in properties:
+        //         bookContents = this.get('data_bookContents');
+        //         bookContents[source.chapter].subheadings.some(function(o) {
+        //           if (o.id == source.subhead) {
+        //             subheading = o;
+        //             return true;
+        //           } else
+        //             return false;
+        //         });
 
-                subheading.paragraphs = subheading.paragraphs.map(function(o) {
-                  if (o.id == source.id)
-                    return parsedParagraph;
-                  else
-                    return o;
-                });
+        //         subheading.paragraphs = subheading.paragraphs.map(function(o) {
+        //           if (o.id == source.id)
+        //             return parsedParagraph;
+        //           else
+        //             return o;
+        //         });
 
-                this.update('data_bookContents', bookContents);
+        //         this.update('data_bookContents', bookContents);
 
-                break;
-              case maze.VOC:
-                var k,
-                    j,
-                    doBreak,
-                    vocContents;
+        //         break;
+        //       case maze.VOC:
+        //         var k,
+        //             j,
+        //             doBreak,
+        //             vocContents;
 
-                // Update the paragraph in properties:
-                vocContents = this.get('data_vocContents');
+        //         // Update the paragraph in properties:
+        //         vocContents = this.get('data_vocContents');
 
-                for (k in vocContents) {
-                  for (j in vocContents[k].paragraphs) {
-                    if (vocContents[k].paragraphs[j].id === parsedParagraph.id)
-                      vocContents[k].paragraphs[j] = parsedParagraph;
-                      doBreak = true;
-                      break;
-                  }
+        //         for (k in vocContents) {
+        //           for (j in vocContents[k].paragraphs) {
+        //             if (vocContents[k].paragraphs[j].id === parsedParagraph.id)
+        //               vocContents[k].paragraphs[j] = parsedParagraph;
+        //               doBreak = true;
+        //               break;
+        //           }
 
-                  if (doBreak)
-                    break;
-                }
+        //           if (doBreak)
+        //             break;
+        //         }
 
-                this.update('data_vocContents', vocContents);
+        //         this.update('data_vocContents', vocContents);
 
-                break;
-              case maze.DOC:
-                var k,
-                    j,
-                    doBreak,
-                    docContents;
+        //         break;
+        //       case maze.DOC:
+        //         var k,
+        //             j,
+        //             doBreak,
+        //             docContents;
 
-                // Update the paragraph in properties:
-                docContents = this.get('data_docContents');
+        //         // Update the paragraph in properties:
+        //         docContents = this.get('data_docContents');
 
-                for (k in docContents) {
-                  for (j in docContents[k].paragraphs) {
-                    if (docContents[k].paragraphs[j].id === parsedParagraph.id)
-                      docContents[k].paragraphs[j] = parsedParagraph;
-                      doBreak = true;
-                      break;
-                  }
+        //         for (k in docContents) {
+        //           for (j in docContents[k].paragraphs) {
+        //             if (docContents[k].paragraphs[j].id === parsedParagraph.id)
+        //               docContents[k].paragraphs[j] = parsedParagraph;
+        //               doBreak = true;
+        //               break;
+        //           }
 
-                  if (doBreak)
-                    break;
-                }
+        //           if (doBreak)
+        //             break;
+        //         }
 
-                this.update('data_docContents', docContents);
+        //         this.update('data_docContents', docContents);
 
-                break;
-            }
+        //         break;
+        //     }
 
-            // Dispatch related events:
-            this.dispatchEvent('refill_paragraph', {
-              column: (p.selection || {}).column,
-              paragraph: parsedParagraph,
-              contributions: contrib
-            });
+        //     // Dispatch related events:
+        //     this.dispatchEvent('refill_paragraph', {
+        //       column: (p.selection || {}).column,
+        //       paragraph: parsedParagraph,
+        //       contributions: contrib
+        //     });
 
-            if (p.editor_init)
-              this.dispatchEvent('editor_init', {
-                contribution: {
-                  id: Math.max.apply(null, data.item[0].bookmarks.map(function(a) {
-                    return +a[4];
-                  }))
-                }
-              });
-            else
-              this.dispatchEvent('notebook_discard');
-          }
-        },
-        { id: 'manage_contribution.edit-objection',
-          type: 'POST',
-          dataType: 'json',
-          url: maze.urls.manage_contribution,
-          data: function(params) {
-            var p = params || {},
-                id = p.id ||
-                  this.die('"undefined" contribution id'),
-                data = {
+        //     if (p.editor_init)
+        //       this.dispatchEvent('editor_init', {
+        //         contribution: {
+        //           id: Math.max.apply(null, data.item[0].bookmarks.map(function(a) {
+        //             return +a[4];
+        //           }))
+        //         }
+        //       });
+        //     else
+        //       this.dispatchEvent('notebook_discard');
+        //   }
+        // },
+        // { id: 'manage_contribution.edit-objection',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   url: maze.urls.manage_contribution,
+        //   data: function(params) {
+        //     var p = params || {},
+        //         id = p.id ||
+        //           this.die('"undefined" contribution id'),
+        //         data = {
                   
-                  action: 'edit-objection',
-                  objection: Base64.encode(p.objection),
-                  content: Base64.encode(p.content),
-                  id: id
-                };
+        //           action: 'edit-objection',
+        //           objection: Base64.encode(p.objection),
+        //           content: Base64.encode(p.content),
+        //           id: id
+        //         };
 
-            return data;
-          }, success: function(data, params) {
-            if( data.status && data.status=="error" ){
-              maze.error( data );
-              maze.toast('problem occurred while saving the paragraph')
-              return;
-            }
+        //     return data;
+        //   }, success: function(data, params) {
+        //     if( data.status && data.status=="error" ){
+        //       maze.error( data );
+        //       maze.toast('problem occurred while saving the paragraph')
+        //       return;
+        //     }
 
-            var p = params || {},
-                scene_column = this.get('scene_column'),
-                contents,
-                ids,
-                contribution;
+        //     var p = params || {},
+        //         scene_column = this.get('scene_column'),
+        //         contents,
+        //         ids,
+        //         contribution;
 
-            contents = this.get('data_contContents');
-            ids = this.get('data_contIdsArray');
-            contribution = maze.engine.parser.contributions([data]).contributions.pop(); // it takes an array of contribution(s) object
+        //     contents = this.get('data_contContents');
+        //     ids = this.get('data_contIdsArray');
+        //     contribution = maze.engine.parser.contributions([data]).contributions.pop(); // it takes an array of contribution(s) object
 
-            if(ids.indexOf() == -1)
-              ids.push(contribution.id);
+        //     if(ids.indexOf() == -1)
+        //       ids.push(contribution.id);
 
-            contents[contribution.id] = contribution; // automatically reassign the edited contribution
+        //     contents[contribution.id] = contribution; // automatically reassign the edited contribution
 
-            if (p.stop_editing)
-              this.update('is_editing', false);
+        //     if (p.stop_editing)
+        //       this.update('is_editing', false);
 
-            this.update({
-              data_contContents: contents,
-              data_contIdsArray: ids
-            });
+        //     this.update({
+        //       data_contContents: contents,
+        //       data_contIdsArray: ids
+        //     });
 
-            this.dispatchEvent('clear', {
-              cont: true
-            });
-            if(scene_column.leading == maze.TEXT)
-              this.dispatchEvent('text_extract_inlinks');
-            else
-              this.dispatchEvent('extract_inlinks');
+        //     this.dispatchEvent('clear', {
+        //       cont: true
+        //     });
+        //     if(scene_column.leading == maze.TEXT)
+        //       this.dispatchEvent('text_extract_inlinks');
+        //     else
+        //       this.dispatchEvent('extract_inlinks');
 
-            if (p.callback)
-              p.callback(contribution);
-          }
-        },
-        { id: 'manage_contribution.remove-contribution',
-          type: 'POST',
-          dataType: 'json',
-          url: maze.urls.manage_contribution,
-          data: function(params) {
-            var data = {
-                  action:'remove',
-                  id: params.id,
+        //     if (p.callback)
+        //       p.callback(contribution);
+        //   }
+        // },
+        // { id: 'manage_contribution.remove-contribution',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   url: maze.urls.manage_contribution,
+        //   data: function(params) {
+        //     var data = {
+        //           action:'remove',
+        //           id: params.id,
                   
-                };
+        //         };
 
-            if (!('id' in params))
-              this.die('Bookmark ID is missing.');
+        //     if (!('id' in params))
+        //       this.die('Bookmark ID is missing.');
 
-            return data;
-          },
-          success: function(data, params) {
-            if (data.status && data.status == 'error') {
-              maze.error( data );
-              maze.toast('problem occurred while removing the contribution')
-              return;
-            }
+        //     return data;
+        //   },
+        //   success: function(data, params) {
+        //     if (data.status && data.status == 'error') {
+        //       maze.error( data );
+        //       maze.toast('problem occurred while removing the contribution')
+        //       return;
+        //     }
 
-            var source,
-                parsedParagraph,
-                contrib,
-                bookContents,
-                subheading,
-                contContents,
-                contIds,
-                slave,
-                actions,
-                items,
-                p = params || {},
-                column = p.column;
+        //     var source,
+        //         parsedParagraph,
+        //         contrib,
+        //         bookContents,
+        //         subheading,
+        //         contContents,
+        //         contIds,
+        //         slave,
+        //         actions,
+        //         items,
+        //         p = params || {},
+        //         column = p.column;
 
-            // Delete the contribution from the properties:
-            contContents = this.get('data_contContents');
-            delete contContents[p.id];
+        //     // Delete the contribution from the properties:
+        //     contContents = this.get('data_contContents');
+        //     delete contContents[p.id];
 
-            contIds = this.get('data_contIdsArray').filter(function(id) {
-              return +id !== +p.id;
-            });
+        //     contIds = this.get('data_contIdsArray').filter(function(id) {
+        //       return +id !== +p.id;
+        //     });
 
-            this.update({
-              data_contContents: contContents,
-              data_contIdsArray: contIds
-            });
+        //     this.update({
+        //       data_contContents: contContents,
+        //       data_contIdsArray: contIds
+        //     });
 
-            // Update the paragraph:
-            source = data.item[0];
+        //     // Update the paragraph:
+        //     source = data.item[0];
 
-            parsedParagraph = maze.engine.helpers.paragraph(source);
-            contrib = maze.engine.helpers.contributions(source);
+        //     parsedParagraph = maze.engine.helpers.paragraph(source);
+        //     contrib = maze.engine.helpers.contributions(source);
 
-            switch (this.get('scene_column').leading) {
-              case maze.TEXT:
-                var bookContents,
-                    subheading;
+        //     switch (this.get('scene_column').leading) {
+        //       case maze.TEXT:
+        //         var bookContents,
+        //             subheading;
 
-                // Update the paragraph in properties:
-                bookContents = this.get('data_bookContents');
-                bookContents[source.chapter].subheadings.some(function(o) {
-                  if (o.id == source.subhead) {
-                    subheading = o;
-                    return true;
-                  } else
-                    return false;
-                });
+        //         // Update the paragraph in properties:
+        //         bookContents = this.get('data_bookContents');
+        //         bookContents[source.chapter].subheadings.some(function(o) {
+        //           if (o.id == source.subhead) {
+        //             subheading = o;
+        //             return true;
+        //           } else
+        //             return false;
+        //         });
 
-                subheading.paragraphs = subheading.paragraphs.map(function(o) {
-                  if (o.id == source.id)
-                    return parsedParagraph;
-                  else
-                    return o;
-                });
+        //         subheading.paragraphs = subheading.paragraphs.map(function(o) {
+        //           if (o.id == source.id)
+        //             return parsedParagraph;
+        //           else
+        //             return o;
+        //         });
 
-                this.update('data_bookContents', bookContents);
+        //         this.update('data_bookContents', bookContents);
 
-                break;
-              case maze.VOC:
-                var k,
-                    j,
-                    doBreak,
-                    vocContents;
+        //         break;
+        //       case maze.VOC:
+        //         var k,
+        //             j,
+        //             doBreak,
+        //             vocContents;
 
-                // Update the paragraph in properties:
-                vocContents = this.get('data_vocContents');
+        //         // Update the paragraph in properties:
+        //         vocContents = this.get('data_vocContents');
 
-                for (k in vocContents) {
-                  for (j in vocContents[k].paragraphs) {
-                    if (vocContents[k].paragraphs[j].id === parsedParagraph.id)
-                      vocContents[k].paragraphs[j] = parsedParagraph;
-                      doBreak = true;
-                      break;
-                  }
+        //         for (k in vocContents) {
+        //           for (j in vocContents[k].paragraphs) {
+        //             if (vocContents[k].paragraphs[j].id === parsedParagraph.id)
+        //               vocContents[k].paragraphs[j] = parsedParagraph;
+        //               doBreak = true;
+        //               break;
+        //           }
 
-                  if (doBreak)
-                    break;
-                }
+        //           if (doBreak)
+        //             break;
+        //         }
 
-                this.update('data_vocContents', vocContents);
+        //         this.update('data_vocContents', vocContents);
 
-                break;
-              case maze.DOC:
-                var k,
-                    j,
-                    doBreak,
-                    docContents;
+        //         break;
+        //       case maze.DOC:
+        //         var k,
+        //             j,
+        //             doBreak,
+        //             docContents;
 
-                // Update the paragraph in properties:
-                docContents = this.get('data_docContents');
+        //         // Update the paragraph in properties:
+        //         docContents = this.get('data_docContents');
 
-                for (k in docContents) {
-                  for (j in docContents[k].paragraphs) {
-                    if (docContents[k].paragraphs[j].id === parsedParagraph.id)
-                      docContents[k].paragraphs[j] = parsedParagraph;
-                      doBreak = true;
-                      break;
-                  }
+        //         for (k in docContents) {
+        //           for (j in docContents[k].paragraphs) {
+        //             if (docContents[k].paragraphs[j].id === parsedParagraph.id)
+        //               docContents[k].paragraphs[j] = parsedParagraph;
+        //               doBreak = true;
+        //               break;
+        //           }
 
-                  if (doBreak)
-                    break;
-                }
+        //           if (doBreak)
+        //             break;
+        //         }
 
-                this.update('data_docContents', docContents);
+        //         this.update('data_docContents', docContents);
 
-                break;
-              case maze.COMM:
-                var scene_bookmark = this.get('scene_bookmark');
+        //         break;
+        //       case maze.COMM:
+        //         var scene_bookmark = this.get('scene_bookmark');
 
-                slave = this.get('scene_column').slave;
+        //         slave = this.get('scene_column').slave;
 
-                actions = {};
-                actions[maze.TEXT] = maze.ACTION_SET_TEXT_LEADER;
-                actions[maze.VOC] = maze.ACTION_SET_VOC_LEADER;
-                actions[maze.DOC] = maze.ACTION_SET_DOC_LEADER;
+        //         actions = {};
+        //         actions[maze.TEXT] = maze.ACTION_SET_TEXT_LEADER;
+        //         actions[maze.VOC] = maze.ACTION_SET_VOC_LEADER;
+        //         actions[maze.DOC] = maze.ACTION_SET_DOC_LEADER;
 
-                items = {};
-                items[maze.VOC] = '#vocab-' + this.get('data_vocIdsArray')[0];
-                items[maze.DOC] = '#doc-' + this.get('data_docIdsArray')[0];
-                // check scene_bookmark
+        //         items = {};
+        //         items[maze.VOC] = '#vocab-' + this.get('data_vocIdsArray')[0];
+        //         items[maze.DOC] = '#doc-' + this.get('data_docIdsArray')[0];
+        //         // check scene_bookmark
 
-                console.log(parsedParagraph);
-                // IF DELETING contrib when COMM in leader without scene_bookmark
-                if(slave == maze.TEXT){
-                  var paragraph = $("#"+parsedParagraph.id),
-                      subheading = paragraph.closest('.subtitle'),
-                      chapter =  subheading.closest('.chapter');
+        //         console.log(parsedParagraph);
+        //         // IF DELETING contrib when COMM in leader without scene_bookmark
+        //         if(slave == maze.TEXT){
+        //           var paragraph = $("#"+parsedParagraph.id),
+        //               subheading = paragraph.closest('.subtitle'),
+        //               chapter =  subheading.closest('.chapter');
 
-                  scene_bookmark = {
-                    chapter: '#' + chapter.attr("id"),
-                    subheading: '#' + subheading.attr("id"),
-                    paragraph: '#' + parsedParagraph.id
-                  };
-                };
+        //           scene_bookmark = {
+        //             chapter: '#' + chapter.attr("id"),
+        //             subheading: '#' + subheading.attr("id"),
+        //             paragraph: '#' + parsedParagraph.id
+        //           };
+        //         };
 
-                this.dispatchEvent('scene_update', {
-                  scene_action: actions[slave],
-                  scene_column: {
-                    leading: slave,
-                    slave: maze.COMM
-                  },
-                  scene_bookmark: scene_bookmark,
-                  scene_item: {
-                    id: items[slave],
-                    column: slave
-                  }
-                });
+        //         this.dispatchEvent('scene_update', {
+        //           scene_action: actions[slave],
+        //           scene_column: {
+        //             leading: slave,
+        //             slave: maze.COMM
+        //           },
+        //           scene_bookmark: scene_bookmark,
+        //           scene_item: {
+        //             id: items[slave],
+        //             column: slave
+        //           }
+        //         });
 
-                column = this.get('scene_column').slave;
+        //         column = this.get('scene_column').slave;
 
-                break;
-            }
+        //         break;
+        //     }
 
-            // Dispatch events
-            this.dispatchEvent('notebook_discard');
-            this.dispatchEvent('refill_paragraph', {
-              column: column,
-              paragraph: parsedParagraph,
-              contributions: contrib
-            });
-          }
-        },
-        { id: 'manage_contribution.publish',
-          type: 'POST',
-          dataType: 'json',
-          url: maze.urls.manage_contribution,
-          data: function(params) {
-            var p = params || {},
-                data = {
-                  action: 'publish',
+        //     // Dispatch events
+        //     this.dispatchEvent('notebook_discard');
+        //     this.dispatchEvent('refill_paragraph', {
+        //       column: column,
+        //       paragraph: parsedParagraph,
+        //       contributions: contrib
+        //     });
+        //   }
+        // },
+        // { id: 'manage_contribution.publish',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   url: maze.urls.manage_contribution,
+        //   data: function(params) {
+        //     var p = params || {},
+        //         data = {
+        //           action: 'publish',
                   
-                  id: p.id || this.die('missing parameter "id"')
-                };
+        //           id: p.id || this.die('missing parameter "id"')
+        //         };
 
-            return data;
-          },
-          success: function(data, params) {
-            if (data.status && data.status == 'error') {
-              maze.error(data);
-              maze.toast('problem occurred while publishing the contribution');
-              return;
-            }
+        //     return data;
+        //   },
+        //   success: function(data, params) {
+        //     if (data.status && data.status == 'error') {
+        //       maze.error(data);
+        //       maze.toast('problem occurred while publishing the contribution');
+        //       return;
+        //     }
 
-            var p = params || {},
-                contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
+        //     var p = params || {},
+        //         contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
 
-            if (p.callback)
-              p.callback(contribution);
-          }
-        },
-        { id: 'manage_contribution.unpublish',
-          type: 'POST',
-          dataType: 'json',
-          url: maze.urls.manage_contribution,
-          data: function(params) {
-            var p = params || {},
-                data = {
-                  action: 'unpublish',
+        //     if (p.callback)
+        //       p.callback(contribution);
+        //   }
+        // },
+        // { id: 'manage_contribution.unpublish',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   url: maze.urls.manage_contribution,
+        //   data: function(params) {
+        //     var p = params || {},
+        //         data = {
+        //           action: 'unpublish',
                   
-                  id: p.id || this.die('missing parameter "id"')
-                };
+        //           id: p.id || this.die('missing parameter "id"')
+        //         };
 
-            return data;
-          },
-          success: function(data, params) {
-            if (data.status && data.status == 'error') {
-              maze.error(data);
-              maze.toast('problem occurred while unpublishing the contribution');
-              return;
-            }
+        //     return data;
+        //   },
+        //   success: function(data, params) {
+        //     if (data.status && data.status == 'error') {
+        //       maze.error(data);
+        //       maze.toast('problem occurred while unpublishing the contribution');
+        //       return;
+        //     }
 
-            var p = params || {},
-                contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
+        //     var p = params || {},
+        //         contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
 
-            if (p.callback)
-              p.callback(contribution);
-          }
-        },
-        { id: 'manage_contribution.makepublic',
-          type: 'POST',
-          dataType: 'json',
-          url: maze.urls.manage_contribution,
-          data: function(params) {
-            var p = params || {},
-                data = {
-                  action: 'makepublic',
+        //     if (p.callback)
+        //       p.callback(contribution);
+        //   }
+        // },
+        // { id: 'manage_contribution.makepublic',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   url: maze.urls.manage_contribution,
+        //   data: function(params) {
+        //     var p = params || {},
+        //         data = {
+        //           action: 'makepublic',
                   
-                  id: p.id || this.die('missing parameter "id"')
-                };
+        //           id: p.id || this.die('missing parameter "id"')
+        //         };
 
-            return data;
-          },
-          success: function(data, params) {
-            if (data.status && data.status == 'error') {
-              maze.error(data);
-              maze.toast('problem occurred while making the contribution public');
-              return;
-            }
+        //     return data;
+        //   },
+        //   success: function(data, params) {
+        //     if (data.status && data.status == 'error') {
+        //       maze.error(data);
+        //       maze.toast('problem occurred while making the contribution public');
+        //       return;
+        //     }
 
-            var p = params || {},
-                contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
+        //     var p = params || {},
+        //         contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
 
-            if (p.callback)
-              p.callback(contribution);
-          }
-        },
-        { id: 'manage_contribution.makemoderated',
-          type: 'POST',
-          dataType: 'json',
-          url: maze.urls.manage_contribution,
-          data: function(params) {
-            var p = params || {},
-                data = {
-                  action: 'makemoderated',
+        //     if (p.callback)
+        //       p.callback(contribution);
+        //   }
+        // },
+        // { id: 'manage_contribution.makemoderated',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   url: maze.urls.manage_contribution,
+        //   data: function(params) {
+        //     var p = params || {},
+        //         data = {
+        //           action: 'makemoderated',
                   
-                  id: p.id || this.die('missing parameter "id"')
-                };
+        //           id: p.id || this.die('missing parameter "id"')
+        //         };
 
-            return data;
-          },
-          success: function(data, params) {
-            if (data.status && data.status == 'error') {
-              maze.error(data);
-              maze.toast('problem occurred while making the contribution moderated');
-              return;
-            }
+        //     return data;
+        //   },
+        //   success: function(data, params) {
+        //     if (data.status && data.status == 'error') {
+        //       maze.error(data);
+        //       maze.toast('problem occurred while making the contribution moderated');
+        //       return;
+        //     }
 
-            var p = params || {},
-                contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
+        //     var p = params || {},
+        //         contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
 
-            if (p.callback)
-              p.callback(contribution);
-          }
-        },
-        { id: 'manage_contribution.add-slide',
-          type: 'POST',
-          dataType: 'json',
-          url: maze.urls.manage_contribution,
-          data: function(params) {
-            var p = params || {},
-                data = {
-                  action: 'add-slide',
+        //     if (p.callback)
+        //       p.callback(contribution);
+        //   }
+        // },
+        // { id: 'manage_contribution.add-slide',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   url: maze.urls.manage_contribution,
+        //   data: function(params) {
+        //     var p = params || {},
+        //         data = {
+        //           action: 'add-slide',
                   
-                  id: p.id || this.die('missing parameter "id"')
-                };
+        //           id: p.id || this.die('missing parameter "id"')
+        //         };
 
-            return data;
-          },
-          success: function(data, params) {
-            if (data.status && data.status == 'error') {
-              maze.error(data);
-              maze.toast('problem occurred while adding the slide');
-              return;
-            }
+        //     return data;
+        //   },
+        //   success: function(data, params) {
+        //     if (data.status && data.status == 'error') {
+        //       maze.error(data);
+        //       maze.toast('problem occurred while adding the slide');
+        //       return;
+        //     }
 
-            var p = params || {},
-                contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
+        //     var p = params || {},
+        //         contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
 
-            if (p.callback)
-              p.callback(contribution);
-          }
-        },
-        { id: 'manage_contribution.edit-slide',
-          type: 'POST',
-          dataType: 'json',
-          url: maze.urls.manage_contribution,
-          data: function(params) {
-            var p = params || {};
+        //     if (p.callback)
+        //       p.callback(contribution);
+        //   }
+        // },
+        // { id: 'manage_contribution.edit-slide',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   url: maze.urls.manage_contribution,
+        //   data: function(params) {
+        //     var p = params || {};
 
-            // last minute validation ? no more
-            //if ((p.ref_url && !p.ref) || (!p.ref_url && p.ref))
-            //  this.die('"ref" and "ref_url" or neither of them. Only one is not valid.')
+        //     // last minute validation ? no more
+        //     //if ((p.ref_url && !p.ref) || (!p.ref_url && p.ref))
+        //     //  this.die('"ref" and "ref_url" or neither of them. Only one is not valid.')
 
-            var data = {
-              action: 'edit-slide',
+        //     var data = {
+        //       action: 'edit-slide',
               
-              id: p.id || this.die('missing parameter "id"'),
-              content: Base64.encode(p.content || ""), //this.die('missing parameter "content"')),
-              ref_url: p.ref_url || "",
-              ref: p.ref || ""
-            };
+        //       id: p.id || this.die('missing parameter "id"'),
+        //       content: Base64.encode(p.content || ""), //this.die('missing parameter "content"')),
+        //       ref_url: p.ref_url || "",
+        //       ref: p.ref || ""
+        //     };
 
-            return data;
-          }, success: function(data, params) {
-            if (data.status && data.status == 'error') {
-              // Check if the URL is not valid:
-              if (((data.error || {}).action || '').match(/the media sent is not valid/)) {
-                maze.toast('please enter a valid media URL');
+        //     return data;
+        //   }, success: function(data, params) {
+        //     if (data.status && data.status == 'error') {
+        //       // Check if the URL is not valid:
+        //       if (((data.error || {}).action || '').match(/the media sent is not valid/)) {
+        //         maze.toast('please enter a valid media URL');
 
-              // If not, we do not know what it is:
-              } else {
-                maze.error(data);
-                maze.toast('problem occurred while editing the slide');
-                return;
-              }
-            } else {
-              var p = params || {},
-                  contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
+        //       // If not, we do not know what it is:
+        //       } else {
+        //         maze.error(data);
+        //         maze.toast('problem occurred while editing the slide');
+        //         return;
+        //       }
+        //     } else {
+        //       var p = params || {},
+        //           contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
 
-              if (p.callback)
-                p.callback(contribution);
-            }
-          }
-        },
-        { id: 'manage_contribution.remove-slide',
-          type: 'POST',
-          dataType: 'json',
-          url: maze.urls.manage_contribution,
-          data: function(params) {
-            var p = params || {},
-                data = {
-                  action: 'remove-slide',
+        //       if (p.callback)
+        //         p.callback(contribution);
+        //     }
+        //   }
+        // },
+        // { id: 'manage_contribution.remove-slide',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   url: maze.urls.manage_contribution,
+        //   data: function(params) {
+        //     var p = params || {},
+        //         data = {
+        //           action: 'remove-slide',
                   
-                  id: p.id || this.die('missing parameter "id"')
-                };
+        //           id: p.id || this.die('missing parameter "id"')
+        //         };
 
-            return data;
-          },
-          success: function(data, params) {
-            if (data.status && data.status == 'error') {
-              maze.error(data);
-              maze.toast('problem occurred while editing the slide');
-              return;
-            }
+        //     return data;
+        //   },
+        //   success: function(data, params) {
+        //     if (data.status && data.status == 'error') {
+        //       maze.error(data);
+        //       maze.toast('problem occurred while editing the slide');
+        //       return;
+        //     }
 
-            var p = params || {},
-                contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
+        //     var p = params || {},
+        //         contribution = maze.engine.parser.contributions([data.contribution]).contributions.pop();
 
-            if (p.callback)
-              p.callback(contribution);
-          }
-        },
+        //     if (p.callback)
+        //       p.callback(contribution);
+        //   }
+        // },
         { id: 'get_notes_book',
           type: 'POST',
           dataType: 'json',
