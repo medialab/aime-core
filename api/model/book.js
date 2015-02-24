@@ -24,13 +24,13 @@ module.exports = {
       return callback(null, data);
     });
   },
-  search: function(query, callback) {
+  search: function(lang, query, callback) {
 
     // Formatting query
     query = helpers.searchRegex(query);
 
     // Executing query
-    db.rows(queries.search, {query: query}, function(err, result) {
+    db.rows(queries.search, {lang: lang, query: query}, function(err, result) {
       if (err) return callback(err);
 
       return callback(null, result.map(function(r) {

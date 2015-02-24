@@ -33,5 +33,6 @@ RETURN chapters;
 MATCH (n)
 WHERE
   (n:Chapter OR n:Subheading OR (:Subheading)-[:HAS]-(n:Paragraph)) AND
+  n.lang = {lang} AND
   n.text =~ {query}
 RETURN id(n);
