@@ -148,4 +148,26 @@ describe('Tokenizer', function() {
       ['How on earth {did this happen}?', 'Horse?', 'Anyone?']
     );
   });
+
+  it('should be possible to start a sentence with a number.', function() {
+    assert.deepEqual(
+      tokenizer('1) We are going to do this. 2) We are going to do that.'),
+      ['1) We are going to do this.', '2) We are going to do that.']
+    );
+
+    assert.deepEqual(
+      tokenizer('1. We are going to do this. 2. We are going to do that.'),
+      ['1. We are going to do this.', '2. We are going to do that.']
+    );
+
+    assert.deepEqual(
+      tokenizer('A) We are going to do this. B) We are going to do that.'),
+      ['A) We are going to do this.', 'B) We are going to do that.']
+    );
+
+    assert.deepEqual(
+      tokenizer('A. We are going to do this. B. We are going to do that.'),
+      ['A. We are going to do this.', 'B. We are going to do that.']
+    );
+  });
 });
