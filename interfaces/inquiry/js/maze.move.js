@@ -505,9 +505,9 @@
 
     el.find("[data-pdf]").each( function( i, e ){
     	var media = $(e);
-      media.pidif({
-        url: maze.urls.storage +'?url=' + media.attr('data-pdf')
-      });
+      // media.pidif({
+      //   url: maze.urls.storage +'?url=' + media.attr('data-pdf')
+      // });
     });
 
 

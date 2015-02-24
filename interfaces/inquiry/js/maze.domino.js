@@ -981,10 +981,12 @@
             ) {
               this.log('Trying to open a doc that is not loaded yet. Currently dealing with it...');
               services.push({
-                service: 'get_documents',
-                ids: [id]
+                service: 'get_documents_item',
+                shortcuts: {
+                  ids: 'doc_'+id
+                }
               });
-
+              
             // Else, we can update the stuff:
             } else if (
               (update.scene_action || this.get('scene_action')) === maze.ACTION_SET_COMM_LEADER &&
@@ -2002,7 +2004,7 @@
           error: maze.domino.errorHandler,
           success: function(data, params) {
             var p = params || {},
-                result = data.result,
+                result = maze.engine.parser.documents(data.result),
                 idsArray = [],
                 contents = {};
 
@@ -2079,13 +2081,16 @@
                 return d;
 
               d.references = []; // search for biblib references to prefetch     
-
+              var display_number = 0;
               for(var i in d.children)
-                for(var j in d.children[i].children)
+                for(var j in d.children[i].children) {
+                  display_number++;
+                  // increment dislpay_number
+                  d.children[i].children[j].display_number = +display_number;
                   if(d.children[i].children[j].type == 'reference'){
                     d.references.push(''+d.children[i].children[j].biblib_id);
                   }
-                    
+                }  
 
               // get the first slide as "document preview"
               d.preview = d.children.shift();
@@ -2141,7 +2146,9 @@
               o.children.filter(function(slide, i) {
                 var paragraphs_matches = slide.children.filter(function(paragraph, j) {
                   paragraph.display_number = j
-                  return !!~paragraph.text.indexOf(maze.domino.controller.get('scene_query'));
+                  if(paragraph.text)
+                    return !!~paragraph.text.indexOf(maze.domino.controller.get('scene_query'));
+                  return false
                 })
                 if(paragraphs_matches.length)
                   slides_matches.push({
@@ -2154,7 +2161,19 @@
                 
                 return paragraphs_matches.length
               });
-              o.slides_matches = slides_matches;
+
+              if(!slides_matches.length)
+                o.slides_matches = [
+                  {
+                    id: o.children[0].id,
+                    lang: o.children[0].lang,
+                    type: o.children[0].type,
+                    display_number: 1,
+                    children: o.children[0].children
+                  }
+                ]; // show first paragraph
+              else
+                o.slides_matches = slides_matches;
             
               idsArray.push(o.slug_id);
               contents[o.slug_id] = o;

@@ -112,8 +112,12 @@
                 </ul>
               </div>
             </div>
-
+            {{#if user.avatar}}T
             <img src='http://www.modesofexistence.org/inquiry/images/uploaded/{{basename user.avatar}}/36x36-{{user.avatar}}'/><!-- user image will be here -->
+            {{else}}
+            <i class="fa fa-user"></i>
+            {{/if}}
+
           </div>
           </a>
         </div>
