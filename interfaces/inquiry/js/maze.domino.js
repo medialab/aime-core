@@ -1843,6 +1843,7 @@
               }
 
               result.forEach(function(o) {
+                o = maze.engine.parser.vocabulary_item(o);
                 idsArray.push(o.slug_id);
                 contents[o.slug_id] = o;
               });
@@ -1919,6 +1920,7 @@
               }
 
               result.forEach(function(o) {
+                o = maze.engine.parser.vocabulary_item(o);
                 idsArray.push(o.slug_id);
                 contents[o.slug_id] = o;
               });

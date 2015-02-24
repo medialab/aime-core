@@ -26,6 +26,18 @@
 	}
 
 	/*
+		@return a enriched signle vocabulary item 
+	*/	
+	maze.engine.parser.vocabulary_item = function(item) {
+		var crossing = item.title.match(/^\[([A-Z]{2,3})(·([A-Z]{2,3}))?\]$/)
+    if(crossing) {
+      item.crossing = maze.settings.crossings_home + crossing[1] + (crossing[3]? '-' + crossing[3]: '');
+    	item.crossing = item.crossing.toLowerCase();
+    }
+    return item;
+	}
+
+	/*
 		@return a enriched collection of documents
 	*/	
 	maze.engine.parser.documents = function(items) {
