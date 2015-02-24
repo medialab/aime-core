@@ -189,7 +189,8 @@
             surname:  $('#signup-surname').val(),
             department: $('#signup-department').val() || '',
             discipline: $('#signup-discipline').val() || '',
-            institution: $('#signup-institution').val() || ''
+            institution: $('#signup-institution').val() || '',
+            interest: $('#signup-interest').val() || ''
           });
           dismiss();
         }
