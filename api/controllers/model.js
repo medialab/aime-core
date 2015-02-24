@@ -13,7 +13,7 @@ var book = require('../model/book.js'),
 // Forge
 function getAll(model) {
   return function(req, res) {
-    model.getAll(req.lang, function(err, result) {
+    model.getAll(req.lang, req.query, function(err, result) {
       if (err) return res.serverError(err);
 
       return res.ok(result);
