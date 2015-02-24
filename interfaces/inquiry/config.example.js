@@ -1,9 +1,10 @@
 var CONFIG = {
-  "debug": true,
   "base_url": "/",
-  "crossings_home": "/",
   "biblib_host": "",
   "biblib_corpus": "",
+  "crossings_home": "/",
   "crossings_modecrossids_host": "",
-  "endpoint": ""
-} 
+  "debug": true,
+  "endpoint": "",
+  "help_link": "http://www.modesofexistence.org/tuto-contribution/"
+};
