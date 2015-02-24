@@ -1,4 +1,4 @@
-<div class="document item {{#if_eq type compare="match"}}match{{/if_eq}} {{media.pdf}} {{media.video}} {{media.img}}" data-status="{{#if force_open}}force-open{{/if}}" id="doc-{{slug_id}}" data-cursor="0" data-size="{{slides_opened.length}}" data-int-id="{{slug_id}}" data-ref-ids="{{#each references}}{{this}} {{/each}}">
+<div class="document item {{#if slides_matches}}match{{/if}} {{media.pdf}} {{media.video}} {{media.img}}" data-status="{{#if force_open}}force-open{{/if}}" id="doc-{{slug_id}}" data-cursor="0" data-size="{{slides_opened.length}}" data-int-id="{{slug_id}}" data-ref-ids="{{#each references}}{{this}} {{/each}}">
   <div class="subtitle">
     <div class="table">
       <div class="text toggle-preview"><p>{{{decorate_lite title}}}</p></div>
