@@ -35,11 +35,13 @@
     "([.?!…]+)",
       "([" + QUOTES + "*_]?[*_]?)",
       "[\\s\\r\\n]+",
-    "(?=[" + QUOTES + SIMPLE_QUOTES + "]?[A-Z])"
+    "(?=[" + QUOTES + SIMPLE_QUOTES + "]?[A-Z0-9])"
   ].join(''), 'g');
 
   var QUOTE_REGEX = new RegExp('[' + QUOTES + ']', 'g'),
-      PAREN_REGEX = /[(){}\[\]]/g;
+      PAREN_REGEX = /[^0-9]\s*[(){}\[\]]/g,
+      LIST_REGEX = /^[A-Z0-9]\s?[.]\s*$/,
+      PITFALL_REGEX = /^[A-Za-z]\s*\)/;
 
   function tokenize(s, exceptions) {
     var initialTokens = s.replace(REGEX, '$1$2\x1E').split('\x1E'),
@@ -67,8 +69,10 @@
       // Searching for exceptions
       if (i !== l - 1 &&
           ((~c.search(new RegExp(exceptionsRegex))) ||
-           (((memo + c).match(QUOTE_REGEX) || []).length % 2 !== 0) ||
-           (((memo + c).match(PAREN_REGEX) || []).length % 2 !== 0))) {
+           (~c.search(LIST_REGEX)) ||
+           (!~c.search(PITFALL_REGEX)) &&
+           ((((memo + c).match(QUOTE_REGEX) || []).length % 2 !== 0) ||
+            (((memo + c).match(PAREN_REGEX) || []).length % 2 !== 0)))) {
         memo += c;
         continue;
       }
@@ -86,7 +90,7 @@
       var docs = d.match(/\{(doc_.*?)\}/)
       if(!docs)
         return d;
-      return '<span class="link doc" data-id="'+ docs.pop().replace('_', '-').replace(',',' ')+'">' + d + '</span>'; // .replace(/\{(doc_.*?)\}/,'')
+      return '<span class="link doc" data-id="'+ docs.pop().replace('_', '-').replace(',',' ')+'">' + d.replace(/\{doc_.*?\}/g,'') + '</span>'; // .replace(/\{(doc_.*?)\}/,'')
     })
     
 
