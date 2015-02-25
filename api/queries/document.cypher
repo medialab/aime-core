@@ -33,7 +33,7 @@ RETURN {
   },
   children: collect(slides)
 } AS item
-ORDER BY item.document.properties.title ASC
+ORDER BY item.document.properties.date DESC, item.document.properties.title ASC
 SKIP {offset}
 LIMIT {limit}
 
@@ -112,3 +112,4 @@ RETURN {
   },
   children: collect(slides)
 } AS item
+ORDER BY item.document.properties.title ASC;

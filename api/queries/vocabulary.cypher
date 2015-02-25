@@ -86,4 +86,5 @@ RETURN {
     cited_by: bpids
   },
   children: collect(paragraphs)
-};
+} AS item
+ORDER BY item.vocabulary.properties.title ASC;
