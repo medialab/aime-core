@@ -69,7 +69,7 @@ RETURN {
 // name: search
 // Search for a precise string in a LIKE manner across vocabulary items
 MATCH (v:Vocabulary)-[r:HAS]-(p:Paragraph)
-WHERE v.title =~ {query} OR p.text =~ {query} AND v.lang = {lang}
+WHERE (v.title =~ {query} OR p.text =~ {query}) AND v.lang = {lang}
 OPTIONAL MATCH (v)-[:CITES]-(bp:Paragraph)<-[:HAS]-(:Subheading)
 
 WITH v, r, {
@@ -86,4 +86,5 @@ RETURN {
     cited_by: bpids
   },
   children: collect(paragraphs)
-};
+} AS item
+ORDER BY item.vocabulary.properties.title ASC;
