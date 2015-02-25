@@ -40,9 +40,9 @@
   ].join(''), 'g');
 
   var QUOTE_REGEX = new RegExp('[' + QUOTES + ']', 'g'),
-      PAREN_REGEX = /[^0-9]\s*[(){}\[\]]/g,
+      PAREN_REGEX = /[(){}\[\]]/g,
       LIST_REGEX = /^[A-Z0-9]\s?[.]\s*$/,
-      PITFALL_REGEX = /^[A-Za-z]\s*\)/;
+      PITFALL_REGEX = /^[A-Za-z0-9]\s*\)/;
 
   function tokenize(s, exceptions) {
     var initialTokens = s.replace(REGEX, '$1$2\x1E').split('\x1E'),
@@ -74,7 +74,7 @@
            (!~c.search(PITFALL_REGEX)) &&
            ((((memo + c).match(QUOTE_REGEX) || []).length % 2 !== 0) ||
             (((memo + c).match(PAREN_REGEX) || []).length % 2 !== 0)))) {
-        memo += c;
+        memo += (memo ? ' ' : '') + c;
         continue;
       }
 
@@ -94,7 +94,7 @@
       
       return '<span class="link doc" data-id="'+ docs.pop().replace(/_/g, '-').replace(',',' ')+'">' + d + '</span>'; // .replace(/\{doc_.*?\}/g,'')
     })
-    
+
 
     //console.log('sentence', sentences)
     return marked(sentences.join(' '), {
