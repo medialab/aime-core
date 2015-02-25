@@ -40,27 +40,63 @@
 	/*
 		@return a enriched collection of documents
 	*/	
-	maze.engine.parser.documents = function(items) {
+	maze.engine.parser.documents = function(items, options) {
+		var options = options || {};
 		return items.map(function(d) {
       if(!d.children.length)
         return d;
 
-      d.references = []; // search for biblib references to prefetch     
-      var display_number = 0;
-      for(var i in d.children)
-        for(var j in d.children[i].children) {
+      d.references = []; // search for biblib references to prefetch  
+      var display_number = 0,
+      		slides_matches = []; // only if options.query is set
+
+      for(var i in d.children) { // each slide
+      	var paragraphs_matches = []; // only paragraph matching here
+
+        for(var j in d.children[i].children) { // each paragraph
           display_number++; // increment display_number
           d.children[i].children[j].display_number = +display_number;
+
+          if(options.query && d.children[i].children[j].text && !!~d.children[i].children[j].text.indexOf(options.query)) {
+          	paragraphs_matches.push(d.children[i].children[j]);
+          }
+
           if(d.children[i].children[j].type == 'reference'){
             d.references.push(''+d.children[i].children[j].biblib_id);
           } else if(d.children[i].children[j].reference) { // take reference attached to a media object
             d.references.push(''+d.children[i].children[j].reference.biblib_id);
           }
-        }  
+        }
+
+        if(options.query && paragraphs_matches.length) {
+        	slides_matches.push({
+        		id: d.children[i].id,
+            lang: d.children[i].lang,
+            type: d.children[i].type,
+            display_number: i,
+            children: paragraphs_matches
+          });
+        }
+      }
+
+      if(options.query) {
+    		if(!slides_matches.length) { // since query was find in document title, just show the very first slide
+          d.slides_matches = [
+            {
+              id: d.children[0].id,
+              lang: d.children[0].lang,
+              type: d.children[0].type,
+              display_number: 1,
+              children: d.children[0].children.slice(0, 1) // export the first paragraph only
+            }
+          ]; 
+        } else { // export slides_matches for each object
+        	d.slides_matches = slides_matches;
+        }
+      }
 
       // get the first slide as "document preview"
       d.preview = d.children.shift();
-
       return d;
     });
 	}

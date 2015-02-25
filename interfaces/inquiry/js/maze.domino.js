@@ -2130,7 +2130,9 @@
           error: maze.domino.errorHandler,
           success: function(data, params) {
             var p = params || {},
-                result = data.result,
+                result = maze.engine.parser.documents(data.result, {
+                  query: this.get('scene_query')
+                }),
                 idsArray = [],
                 contents = {};
 
@@ -2142,40 +2144,6 @@
             result.forEach(function(o) {
               if(!o || !o.slug_id)
                 return;
-
-              var slides_matches = [];
-              
-              o.children.filter(function(slide, i) {
-                var paragraphs_matches = slide.children.filter(function(paragraph, j) {
-                  paragraph.display_number = j
-                  if(paragraph.text)
-                    return !!~paragraph.text.indexOf(maze.domino.controller.get('scene_query'));
-                  return false
-                })
-                if(paragraphs_matches.length)
-                  slides_matches.push({
-                    id: slide.id,
-                    lang: slide.lang,
-                    type: slide.type,
-                    display_number: i,
-                    children: paragraphs_matches
-                  });
-                
-                return paragraphs_matches.length
-              });
-
-              if(!slides_matches.length)
-                o.slides_matches = [
-                  {
-                    id: o.children[0].id,
-                    lang: o.children[0].lang,
-                    type: o.children[0].type,
-                    display_number: 1,
-                    children: o.children[0].children
-                  }
-                ]; // show first paragraph
-              else
-                o.slides_matches = slides_matches;
             
               idsArray.push(o.slug_id);
               contents[o.slug_id] = o;
