@@ -34,23 +34,27 @@
 
           {{#if_eq type compare='media'}}
             {{#if_eq kind compare='quote'}}
-              <span class="number">- {{display_number}} -</span>
-              <div class="citation"><div class="content">{{{text}}}</div></div>
+            <span class="number">- {{display_number}} -</span>
+            <div class="citation"><div class="content">{{{text}}}</div></div>
             {{/if_eq}}
+
             {{#if_eq kind compare='html'}}
-              <span class="number">- {{display_number}} -</span>
-              <div class="citation">
-                <div class="content">{{{html}}}</div>
-              </div>
+            <span class="number">- {{display_number}} -</span>
+            <div class="citation">
+              <div class="content">{{{html}}}</div>
+            </div>
             {{/if_eq}}
+
             {{#if_eq kind compare='pdf'}}
-              <!-- PDF media -->
-              <span class="number unselectable">- {{display_number}} -</span>
-              <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}"></div>
-
-              
-
+            <span class="number unselectable">- {{display_number}} -</span>
+            <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}"></div>
             {{/if_eq}}
+
+            {{#if_eq kind compare='video'}}
+            <span class="number unselectable">- {{display_number}} -</span>
+            <div class="media video unselectable" id="video-{{display_number}}" data-video="{{iframe}}"></div>
+            {{/if_eq}}
+
             {{#if_eq kind compare='image'}}
             <span class="number unselectable">- {{display_number}} -</span>
             <div class="media unselectable">
@@ -59,9 +63,9 @@
             {{/if_eq}}
 
             {{#if reference}}
-              <div class="ref unselectable" data-id="{{reference.biblib_id}}">
-                <div class="content unselectable" data-ref="ref-{{reference.biblib_id}}">{{text}}</div>
-              </div>
+            <div class="ref unselectable" data-id="{{reference.biblib_id}}">
+              <div class="content unselectable" data-ref="ref-{{reference.biblib_id}}">{{text}}</div>
+            </div>
             {{/if}}
           {{/if_eq}}
         </div>
@@ -82,41 +86,50 @@
                 <span class="number">- {{display_number}} -</span>
                 <div class="text content">{{{decorate markdown}}}</div>
               {{/if_eq}}
-              {{#if_eq type compare='media'}}
-                {{#if_eq kind compare='quote'}}
-                  <span class="number">- {{display_number}} -</span>
-                  <div class="citation"><div class="content">{{{text}}}</div>
-                  </div>
-                {{/if_eq}}
-                {{#if_eq kind compare='html'}}
-                  <span class="number">- {{display_number}} -</span>
-                  <div class="citation">
-                    <div class="content">{{{html}}}</div>
-                  </div>
-                {{/if_eq}}
+
+              {{#if_eq type compare='reference'}}
+                <span class="number unselectable">- {{display_number}} -</span>
+                <div class="ref unselectable" data-id="{{biblib_id}}"><div class="content unselectable" data-ref="ref-{{biblib_id}}"></div></div>
               {{/if_eq}}
 
-              {{#if citation}}
-                <span class="number">- {{citation.number}} -</span>
-                <div class="citation"><div class="content">{{#if citation.content.slices.length }}{{{parse citation.content.slices}}}{{else}}{{{decorate citation.content.content}}}{{/if}}</div></div>
-              {{/if}}
-              {{#if reference}}
-                <span class="number">- {{reference.number}} -</span>
-                <div class="ref" data-id="{{reference.content}}"><div class="content" data-ref="ref-{{reference.content}}"></div></div>
-              {{/if}}
-              {{#if image}}
-                <span class="number ">- {{image.number}} -</span>
-                <div class="media "><div><img class="image" data-height="{{image.height}}" data-width="{{image.width}}" data-src="{{image.content}}" /></div></div>
-              {{/if}}
-              {{#if vimeo}}
-                <span class="number ">- {{vimeo.number}} -</span>
-                <div class="media "><div><iframe class="vimeo" data-src="http://player.vimeo.com/video/{{vimeo.content}}?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div></div>
-              {{/if}}
-              {{#if issuu}}
-                <span class="number ">- {{issuu.number}} -</span>
-                <div class="media pdf " id="pdf-{{issuu.number}}" data-pdf="{{storage_url issuu.content}}"></div>
-                <!-- div class="media"><div><iframe class="issuuembed" data-src="//e.issuu.com/embed.html#{{issuu.content}}" frameborder="0" allowfullscreen></iframe></div></div -->
-              {{/if}}
+
+              {{#if_eq type compare='media'}}
+
+                {{#if_eq kind compare='quote'}}
+                <span class="number">- {{display_number}} -</span>
+                <div class="citation"><div class="content">{{{text}}}</div></div>
+                {{/if_eq}}
+
+                {{#if_eq kind compare='html'}}
+                <span class="number">- {{display_number}} -</span>
+                <div class="citation">
+                  <div class="content">{{{html}}}</div>
+                </div>
+                {{/if_eq}}
+
+                {{#if_eq kind compare='pdf'}}
+                <span class="number unselectable">- {{display_number}} -</span>
+                <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}"></div>
+                {{/if_eq}}
+
+                {{#if_eq kind compare='video'}}
+                <span class="number unselectable">- {{display_number}} -</span>
+                <div class="media video unselectable" id="video-{{display_number}}" data-video="{{iframe}}"></div>
+                {{/if_eq}}
+
+                {{#if_eq kind compare='image'}}
+                <span class="number unselectable">- {{display_number}} -</span>
+                <div class="media unselectable">
+                  <div><img class="image" data-src="http://www.modesofexistence.org/inquiry/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
+                </div>
+                {{/if_eq}}
+
+                {{#if reference}}
+                <div class="ref unselectable" data-id="{{reference.biblib_id}}">
+                  <div class="content unselectable" data-ref="ref-{{reference.biblib_id}}">{{reference.text}}</div>
+                </div>
+                {{/if}}
+              {{/if_eq}}
             </div>
           {{/each}}
         </div>
@@ -174,6 +187,11 @@
                 {{#if_eq kind compare='pdf'}}
                 <span class="number unselectable">- {{display_number}} -</span>
                 <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}"></div>
+                {{/if_eq}}
+
+                {{#if_eq kind compare='video'}}
+                <span class="number unselectable">- {{display_number}} -</span>
+                <div class="media video unselectable" id="video-{{display_number}}" data-video="{{iframe}}"></div>
                 {{/if_eq}}
 
                 {{#if_eq kind compare='image'}}

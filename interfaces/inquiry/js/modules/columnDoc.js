@@ -68,9 +68,9 @@
           contents = controller.get('data_docContents');
       _self.box.highlight(query);
       
-      _self.box.find('.highlight').each(function(d, i) {
-        $(this).closest('.paragraph').addClass('match');
-      })
+      //_self.box.find('.highlight').each(function(d, i) {
+      //  $(this).closest('.paragraph').addClass('match');
+      //})
 
       // Add the matching paragraph to the slides_matches property for each matching document
       // cfr slides_matches ...

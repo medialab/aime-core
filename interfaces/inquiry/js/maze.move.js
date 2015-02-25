@@ -512,7 +512,7 @@
     
     el.find("[data-video]").each( function( i, e ){
     	var media = $(e);
-    	media.empty().html(media.attr('data-video'))
+    	media.empty().html('<div>' + media.attr('data-video') + '</div>')
     });
 
 
