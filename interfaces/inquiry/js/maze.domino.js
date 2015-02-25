@@ -24,7 +24,7 @@
         maze.domino.controller.update('authorization', maze.AUTHORIZATION_FAILED);
         break;
       default:
-        maze.toast('connection error', {sticky:true, cleanup:true}); 
+        maze.toast('connection error', {sticky:true, cleanup:true});
         break;
     }
   }
@@ -40,7 +40,7 @@
 
     return data;
   };
-  
+
 
   maze.domino.factory = function(fn){
     return function(options) {
@@ -574,12 +574,12 @@
           description: 'call session service to get the current user if any and the current language',
           method: function() { //check location search. IS IT THE LAST HANDLER?
             var activation = maze.domino.parseQueryString(location.search.split('?').pop());
-            
+
             if(activation.token && activation.activate)
               maze.domino.controller.dispatchEvent('user__activate', activation);
             else
               maze.domino.controller.dispatchEvent(['resize', 'scene__initialize']);
-            
+
           }
         },
         /**
@@ -607,7 +607,7 @@
           description: 'change language at session level',
           method: function(e) {
             console.log('change language', this.get('lang'), e.data);
-            
+
             if(this.get('lang') != e.data.lang) {
               this.request('lang',{
                 shortcuts: {
@@ -899,7 +899,7 @@
           triggers: 'scene__initialize',
           description: 'load the very book and the corossings, then allow people to discover aime paltform...',
           method: function(e) {
-            
+
             var services = [
               {
                 service: 'get_crossings'
@@ -986,7 +986,7 @@
                   ids: 'doc_'+id
                 }
               });
-              
+
             // Else, we can update the stuff:
             } else if (
               (update.scene_action || this.get('scene_action')) === maze.ACTION_SET_COMM_LEADER &&
@@ -1633,7 +1633,7 @@
         var d = domino.instances('maze');
         d.request('service_name',{offset:10, limit:20, query:'query search'})
 
-        or 
+        or
 
         maze.domino.controller.request('login', {data: {email: '***@**.**', password: '******'}})
       */
@@ -1776,7 +1776,7 @@
                 idsArray = [],
                 contents = {};
 
-              
+
             //data.result.chapters.shift();
 
             if (+p.offset > 0) {
@@ -1817,7 +1817,7 @@
                     maze.domino.controller.log( 'no results found' );
                   }
               // maze.domino.controller.dispatchEvent('unlock scrolling_text sticky_show');
-            }, 100);  
+            }, 100);
 
           }
         },
@@ -1888,7 +1888,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  
+
                 };
 
             if (p.ids)
@@ -1907,7 +1907,7 @@
 
           },
           success: function(data, params) {
-            
+
             var p = params || {},
                 result = data.result,//maze.engine.parser.vocabulary(data, this.get('data_crossings')),
                 idsArray = [],
@@ -1961,7 +1961,7 @@
                 result = data.result,
                 idsArray = [],
                 contents = {};
-            
+
               if (+p.offset > 0) {
                 idsArray = this.get('data_vocIdsArray');
                 contents = this.get('data_vocContents');
@@ -2041,7 +2041,7 @@
           before: function(params, xhr) {
             xhr.withCredentials = true;
             // INFINIT SCROLLING needed
-            
+
             // var p = params || {};
 
             // if (+p.offset > this.get('data_docIdsArray').length + 1)
@@ -2082,7 +2082,7 @@
               if(!d.children.length)
                 return d;
 
-              d.references = []; // search for biblib references to prefetch     
+              d.references = []; // search for biblib references to prefetch
               var display_number = 0;
               for(var i in d.children)
                 for(var j in d.children[i].children) {
@@ -2092,7 +2092,7 @@
                   if(d.children[i].children[j].type == 'reference'){
                     d.references.push(''+d.children[i].children[j].biblib_id);
                   }
-                }  
+                }
 
               // get the first slide as "document preview"
               d.preview = d.children.shift();
@@ -2144,7 +2144,7 @@
             result.forEach(function(o) {
               if(!o || !o.slug_id)
                 return;
-            
+
               idsArray.push(o.slug_id);
               contents[o.slug_id] = o;
             });
@@ -2173,7 +2173,7 @@
         //   data: function(params) {
         //     var p = params || {},
         //         data = {
-                  
+
         //         };
 
         //     if (p.id)
@@ -2250,7 +2250,7 @@
         //           action: 'add-bookmark',
         //           ref_id: selection.id.replace(/[^\d]/g,''),
         //           ref_content: Base64.encode(selection.content),
-                  
+
         //         };
 
         //     if( selection.column == maze.TEXT )
@@ -2382,7 +2382,7 @@
         //         id = p.id ||
         //           this.die('"undefined" contribution id'),
         //         data = {
-                  
+
         //           action: 'edit-objection',
         //           objection: Base64.encode(p.objection),
         //           content: Base64.encode(p.content),
@@ -2440,7 +2440,7 @@
         //     var data = {
         //           action:'remove',
         //           id: params.id,
-                  
+
         //         };
 
         //     if (!('id' in params))
@@ -2624,7 +2624,7 @@
         //     var p = params || {},
         //         data = {
         //           action: 'publish',
-                  
+
         //           id: p.id || this.die('missing parameter "id"')
         //         };
 
@@ -2652,7 +2652,7 @@
         //     var p = params || {},
         //         data = {
         //           action: 'unpublish',
-                  
+
         //           id: p.id || this.die('missing parameter "id"')
         //         };
 
@@ -2680,7 +2680,7 @@
         //     var p = params || {},
         //         data = {
         //           action: 'makepublic',
-                  
+
         //           id: p.id || this.die('missing parameter "id"')
         //         };
 
@@ -2708,7 +2708,7 @@
         //     var p = params || {},
         //         data = {
         //           action: 'makemoderated',
-                  
+
         //           id: p.id || this.die('missing parameter "id"')
         //         };
 
@@ -2736,7 +2736,7 @@
         //     var p = params || {},
         //         data = {
         //           action: 'add-slide',
-                  
+
         //           id: p.id || this.die('missing parameter "id"')
         //         };
 
@@ -2769,7 +2769,7 @@
 
         //     var data = {
         //       action: 'edit-slide',
-              
+
         //       id: p.id || this.die('missing parameter "id"'),
         //       content: Base64.encode(p.content || ""), //this.die('missing parameter "content"')),
         //       ref_url: p.ref_url || "",
@@ -2806,7 +2806,7 @@
         //     var p = params || {},
         //         data = {
         //           action: 'remove-slide',
-                  
+
         //           id: p.id || this.die('missing parameter "id"')
         //         };
 
@@ -2834,7 +2834,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  
+
                 };
 
             return data;
@@ -2851,7 +2851,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  
+
                 };
 
             return data;
@@ -2894,7 +2894,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  
+
                 };
 
             return data;
@@ -2938,7 +2938,7 @@
             var p = params || {},
               // here we will ask to only get 'notebook' contribs, aka those bookmarked
                 data = {
-                  
+
                 };
 
             return data;
@@ -2980,7 +2980,7 @@
           data: function(params) {
             var p = params || {},
                 data = {
-                  
+
                   lang: maze.i18n.lang
                 };
 
@@ -3018,8 +3018,7 @@
     maze.domino.controller.addModule( maze.domino.modules.Scroll, null, {id:'scroll'});
     maze.domino.controller.addModule( maze.domino.modules.Search, null, {id:'search'});
     maze.domino.controller.addModule( maze.domino.modules.Page, null, {id:'page'});
-    maze.domino.controller.addModule( maze.domino.modules.Rangy,null, {id:'rangy'});
-    
+
     maze.domino.controller.addModule( maze.domino.modules.Slider,null, {id:'slider'});
 
     maze.domino.controller.addModule( maze.domino.modules.Editor,null, {id:'editor'});
@@ -3038,7 +3037,7 @@
     maze.domino.controller.dispatchEvent('session__initialize');
 
 
-   
+
 
   };
 

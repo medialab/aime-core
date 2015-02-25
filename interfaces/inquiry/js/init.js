@@ -3,7 +3,7 @@ $(document).ready(function() {
 
   // load settings from var
   maze.settings = CONFIG;
-  
+
   // maze urls
   maze.urls = {
     session: '/session',
@@ -29,24 +29,24 @@ $(document).ready(function() {
     infinite_comments: 'documentItems/items',
 
     list_documents: 'documentItems/items',
-    
+
     fetch_documents: 'documentItems/items',
     infinite_documents: 'documentItems/items',
     save_document: 'documentItems/items',
 
     list_vocabulary: 'vocabItems/items',
-    
+
     fetch_vocabulary: 'vocabItems/items',
     //search_vocabulary: 'vocabItems/items',
     infinite_vocabulary: 'vocabItems/items',
     save_vocabulary: 'vocabItems/items',
 
-    
+
     // search_book: 'bookItems/items',
     fetch_book: 'bookItems/items',
     save_book: 'bookItems/items',
 
-    
+
     get_notes_book: 'bookItems/bookmarks',
     get_notes_vocabulary: 'vocabItems/bookmarks',
     get_notes_documents: 'documentItems/bookmarks',
@@ -57,13 +57,13 @@ $(document).ready(function() {
 
     storage: '/storage'
   };
-  
-  // enrich maze.urls 
+
+  // enrich maze.urls
   for(i in maze.urls){
     maze.urls[i] = maze.settings.endpoint + maze.urls[i];
   };
 
-  
+
 
   maze.init = function(){
 
@@ -78,7 +78,7 @@ $(document).ready(function() {
     maze.verbose = maze.settings.debug || true;
     domino.settings('verbose', true);
 
-    
+
 
     $("#terms-popup").appendTo("body");
     $("#legal-popup").appendTo("body");
@@ -98,7 +98,7 @@ $(document).ready(function() {
     maze.today = "'.$current_date.'";
     maze.role = '.$role.';
     maze.reference_corpus = "'.Yii::app()->params["biblib_corpus"].'";
-    
+
     */
 
     // update maze.urls
@@ -111,15 +111,14 @@ $(document).ready(function() {
     maze.columns.doc = maze.columns[ maze.DOC ] = $('#column-doc .box');
     maze.columns.com = maze.columns[ maze.COMM ] = maze.columns.comm = maze.columns.contr = $('#column-comm .box');
 
-    maze.rangy.init();
     maze.domino.init();
 
-    
+
   };
 
 
 
   maze.init();
-  
-  
+
+
 });
