@@ -79,6 +79,17 @@ describe('Tokenizer', function() {
         'To adopt a horse.'
       ]
     );
+
+    assert.deepEqual(
+      tokenizer('No, what interests our investigator about Church history is that in it the continual fluctuations in the very relation between these two questions—which she has still not managed to bring together—can be clearly seen. The multiple gaps between network, value, domain, and institution are not only her problem, as an uninformed observer, but the problem that her informants themselves confront constantly, explicitly, consciously. Whether it is a question of St. Paul’s “invention” of Christianity, St. Francis’s monastic renewal, Luther’s Reform (I almost said St. Luther), each case features the relation between an aging, impotent institution and the necessary renewal that allows that institution to remain fundamentally faithful to its origins while undergoing huge transformations. And each case calls for judgment; in each case, the researcher has to make a fresh start, cast the fruitfulness of the renewal into doubt, go back to the beginning, reconsider and redistribute all the elements that had been renewed . . . Or else.'),
+      [
+        'No, what interests our investigator about Church history is that in it the continual fluctuations in the very relation between these two questions—which she has still not managed to bring together—can be clearly seen.',
+        'The multiple gaps between network, value, domain, and institution are not only her problem, as an uninformed observer, but the problem that her informants themselves confront constantly, explicitly, consciously.',
+        'Whether it is a question of St. Paul’s “invention” of Christianity, St. Francis’s monastic renewal, Luther’s Reform (I almost said St. Luther), each case features the relation between an aging, impotent institution and the necessary renewal that allows that institution to remain fundamentally faithful to its origins while undergoing huge transformations.',
+        'And each case calls for judgment; in each case, the researcher has to make a fresh start, cast the fruitfulness of the renewal into doubt, go back to the beginning, reconsider and redistribute all the elements that had been renewed . . .',
+        'Or else.'
+      ]
+    );
   });
 
   it('should handle proclitics.', function() {
@@ -116,6 +127,21 @@ describe('Tokenizer', function() {
     assert.deepEqual(
       tokenizer('Hello (First item. Second item). So?'),
       ['Hello (First item. Second item).', 'So?']
+    );
+
+    assert.deepEqual(
+      tokenizer('Hello {First item. Second item}. So?'),
+      ['Hello {First item. Second item}.', 'So?']
+    );
+
+    assert.deepEqual(
+      tokenizer('Hello my liege (doc_45). What about you?'),
+      ['Hello my liege (doc_45).', 'What about you?']
+    );
+
+    assert.deepEqual(
+      tokenizer('Hello my liege {doc_45}. What about you?'),
+      ['Hello my liege {doc_45}.', 'What about you?']
     );
   });
 
