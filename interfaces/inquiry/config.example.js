@@ -5,6 +5,7 @@ var CONFIG = {
   "crossings_home": "/",
   "crossings_modecrossids_host": "",
   "debug": true,
+  "storage_url": "/storage?url=",
   "endpoint": "",
-  "help_link": "http://www.modesofexistence.org/tuto-contribution/"
+  "help_link": "/help"
 };

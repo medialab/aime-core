@@ -46,7 +46,7 @@
             {{#if_eq kind compare='pdf'}}
               <!-- PDF media -->
               <span class="number unselectable">- {{display_number}} -</span>
-              <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{title}}"></div>
+              <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}"></div>
 
               
 
@@ -114,7 +114,7 @@
               {{/if}}
               {{#if issuu}}
                 <span class="number ">- {{issuu.number}} -</span>
-                <div class="media pdf " id="pdf-{{issuu.number}}" data-pdf="{{issuu.content}}"></div>
+                <div class="media pdf " id="pdf-{{issuu.number}}" data-pdf="{{storage_url issuu.content}}"></div>
                 <!-- div class="media"><div><iframe class="issuuembed" data-src="//e.issuu.com/embed.html#{{issuu.content}}" frameborder="0" allowfullscreen></iframe></div></div -->
               {{/if}}
             </div>
@@ -174,7 +174,7 @@
                 {{#if_eq kind compare='pdf'}}
                 <!-- PDF media -->
                 <span class="number unselectable">- {{display_number}} -</span>
-                <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{title}}">pdf</div>
+                <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}">pdf</div>
 
                 {{/if_eq}}
                 {{#if_eq kind compare='image'}}
@@ -223,7 +223,7 @@
                 {{/if}}
                 {{#if issuu}}
                   <span class="number unselectable">- {{issuu.number}} -</span>
-                  <div class="media pdf unselectable" id="pdf-{{issuu.number}}" data-pdf="{{issuu.content}}"></div>
+                  <div class="media pdf unselectable" id="pdf-{{issuu.number}}" data-pdf="{{storage_url issuu.content}}"></div>
                   <!-- div class="media"><div><iframe class="issuuembed" data-src="//e.issuu.com/embed.html#{{issuu.content}}" frameborder="0" allowfullscreen></iframe></div></div -->
                 {{/if}}
                 {{#if reference}}

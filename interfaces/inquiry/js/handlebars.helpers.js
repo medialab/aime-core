@@ -14,6 +14,9 @@
       return text.split('.').shift()
     });
 
+    Handlebars.registerHelper('storage_url', function(url) {
+      return maze.settings.storage_url + url;
+    })
 
     Handlebars.registerHelper('slides_navigation', function( length ) {
       return (length > 1) ? 'block' : 'none';
