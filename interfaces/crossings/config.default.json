@@ -1,11 +1,11 @@
 {
   "settings": {
     "dev": {
-      "domain":"http://aime.medialab.sciences-po.fr",
-      "inquiryUrl":"http://aime.medialab.sciences-po.fr/inquiry_dev",
-      "crossingsUrl":"http://aime.medialab.sciences-po.fr/crossings_dev/dist",
-      "apiUrl":"http://aime.medialab.sciences-po.fr/crossings_dev_server",
-      "pdfUrl":"http://aime.medialab.sciences-po.fr/crossings_dev/dist/Viewer.js/#../../../../inquiry_dev/storage?url=",
+      "domain":"http://localhost:5000",
+      "inquiryUrl":"http://localhost:8000",
+      "crossingsUrl":"http://localhost:5000/dist",
+      "apiUrl":"http://localhost:7000",
+      "pdfUrl":"http://localhost:5000/dist/Viewer.js/#../../../../inquiry_dev/storage?url=",
       "adminIfFreeForAll": true
     },
     "prod": {

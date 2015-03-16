@@ -9,7 +9,7 @@ angular.module('myApp.services', [])
 	.value('version', '0.1')
 
 	.factory('Api', ["$http","settings","$window","$location", function($http,settings,$window,$location) {
-		
+
 		var b = settings.apiUrl;
 
 		return {
@@ -17,7 +17,7 @@ angular.module('myApp.services', [])
 			fetchConfig: function(params,callback) {
 				$http({
 					method: 	'GET',
-					url: 		b+"/api/config",
+					url: 		b+"/crossings/config",
 					params: 	params,
 				}).then(function(data){
 					if(data.data.blocked) {
@@ -26,9 +26,7 @@ angular.module('myApp.services', [])
 						$window.location.href = params.redirectUrl;
 
 					} else {
-
-						callback(data);
-						
+						callback({data: data.data.result});
 					}
 				});
 			},
@@ -36,24 +34,24 @@ angular.module('myApp.services', [])
 			fetchTilesAhead: function(params,callback) {
 				$http({
 					method: 	'GET',
-					url: 			b+"/api/tiles",
+					url: 			b+"/crossings/tiles",
 					params: 	params,
-				}).then(function(data){ callback(data) });
+				}).then(function(data){ callback(data.result) });
 			},
 
 			addRelated: function(params,callback) {
 				$http({
 					method: 	'GET',
-					url: 			b+"/api/addrelated",
+					url: 			b+"/crossings/addrelated",
 					params: 	params,
-				}).then(function(data){ callback(data) });
+				}).then(function(data){ callback(data.result) });
 			},
 
 			fetchRelated: function(params,callback) {
 				var ismodecross = ["book","voc","doc","cont"].indexOf(params.modecross.toLowerCase())==-1;
-				var url = ismodecross ? b+"/api/related/"+params.modecross : b+"/api/elements/"+params.modecross;
+				var url = ismodecross ? b+"/crossings/related/"+params.modecross : b+"/crossings/elements/"+params.modecross;
 				if(/^search/.test(params.modecross.toLowerCase())) {
-					url = b+"/api/search";
+					url = b+"/crossings/search";
 					params = {
 						q: 			params.modecross.split("#")[1],
 						lang: 		params.lang
@@ -63,28 +61,28 @@ angular.module('myApp.services', [])
 					method: 	'GET',
 					url: 		url,
 					params: 	params,
-				}).then(function(data){ callback(data); });
+				}).then(function(data){ callback(data.result); });
 			},
 
 			scenarUpdate: function(params,callback) {
 				$http({
 					method: 	'GET',
-					url: 		b+"/api/scenar/update",
+					url: 		b+"/crossings/scenar/update",
 					params: 	params,
-				}).then(function(data){ callback(data); });
+				}).then(function(data){ callback(data.result); });
 			},
 
 			elementUpdate: function(params,callback) {
 				$http
-					.post(b+"/api/element/update", params)
-					.then(function(data){ callback(data); });
+					.post(b+"/crossings/element/update", params)
+					.then(function(data){ callback(data.result); });
 			},
 
 			// following is kept in case (nb: everything is well plugged server side)
 			/*authTest: function(callback) {
 				$http({
 					method: 'GET',
-					url: 	b+"/api/testlogin",
+					url: 	b+"/crossings/testlogin",
 				}).then(function(data){ callback(data); });
 			},
 
@@ -145,7 +143,7 @@ angular.module('myApp.services', [])
 
 						'#description':'left = A short introduction describes the current selected mode or crossing at a glance',
 						'#questions':"left = Four answers from the inquiry's questionnaire",
-						
+
 						'#mosaiccontainer':"right = The <i>tiles</i> are elements fetched from the inquiry whenever they:"+
 								//"<ul><li>contributions</li><li>documents</li><li>vocabulary entries</li><li>book subheads</li></ul>"+
 								"<ul><li>contain a "+mce+" in their title or full text</li>"+
@@ -155,7 +153,7 @@ angular.module('myApp.services', [])
 								'<ul><li>latest contributions</li>'+
 								'<li>vocabulary & documents (alphabetically)</li>'+
 								'<li>book chapters</li></ul>',
-						
+
 						'#tutoscenar_0':"left = For each mode or crossing, you may also find additional scenarios (selected one appears in red). "+
 								"Tiles are filtered & ordered based on the current selected scenario.",
 
@@ -190,7 +188,7 @@ angular.module('myApp.services', [])
 
 						'#tutoscenar_0':"left = Certains modes/croisements sont accompagnés d'une liste de scénarisations (celle qui est selectionné apparaît en rouge). "+
 								"Elles correspondent à un filtrage et ordonnancement particulier permettant d'aborder le mode/croisement d'un angle nouveau",
-						
+
 						'.tutomosaic_0':'bottom = Cliquez sur une tesselle pour la consulter en plein écran',
 						'#menutoggle':"left = Cliquez ici pour changer de langue et accéder aux différents liens du projet. En particulier:"+
 								"<ul><li><i>LIVRE</i>: pour consulter la plateforme de l'enquête permettant de contribuer</li>"+

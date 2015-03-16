@@ -8,3 +8,4 @@ var app = require('../api/app.js'),
     biblib = require('../api/model/biblib.js');
 
 app.listen(7000);
+console.log('Server online...');

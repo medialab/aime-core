@@ -1,28 +1,64 @@
 {
-  "name": "aimecrossings",
-  "description": "AIME Project",
+  "name": "aime-crossings-interface",
+  "version": "1.0.0",
+  "description": "The alternative AIME project user interface.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/medialab/aime-core"
+  },
+  "scripts": {
+    "start": "grunt dev && http-server ./app -p 5000"
+  },
+  "contributors": [
+    {
+      "name": "Paul Girard",
+      "url": "https://github.com/paulgirard"
+    },
+    {
+      "name": "Daniele Guido",
+      "url": "https://github.com/danieleguido"
+    },
+    {
+      "name": "Alexis Jacomy",
+      "url": "https://github.com/jacomyal"
+    },
+    {
+      "name": "Pierre Jullian de la Fuente",
+      "url": "https://github.com/pierrejdlf"
+    },
+    {
+      "name": "Guillaume Plique",
+      "url": "https://github.com/Yomguithereal"
+    }
+  ],
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/medialab/aime-core/issues"
+  },
+  "homepage": "https://github.com/medialab/aime-core",
   "devDependencies": {
-    "phantomjs": "~1.9",
-    "karma": "~0.10",
-    "karma-junit-reporter": "~0.1",
-    "karma-jasmine": "~0.1",
-    "karma-ng-scenario": "~0.1",
     "grunt": "~0.4.1",
-    "grunt-recess": "~0.3.0",
-    "grunt-env": "~0.4.0",
-    "grunt-preprocess": "~4.0.0",
-    "grunt-lib-contrib": "~0.6.1",
     "grunt-contrib-clean": "~0.4.1",
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-less": "~0.9.0",
-    "grunt-contrib-jshint": "~0.4.3",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-watch": "~0.4.0",
-    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-contrib-less": "~0.9.0",
     "grunt-contrib-qunit": "0.2.2",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt-env": "~0.4.0",
+    "grunt-lib-contrib": "~0.6.1",
     "grunt-ng-constant": "~0.4.8",
     "grunt-ngmin": "0.0.3",
+    "grunt-preprocess": "~4.0.0",
+    "grunt-recess": "~0.3.0",
     "grunt-remove-logging": "~0.2.0",
-    "grunt-strip": "~0.2.1"
+    "grunt-strip": "~0.2.1",
+    "http-server": "^0.7.5",
+    "karma": "~0.10",
+    "karma-jasmine": "~0.1",
+    "karma-junit-reporter": "~0.1",
+    "karma-ng-scenario": "~0.1",
+    "phantomjs": "~1.9"
   }
 }

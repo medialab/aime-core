@@ -23,7 +23,9 @@ responses(express);
 /**
  * Helpers
  */
-function loadController(router, routes, auth) {
+function loadController(routes, auth) {
+  var router = express.Router();
+
   routes.forEach(function(route) {
     var args = [route.url];
 
@@ -42,6 +44,8 @@ function loadController(router, routes, auth) {
 
     router.all.apply(router, args);
   });
+
+  return router;
 }
 
 /**
@@ -75,22 +79,18 @@ app.use(session({
 app.use(middlewares.language);
 
 /**
- * Login Routes
+ * Routers
  */
-var loginRouter = express.Router();
-loadController(loginRouter, controllers.login);
+var loginRouter = loadController(controllers.login),
+    authenticatedRouter = loadController(controllers.model, true),
+    crossingsRouter = loadController(controllers.crossings, false);
 
 /**
- * Authenticated Routes
- */
-var authenticatedRouter = express.Router();
-loadController(authenticatedRouter, controllers.model, true);
-
-/**
- * Registration
+ * Mounting
  */
 app.use(loginRouter);
 app.use(authenticatedRouter);
+app.use('/crossings', crossingsRouter);
 
 app.use(function(req, res) {
   return res.notFound();
