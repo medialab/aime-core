@@ -5,6 +5,7 @@
  * Collection of application routes applying only to the crossings interface.
  */
 var model = require('../model/crossings.js'),
+    types = require('../typology.js'),
     _ = require('lodash');
 
 // Constants
@@ -61,6 +62,25 @@ module.exports = [
           order: MODES_ORDER[req.lang],
           platformuser: 'user'
         }, stats));
+      });
+    }
+  },
+
+  // Related
+  {
+    url: '/related/:modecross',
+    validate: {
+      modecross: 'modecross'
+    },
+    action: function(req, res) {
+      var method = types.check(req.params.modecross, 'mode') ?
+        'getRelatedToMode' :
+        'getRelatedToCrossing';
+
+      model[method](req.params.modecross, req.lang, function(err, result) {
+        if (err) return res.serverError(err);
+
+        return res.ok(result);
       });
     }
   }

@@ -26,6 +26,21 @@ module.exports = new Typology({
     return v === 'en' || v === 'fr';
   },
 
+  // Mode
+  mode: function(v) {
+    return /^[A-Z]{2,3}$/.test(v);
+  },
+
+  // Crossing
+  crossing: function(v) {
+    return /^[A-Z]{2,3}-[A-Z]{2,3}$/.test(v);
+  },
+
+  // Mode or crossing
+  modecross: function(v) {
+    return /^[A-Z]{2,3}(-[A-Z]{2,3})?$/.test(v);
+  },
+
   // List of slug ids
   slugs: function(v) {
     return (v instanceof Array) &&
