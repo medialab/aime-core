@@ -27,7 +27,6 @@ RETURN collect(elements) AS result;
 // name: modecross
 // Query returning a batch of things related to the given mode or crossing.
 MATCH (m {name: {name}})<-[:DEFINES]-(:Vocabulary {lang: {lang}})-[rp:HAS]->(p:Paragraph)
-WHERE labels(m)[0] = {label}
 WITH m, rp, p ORDER BY rp.order
 WITH m, collect(p) AS paragraphs
 OPTIONAL MATCH (m)<-[:RELATES_TO]-(s:Scenario {status: 'published', lang: {lang}})-[rs:HAS]->(i)

@@ -66,6 +66,27 @@ RETURN {
   children: collect(paragraphs)
 };
 
+// name: getByModecross
+// Retrieve every vocabulary related to a precise mode or crossing.
+MATCH (m {name: {modecross}})<-[:RELATES_TO]-(v:Vocabulary {lang: {lang}})-[r:HAS]-(p:Paragraph)
+OPTIONAL MATCH (v)-[:CITES]-(bp:Paragraph)<-[:HAS]-(:Subheading)
+
+WITH v, r, {
+  id: id(p),
+  properties: p
+} AS paragraphs,
+collect(id(bp)) AS bpids
+ORDER BY r.order
+
+RETURN {
+  vocabulary: {
+    id: id(v),
+    properties: v,
+    cited_by: bpids
+  },
+  children: collect(paragraphs)
+};
+
 // name: search
 // Search for a precise string in a LIKE manner across vocabulary items
 MATCH (v:Vocabulary)-[r:HAS]-(p:Paragraph)

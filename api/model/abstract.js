@@ -48,6 +48,15 @@ module.exports = function(queries) {
         return callback(null, helpers.reorder(data, ids, 'slug_id'));
       });
     },
+    getByModecross: function(modecross, lang, callback) {
+      db.rows(queries.getByModecross, {modecross: modecross, lang: lang}, function(err, result) {
+
+        // On typical error
+        if (err) return callback(err);
+
+        return callback(null, result);
+      });
+    },
     getAll: function(lang, params, callback) {
       params = _.extend({}, {lang: lang}, {
         offset: +params.offset || 0,

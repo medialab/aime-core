@@ -54,8 +54,22 @@ function getByIds(model) {
   };
 }
 
+function getRelated(model) {
+  return function(req, res) {
+    var modecross = req.params.modecross;
+
+    model.getByModecross(modecross, req.lang, function(err, result) {
+      if (err) return res.serverError(err);
+
+      return res.ok(result);
+    });
+  };
+}
+
 // Refactor model access by forge
 module.exports = [
+
+  // Book
   {
     url: '/book',
     cache: 'book',
@@ -68,6 +82,8 @@ module.exports = [
     },
     action: search(book)
   },
+
+  // Vocabulary
   {
     url: '/voc',
     validate: {
@@ -88,6 +104,15 @@ module.exports = [
     },
     action: search(voc)
   },
+  {
+    url: '/voc/related/:modecross',
+    validate: {
+      modecross: 'modecross'
+    },
+    action: getRelated(voc)
+  },
+
+  // Documents
   {
     url: '/doc',
     validate: {
