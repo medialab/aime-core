@@ -4,12 +4,12 @@
  *
  */
 var db = require('../connection.js'),
-    queries = require('../queries.js'),
+    queries = require('../queries.js').crossings,
     _ = require('lodash');
 
 module.exports = {
   getInfo: function(lang, callback) {
-    db.rows(queries.crossings.getInfo, {lang: lang}, function(err, results) {
+    db.rows(queries.getInfo, {lang: lang}, function(err, results) {
       if (err) return callback(err);
 
       return callback(null, {
@@ -23,6 +23,6 @@ module.exports = {
     });
   },
   getRelatedToMode: function(mode, lang, callback) {
-    db.rows(queries.related.mode, {name: mode, lang: lang}, callback);
+    db.rows(queries.modecross, {name: mode, lang: lang, label: 'Mode'}, callback);
   }
 };
