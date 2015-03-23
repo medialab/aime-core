@@ -68,7 +68,7 @@ RETURN {
 
 // name: getByModecross
 // Retrieve every vocabulary related to a precise mode or crossing.
-MATCH (m {name: {modecross}})<-[:RELATES_TO]-(v:Vocabulary {lang: {lang}})-[r:HAS]-(p:Paragraph)
+MATCH ({name: {modecross}})<-[:RELATES_TO]-(v:Vocabulary {lang: {lang}})-[r:HAS]-(p:Paragraph)
 OPTIONAL MATCH (v)-[:CITES]-(bp:Paragraph)<-[:HAS]-(:Subheading)
 
 WITH v, r, {

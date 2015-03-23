@@ -54,7 +54,7 @@ module.exports = function(queries) {
         // On typical error
         if (err) return callback(err);
 
-        return callback(null, result);
+        return callback(null, helpers.nested(result));
       });
     },
     getAll: function(lang, params, callback) {

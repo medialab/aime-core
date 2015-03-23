@@ -132,5 +132,12 @@ module.exports = [
       query: 'string'
     },
     action: search(doc)
+  },
+  {
+    url: '/doc/related/:modecross',
+    validate: {
+      modecross: 'modecross'
+    },
+    action: getRelated(doc)
   }
 ];
