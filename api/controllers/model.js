@@ -58,7 +58,7 @@ function getRelated(model) {
   return function(req, res) {
     var modecross = req.params.modecross;
 
-    model.getByModecross(modecross, req.lang, function(err, result) {
+    model.getByModecross(req.lang, modecross, function(err, result) {
       if (err) return res.serverError(err);
 
       return res.ok(result);
@@ -81,6 +81,13 @@ module.exports = [
       query: 'string'
     },
     action: search(book)
+  },
+  {
+    url: '/book/related/:modecross',
+    validate: {
+      modecross: 'modecross'
+    },
+    action: getRelated(book)
   },
 
   // Vocabulary

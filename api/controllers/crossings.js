@@ -73,7 +73,7 @@ module.exports = [
       modecross: 'modecross'
     },
     action: function(req, res) {
-      model.getRelatedToModecross(req.params.modecross, req.lang, function(err, result) {
+      model.getRelatedToModecross(req.lang, req.params.modecross, function(err, result) {
         if (err) return res.serverError(err);
 
         return res.ok(result);

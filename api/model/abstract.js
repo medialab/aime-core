@@ -48,7 +48,7 @@ module.exports = function(queries) {
         return callback(null, helpers.reorder(data, ids, 'slug_id'));
       });
     },
-    getByModecross: function(modecross, lang, callback) {
+    getByModecross: function(lang, modecross, callback) {
       db.rows(queries.getByModecross, {modecross: modecross, lang: lang}, function(err, result) {
 
         // On typical error

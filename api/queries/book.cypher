@@ -28,6 +28,32 @@ ORDER BY rc.order ASC
 
 RETURN chapters;
 
+// name: getByModecross
+// Retrieve every subheadings related to a precise mode or crossing.
+MATCH (c:Chapter)-[:HAS]->(s:Subheading {lang: {lang}})-[rp:HAS]->(p:Paragraph)
+MATCH (s)-[:RELATES_TO]->({name: {modecross}})
+
+WITH c, s, rp, {
+  id: id(p),
+  properties: p
+} AS paragraphs
+ORDER BY rp.order ASC
+
+WITH s, {
+  parent: {
+    id: id(c),
+    properties: c
+  },
+  subheading: {
+    id: id(s),
+    properties: s
+  },
+  children: collect(paragraphs)
+} AS subheadings
+ORDER BY s.page
+
+RETURN subheadings;
+
 // name: search
 // Search for a precise string in a LIKE manner across book items and return their ids
 MATCH (n)

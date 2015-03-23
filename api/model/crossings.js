@@ -22,7 +22,7 @@ module.exports = {
       });
     });
   },
-  getRelatedToModecross: function(mode, lang, callback) {
-    db.rows(queries.modecross, {name: mode, lang: lang}, callback);
+  getRelatedToModecross: function(lang, modecross, callback) {
+    db.rows(queries.modecross, {name: modecross, lang: lang}, callback);
   }
 };

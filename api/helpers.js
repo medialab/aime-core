@@ -19,7 +19,13 @@ function treat(sub) {
 
   for (k in sub) {
     if (types.check(sub[k], 'object') && sub[k].id) {
+      if (k === 'parent')
+        continue;
+
       item = _.extend({id: sub[k].id}, sub[k].properties, _.omit(sub[k], ['id', 'properties']));
+
+      if (sub.parent)
+        item = _.extend({parent: treat(sub.parent)}, item);
     }
     else {
       children = {};

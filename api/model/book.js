@@ -24,6 +24,21 @@ module.exports = {
       return callback(null, data);
     });
   },
+  getByModecross: function(lang, modecross, callback) {
+
+    // Executing query
+    db.rows(queries.getByModecross, {lang: lang, modecross: modecross}, function(err, result) {
+
+      // On typical error
+      if (err) return callback(err);
+
+      // Treating incoming data
+      var data = helpers.nested(result);
+
+      // Returning
+      return callback(null, data);
+    });
+  },
   search: function(lang, query, callback) {
 
     // Formatting query
