@@ -20,11 +20,11 @@ module.exports = {
       if (err) return callback(err);
 
       return callback(null, {
-        modes: _.indexBy(results[0][0], 'name'),
-        cross: _.indexBy(results[1][0], 'name'),
+        modes: _.indexBy(results[0], 'name'),
+        cross: _.indexBy(results[1], 'name'),
         maxCount: {
-          modes: _.max(results[0][0], 'count').count,
-          cross: _.max(results[1][0], 'count').count
+          modes: _.max(results[0], 'count').count,
+          cross: _.max(results[1], 'count').count
         }
       });
     });
@@ -35,7 +35,7 @@ module.exports = {
 
       return callback(null, result.map(function(e) {
         return {
-          title: slugs[e[1]] + '- ' + e[0]
+          title: slugs[e.type] + '- ' + e.title
         };
       }));
     });
@@ -46,7 +46,7 @@ module.exports = {
         db.rows(queries.modecross, {name: modecross, lang: lang}, function(err, result) {
           if (err) return next(err);
 
-          return next(null, result[0][0]);
+          return next(null, result[0]);
         });
       },
       doc: function(next) {

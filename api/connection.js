@@ -47,8 +47,22 @@ function makeHelper(dataContent) {
         return callback(e);
       }
 
+      var columns = response.results[0].columns;
+
       var data = response.results[0].data.map(function(d) {
-        return d[dataContent];
+
+        if (columns.length > 1) {
+          var o = {};
+
+          columns.forEach(function(c, i) {
+            o[c] = d[dataContent][i];
+          });
+
+          return o;
+        }
+        else {
+          return d[dataContent][0];
+        }
       });
 
       return callback(null, data);

@@ -37,7 +37,7 @@ function treat(sub) {
 }
 
 function nested(rows) {
-  return rows.map(function(r) { return r[0] }).map(treat);
+  return rows.map(treat);
 }
 
 // Reorder an array following the given order

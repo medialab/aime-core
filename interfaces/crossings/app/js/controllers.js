@@ -10,7 +10,7 @@ angular.module('underscore', [])
 
 
 angular.module('myApp.controllers', ['underscore','config'])
-	
+
 	.controller('CrossingsCtrl',
 			["$scope","$rootScope","Api","$document","$location","$route","$routeParams","$timeout","_","settings","$sce", //"$cookies","$cookieStore"
 			function($scope,$rootScope,Api,$document,$location,$route,$routeParams,$timeout,_,settings,$sce) { //$cookies,$cookieStore
@@ -68,7 +68,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 					$scope.user = $cookieStore.get('user');
 				}
 				console.log(res.data);
-			});		
+			});
 		};
 		$scope.authLogOut = function() {
 			console.log("auth: logging out");
@@ -76,7 +76,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 				// remove cookie
 				$cookieStore.remove('user');
 				$scope.user = null;
-			});		
+			});
 		};*/
 
 		///////////////////////////////////////////// get position based on modecross
@@ -318,10 +318,10 @@ angular.module('myApp.controllers', ['underscore','config'])
 
 		$scope.updateShapeshiftDelayed = function() {
 			$scope.loading = false;
-			
+
 			// do it when the DOM is rendered !
 			setTimeout(function() {
-				
+
 				$scope.$apply(); // make the data-order work ?
 
 				$timeout(function () {
@@ -331,7 +331,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 					// remake grid
 					$(".mosaic").trigger("ss-destroy");
 					$scope.initGrid($scope.editing);
-					
+
 					$(".mosaicscroller").scrollTop(0);
 					$(".sidebarscroller").scrollTop(0);
 
@@ -379,7 +379,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 				});
 
 			} else {
-				
+
 				$scope.cells = _.map($scope.cells, function(c) {
 						c.order = c.i;
 						c.choosen = true;
@@ -524,13 +524,13 @@ angular.module('myApp.controllers', ['underscore','config'])
 			var params = {
 				lang:  		$scope.lang,
 				modecross:  modecross,
-				fetch:  	$scope.isAdmin() ? "all" : "selection", 
+				fetch:  	$scope.isAdmin() ? "all" : "selection",
 			};
 
 			// ask for scene scenar ? no. at the moment set to default
 			//if(scenar) params.sid = scenar.sid;
-			
-			
+
+
 			console.log("Will fetch related of: ["+modecross+"]");
 			//console.log(scenar);
 
@@ -542,7 +542,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 
 			// fetch related elements
 			Api.fetchRelated(params, function(res) {
-				
+
 				console.log("Fetched related: ",res.data);
 
 				if(res.data.scenars) {
@@ -577,11 +577,11 @@ angular.module('myApp.controllers', ['underscore','config'])
 					- element.i : the default order
 					- element.order : initially same as i, but updated if different scenar
 					- element.slides_medias_flattened : all the medias in a single array rather than seperated by slides
-					
+
 					now it's made server side ! faster
 					see server/app/controllers/bam.routes.js > flattenItem() / flattenItems()
 
-					... so that cells contains slides_medias_flattened, and NO slides 
+					... so that cells contains slides_medias_flattened, and NO slides
 				*/
 
 				$scope.cells = res.data.related;
@@ -595,7 +595,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 					//console.log("Wanted scenar: ", scen);
 					if(foundscenar) $scope.loadScenar(foundscenar);
 					else $scope.loadScenar(null);
-				} else 
+				} else
 					$scope.loadScenar(null);
 
 
@@ -630,7 +630,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 				}
 
 			} else {
-			
+
 				$scope.theatreCurrent = null;
 
 			}
@@ -639,9 +639,9 @@ angular.module('myApp.controllers', ['underscore','config'])
 			forbidSwipe();
 
 			$scope.titleCollapsed = false;
-			
+
 			//$scope.docCurrent = 0;
-			
+
 			var N = $scope.cells.length;
 			var s = $scope.scenar;
 			if(s && s.status=='published') N = s.items.length;
@@ -685,7 +685,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 			// what is the max scrollHeight ?
 			$scope.theatreScrollH = scrollcont[0].scrollHeight - scrollcont[0].clientHeight;
 			console.log("Binding scroll with .content scrollH: "+$scope.theatreScrollH);
-			
+
 			// allow swiping again ?
 			// (delayed to avoid swiping 2+ slides at same time)
 			setTimeout(function() {
@@ -708,8 +708,8 @@ angular.module('myApp.controllers', ['underscore','config'])
 					$scope.titleCollapsed = false;
 					$scope.$apply();
 				}
-				
-				
+
+
 				//console.log("scrolling ! "+s);
 				//var pre = angular.element(e.target).parent().prev();
 				//var classed = pre.hasClass("collapsed");
@@ -776,7 +776,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 
 			}
 		});
-		
+
 		// will be triggered when mosaic ngRepeat ends
 		$scope.$on('mosaCellsDone', function(ngRepeatFinishedEvent) {
 			//console.log("NgRepeat - Mosaic cells done.");
@@ -857,13 +857,13 @@ angular.module('myApp.controllers', ['underscore','config'])
 			// 1. scribd
 			var scribdH = "650px";
 			html = html.replace(/(<iframe class="scribd_iframe_embed" data-aspect-ratio="[^"]*" frameborder="0" height=")[^"]*(")/, "\$1"+scribdH+"\$2");
-			
+
 			// 2. youtube
 			html = html.replace(/(<iframe width=")[^"]*(" height=")[^"]*(" src="http:\/\/www\.youtube\.com)/, "\$1100%\$2100%\$3");
 
 			// 3. vimeo
 			html = html.replace(/(<iframe src="\/\/player\.vimeo\.com\/video\/[\d]*" width=")[^"]*(" height=")[^"]*(")/, "\$1100%\$2100%\$3");
-			
+
 			// 4. ted
 			var tedH = "450px";
 			html = html.replace(/(<iframe src="http:\/\/embed\.ted\.com\/talks\/[_a-z\.]*" width=")[^"]*(" height=")[^"]*(")/, "\$1100%\$2"+tedH+"\$3");
@@ -899,7 +899,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 
 				$scope.headerOpened = false;
 				$scope.onTriangle = false;
-				
+
 				analytic("/crossings" + $location.path() + "#tutorial");
 
 				var tutos = Api.getTutorial($scope.lang);
@@ -908,15 +908,15 @@ angular.module('myApp.controllers', ['underscore','config'])
 					var infos = v.split(" = ");
 					//$('#'+k).attr('data-position',infos[0]);
 					//$('#'+k).attr('data-intro',infos[1]);
-					
+
 					//$('#'+k).addClass('hint-bounce hint--always hint--rounded hint-'+infos[0]);
 					//$('#'+k).attr('data-hint',infos[1]);
-					
+
 					$(k).attr('data-position',infos[0]);
 					$(k).attr('data-tooltipClass','tooltip-'+k.replace(/^[#\.]/,"")); // remove selector (first # or .)
 					$(k).attr('data-intro',infos[1]);
 					$(k).attr('data-step',step++);
-					
+
 				});
 				var eng = $scope.lang == "en";
 				var introjs = introJs().setOptions({
@@ -951,7 +951,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 
 					//if(id=='theatrenext') $(".mosaic_1").click();
 					//if(id=='theatreclose') $("#theatrenext").click();
-					
+
 				});
 				introjs.onexit(function() {
 					console.log("intro.js: exited.");
@@ -1041,7 +1041,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 
 			// add new cell
 			$scope.cells.push($scope.editingTile);
-			// refresh ordercells 
+			// refresh ordercells
 			$scope.reorderCellsBasedOnList([]); // empty list provided, order will be based on cell.i . new one will be last ! (i = cells.length)
 			// reorder cells' mosaic
 			$scope.updateShapeshiftDelayed();
@@ -1076,7 +1076,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 				var parts = b.split(/\n*-\n/);
 				//console.log(parts);
 				if(parts.length==1) { // only text
-					
+
 					txt = parts[0];
 
 				} else if(parts.length==2) {
@@ -1134,7 +1134,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 
 		// will update the element
 		$scope.theatreSaveElement = function(e) {
-			
+
 			//console.log("Editing:",$scope.editingTile);
 
 			var call = false;
@@ -1147,9 +1147,9 @@ angular.module('myApp.controllers', ['underscore','config'])
 				_.extend(e, withslid);
 
 				console.log("Edited:",e);
-				
+
 				if(e.textarea=="") {
-					call = confirm("Do you really want to delete this contribution ?");	
+					call = confirm("Do you really want to delete this contribution ?");
 				} else {
 					call = true;
 				}
@@ -1216,7 +1216,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 			Api.fetchTilesAhead({lang:$scope.lang}, function(res) {
 
 				//console.log("TilesAhead:",res.data);
-				
+
 				$('#typeahead').typeahead({
 				  hint: true,
 				  highlight: true,
@@ -1243,7 +1243,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 				      		link: e.link
 				      	});
 				    });
-				    cb(matches);				  	
+				    cb(matches);
 				  }
 				}).on('typeahead:selected',function(obj,datum) {
 				    //console.log(datum);
