@@ -36,7 +36,7 @@ angular.module('myApp.services', [])
 					method: 	'GET',
 					url: 			b+"/crossings/tiles",
 					params: 	params,
-				}).then(function(data){ callback(data.result) });
+				}).then(function(data){ callback(data.data.result) });
 			},
 
 			addRelated: function(params,callback) {
@@ -44,7 +44,7 @@ angular.module('myApp.services', [])
 					method: 	'GET',
 					url: 			b+"/crossings/addrelated",
 					params: 	params,
-				}).then(function(data){ callback(data.result) });
+				}).then(function(data){ callback(data.data.result) });
 			},
 
 			fetchRelated: function(params,callback) {
@@ -61,7 +61,7 @@ angular.module('myApp.services', [])
 					method: 	'GET',
 					url: 		url,
 					params: 	params,
-				}).then(function(data){ callback(data.result); });
+				}).then(function(data){callback({data: data.data.result}); });
 			},
 
 			scenarUpdate: function(params,callback) {

@@ -79,5 +79,17 @@ module.exports = [
         return res.ok(result);
       });
     }
+  },
+
+  // Tiles
+  {
+    url: '/tiles',
+    action: function(req, res) {
+      model.getTiles(req.lang, function(err, result) {
+        if (err) return res.serverError(err);
+
+        return res.ok(result);
+      });
+    }
   }
 ];

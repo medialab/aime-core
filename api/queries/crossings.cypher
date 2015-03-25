@@ -26,10 +26,18 @@ RETURN collect(elements) AS result;
 
 // name: modecross
 // Query returning a batch of things related to the given mode or crossing.
-MATCH (m {name: {name}})<-[:DEFINES]-(:Vocabulary {lang: {lang}})-[rp:HAS]->(p:Paragraph)
-WITH m, rp, p ORDER BY rp.order
-WITH m, collect(p) AS paragraphs
+MATCH (m {name: {name}})<-[:DEFINES]-(v:Vocabulary {lang: {lang}})-[rp:HAS]->(p:Paragraph)
+WITH m, v, rp, p ORDER BY rp.order
+WITH m, v, collect(p) AS paragraphs
 OPTIONAL MATCH (m)<-[:RELATES_TO]-(s:Scenario {status: 'published', lang: {lang}})-[rs:HAS]->(i)
-WITH m, paragraphs, rs, s, i ORDER BY rs.order
-WITH m, paragraphs, {scenario: s, items: collect(i)} AS scenars
-RETURN {name: m.name, paragraphs: paragraphs, scenars: filter(s in collect(scenars) WHERE s.scenario IS NOT NULL)};
+WITH m, v, paragraphs, rs, s, i ORDER BY rs.order
+WITH m, v, paragraphs, {scenario: s, items: collect(i)} AS scenars
+RETURN {name: m.name, type: m.type, slug_id: v.slug_id, paragraphs: paragraphs, scenars: filter(s in collect(scenars) WHERE s.scenario IS NOT NULL)};
+
+// name: tiles
+// Returning basic information about the database objects so we can build tiles index.
+MATCH (e {lang: {lang}})
+WHERE e:Subheading OR e:Vocabulary OR e:Document
+RETURN
+	CASE WHEN has(e.name) THEN e.name ELSE e.title END AS title,
+	e.type AS type;

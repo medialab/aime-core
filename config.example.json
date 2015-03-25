@@ -8,7 +8,8 @@
       "document": "doc",
       "vocabulary": "voc",
       "resource": "res",
-      "reference": "ref"
+      "reference": "ref",
+      "subheading": "bsc"
     }
   },
   "biblib": {
