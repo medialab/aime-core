@@ -85,6 +85,24 @@ module.exports = {
 
       // TODO: questions
 
+      // Scenars
+      data.scenars = results.info.scenars.map(function(s) {
+        return {
+          lang: lang,
+          modecross: results.info.name,
+          name: s.scenario.title,
+          status: 'published',
+          items: s.items.map(function(i) {
+            return slugs[i.type] + '_' + i.slug_id;
+          })
+        };
+      });
+
+      // Related elements
+      data.related = results.doc
+        .concat(results.voc)
+        .concat(results.book);
+
       return callback(null, data);
     });
   }
