@@ -30,10 +30,10 @@ RETURN chapters;
 
 // name: getByModecross
 // Retrieve every subheadings related to a precise mode or crossing.
-MATCH (c:Chapter)-[:HAS]->(s:Subheading {lang: {lang}})-[rp:HAS]->(p:Paragraph)
+MATCH (c:Chapter)-[rs:HAS]->(s:Subheading {lang: {lang}})-[rp:HAS]->(p:Paragraph)
 MATCH (s)-[:RELATES_TO]->({name: {modecross}})
 
-WITH c, s, rp, {
+WITH c, s, rp, rs, {
   id: id(p),
   properties: p
 } AS paragraphs
@@ -46,7 +46,8 @@ WITH s, {
   },
   subheading: {
     id: id(s),
-    properties: s
+    properties: s,
+    index: rs.order + 1
   },
   children: collect(paragraphs)
 } AS subheadings
