@@ -39,6 +39,7 @@ const SEQ = [
   'harmony',
   'references',
   'slugs',
+  'user_bookmarks',
   'markdown',
   'cleanup'
 ];
