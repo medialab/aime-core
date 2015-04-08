@@ -7,6 +7,7 @@ var db = require('../connection.js'),
     queries = require('../queries.js').crossings,
     async = require('async'),
     slugs = require('../../config.json').api.slugs,
+    types = require('../typology.js'),
     models = {
       book: require('./book.js'),
       doc: require('./document.js'),
@@ -43,6 +44,14 @@ function questionTokenizer(txt) {
       answer: am[i]
     };
   });
+}
+
+function formatDate(date) {
+  var y = date.slice(0, 4),
+      m = date.slice(4, 6),
+      j = date.slice(6, 8);
+
+  return (new Date(y, m, j).toISOString())
 }
 
 module.exports = {
@@ -127,8 +136,6 @@ module.exports = {
         ].concat(questions)
       };
 
-      // TODO: questions
-
       // Scenars
       data.scenars = results.info.scenars.map(function(s) {
         return {
@@ -146,15 +153,50 @@ module.exports = {
 
       // Related elements
       // NOTE: should be ordered likewise:
-      //  -- Contributions
-      //  -- Documents
+
+      //  -- Documents & Contributions
+      var docRelated = results.doc.map(function(d) {
+        return {
+          cat: d.original ? 'doc' : 'cont',
+          author: {
+            name: d.author.name + ' ' + d.author.surname
+          },
+          choosen: true,
+          date: formatDate(d.date),
+          id: slugs[d.type] + '_' + d.slug_id,
+          lang: d.lang,
+          status: d.status,
+          title: d.title
+        };
+      });
+
       //  -- Vocabulary
+      var vocRelated = results.voc.map(function(v) {
+        var mc = types.check(v.title, 'modecross');
+
+        var cat = mc ?
+          (types.check(v.title, 'mode') ? 'Vocabulary_Mode' : 'Vocabulary_Cross') :
+          'Vocabulary_Voc';
+
+        return {
+          cat: cat,
+          choosen: true,
+          id: slugs[v.type] + '_' + v.slug_id,
+          lang: v.lang,
+          thumbnail: {
+            type: 'txt',
+            content: v.children[0].text
+          },
+          title: v.title,
+          paragraphs: v.children.map(function(p) {
+            return {
+              text: p.text
+            };
+          })
+        };
+      });
+
       //  -- Subheadings
-
-      // data.related = results.doc
-      //   .concat(results.voc)
-      //   .concat(results.book);
-
       var bookRelated = results.book.map(function(b) {
         return {
           cat: 'bsc',
@@ -179,6 +221,8 @@ module.exports = {
       });
 
       data.related = data.related
+        .concat(docRelated)
+        .concat(vocRelated)
         .concat(bookRelated);
 
       data.related = data.related.map(function(item, i) {
