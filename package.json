@@ -4,7 +4,7 @@
   "description": "An inquiry into modes of existences.",
   "main": "index.js",
   "scripts": {
-    "migrate": "node ./scripts/migrate.js",
+    "migrate": "node ./scripts/migrate.js && node ./scripts/biblib.js",
     "test": "mocha -R spec ./test/endpoint.js",
     "start": "node ./scripts/start.js",
     "biblib": "node ./scripts/biblib.js"
