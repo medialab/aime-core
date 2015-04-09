@@ -111,6 +111,7 @@ RETURN {
   },
   children: collect(slides)
 } AS item
+ORDER BY item.document.properties.date DESC, item.document.properties.title ASC
 
 // name: search
 // Search for a precise string in a LIKE manner across documents
