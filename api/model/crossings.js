@@ -15,6 +15,9 @@ var db = require('../connection.js'),
     },
     _ = require('lodash');
 
+/**
+ * Helpers
+ */
 var MAX = 290;
 function truncate(str) {
   return _.trunc(str, {
@@ -54,6 +57,67 @@ function formatDate(date) {
   return (new Date(y, m, j).toISOString())
 }
 
+// TODO: relative url!
+function ensureUrl(url) {
+  if (url[0] === '/')
+    return url.replace(/\/[^\/]*/, '');
+  return url;
+}
+
+function getDocumentThumbnail(doc) {
+  var candidates = [];
+
+  // Iterating through slides
+  doc.children.forEach(function(slide) {
+
+    // Iterating through slide's elements
+    slide.children.forEach(function(element) {
+
+      // In case of text
+      if (element.type === 'paragraph' &&
+          !candidates.length &&
+          /[^:]$/.test(element.text))
+        candidates.unshift({
+          type: 'txt',
+          content: truncate(element.text)
+        });
+
+      // In case of quote
+      if (element.kind === 'quote' && !candidates.length)
+        candidates.unshift({
+          type: 'cit',
+          content: truncate(element.text)
+        });
+
+      // In case of biblib
+      if (element.type === 'reference' &&
+          !!element.biblib_id &&
+          !candidates.length)
+        candidates.unshift({
+          type: 'bib',
+          content: truncate(element.text || element.biblib_id)
+        });
+
+      if (element.kind === 'image')
+        candidates.unshift({
+          type: 'img',
+          content: ensureUrl(element.filename)
+        });
+
+      if (element.kind === 'video' && element.host === 'vimeo')
+        candidates.unshift({
+          type: 'vimeo',
+          content: element.identifier
+        });
+    });
+  });
+
+  return candidates[0];
+}
+
+/**
+ * Model
+ */
 module.exports = {
   getInfo: function(lang, callback) {
     db.rows(queries.getInfo, {lang: lang}, function(err, results) {
@@ -156,6 +220,7 @@ module.exports = {
 
       //  -- Documents & Contributions
       var docRelated = results.doc.map(function(d) {
+        getDocumentThumbnail(d);
         return {
           cat: d.original ? 'doc' : 'cont',
           author: {
@@ -166,7 +231,8 @@ module.exports = {
           id: slugs[d.type] + '_' + d.slug_id,
           lang: d.lang,
           status: d.status,
-          title: d.title
+          title: d.title,
+          thumbnail: getDocumentThumbnail(d)
         };
       });
 
