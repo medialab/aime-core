@@ -265,6 +265,13 @@ module.exports = {
                 content: element.text,
                 pindex: ++i
               };
+
+            if (element.kind === 'pdf')
+              return {
+                type: 'pdf',
+                content_id: element.title,
+                pindex: -1
+              };
           });
 
           refs.forEach(function(r) {
