@@ -23,12 +23,21 @@ async.waterfall([
     });
   },
   function update(references, docs, next) {
+    var docIndex = _.indexBy(docs, 'rec_id');
 
     var batch = neo4j.db.batch();
 
-    references.forEach(function(r, i) {
-      r.html = docs[i];
-      r.text = cheerio(docs[i]).text();
+    references.forEach(function(r) {
+      var bid = '' + r.biblib_id,
+          mla = (docIndex[bid] || {}).mla;
+
+      if (!mla) {
+        console.log('No reference found for:', r);
+        return;
+      }
+
+      r.html = mla;
+      r.text = cheerio(mla).text();
 
       batch.save(r);
     });

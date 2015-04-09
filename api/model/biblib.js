@@ -20,9 +20,7 @@ var model = {
       function(err, response) {
         if (err) return callback(err);
 
-        return callback(null, response.result.map(function(r) {
-          return r.mla;
-        }));
+        return callback(null, response.result);
       }
     );
   },
