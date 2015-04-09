@@ -220,7 +220,65 @@ module.exports = {
 
       //  -- Documents & Contributions
       var docRelated = results.doc.map(function(d) {
-        getDocumentThumbnail(d);
+
+        var slides = d.children.map(function(slide) {
+          var refs = [],
+              i = 0;
+
+          var medias = slide.children.map(function(element, j) {
+
+            // Additionnal reference
+            if (element.reference) {
+              var reference = element.reference;
+
+              refs.push([j, {
+                type: 'bib',
+                content: reference.html || reference.text,
+                pindex: -1
+              }]);
+            }
+
+            if (element.type === 'paragraph')
+              return {
+                type: 'txt',
+                content: element.text,
+                pindex: ++i
+              };
+
+            if (element.type === 'reference')
+              return {
+                type: 'bib',
+                content: element.html || element.text,
+                pindex: -1
+              };
+
+            if (element.kind === 'video' && element.host === 'vimeo')
+              return {
+                type: 'vimeo',
+                content_id: element.identifier,
+                pindex: -1
+              };
+
+            if (element.kind === 'quote')
+              return {
+                type: 'cit',
+                content: element.text,
+                pindex: ++i
+              };
+          });
+
+          refs.forEach(function(r) {
+            var i = r[0],
+                ref = r[1];
+
+            medias = medias.slice(0, i + 1).concat(r[1]).concat(medias.slice(i + 1));
+          });
+
+          return {
+            medias: medias
+          };
+        });
+
         return {
           cat: d.original ? 'doc' : 'cont',
           author: {
@@ -232,7 +290,9 @@ module.exports = {
           lang: d.lang,
           status: d.status,
           title: d.title,
-          thumbnail: getDocumentThumbnail(d)
+          thumbnail: getDocumentThumbnail(d),
+          slides: slides,
+          slides_medias_flattened: _(slides).map('medias').flatten().value()
         };
       });
 
