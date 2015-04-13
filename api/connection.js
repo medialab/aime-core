@@ -9,7 +9,7 @@ var config = require('../config.json').dbs.neo4j,
 
 // Launching the seraph
 var host = 'http://' + config.host + ':' + config.port,
-    db = new seraph(host);
+    db = new seraph({server: host, user: config.user, pass: config.password});
 
 // Helper Forge
 function makeHelper(dataContent) {
