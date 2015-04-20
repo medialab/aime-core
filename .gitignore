@@ -4,3 +4,4 @@ config.json
 Notes.md
 *.log
 external
+.sessions

@@ -5,6 +5,7 @@
     "defaultLang": "en",
     "external": "./external",
     "secret": "falafel",
+    "sessionStore": "./.sessions",
     "slugs": {
       "document": "doc",
       "vocabulary": "voc",

@@ -5,10 +5,12 @@
  * Defining the express application aimed at serving the graph database.
  */
 var express = require('express'),
+    env = process.env.NODE_ENV || 'dev',
     path = require('path'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
+    FileStore = require('session-file-store')(session),
     compress = require('compression'),
     morgan = require('morgan'),
     cors = require('cors'),
@@ -64,17 +66,23 @@ app.use(cors({
 // Log
 app.use(morgan('dev'));
 
-// Utilities
-app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
-app.use(bodyParser.json({limit: '5mb'}));
-app.use(cookieParser());
-app.use(session({
+// Session options
+var sessionOptions = {
   name: 'aime.sid',
   secret: config.secret,
   trustProxy: false,
   resave: true,
   saveUninitialized: true
-}));
+};
+
+if (env === 'dev')
+  sessionOptions.store = new FileStore({path: config.sessionStore});
+
+// Utilities
+app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
+app.use(bodyParser.json({limit: '5mb'}));
+app.use(cookieParser());
+app.use(session(sessionOptions));
 // app.use(compress());
 app.use(middlewares.language);
 
@@ -90,7 +98,7 @@ var loginRouter = loadController(controllers.login),
  */
 var mediasRouter = express.Router();
 mediasRouter.use(middlewares.authenticate);
-mediasRouter.use(express.static(path.resolve(process.cwd(), config.external)));
+mediasRouter.use(express.static(config.external));
 
 /**
  * Mounting
