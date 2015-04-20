@@ -116,11 +116,12 @@ ORDER BY item.document.properties.date DESC, item.document.properties.title ASC
 // name: search
 // Search for a precise string in a LIKE manner across documents
 MATCH (a:User)<-[:CREATED_BY]-(d:Document {status: "public"})-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
-WHERE
-  (d.title =~ {query} OR
+WHERE (
+  d.title =~ {query} OR
   e.text =~ {query} OR
   (a.name + " " + a.surname) =~ {query} OR
-  (a.surname + " " + a.name) =~ {query})
+  (a.surname + " " + a.name) =~ {query}
+)
 AND d.lang = {lang}
 
 OPTIONAL MATCH (e)<-[:DESCRIBES]-(r:Reference)
