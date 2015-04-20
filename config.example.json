@@ -3,6 +3,7 @@
     "allowedOrigins": ["http://localhost:8000", "http://localhost:5000"],
     "cache": true,
     "defaultLang": "en",
+    "external": "./external",
     "secret": "falafel",
     "slugs": {
       "document": "doc",
@@ -35,6 +36,11 @@
       "port": 27017,
       "database": "aime_crossings_prod"
     }
+  },
+  "external": {
+    "crossings": "./external/crossings",
+    "pdfs": "./external/pdfs",
+    "uploaded": "./external/uploaded"
   },
   "mail": {
     "host": "localhost",

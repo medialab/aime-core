@@ -5,6 +5,7 @@
  * Defining the express application aimed at serving the graph database.
  */
 var express = require('express'),
+    path = require('path'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
@@ -13,8 +14,7 @@ var express = require('express'),
     cors = require('cors'),
     config = require('../config.json').api,
     responses = require('./responses.js'),
-    middlewares = require('./middlewares.js')
-    validate = middlewares.validate;
+    middlewares = require('./middlewares.js');
 
 var controllers = require('require-all')(__dirname + '/controllers');
 
@@ -86,11 +86,19 @@ var loginRouter = loadController(controllers.login),
     crossingsRouter = loadController(controllers.crossings, false);
 
 /**
+ * Serving static files
+ */
+var mediasRouter = express.Router();
+mediasRouter.use(middlewares.authenticate);
+mediasRouter.use(express.static(path.resolve(process.cwd(), config.external)));
+
+/**
  * Mounting
  */
 app.use(loginRouter);
 app.use(authenticatedRouter);
 app.use('/crossings', crossingsRouter);
+app.use('/medias', mediasRouter);
 
 app.use(function(req, res) {
   return res.notFound();
