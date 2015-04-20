@@ -20,3 +20,10 @@ npm install
 # Running a migration
 npm run migrate
 ```
+
+## External resources (reminder)
+
+Not included in this repository for obvious reasons.
+
+* Internal medias (images, pdfs etc.)
+* NovelPro fonts
