@@ -45,12 +45,6 @@ module.exports = {
     query = helpers.searchRegex(query);
 
     // Executing query
-    db.rows(queries.search, {lang: lang, query: query}, function(err, result) {
-      if (err) return callback(err);
-
-      return callback(null, result.map(function(r) {
-        return r[0];
-      }));
-    });
+    db.rows(queries.search, {lang: lang, query: query}, callback);
   }
 };
