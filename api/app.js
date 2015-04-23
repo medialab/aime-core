@@ -76,7 +76,10 @@ var sessionOptions = {
 };
 
 if (env === 'dev')
-  sessionOptions.store = new FileStore({path: config.sessionStore});
+  sessionOptions.store = new FileStore({
+    path: config.sessionStore,
+    ttl: 30 * 24 * 60 * 60
+  });
 
 // Utilities
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
