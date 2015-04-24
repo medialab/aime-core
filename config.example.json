@@ -4,6 +4,7 @@
     "cache": true,
     "defaultLang": "en",
     "external": "./external",
+    "port": 7000,
     "secret": "falafel",
     "sessionStore": "./.sessions",
     "slugs": {

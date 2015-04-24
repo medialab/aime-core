@@ -5,7 +5,8 @@
  * This scripts launches the express application serving the inquiry's data.
  */
 var app = require('../api/app.js'),
+    config = require('../config.json').api,
     biblib = require('../api/model/biblib.js');
 
-app.listen(7000);
+app.listen(config.port);
 console.log('Server online...');
