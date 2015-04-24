@@ -17,6 +17,9 @@ This repository holds the code driving the new core of the AIME project.
 # Install dependencies
 npm install
 
+# edit config
+cp config.example.json config.json
+
 # Running a migration
 npm run migrate
 ```
