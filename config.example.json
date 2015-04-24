@@ -38,11 +38,6 @@
       "database": "aime_crossings_prod"
     }
   },
-  "external": {
-    "crossings": "./external/crossings",
-    "pdfs": "./external/pdfs",
-    "uploaded": "./external/uploaded"
-  },
   "mail": {
     "host": "localhost",
     "port": 25
