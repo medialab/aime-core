@@ -48,17 +48,12 @@
     "grunt-contrib-watch": "~0.4.0",
     "grunt-env": "~0.4.0",
     "grunt-lib-contrib": "~0.6.1",
-    "grunt-ng-constant": "~0.4.8",
+    "grunt-ng-constant": "1.1.0",
     "grunt-ngmin": "0.0.3",
     "grunt-preprocess": "~4.0.0",
     "grunt-recess": "~0.3.0",
     "grunt-remove-logging": "~0.2.0",
     "grunt-strip": "~0.2.1",
-    "http-server": "^0.7.5",
-    "karma": "~0.10",
-    "karma-jasmine": "~0.1",
-    "karma-junit-reporter": "~0.1",
-    "karma-ng-scenario": "~0.1",
-    "phantomjs": "~1.9"
+    "http-server": "^0.7.5"
   }
 }

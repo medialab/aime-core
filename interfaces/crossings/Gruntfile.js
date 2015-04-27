@@ -7,26 +7,25 @@ module.exports = function(grunt) {
     // settings set in config.json will be available as constants within angular
     conf: grunt.file.readJSON('config.json'),
     ngconstant: {
-      options: {
-        space: '  '
-      },
       // Environment targets
-      development: [{
-        dest: 'app/js/config.js',
-        wrap: '"use strict";\n\n <%= __ngModule %>',
-        name: 'config',
+      development: {
+        options: {
+          dest: 'app/js/config.js',
+          name: 'config'
+        },
         constants: {
-          settings: '<%= conf.settings.dev %>'
+          settings: grunt.file.readJSON('config.json').settings.dev
         }
-      }],
-      production: [{
-        dest: 'app/js/config.js',
-        wrap: '"use strict";\n\n <%= __ngModule %>',
-        name: 'config',
+      },
+      production: {
+        options: {
+          dest: 'app/js/config.js',
+          name: 'config'
+        },
         constants: {
-          settings: '<%= conf.settings.prod %>'
+          settings: grunt.file.readJSON('config.json').settings.prod
         }
-      }]
+      }
     },
 
     env : {
@@ -90,7 +89,7 @@ module.exports = function(grunt) {
           //'app/lib/angular-inview/angular-inview.js',
           //'app/lib/hamsterjs/hamster.js',
           //'app/lib/angular-mousewheel/mousewheel.js',
-          
+
           // 'app/js/config.js',
           // 'app/js/app.js',
           // 'app/js/services.js',
@@ -115,7 +114,7 @@ module.exports = function(grunt) {
                 {
                     expand: true,
                     flatten: true,
-                    src: [ 
+                    src: [
                         'app/lib/font-awesome/fonts/**'
                     ],
                     dest: 'dist/fonts/',
@@ -124,7 +123,7 @@ module.exports = function(grunt) {
                 {
                     expand: true,
                     flatten: true,
-                    src: [ 
+                    src: [
                         'app/lib/font-awesome/css/**'
                     ],
                     dest: 'dist/css/',
@@ -133,7 +132,7 @@ module.exports = function(grunt) {
                 {
                     expand: true,
                     flatten: true,
-                    src: [ 
+                    src: [
                         'app/fonts/**'
                     ],
                     dest: 'dist/fonts/',
@@ -224,7 +223,7 @@ module.exports = function(grunt) {
     }
 
   });
-  
+
   grunt.loadNpmTasks('grunt-ng-constant');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-copy' );
