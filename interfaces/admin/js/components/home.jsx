@@ -38,6 +38,7 @@ export default class Home extends PureComponent {
   render() {
     return (
       <div>
+        <h1>Aime Quinoa</h1>
         <Row>
           <Col md={6}>
             <Box selected={this.props.lang === 'en'}

@@ -6,6 +6,11 @@
  */
 const actions = {
 
+  // Login attempt
+  'login:attempt': function({data}) {
+    console.log('ici', data);
+  },
+
   // Changing the current language
   'lang:change': function({data}) {
     if (this.get('lang') === data)

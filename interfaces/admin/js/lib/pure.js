@@ -7,7 +7,7 @@
  */
 import React from 'react/addons';
 
-var fn = React.addons.PureRenderMixin.shouldComponentUpdate;
+const fn = React.addons.PureRenderMixin.shouldComponentUpdate;
 
 export default class PureComponent {
   shouldComponentUpdate() {

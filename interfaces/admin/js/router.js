@@ -8,7 +8,7 @@ import tree from './state.js';
 import Router from 'baobab-router';
 
 export default new Router(tree, {
-  readOnly: [['logged']],
+  readOnly: [['user']],
   defaultRoute: '/',
   routes: [
 
@@ -16,7 +16,7 @@ export default new Router(tree, {
     {
       path: '/login',
       state: {
-        logged: false,
+        user: null,
         view: 'login'
       }
     },
@@ -25,7 +25,6 @@ export default new Router(tree, {
     {
       path: '/',
       state: {
-        logged: true,
         view: null
       }
     }

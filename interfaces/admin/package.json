@@ -31,6 +31,7 @@
     "baobab-router": "^1.0.0",
     "classnames": "^2.0.0",
     "djax-client": "^0.1.0",
+    "lodash": "^3.8.0",
     "marked": "^0.3.3",
     "react": "^0.13.2",
     "react-bootstrap": "^0.21.2"
