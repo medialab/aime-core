@@ -1,0 +1,44 @@
+/**
+ * AIME-admin Stylesheet
+ * ======================
+ */
+
+/*
+ * Titles
+ */
+h1 {
+  color: black;
+  font-family: "NovelMonoPro-Regular", Arial, sans-serif;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+/*
+ * Layout
+ */
+#middle {
+  text-align: center;
+}
+
+.box {
+  height: 45px;
+  background-color: #eeeeee;
+  text-align: center;
+  line-height: 45px;
+  font-family: "NovelMonoPro-RegularIt", Arial, sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.box:hover {
+  background-color: #cecece;
+}
+
+.box.selected {
+  color: white;
+  background-color: #353535;
+}
+
+.spaced {
+  margin-top: 10px;
+}

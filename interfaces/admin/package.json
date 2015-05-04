@@ -1,0 +1,48 @@
+{
+  "name": "aime-admin",
+  "version": "0.1.0",
+  "description": "The AIME project's admin UI.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "LGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/medialab/aime-core"
+  },
+  "bugs": {
+    "url": "https://github.com/medialab/aime-core/issues"
+  },
+  "homepage": "https://github.com/medialab/aime-core",
+  "contributors": [
+    {
+      "name": "Paul Girard",
+      "url": "https://github.com/paulgirard"
+    },
+    {
+      "name": "Guillaume Plique",
+      "url": "https://github.com/Yomguithereal"
+    }
+  ],
+  "dependencies": {
+    "baobab": "^1.0.3",
+    "baobab-react": "^0.1.0",
+    "baobab-router": "^1.0.0",
+    "classnames": "^2.0.0",
+    "djax-client": "^0.1.0",
+    "marked": "^0.3.3",
+    "react": "^0.13.2",
+    "react-bootstrap": "^0.21.2"
+  },
+  "devDependencies": {
+    "babel-core": "^5.2.9",
+    "babel-loader": "^5.0.0",
+    "css-loader": "^0.12.0",
+    "json-loader": "^0.5.1",
+    "react-hot-loader": "^1.2.6",
+    "style-loader": "^0.12.1",
+    "webpack": "^1.8.11",
+    "webpack-dev-server": "^1.8.2"
+  }
+}

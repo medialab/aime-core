@@ -1,0 +1,76 @@
+/**
+ * URL: http://www.myfonts.com/fonts/burodunst/novel-[\w-]+/[\w-]+/
+ * Copyright: Copyright (c) 2010 by Christoph Dunst. All rights reserved.
+ */
+@font-face {
+  font-family: 'NovelSansPro-Regular';
+  src: url('../fonts/NovelSansPro-Regular.eot');
+  src: url('../fonts/NovelSansPro-Regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NovelSansPro-Regular.woff') format('woff'),
+       url('../fonts/NovelSansPro-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NovelSansPro-LightIt';
+  src: url('../fonts/NovelSansPro-LightIt.eot');
+  src: url('../fonts/NovelSansPro-LightIt.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NovelSansPro-LightIt.woff') format('woff'),
+       url('../fonts/NovelSansPro-LightIt.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NovelSansPro-SemiBold';
+  src: url('../fonts/NovelSansPro-SemiBold.eot');
+  src: url('../fonts/NovelSansPro-SemiBold.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NovelSansPro-SemiBold.woff') format('woff'),
+       url('../fonts/NovelSansPro-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NovelSansPro-Bold';
+  src: url('../fonts/NovelSansPro-Bold.eot');
+  src: url('../fonts/NovelSansPro-Bold.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NovelSansPro-Bold.woff') format('woff'),
+       url('../fonts/NovelSansPro-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NovelPro-Regular';
+  src: url('../fonts/NovelPro-Regular.eot');
+  src: url('../fonts/NovelPro-Regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NovelPro-Regular.woff') format('woff'),
+       url('../fonts/NovelPro-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NovelPro-It';
+  src: url('../fonts/NovelPro-It.eot');
+  src: url('../fonts/NovelPro-It.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NovelPro-It.woff') format('woff'),
+       url('../fonts/NovelPro-It.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NovelMonoPro-Regular';
+  src: url('../fonts/NovelMonoPro-Regular.eot');
+  src: url('../fonts/NovelMonoPro-Regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NovelMonoPro-Regular.woff') format('woff'),
+       url('../fonts/NovelMonoPro-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NovelMonoPro-Bold';
+  src: url('../fonts/NovelMonoPro-Bold.eot');
+  src: url('../fonts/NovelMonoPro-Bold.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NovelMonoPro-Bold.woff') format('woff'),
+       url('../fonts/NovelMonoPro-Bold.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'NovelMonoPro-RegularIt';
+  src: url('../fonts/NovelMonoPro-RegularIt.eot');
+  src: url('../fonts/NovelMonoPro-RegularIt.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NovelMonoPro-RegularIt.woff') format('woff'),
+       url('../fonts/NovelMonoPro-RegularIt.ttf') format('truetype');
+}
