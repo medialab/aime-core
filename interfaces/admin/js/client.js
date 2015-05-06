@@ -33,7 +33,10 @@ export default function(scope) {
       // Login
       login: {
         url: '/login',
-        type: 'POST'
+        type: 'POST',
+        success: function({result}) {
+          this.set('user', result.user || null);
+        }
       },
 
       // Logout

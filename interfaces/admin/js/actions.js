@@ -6,12 +6,20 @@
  */
 const actions = {
 
-  // Login attempt
+  /**
+   * Login to the API
+   */
   'login:attempt': function({data}) {
-    console.log('ici', data);
+    if (!data.email || !data.password)
+      return;
+
+    // Calling service
+    this.client.login({data: data});
   },
 
-  // Changing the current language
+  /**
+   * Changing the current language
+   */
   'lang:change': function({data}) {
     if (this.get('lang') === data)
       return;

@@ -8,15 +8,16 @@ import tree from './state.js';
 import Router from 'baobab-router';
 
 export default new Router(tree, {
-  readOnly: [['user']],
   defaultRoute: '/',
   routes: [
 
     // Login
     {
       path: '/login',
+      facets: {
+        logged: false
+      },
       state: {
-        user: null,
         view: 'login'
       }
     },
@@ -24,6 +25,9 @@ export default new Router(tree, {
     // Home
     {
       path: '/',
+      facets: {
+        logged: true
+      },
       state: {
         view: null
       }

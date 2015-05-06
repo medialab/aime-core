@@ -6,16 +6,26 @@
  */
 import Baobab from 'baobab';
 import actions from './actions.js';
-import createClient from './client.js';
+import bindClient from './client.js';
+import bindFetching from './fetching.js';
+import config from '../config.json';
+import _ from 'lodash';
 
+// Reading storage
+const storageData = JSON.parse(localStorage.getItem(config.storageKey) || '{}');
+
+// State
+const state = {
+  lang: null,
+  user: null,
+  view: null
+};
+
+// Tree definition
 const tree = new Baobab(
 
   // Data
-  {
-    lang: null,
-    user: null,
-    view: null
-  },
+  _.merge({}, state, storageData),
 
   // Options
   {
@@ -32,8 +42,25 @@ const tree = new Baobab(
   }
 );
 
+// Local storage synchronization
+var storageFacet = tree.createFacet({
+  cursors: {
+    lang: ['lang'],
+    user: ['user'],
+    view: ['view']
+  }
+});
+
+storageFacet.on('update', function() {
+  localStorage.setItem(
+    config.storageKey,
+    JSON.stringify(storageFacet.get())
+  );
+});
+
 // Bindings
-tree.client = createClient(tree);
+tree.client = bindClient(tree);
+bindFetching(tree);
 tree.on(actions);
 
 export default tree;

@@ -26,9 +26,9 @@
     }
   ],
   "dependencies": {
-    "baobab": "^1.0.3",
+    "baobab": "git+https://github.com/Yomguithereal/baobab.git",
     "baobab-react": "^0.1.0",
-    "baobab-router": "^1.0.0",
+    "baobab-router": "git+https://github.com/jacomyal/baobab-router.git",
     "classnames": "^2.0.0",
     "djax-client": "^0.1.0",
     "lodash": "^3.8.0",

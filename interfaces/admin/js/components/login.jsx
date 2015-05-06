@@ -28,10 +28,10 @@ export default class Login extends PureComponent {
         <h1>Aime Quinoa - Login</h1>
         <Input type="text"
                placeholder="Login"
-               ref="user" />
+               ref="email" />
         <Input type="password"
                placeholder="Password"
-               ref="pass" />
+               ref="password" />
         <Input type="submit" value="Log" />
       </form>
     );

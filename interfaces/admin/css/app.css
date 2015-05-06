@@ -10,7 +10,9 @@ h1 {
   color: black;
   font-family: "NovelMonoPro-Regular", Arial, sans-serif;
   font-size: 15px;
-  text-transform: uppercase;
+  font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
+  -webkit-font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
+  text-rendering: optimizeLegibility;
 }
 
 /*
