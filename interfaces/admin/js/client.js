@@ -46,6 +46,14 @@ export default function(scope) {
         success: function() {
           this.set('user', null);
         }
+      },
+
+      // Book data
+      book: {
+        url: '/book',
+        success: function({result}) {
+          this.set(['data', 'book'], result);
+        }
       }
     }
   });

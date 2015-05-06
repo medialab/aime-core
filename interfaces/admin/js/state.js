@@ -16,9 +16,16 @@ const storageData = JSON.parse(localStorage.getItem(config.storageKey) || '{}');
 
 // State
 const state = {
-  lang: null,
+
+  // Basics
+  lang: 'en',
   user: null,
-  view: null
+  view: 'home',
+
+  // Misc data
+  data: {
+    book: null
+  }
 };
 
 // Tree definition
@@ -43,7 +50,7 @@ const tree = new Baobab(
 );
 
 // Local storage synchronization
-var storageFacet = tree.createFacet({
+const storageFacet = tree.createFacet({
   cursors: {
     lang: ['lang'],
     user: ['user'],

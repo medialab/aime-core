@@ -25,6 +25,16 @@ const actions = {
       return;
 
     this.set('lang', data);
+  },
+
+  /**
+   * Changing the current view
+   */
+  'view:change': function({data}) {
+    if (this.get('view') === data)
+      return;
+
+    this.set('view', data);
   }
 };
 

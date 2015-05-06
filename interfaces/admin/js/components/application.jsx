@@ -12,13 +12,13 @@ import Col from 'react-bootstrap/lib/Col';
 import {branch} from 'baobab-react/decorators';
 import Home from './home.jsx';
 import Login from './login.jsx';
+import Book from './book.jsx';
 
-const views = x => {
-
-  return ({
-    login: Login
-  })[x] || Home
-};
+const views = x => ({
+  login: Login,
+  home: Home,
+  book: Book
+})[x];
 
 @branch({
   cursors: {
@@ -31,15 +31,7 @@ export default class Application extends PureComponent {
 
     return (
       <Grid>
-        <Row>
-          <div>
-            <Col md={4} />
-            <Col md={4} id="middle">
-              <Component />
-            </Col>
-            <Col md={4} />
-          </div>
-        </Row>
+        <Component />
       </Grid>
     );
   }

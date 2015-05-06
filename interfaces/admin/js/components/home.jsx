@@ -35,34 +35,46 @@ export default class Home extends PureComponent {
     this.context.tree.emit('lang:change', lang);
   }
 
+  changeView(view) {
+    this.context.tree.emit('view:change', view);
+  }
+
   render() {
     return (
-      <div>
-        <h1>Aime Quinoa</h1>
-        <Row>
-          <Col md={6}>
-            <Box selected={this.props.lang === 'en'}
-                 onClick={this.changeLang.bind(this, 'en')}>
-              en
-            </Box>
-          </Col>
-          <Col md={6}>
-            <Box selected={this.props.lang === 'fr'}
-                 onClick={this.changeLang.bind(this, 'fr')}>
-              fr
-            </Box>
-          </Col>
-        </Row>
-        {models.map(m => {
-          return (
-            <Row key={m.id}>
-              <Col md={12} className="spaced">
-                <Box>{m.label}</Box>
+      <Row>
+        <Col md={4} />
+        <Col md={4} id="middle">
+          <div>
+            <h1>Aime Quinoa</h1>
+            <Row>
+              <Col md={6}>
+                <Box selected={this.props.lang === 'en'}
+                     onClick={this.changeLang.bind(this, 'en')}>
+                  en
+                </Box>
+              </Col>
+              <Col md={6}>
+                <Box selected={this.props.lang === 'fr'}
+                     onClick={this.changeLang.bind(this, 'fr')}>
+                  fr
+                </Box>
               </Col>
             </Row>
-          );
-        })}
-      </div>
+            {models.map(m => {
+              return (
+                <Row key={m.id}>
+                  <Col md={12} className="spaced">
+                    <Box onClick={this.changeView.bind(this, m.id)}>
+                      {m.label}
+                    </Box>
+                  </Col>
+                </Row>
+              );
+            })}
+          </div>
+        </Col>
+        <Col md={4} />
+      </Row>
     );
   }
 }
