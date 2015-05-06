@@ -8,6 +8,7 @@ import React from 'react';
 import PureComponent from '../lib/pure.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import {Box} from './misc.jsx';
 import {branch} from 'baobab-react/decorators';
 
 /**
@@ -16,7 +17,7 @@ import {branch} from 'baobab-react/decorators';
 class Chapter extends PureComponent {
   render() {
     return (
-      <Box>{this.props.name}</Box>
+      <Box>{this.props.title}</Box>
     );
   }
 }
@@ -30,14 +31,21 @@ class Chapter extends PureComponent {
   }
 })
 class List extends PureComponent {
+  renderChapter(chapter) {
+    return (
+      <li key={chapter.id} className="spaced">
+        <Chapter title={chapter.title} />
+      </li>
+    );
+  }
+
   render() {
-    console.log('render list')
     const chapters = this.props.chapters;
 
     if (!chapters)
       return <div>...</div>;
     else
-      return <div>List here.</div>;
+      return <ul>{this.props.chapters.map(this.renderChapter)}</ul>;
   }
 }
 

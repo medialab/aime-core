@@ -17,10 +17,12 @@ function compare(a1, a2) {
   return true;
 }
 
+// TODO: code an abstraction over this
+// TODO: code a service lock to avoid stupidities
+// TODO: don't access API if not logged
 export default function(tree) {
 
   tree.on('get', function({data: {path, data}}) {
-    console.log(path, data);
     if (compare(path, ['data', 'book']) && !data)
       tree.client.book();
   });
