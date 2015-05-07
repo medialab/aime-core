@@ -78,7 +78,7 @@ var sessionOptions = {
 if (env === 'dev')
   sessionOptions.store = new FileStore({
     path: config.sessionStore,
-    ttl: 30 * 24 * 60 * 60 * 1000
+    ttl: 30 * 24 * 60 * 60
   });
 
 // Utilities
