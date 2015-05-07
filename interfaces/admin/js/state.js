@@ -45,7 +45,8 @@ const tree = new Baobab(
           return !!data.user;
         }
       }
-    }
+    },
+    asynchronous: false
   }
 );
 

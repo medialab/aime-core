@@ -7,8 +7,32 @@
 import tree from './state.js';
 import Router from 'baobab-router';
 
+// NOTE: problemn is with the slash / route
 export default new Router(tree, {
+  defaultRoute: '/home',
   routes: [
+
+    // Home
+    {
+      path: '/home',
+      facets: {
+        logged: true
+      },
+      state: {
+        view: 'home'
+      }
+    },
+
+    // Book
+    {
+      path: '/book',
+      facets: {
+        logged: true
+      },
+      state: {
+        view: 'book'
+      }
+    },
 
     // Login
     {
@@ -19,31 +43,6 @@ export default new Router(tree, {
       state: {
         view: 'login'
       }
-    },
-
-    {
-      defaultRoute: '/',
-      facets: {
-        logged: true
-      },
-      routes: [
-
-        // Home
-        {
-          path: '/',
-          state: {
-            view: 'home'
-          }
-        },
-
-        // Book
-        {
-          path: '/book',
-          state: {
-            view: 'book'
-          }
-        }
-      ]
     }
   ]
 });

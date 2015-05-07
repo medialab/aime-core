@@ -9,7 +9,7 @@ import React from 'react';
 import {root} from 'baobab-react/higher-order';
 import Application from './components/application.jsx';
 import client from './client.js';
-// import router from './router.js';
+import router from './router.js';
 
 // Style
 require('../css/app.css');

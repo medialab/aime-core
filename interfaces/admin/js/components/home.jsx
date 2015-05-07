@@ -60,8 +60,7 @@ export default class Home extends PureComponent {
                 </Box>
               </Col>
             </Row>
-            {models.map(m => {
-              return (
+            {models.map(m => (
                 <Row key={m.id}>
                   <Col md={12} className="spaced">
                     <Box onClick={this.changeView.bind(this, m.id)}>
@@ -69,8 +68,8 @@ export default class Home extends PureComponent {
                     </Box>
                   </Col>
                 </Row>
-              );
-            })}
+              )
+            )}
           </div>
         </Col>
         <Col md={4} />

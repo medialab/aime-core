@@ -35,7 +35,7 @@ export default function(scope) {
         url: '/login',
         type: 'POST',
         success: function({result}) {
-          this.set('user', result.user || null);
+          this.set('user', result || null);
         }
       },
 
