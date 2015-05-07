@@ -10,14 +10,22 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import {Box} from './misc.jsx';
 import {branch} from 'baobab-react/decorators';
+import classes from 'classnames';
 
 /**
- * A chapter
+ * Main component
  */
-class Chapter extends PureComponent {
+export default class Book extends PureComponent {
   render() {
     return (
-      <Box>{this.props.title}</Box>
+      <Row>
+        <Col md={4} />
+        <Col md={4} id="middle">
+          <h1>The Book</h1>
+          <ChapterList />
+        </Col>
+        <Col md={4} />
+      </Row>
     );
   }
 }
@@ -30,13 +38,9 @@ class Chapter extends PureComponent {
     chapters: ['data', 'book']
   }
 })
-class List extends PureComponent {
+class ChapterList extends PureComponent {
   renderChapter(chapter) {
-    return (
-      <li key={chapter.id} className="spaced">
-        <Chapter title={chapter.title} />
-      </li>
-    );
+    return <Chapter key={chapter.id} chapter={chapter} />;
   }
 
   render() {
@@ -50,19 +54,66 @@ class List extends PureComponent {
 }
 
 /**
- * Main component
+ * A chapter
  */
-export default class Book extends PureComponent {
+class Chapter extends PureComponent {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {collapsed: true};
+  }
+
+  handleClick() {
+    this.setState({collapsed: !this.state.collapsed});
+  }
+
   render() {
+    const chapter = this.props.chapter;
+
     return (
-      <Row>
-        <Col md={4} />
-        <Col md={4} id="middle">
-          <h1>The Book</h1>
-          <List />
-        </Col>
-        <Col md={4} />
-      </Row>
+      <li onClick={this.handleClick.bind(this)}>
+        <div className="chapter-box">
+          <span>{chapter.display_number}</span>
+          {' ' + chapter.title}
+        </div>
+        <SubheadingList subheadings={chapter.children} visible={!this.state.collapsed} />
+      </li>
+    );
+  }
+}
+
+/**
+ * List displaying a chapter's subheading
+ */
+class SubheadingList extends PureComponent {
+  renderSubheading(subheading) {
+    return <Subheading key={subheading.id} subheading={subheading} />;
+  }
+
+  render() {
+    const {subheadings, visible} = this.props;
+
+    return (
+      <ul className={classes({hidden: !visible})}>
+        {subheadings.map(this.renderSubheading)}
+      </ul>
+    );
+  }
+}
+
+/**
+ * A subheading
+ */
+class Subheading extends PureComponent {
+  render() {
+    const {subheading} = this.props;
+
+    return (
+      <li>
+        <div className="subheading-box">
+          {subheading.title}
+        </div>
+      </li>
     );
   }
 }

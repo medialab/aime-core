@@ -4,6 +4,13 @@
  */
 
 /*
+ * Globals
+ */
+ul {
+  list-style-type: none;
+}
+
+/*
  * Titles
  */
 h1 {
@@ -20,6 +27,10 @@ h1 {
  */
 #middle {
   text-align: center;
+}
+
+.plain-list {
+  list-style-type: none;
 }
 
 .box {
@@ -43,4 +54,28 @@ h1 {
 
 .spaced {
   margin-top: 10px;
+}
+
+.chapter-box {
+  cursor: pointer;
+  background-color: #eeeeee;
+  font-family: "NovelMonoPro-RegularIt", Arial, sans-serif;
+  font-size: 15px;
+  text-align: left;
+  padding: 10px 5px;
+  margin-bottom: 10px;
+}
+
+.chapter-box:hover {
+  background-color: #cecece;
+}
+
+.subheading-box {
+  cursor: pointer;
+  background-color: #eeeeee;
+  text-align: left;
+  font-family: "NovelMonoPro-RegularIt", Arial, sans-serif;
+  font-size: 15px;
+  padding: 10px 5px;
+  margin-bottom: 10px;
 }
