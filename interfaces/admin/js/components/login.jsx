@@ -6,6 +6,8 @@
  */
 import React from 'react';
 import Input from 'react-bootstrap/lib/Input';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
 import PureComponent, {BranchedComponent} from '../lib/pure.js';
 import PropTypes from 'baobab-react/prop-types';
 import _ from 'lodash';
@@ -20,16 +22,22 @@ export default class Login extends BranchedComponent {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        <h1>Aime Quinoa - Login</h1>
-        <Input type="text"
-               placeholder="Login"
-               ref="email" />
-        <Input type="password"
-               placeholder="Password"
-               ref="password" />
-        <Input type="submit" value="Log" />
-      </form>
+      <Row>
+        <Col md={4} />
+        <Col md={4}>
+          <form onSubmit={this.handleSubmit.bind(this)}>
+            <h1>Aime Quinoa - Login</h1>
+            <Input type="text"
+                   placeholder="Login"
+                   ref="email" />
+            <Input type="password"
+                   placeholder="Password"
+                   ref="password" />
+            <Input type="submit" value="Log" />
+          </form>
+        </Col>
+        <Col md={4} />
+      </Row>
     );
   }
 }
