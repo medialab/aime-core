@@ -6,7 +6,7 @@
  * language and a starting model.
  */
 import React from 'react';
-import PureComponent from '../lib/pure.js';
+import PureComponent, {BranchedComponent} from '../lib/pure.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import {branch} from 'baobab-react/decorators';
@@ -26,7 +26,7 @@ const models = [
     lang: ['lang']
   }
 })
-export default class Home extends PureComponent {
+export default class Home extends BranchedComponent {
   static contextTypes = {
     tree: PropTypes.baobab
   };

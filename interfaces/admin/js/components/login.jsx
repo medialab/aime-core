@@ -6,15 +6,11 @@
  */
 import React from 'react';
 import Input from 'react-bootstrap/lib/Input';
-import PureComponent from '../lib/pure.js';
+import PureComponent, {BranchedComponent} from '../lib/pure.js';
 import PropTypes from 'baobab-react/prop-types';
 import _ from 'lodash';
 
-export default class Login extends PureComponent {
-  static contextTypes = {
-    tree: PropTypes.baobab
-  };
-
+export default class Login extends BranchedComponent {
   handleSubmit(e) {
     const data = _.mapValues(this.refs, ref => ref.getValue());
 
