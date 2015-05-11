@@ -6,7 +6,6 @@
  */
 import React from 'react';
 import PureComponent from '../lib/pure.js';
-import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import {branch} from 'baobab-react/decorators';
@@ -30,9 +29,9 @@ export default class Application extends PureComponent {
     const Component = views(this.props.view);
 
     return (
-      <Grid>
+      <div className="container-fluid full-height">
         <Component />
-      </Grid>
+      </div>
     );
   }
 }

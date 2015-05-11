@@ -35,6 +35,38 @@ const actions = {
       return;
 
     this.set('view', data);
+  },
+
+  /**
+   * Selecting a chapter
+   */
+  'chapter:select': function({data}) {
+    var path = ['states', 'book', 'selected', 'chapter'],
+        selected = this.get(path);
+
+    if (data === selected)
+      this.set(path, null);
+    else
+      this.set(path, data);
+  },
+
+  /**
+   * Selecting a subheading
+   */
+  'subheading:select': function({data}) {
+    this.set(['states', 'book', 'selected', 'subheading'], data);
+    this.set(
+      ['states', 'editor', 'buffer'],
+      this.facets.selectedSubheading.get().children[0].markdown
+    );
+  },
+
+  /**
+   * Updating the editor's buffer
+   */
+  'buffer:change': function({data}) {
+    this.set(['states', 'editor', 'buffer'], data);
+    this.commit();
   }
 };
 

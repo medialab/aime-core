@@ -27,10 +27,6 @@ const models = [
   }
 })
 export default class Home extends BranchedComponent {
-  static contextTypes = {
-    tree: PropTypes.baobab
-  };
-
   changeLang(lang) {
     this.context.tree.emit('lang:change', lang);
   }

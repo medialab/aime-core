@@ -22,6 +22,19 @@ const state = {
   user: null,
   view: 'home',
 
+  // Views states
+  states: {
+    book: {
+      selected: {
+        chapter: null,
+        subheading: null
+      }
+    },
+    editor: {
+      buffer: null
+    }
+  },
+
   // Misc data
   data: {
     book: null
@@ -37,6 +50,8 @@ const tree = new Baobab(
   // Options
   {
     facets: {
+
+      // Is the user currently logged?
       logged: {
         cursors: {
           user: ['user']
@@ -44,9 +59,24 @@ const tree = new Baobab(
         get: function(data) {
           return !!data.user;
         }
+      },
+
+      // The selected subheading
+      selectedSubheading: {
+        cursors: {
+          book: ['data', 'book'],
+          selected: ['states', 'book', 'selected', 'subheading']
+        },
+        get: function(data) {
+          return _(data.book)
+            .map('children')
+            .flatten()
+            .find({id: data.selected});
+        }
       }
     },
-    asynchronous: false
+    asynchronous: false,
+    syncwrite: true
   }
 );
 
@@ -55,6 +85,7 @@ const storageFacet = tree.createFacet({
   cursors: {
     lang: ['lang'],
     user: ['user'],
+    states: ['states'],
     view: ['view']
   }
 });

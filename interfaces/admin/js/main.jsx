@@ -12,6 +12,8 @@ import client from './client.js';
 import router from './router.js';
 
 // Style
+require('../css/codemirror.css');
+require('../css/codemirror.theme.css');
 require('../css/app.css');
 
 // Composing tree

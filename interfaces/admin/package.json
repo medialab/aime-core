@@ -30,6 +30,7 @@
     "baobab-react": "^0.1.1",
     "baobab-router": "git+https://github.com/jacomyal/baobab-router.git",
     "classnames": "^2.0.0",
+    "codemirror": "^5.2.0",
     "djax-client": "^0.1.0",
     "lodash": "^3.8.0",
     "marked": "^0.3.3",
