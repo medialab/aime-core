@@ -19,27 +19,29 @@ import classes from 'classnames';
  */
 @branch({
   cursors: {
+    data: ['data', 'book'],
     selected: ['states', 'book', 'selected', 'subheading']
   }
 })
 export default class Book extends PureComponent {
   render() {
-    const isSomethingSelected = !!this.props.selected;
+    const isSomethingSelected = !!this.props.selected,
+          isThereAnyData = !!this.props.data;
 
     return (
       <Row className="full-height">
-        <Col className={classes({hidden: isSomethingSelected})} md={4} />
+        <Col className={classes({hidden: isThereAnyData && isSomethingSelected})} md={4} />
         <Col md={4} id="middle">
           <h1>The Book</h1>
           <ChapterList />
         </Col>
         <Col md={4}>
-          {isSomethingSelected ?
+          {isThereAnyData && isSomethingSelected ?
             <Editor buffer={this.props.buffer} /> :
             <div />}
         </Col>
         <Col md={4}>
-          {isSomethingSelected ?
+          {isThereAnyData && isSomethingSelected ?
             <Preview buffer={this.props.buffer} /> :
             <div />}
         </Col>

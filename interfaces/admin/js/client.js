@@ -30,6 +30,14 @@ export default function(scope) {
         }
       },
 
+      // Switching language
+      lang: {
+        url: '/lang',
+        success: function({result}) {
+          console.log(result);
+        }
+      },
+
       // Login
       login: {
         url: '/login',
