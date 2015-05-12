@@ -41,7 +41,7 @@ const actions = {
    * Selecting a chapter
    */
   'chapter:select': function({data}) {
-    var path = ['states', 'book', 'selected', 'chapter'],
+    const path = ['states', 'book', 'selected', 'chapter'],
         selected = this.get(path);
 
     if (data === selected)

@@ -7,9 +7,9 @@
 import React from 'react';
 import PureComponent from '../lib/pure.js';
 import CodeMirror from 'codemirror';
-import marked from 'marked';
 import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
+import parser from '../lib/parser.js';
 
 // Importing needed codemirror assets
 require('codemirror/mode/markdown/markdown');
@@ -28,7 +28,10 @@ export class Editor extends PureComponent {
     this.editor = CodeMirror.fromTextArea(
       React.findDOMNode(this.refs.editor),
       {
-        mode: 'markdown',
+        mode: {
+          name: 'markdown',
+          underscoresBreakWords: false
+        },
         theme: 'base16-light',
         lineWrapping: true
       }
@@ -46,7 +49,7 @@ export class Editor extends PureComponent {
   }
 
   componentWillReceiveProps(props) {
-    var currentValue = this.editor.doc.getValue();
+    const currentValue = this.editor.doc.getValue();
 
     if (currentValue !== props.buffer)
       this.editor.doc.setValue(props.buffer);
@@ -76,7 +79,7 @@ export class Editor extends PureComponent {
 })
 export class Preview extends PureComponent {
   render() {
-    const markdown = marked(this.props.buffer);
+    const markdown = parser(this.props.buffer);
 
     return (
       <div className="editor-container full-height">
