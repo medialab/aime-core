@@ -34,6 +34,28 @@ export default new Router(tree, {
       }
     },
 
+    // Vocabulary
+    {
+      path: '/voc',
+      facets: {
+        logged: true
+      },
+      state: {
+        view: 'voc'
+      }
+    },
+
+    // Documents
+    {
+      path: '/doc',
+      facets: {
+        logged: true
+      },
+      state: {
+        view: 'doc'
+      }
+    },
+
     // Login
     {
       path: '/login',

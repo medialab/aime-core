@@ -12,11 +12,15 @@ import {branch} from 'baobab-react/decorators';
 import Home from './home.jsx';
 import Login from './login.jsx';
 import Book from './book.jsx';
+import Vocabulary from './vocabulary.jsx';
+import Documents from './documents.jsx';
 
 const views = x => ({
   login: Login,
   home: Home,
-  book: Book
+  book: Book,
+  voc: Vocabulary,
+  doc: Documents
 })[x];
 
 @branch({
