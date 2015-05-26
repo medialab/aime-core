@@ -18,7 +18,8 @@ import classes from 'classnames';
 @branch({
   cursors: {
     data: ['data', 'vocabulary'],
-    selected: ['states', 'book', 'selected']
+    buffer: ['states', 'vocabulary', 'editor'],
+    selected: ['states', 'vocabulary', 'selected']
   }
 })
 export default class Vocabulary extends PureComponent {
@@ -31,19 +32,66 @@ export default class Vocabulary extends PureComponent {
         <Col className={classes({hidden: isThereAnyData && isSomethingSelected})} md={4} />
         <Col md={4} id="middle">
           <h1>Vocabulary</h1>
-          <div />
+          <VocabularyList vocabulary={this.props.data} />
         </Col>
         <Col md={4}>
-          {isThereAnyData && isSomethingSelected ?
-            <Editor buffer={this.props.buffer} /> :
+          {isThereAnyData && isSomethingSelected && this.props.buffer ?
+            <Editor path={['states', 'book', 'editor']} buffer={this.props.buffer} /> :
             <div />}
         </Col>
         <Col md={4}>
-          {isThereAnyData && isSomethingSelected ?
+          {isThereAnyData && isSomethingSelected && this.props.buffer  ?
             <Preview buffer={this.props.buffer} /> :
             <div />}
         </Col>
       </Row>
+    );
+  }
+}
+
+/**
+ * List displaying the different vocabulary items
+ */
+@branch({
+  cursors: {
+    selected: ['states', 'vocabulary', 'selected']
+  }
+})
+class VocabularyList extends PureComponent {
+  renderItem(item) {
+    return <VocabularyItem key={item.id}
+                           item={item}
+                           active={this.props.selected === item.id} />;
+  }
+
+  render() {
+    const vocabulary = this.props.vocabulary;
+
+    if (!vocabulary)
+      return <div>...</div>;
+    else
+      return <ul>{vocabulary.map(this.renderItem.bind(this))}</ul>;
+  }
+}
+
+/**
+ * Vocabulary item
+ */
+class VocabularyItem extends PureComponent {
+  handleClick() {
+    console.log('clicked');
+  }
+
+  render() {
+    const item = this.props.item;
+
+    return (
+      <li>
+        <div className={classes('chapter-box', {active: this.props.active})}
+             onClick={this.handleClick.bind(this)}>
+          {item.title}
+        </div>
+      </li>
     );
   }
 }

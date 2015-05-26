@@ -8,7 +8,6 @@ import React from 'react';
 import PureComponent from '../lib/pure.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import {Box} from './misc.jsx';
 import {Editor, Preview} from './editor.jsx';
 import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
@@ -34,7 +33,7 @@ export default class Book extends PureComponent {
         <Col className={classes({hidden: isThereAnyData && isSomethingSelected})} md={4} />
         <Col md={4} id="middle">
           <h1>The Book</h1>
-          <ChapterList />
+          <ChapterList chapters={this.props.data} />
         </Col>
         <Col md={4}>
           {isThereAnyData && isSomethingSelected && this.props.buffer ?
@@ -56,7 +55,6 @@ export default class Book extends PureComponent {
  */
 @branch({
   cursors: {
-    chapters: ['data', 'book'],
     selected: ['states', 'book', 'selected', 'chapter']
   }
 })
@@ -73,7 +71,7 @@ class ChapterList extends PureComponent {
     if (!chapters)
       return <div>...</div>;
     else
-      return <ul>{this.props.chapters.map(this.renderChapter.bind(this))}</ul>;
+      return <ul>{chapters.map(this.renderChapter.bind(this))}</ul>;
   }
 }
 
