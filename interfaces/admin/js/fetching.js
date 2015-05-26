@@ -23,7 +23,9 @@ function compare(a1, a2) {
 export default function(tree) {
 
   tree.on('get', function({data: {path, data}}) {
-    if (compare(path, ['data', 'book']) && !data)
+    if (!data && compare(path, ['data', 'book']))
       tree.client.book();
+    if (!data && compare(path, ['data', 'vocabulary']))
+      tree.client.vocabulary();
   });
 };

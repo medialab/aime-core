@@ -20,6 +20,8 @@ const RE_DOCS = /{(doc_\d+(?:,doc_\d+)*)}/,
 export default function(string) {
   const renderer = new Renderer();
 
+  string = string || '';
+
   const originals = {
     link: renderer.link
   };

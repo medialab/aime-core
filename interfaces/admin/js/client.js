@@ -60,6 +60,22 @@ export default function(scope) {
         success: function({result}) {
           this.set(['data', 'book'], result);
         }
+      },
+
+      // Vocabulary data
+      vocabulary: {
+        url: '/voc',
+        success: function({result}) {
+          this.set(['data', 'vocabulary'], result);
+        }
+      },
+
+      // Document data
+      documents: {
+        url: '/doc',
+        success: function({result}) {
+          this.set(['data', 'documents'], result);
+        }
       }
     }
   });

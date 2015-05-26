@@ -33,9 +33,6 @@ const actions = {
     // Clearing states
     this.set('states', null);
 
-    // Clearing current editor buffer
-    this.set(['states', 'editor', 'buffer'], null);
-
     // Effectively changing client's lang
     this.client.lang({params: {lang: data}});
   },
@@ -67,18 +64,18 @@ const actions = {
    * Selecting a subheading
    */
   'subheading:select': function({data}) {
-    this.set(['states', 'book', 'selected', 'subheading'], data);
-    this.set(
-      ['states', 'editor', 'buffer'],
-      this.facets.selectedSubheading.get().children[0].markdown
-    );
+    const cursor = this.select('states', 'book');
+
+    cursor.set(['selected', 'subheading'], data);
+    cursor.set('editor',
+      this.facets.selectedSubheading.get().children[0].markdown);
   },
 
   /**
    * Updating the editor's buffer
    */
-  'buffer:change': function({data}) {
-    this.set(['states', 'editor', 'buffer'], data);
+  'buffer:change': function({data: {path, markdown}}) {
+    this.set(path, markdown);
     this.commit();
   }
 };

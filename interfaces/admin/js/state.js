@@ -9,7 +9,6 @@ import actions from './actions.js';
 import bindClient from './client.js';
 import bindFetching from './fetching.js';
 import config from '../config.json';
-import parser from './lib/parser.js';
 import _ from 'lodash';
 
 // Reading storage
@@ -26,19 +25,30 @@ const state = {
   // Views states
   states: {
     book: {
+      editor: null,
       selected: {
         chapter: null,
         subheading: null
       }
     },
-    editor: {
-      buffer: null
+    vocabulary: {
+      editor: null,
+      selected: null
+    },
+    documents:{
+      editor: null,
+      selected: {
+        document: null,
+        slide: null
+      }
     }
   },
 
   // Misc data
   data: {
-    book: null
+    book: null,
+    vocabulary: null,
+    documents: null
   }
 };
 
@@ -73,16 +83,6 @@ const tree = new Baobab(
             .map('children')
             .flatten()
             .find({id: data.selected});
-        }
-      },
-
-      // Rendered buffer
-      renderedBuffer: {
-        cursors: {
-          buffer: ['states', 'editor', 'buffer']
-        },
-        get: function(data) {
-          return parser(data.buffer || '');
         }
       }
     },

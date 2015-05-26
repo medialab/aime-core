@@ -7,17 +7,15 @@
 import React from 'react';
 import PureComponent from '../lib/pure.js';
 import CodeMirror from 'codemirror';
-import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
+import parser from '../lib/parser.js';
 
 // Importing needed codemirror assets
 require('codemirror/mode/markdown/markdown');
 
-@branch({
-  cursors: {
-    buffer: ['states', 'editor', 'buffer']
-  }
-})
+/**
+ * Markdown editor component
+ */
 export class Editor extends PureComponent {
   static contextTypes = {
     tree: PropTypes.baobab
@@ -41,7 +39,10 @@ export class Editor extends PureComponent {
 
     // Listening to changes
     this.listener = doc => {
-      this.context.tree.emit('buffer:change', doc.getValue());
+      this.context.tree.emit('buffer:change', {
+        markdown: doc.getValue(),
+        path: this.props.path
+      });
     };
 
     this.editor.on('update', this.listener);
@@ -71,14 +72,12 @@ export class Editor extends PureComponent {
   }
 }
 
-@branch({
-  facets: {
-    rendered: 'renderedBuffer'
-  }
-})
+/**
+ * Markdown rendered preview component
+ */
 export class Preview extends PureComponent {
   render() {
-    const {markdown, data} = this.props.rendered;
+    const {markdown, data} = parser(this.props.buffer);
 
     return (
       <div className="editor-container full-height">

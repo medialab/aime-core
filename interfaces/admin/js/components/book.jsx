@@ -20,6 +20,7 @@ import classes from 'classnames';
 @branch({
   cursors: {
     data: ['data', 'book'],
+    buffer: ['states', 'book', 'editor'],
     selected: ['states', 'book', 'selected', 'subheading']
   }
 })
@@ -36,12 +37,12 @@ export default class Book extends PureComponent {
           <ChapterList />
         </Col>
         <Col md={4}>
-          {isThereAnyData && isSomethingSelected ?
-            <Editor buffer={this.props.buffer} /> :
+          {isThereAnyData && isSomethingSelected && this.props.buffer ?
+            <Editor path={['states', 'book', 'editor']} buffer={this.props.buffer} /> :
             <div />}
         </Col>
         <Col md={4}>
-          {isThereAnyData && isSomethingSelected ?
+          {isThereAnyData && isSomethingSelected && this.props.buffer  ?
             <Preview buffer={this.props.buffer} /> :
             <div />}
         </Col>
