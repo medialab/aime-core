@@ -32,10 +32,8 @@ export default function(scope) {
 
       // Switching language
       lang: {
-        url: '/lang',
-        success: function({result}) {
-          console.log(result);
-        }
+        type: 'POST',
+        url: '/lang/:lang'
       },
 
       // Login

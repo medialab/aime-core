@@ -82,7 +82,7 @@ const tree = new Baobab(
           buffer: ['states', 'editor', 'buffer']
         },
         get: function(data) {
-          return parser(data.buffer);
+          return parser(data.buffer || '');
         }
       }
     },

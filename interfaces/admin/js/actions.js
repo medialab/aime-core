@@ -24,7 +24,20 @@ const actions = {
     if (this.get('lang') === data)
       return;
 
+    // Changing the lang
     this.set('lang', data);
+
+    // Clearing fetched data
+    this.set('data', {});
+
+    // Clearing states
+    this.set('states', null);
+
+    // Clearing current editor buffer
+    this.set(['states', 'editor', 'buffer'], null);
+
+    // Effectively changing client's lang
+    this.client.lang({params: {lang: data}});
   },
 
   /**
