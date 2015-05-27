@@ -7,6 +7,9 @@ import React from 'react';
 import classes from 'classnames';
 import PureComponent from '../lib/pure.js';
 
+/**
+ * Box generic component
+ */
 export class Box extends PureComponent {
   render() {
     return (

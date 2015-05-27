@@ -41,7 +41,7 @@ export class Editor extends PureComponent {
     this.listener = doc => {
       this.context.tree.emit('buffer:change', {
         markdown: doc.getValue(),
-        path: this.props.path
+        model: this.props.model
       });
     };
 

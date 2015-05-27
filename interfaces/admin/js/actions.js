@@ -4,6 +4,8 @@
  *
  * Actions updating the application's state.
  */
+import _ from 'lodash';
+
 const actions = {
 
   /**
@@ -48,34 +50,33 @@ const actions = {
   },
 
   /**
-   * Selecting a chapter
+   * Selecting data
    */
-  'chapter:select': function({data}) {
-    const path = ['states', 'book', 'selected', 'chapter'],
-        selected = this.get(path);
+  'selection:change': function({data: {model, level, target}}) {
+    const cursor = this.select('states', model, 'selection'),
+          selection = cursor.get() || [];
 
-    if (data === selected)
-      this.set(path, null);
-    else
-      this.set(path, data);
-  },
+    selection[level] = target;
+    cursor.set(selection);
 
-  /**
-   * Selecting a subheading
-   */
-  'subheading:select': function({data}) {
-    const cursor = this.select('states', 'book');
+    // If level is > 0, we initialize the editor
+    if (level > 0) {
+      const data = this.get('data', model);
 
-    cursor.set(['selected', 'subheading'], data);
-    cursor.set('editor',
-      this.facets.selectedSubheading.get().children[0].markdown);
+      const item = _(data)
+        .map('children')
+        .flatten()
+        .find({id: selection[1]});
+
+      cursor.up().set('editor', item.children[0].markdown);
+    }
   },
 
   /**
    * Updating the editor's buffer
    */
-  'buffer:change': function({data: {path, markdown}}) {
-    this.set(path, markdown);
+  'buffer:change': function({data: {model, markdown}}) {
+    this.set(['states', model, 'editor'], markdown);
     this.commit();
   }
 };

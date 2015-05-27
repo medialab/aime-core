@@ -27,5 +27,7 @@ export default function(tree) {
       tree.client.book();
     if (!data && compare(path, ['data', 'vocabulary']))
       tree.client.vocabulary();
+    if (!data && compare(path, ['data', 'documents']))
+      tree.client.documents();
   });
 };

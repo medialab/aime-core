@@ -26,21 +26,15 @@ const state = {
   states: {
     book: {
       editor: null,
-      selected: {
-        chapter: null,
-        subheading: null
-      }
+      selection: null
     },
     vocabulary: {
       editor: null,
-      selected: null
+      selection: null
     },
     documents:{
       editor: null,
-      selected: {
-        document: null,
-        slide: null
-      }
+      selection: null
     }
   },
 
@@ -69,20 +63,6 @@ const tree = new Baobab(
         },
         get: function(data) {
           return !!data.user;
-        }
-      },
-
-      // The selected subheading
-      selectedSubheading: {
-        cursors: {
-          book: ['data', 'book'],
-          selected: ['states', 'book', 'selected', 'subheading']
-        },
-        get: function(data) {
-          return _(data.book)
-            .map('children')
-            .flatten()
-            .find({id: data.selected});
         }
       }
     },
