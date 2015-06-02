@@ -45,6 +45,11 @@ h1 {
   min-height: 100%;
 }
 
+.overflowing {
+  height: 90%;
+  overflow-y: auto;
+}
+
 .box {
   height: 45px;
   background-color: #eeeeee;

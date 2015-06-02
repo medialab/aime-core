@@ -66,7 +66,6 @@ export class Editor extends PureComponent {
   render() {
     return (
       <div className="editor-container full-height">
-        <h1>Editor</h1>
         <textarea ref="editor" className="editor"></textarea>
       </div>
     );
@@ -96,7 +95,6 @@ export class Preview extends PureComponent {
 
     return (
       <div className="editor-container full-height">
-        <h1>Preview</h1>
         <div className="preview full-height"
              dangerouslySetInnerHTML={{__html: markdown}}/>
       </div>

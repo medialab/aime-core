@@ -54,7 +54,11 @@ const actions = {
    */
   'selection:change': function({data: {model, level, target}}) {
     const cursor = this.select('states', model, 'selection'),
-          selection = cursor.get() || [];
+          selection = cursor.get();
+
+    // Ensuring we are acting on an array
+    if (!selection)
+      cursor.set([]);
 
     cursor.set(level, target);
 

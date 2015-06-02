@@ -27,31 +27,57 @@ import autobind from 'autobind-decorator';
   }
 })
 export class ListLayout extends PureComponent {
+
+  @autobind
+  renderEditor(visible) {
+    if (!visible)
+      return <Col md={4} />;
+
+    return (
+      <Col md={4} className="full-height">
+        <h1>Editor</h1>
+        <div className="overflowing">
+          <Editor model={this.props.model}
+                  buffer={this.props.buffer} />
+        </div>
+      </Col>
+    );
+  }
+
+  @autobind
+  renderPreview(visible) {
+    if (!visible)
+      return <Col md={4} />;
+
+    return (
+      <Col md={4} className="full-height">
+        <h1>Preview</h1>
+        <div className="overflowing">
+          <Preview model={this.props.model}
+                   buffer={this.props.buffer} />
+        </div>
+      </Col>
+    );
+  }
+
   render() {
     const isSomethingSelected = (this.props.selection || []).length > 1,
           isThereAnyData = !!this.props.data;
 
+    // TODO: full height
     return (
       <Row className="full-height">
         <Col className={classes({hidden: isThereAnyData && isSomethingSelected})} md={4} />
-        <Col md={4} id="middle">
+        <Col md={4} id="middle" className="full-height">
           <h1>{this.props.title}</h1>
-          <List model={this.props.model}
-                items={this.props.data}
-                selection={this.props.selection} />
+          <div className="overflowing">
+            <List model={this.props.model}
+                  items={this.props.data}
+                  selection={this.props.selection} />
+          </div>
         </Col>
-        <Col md={4}>
-          {isThereAnyData && isSomethingSelected ?
-            <Editor model={this.props.model}
-                    buffer={this.props.buffer} /> :
-            <div />}
-        </Col>
-        <Col md={4}>
-          {isThereAnyData && isSomethingSelected ?
-            <Preview model={this.props.model}
-                     buffer={this.props.buffer} /> :
-            <div />}
-        </Col>
+        {this.renderEditor(isThereAnyData && isSomethingSelected)}
+        {this.renderPreview(isThereAnyData && isSomethingSelected)}
       </Row>
     );
   }
