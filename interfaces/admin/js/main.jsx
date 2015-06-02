@@ -30,5 +30,5 @@ tree.client.session();
 // Exposing application
 export default tree;
 
-// Exposing lodash for debugging purposed
+// Exposing lodash for debugging purposes
 global._ = lodash;
