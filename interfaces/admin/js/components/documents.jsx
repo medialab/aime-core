@@ -1,19 +1,18 @@
 /**
- * AIME-admin Documents Component
- * ===============================
+ * AIME-admin Book Component
+ * ==========================
  *
- * Component dealing with the documents model's view.
+ * Component dealing with the book model's view.
  */
 import React from 'react';
 import PureComponent from '../lib/pure.js';
+import {ListLayout} from './list.jsx';
 
 /**
  * Main component
  */
 export default class Documents extends PureComponent {
   render() {
-    return (
-      <div>Documents</div>
-    );
+    return <ListLayout title="Documents" model="documents" />;
   }
 }

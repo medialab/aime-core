@@ -10,6 +10,7 @@ import {root} from 'baobab-react/higher-order';
 import Application from './components/application.jsx';
 import client from './client.js';
 import router from './router.js';
+import lodash from 'lodash';
 
 // Style
 require('../css/codemirror.css');
@@ -28,3 +29,6 @@ tree.client.session();
 
 // Exposing application
 export default tree;
+
+// Exposing lodash for debugging purposed
+global._ = lodash;

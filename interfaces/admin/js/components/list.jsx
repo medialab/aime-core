@@ -15,24 +15,19 @@ import autobind from 'autobind-decorator';
 /**
  * List layout generic component
  */
-
-// TODO: render more cleverly concerning buffer here?
-// TODO: the editor itself and the preview should be cursored, not this comp
 @branch({
   cursors(props) {
     const model = props.model;
 
     return {
       data: ['data', model],
-      buffer: ['states', model, 'editor'],
       selection: ['states', model, 'selection']
     };
   }
 })
 export class ListLayout extends Component {
   render() {
-    console.log('render');
-    const isSomethingSelected = !!this.props.selection && this.props.selection.length > 1,
+    const isSomethingSelected = (this.props.selection || []).length > 1,
           isThereAnyData = !!this.props.data;
 
     return (
@@ -45,14 +40,15 @@ export class ListLayout extends Component {
                 selection={this.props.selection} />
         </Col>
         <Col md={4}>
-          {isThereAnyData && isSomethingSelected && this.props.buffer ?
+          {isThereAnyData && isSomethingSelected ?
             <Editor model={this.props.model}
                     buffer={this.props.buffer} /> :
             <div />}
         </Col>
         <Col md={4}>
-          {isThereAnyData && isSomethingSelected && this.props.buffer  ?
-            <Preview buffer={this.props.buffer} /> :
+          {isThereAnyData && isSomethingSelected ?
+            <Preview model={this.props.model}
+                     buffer={this.props.buffer} /> :
             <div />}
         </Col>
       </Row>
@@ -161,13 +157,16 @@ class SubItem extends Component {
   }
 
   render() {
-    const item = this.props.item;
+    const item = this.props.item,
+          title = this.props.model === 'documents' ?
+            'slide' :
+            item.title;
 
     return (
       <li>
         <div className={classes('subheading-box', {active: this.props.active})}
              onClick={this.handleClick}>
-          {item.title}
+          {title}
         </div>
       </li>
     );

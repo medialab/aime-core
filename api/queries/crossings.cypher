@@ -32,7 +32,13 @@ WITH m, v, collect(p) AS paragraphs
 OPTIONAL MATCH (m)<-[:RELATES_TO]-(s:Scenario {status: 'published', lang: {lang}})-[rs:HAS]->(i)
 WITH m, v, paragraphs, rs, s, i ORDER BY rs.order
 WITH m, v, paragraphs, {scenario: s, items: collect(i)} AS scenars
-RETURN {name: m.name, type: m.type, slug_id: v.slug_id, paragraphs: paragraphs, scenars: filter(s in collect(scenars) WHERE s.scenario IS NOT NULL)};
+RETURN {
+	name: m.name,
+	type: m.type,
+	slug_id: v.slug_id,
+	paragraphs: paragraphs,
+	scenars: filter(s in collect(scenars) WHERE s.scenario IS NOT NULL)
+};
 
 // name: tiles
 // Returning basic information about the database objects so we can build tiles index.
