@@ -66,7 +66,7 @@ const tree = new Baobab(
         }
       }
     },
-    asynchronous: false,
+    immutable: true,
     syncwrite: true
   }
 );

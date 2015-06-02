@@ -3,7 +3,8 @@
  * ===========================
  *
  */
-import React, {Component} from 'react';
+import React from 'react';
+import PureComponent from '../lib/pure.js';
 import classes from 'classnames';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -25,7 +26,7 @@ import autobind from 'autobind-decorator';
     };
   }
 })
-export class ListLayout extends Component {
+export class ListLayout extends PureComponent {
   render() {
     const isSomethingSelected = (this.props.selection || []).length > 1,
           isThereAnyData = !!this.props.data;
@@ -59,7 +60,7 @@ export class ListLayout extends Component {
 /**
  * List generic component
  */
-class List extends Component {
+class List extends PureComponent {
 
   @autobind
   renderItem(item) {
@@ -83,7 +84,7 @@ class List extends Component {
 /**
  * A generic list item
  */
-class Item extends Component {
+class Item extends PureComponent {
   static contextTypes = {
     tree: PropTypes.baobab
   };
@@ -118,7 +119,7 @@ class Item extends Component {
 /**
  * Sublist generic component
  */
-class SubList extends Component {
+class SubList extends PureComponent {
 
   @autobind
   renderItem(item) {
@@ -142,7 +143,7 @@ class SubList extends Component {
 /**
  * A generic sublist item
  */
-class SubItem extends Component {
+class SubItem extends PureComponent {
   static contextTypes = {
     tree: PropTypes.baobab
   };

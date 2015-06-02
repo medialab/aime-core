@@ -56,8 +56,7 @@ const actions = {
     const cursor = this.select('states', model, 'selection'),
           selection = cursor.get() || [];
 
-    selection[level] = target;
-    cursor.set(selection);
+    cursor.set(level, target);
 
     // If level is > 0, we initialize the editor
     if (level > 0) {
@@ -66,7 +65,7 @@ const actions = {
       const item = _(data)
         .map('children')
         .flatten()
-        .find({id: selection[1]});
+        .find({id: level === 1 ? target : selection[1]});
 
       cursor.up().set('editor', item.children[0].markdown);
     }
