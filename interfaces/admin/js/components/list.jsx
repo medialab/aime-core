@@ -73,7 +73,7 @@ export class ListLayout extends PureComponent {
           <div className="overflowing">
             <List model={this.props.model}
                   items={this.props.data}
-                  selection={this.props.selection} />
+                  selection={this.props.selection || []} />
           </div>
         </Col>
         {this.renderEditor(isThereAnyData && isSomethingSelected)}
@@ -94,7 +94,7 @@ class List extends PureComponent {
                  item={item}
                  model={this.props.model}
                  selection={this.props.selection}
-                 active={(this.props.selection || [])[0] === item.id} />;
+                 active={this.props.selection[0] === item.id} />;
   }
 
   render() {
@@ -135,7 +135,7 @@ class Item extends PureComponent {
         </div>
         <SubList items={item.children}
                  model={this.props.model}
-                 selection={this.props.selection}
+                 selection={this.props.selection.slice(1)}
                  visible={this.props.active} />
       </li>
     );
@@ -152,14 +152,15 @@ class SubList extends PureComponent {
     return <SubItem key={item.id}
                     item={item}
                     model={this.props.model}
-                    active={(this.props.selection || [])[1] === item.id} />;
+                    selection={this.props.selection.slice(1)}
+                    active={this.props.selection[0] === item.id} />;
   }
 
   render() {
     const {items, visible} = this.props;
 
     return (
-      <ul className={classes({hidden: !visible})}>
+      <ul className={classes({hidden: !visible, 'sub-list': true})}>
         {items.map(this.renderItem)}
       </ul>
     );
@@ -194,6 +195,72 @@ class SubItem extends PureComponent {
         <div className={classes('subheading-box', {active: this.props.active})}
              onClick={this.handleClick}>
           {title}
+        </div>
+        {this.props.active ?
+          <ThumbnailList items={item.children}
+                         model={this.props.model}
+                         selection={this.props.selection} /> :
+          null}
+      </li>
+    );
+  }
+}
+
+/**
+ * Thumbnail list component
+ */
+class ThumbnailList extends PureComponent {
+
+  @autobind
+  renderThumbnail(item, index) {
+    return <Thumbnail key={index}
+                      index={index}
+                      item={item}
+                      model={this.props.model}
+                      active={this.props.selection[0] === index} />;
+  }
+
+  render() {
+    return (
+      <ul className="sub-list">
+        {this.props.items.map(this.renderThumbnail)}
+      </ul>
+    );
+  }
+}
+
+/**
+ * Thumbnail generic component
+ */
+class Thumbnail extends PureComponent {
+  static contextTypes = {
+    tree: PropTypes.baobab
+  };
+
+  @autobind
+  handleClick() {
+    this.context.tree.emit('selection:change', {
+      model: this.props.model,
+      level: 2,
+      target: this.props.index
+    });
+  }
+
+  render() {
+    const {active, index, item: {text}} = this.props;
+
+    return (
+      <li>
+        <div className="thumbnail-box">
+          <table>
+            <tr>
+              <td className="thumbnail-index">{index}</td>
+              <td className={classes('thumbnail-text', {active: active})}
+                  onClick={this.handleClick}>
+                {text}
+              </td>
+            </tr>
+          </table>
         </div>
       </li>
     );

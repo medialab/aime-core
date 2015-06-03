@@ -62,16 +62,29 @@ const actions = {
 
     cursor.set(level, target);
 
-    // If level is > 0, we initialize the editor
-    if (level > 0) {
+    // If level is 1, we initialize the editor
+    if (level === 1) {
       const data = this.get('data', model);
 
       const item = _(data)
         .map('children')
         .flatten()
-        .find({id: level === 1 ? target : selection[1]});
+        .find({id: target});
 
+      cursor.set(2, 0);
       cursor.up().set('editor', item.children[0].markdown);
+    }
+
+    // If level is 2, we change the editor buffer only
+    if (level === 2) {
+      const data = this.get('data', model);
+
+      const item = _(data)
+        .map('children')
+        .flatten()
+        .find({id: selection[1]});
+
+      cursor.up().set('editor', item.children[target].markdown);
     }
   },
 

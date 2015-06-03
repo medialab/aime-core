@@ -65,8 +65,10 @@ export class Editor extends PureComponent {
 
   render() {
     return (
-      <div className="editor-container full-height">
-        <textarea ref="editor" className="editor"></textarea>
+      <div className="full-height">
+        <div className="editor-container">
+          <textarea ref="editor" className="editor" />
+        </div>
       </div>
     );
   }
