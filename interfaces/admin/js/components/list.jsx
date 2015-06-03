@@ -27,6 +27,15 @@ import autobind from 'autobind-decorator';
   }
 })
 export class ListLayout extends PureComponent {
+  static childContextTypes = {
+    model: React.PropTypes.string
+  };
+
+  getChildContext() {
+    return {
+      model: this.props.model
+    };
+  }
 
   @autobind
   renderEditor(visible) {
@@ -64,15 +73,13 @@ export class ListLayout extends PureComponent {
     const isSomethingSelected = (this.props.selection || []).length > 1,
           isThereAnyData = !!this.props.data;
 
-    // TODO: full height
     return (
       <Row className="full-height">
         <Col className={classes({hidden: isThereAnyData && isSomethingSelected})} md={4} />
         <Col md={4} id="middle" className="full-height">
           <h1>{this.props.title}</h1>
           <div className="overflowing">
-            <List model={this.props.model}
-                  items={this.props.data}
+            <List items={this.props.data}
                   selection={this.props.selection || []} />
           </div>
         </Col>
@@ -92,7 +99,6 @@ class List extends PureComponent {
   renderItem(item) {
     return <Item key={item.id}
                  item={item}
-                 model={this.props.model}
                  selection={this.props.selection}
                  active={this.props.selection[0] === item.id} />;
   }
@@ -112,13 +118,14 @@ class List extends PureComponent {
  */
 class Item extends PureComponent {
   static contextTypes = {
-    tree: PropTypes.baobab
+    tree: PropTypes.baobab,
+    model: React.PropTypes.string
   };
 
   @autobind
   handleClick() {
     this.context.tree.emit('selection:change', {
-      model: this.props.model,
+      model: this.context.model,
       level: 0,
       target: this.props.item.id
     });
@@ -134,7 +141,6 @@ class Item extends PureComponent {
           {item.title}
         </div>
         <SubList items={item.children}
-                 model={this.props.model}
                  selection={this.props.selection.slice(1)}
                  visible={this.props.active} />
       </li>
@@ -151,7 +157,6 @@ class SubList extends PureComponent {
   renderItem(item) {
     return <SubItem key={item.id}
                     item={item}
-                    model={this.props.model}
                     selection={this.props.selection.slice(1)}
                     active={this.props.selection[0] === item.id} />;
   }
@@ -172,13 +177,14 @@ class SubList extends PureComponent {
  */
 class SubItem extends PureComponent {
   static contextTypes = {
-    tree: PropTypes.baobab
+    tree: PropTypes.baobab,
+    model: React.PropTypes.string
   };
 
   @autobind
   handleClick() {
     this.context.tree.emit('selection:change', {
-      model: this.props.model,
+      model: this.context.model,
       level: 1,
       target: this.props.item.id
     });
@@ -198,7 +204,6 @@ class SubItem extends PureComponent {
         </div>
         {this.props.active ?
           <ThumbnailList items={item.children}
-                         model={this.props.model}
                          selection={this.props.selection} /> :
           null}
       </li>
@@ -216,7 +221,6 @@ class ThumbnailList extends PureComponent {
     return <Thumbnail key={index}
                       index={index}
                       item={item}
-                      model={this.props.model}
                       active={this.props.selection[0] === index} />;
   }
 
@@ -234,13 +238,14 @@ class ThumbnailList extends PureComponent {
  */
 class Thumbnail extends PureComponent {
   static contextTypes = {
-    tree: PropTypes.baobab
+    tree: PropTypes.baobab,
+    model: React.PropTypes.string
   };
 
   @autobind
   handleClick() {
     this.context.tree.emit('selection:change', {
-      model: this.props.model,
+      model: this.context.model,
       level: 2,
       target: this.props.index
     });
