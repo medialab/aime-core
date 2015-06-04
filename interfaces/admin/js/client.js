@@ -75,6 +75,20 @@ export default function(scope) {
       doc: {
         url: '/doc?limit=15',
         success: function({result}) {
+
+          // Generating the monolithic markdown version
+          const data = result.forEach(function(doc) {
+            doc.markdown = doc.children.map(function(slide) {
+              return slide.children
+                .map(e => {
+                  if (e.type === 'paragraph')
+                    return e.markdown;
+                  else
+                    return `![${e.type}](res_${e.slug_id})`;
+                }).join('\n\n');
+            }).join('\n\n---\n\n');
+          });
+
           this.set(['data', 'doc'], result);
         }
       }

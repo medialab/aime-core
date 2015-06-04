@@ -6,7 +6,7 @@
   text-rendering: optimizeLegibility;
   font-size: 16px;
   line-height: 1.65em;
-  height: 100%;
+  height: auto;
   color: black;
 }
 

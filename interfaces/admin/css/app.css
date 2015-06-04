@@ -177,3 +177,9 @@ h1 {
   padding: 3px;
   font-size: 0.8em;
 }
+
+.preview .resource-item {
+  background-color: #cecece;
+  padding: 5px;
+  display: block;
+}

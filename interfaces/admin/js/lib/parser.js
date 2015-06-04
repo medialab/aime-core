@@ -22,13 +22,10 @@ export default function(string) {
 
   string = string || '';
 
-  const originals = {
-    link: renderer.link
-  };
-
   const data = {
     docs: [],
-    vocs: []
+    vocs: [],
+    res: []
   };
 
   // Paragraphs
@@ -67,7 +64,15 @@ export default function(string) {
     return `<span class="vocabulary-item">${text}</span>`;
   };
 
+  // Images
+  renderer.image = function(src) {
+    data.res.push(src);
+
+    return `<span class="resource-item">${src}</span>`;
+  };
+
   const markdown = marked(string, {renderer: renderer});
+
   return {
     markdown: markdown,
     data: data
