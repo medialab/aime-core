@@ -61,8 +61,28 @@ const tree = new Baobab(
         cursors: {
           user: ['user']
         },
-        get: function(data) {
-          return !!data.user;
+        get: function({user}) {
+          return !!user;
+        }
+      },
+
+      // Voc index
+      vocIndex: {
+        cursors: {
+          data: ['data', 'voc']
+        },
+        get: function({data}) {
+          return _.indexBy(data, item => 'voc_' + item.slug_id);
+        }
+      },
+
+      // Doc index
+      docIndex: {
+        cursors: {
+          data: ['data', 'doc']
+        },
+        get: function({data}) {
+          return _.indexBy(data, item => 'doc_' + item.slug_id);
         }
       }
     },
