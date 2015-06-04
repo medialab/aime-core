@@ -15,7 +15,6 @@ import {Box} from './misc.jsx';
 
 const models = [
   {id: 'book', label: 'the book'},
-  {id: 'voc', label: 'vocabulary'},
   {id: 'doc', label: 'documents'}
 ];
 

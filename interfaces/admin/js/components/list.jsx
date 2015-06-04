@@ -70,7 +70,7 @@ export class ListLayout extends PureComponent {
   }
 
   render() {
-    const isSomethingSelected = (this.props.selection || []).length > 1,
+    const isSomethingSelected = (this.props.selection || []).length > (1 - (this.props.model === 'doc')),
           isThereAnyData = !!this.props.data;
 
     return (
@@ -140,9 +140,10 @@ class Item extends PureComponent {
              onClick={this.handleClick}>
           {item.title}
         </div>
-        <SubList items={item.children}
-                 selection={this.props.selection.slice(1)}
-                 visible={this.props.active} />
+        {this.context.model === 'book' &&
+          <SubList items={item.children}
+                   selection={this.props.selection.slice(1)}
+                   visible={this.props.active} />}
       </li>
     );
   }

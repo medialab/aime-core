@@ -62,6 +62,10 @@ const actions = {
 
     cursor.set(level, target);
 
+    // If we are handling a document, there is only one level
+    if (model === 'doc')
+      return cursor.up().set('editor', 'Yay!');
+
     // If level is 1, we initialize the editor
     if (level === 1) {
       const data = this.get('data', model);

@@ -68,7 +68,7 @@ export class Editor extends PureComponent {
   }
 
   render() {
-    const {vocs, docs, vocItems, docItems} = this.props.parsed.data;
+    const {vocs, docs, vocItems=[], docItems=[]} = this.props.parsed.data;
 
     return (
       <div className="full-height">
@@ -127,7 +127,7 @@ class EditorEntity extends PureComponent {
 export class Preview extends PureComponent {
   render() {
     const markdown = this.props.parsed.markdown,
-          {docs, docItems} = this.props.parsed.data;
+          {docs, docItems=[]} = this.props.parsed.data;
 
     return (
       <div className="editor-container full-height">

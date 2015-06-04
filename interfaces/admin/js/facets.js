@@ -49,7 +49,7 @@ export default {
       edited: ['states', 'book', 'editor']
     },
     get: function({edited, voc, doc}) {
-      if (!edited)
+      if (!edited && edited !== '')
         return null;
 
       const parsed = parser(edited);
@@ -57,6 +57,21 @@ export default {
       // Associating linked elements
       parsed.data.vocItems = parsed.data.vocs.map(v => voc[v]);
       parsed.data.docItems = parsed.data.docs.map(d => doc[d]);
+
+      return parsed;
+    }
+  },
+
+  // Document parsed buffer
+  docParsed: {
+    cursors: {
+      edited: ['states', 'doc', 'editor']
+    },
+    get: function({edited}) {
+      if (!edited && edited !== '')
+        return null;
+
+      const parsed = parser(edited);
 
       return parsed;
     }

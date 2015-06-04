@@ -71,8 +71,9 @@ export default function(scope) {
       },
 
       // Document data
+      // TODO: drop the limit when not debugging anymore
       doc: {
-        url: '/doc',
+        url: '/doc?limit=15',
         success: function({result}) {
           this.set(['data', 'doc'], result);
         }
