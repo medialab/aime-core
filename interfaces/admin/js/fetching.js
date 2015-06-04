@@ -6,11 +6,8 @@
  * must be retrieved from the API.
  */
 function compare(a1, a2) {
-  if (a1.length !== a2.length)
-    return;
-
-  for (let i = 0, l = a1.length; i < l; i++) {
-    if (a1[i] !== a2[i])
+  for (let i = 0, l = a2.length; i < l; i++) {
+    if (!a1[i] || a1[i] !== a2[i])
       return false;
   }
 
@@ -23,11 +20,10 @@ function compare(a1, a2) {
 export default function(tree) {
 
   tree.on('get', function({data: {path, data}}) {
-    if (!data && compare(path, ['data', 'book']))
+    if (!data && compare(path, ['data'])) {
       tree.client.book();
-    if (!data && compare(path, ['data', 'voc']))
       tree.client.voc();
-    if (!data && compare(path, ['data', 'doc']))
       tree.client.doc();
+    }
   });
 };

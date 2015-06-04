@@ -78,8 +78,7 @@ var sessionOptions = {
 if (env === 'dev')
   sessionOptions.store = new FileStore({
     path: config.sessionStore,
-    ttl: 30 * 24 * 60 * 60 * 1000,
-    reapInterval: -1
+    ttl: 30 * 24 * 60 * 60 * 1000
   });
 
 // Utilities
@@ -87,7 +86,7 @@ app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(cookieParser());
 app.use(session(sessionOptions));
-// app.use(compress());
+app.use(compress());
 app.use(middlewares.language);
 
 /**
