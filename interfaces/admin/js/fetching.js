@@ -25,9 +25,9 @@ export default function(tree) {
   tree.on('get', function({data: {path, data}}) {
     if (!data && compare(path, ['data', 'book']))
       tree.client.book();
-    if (!data && compare(path, ['data', 'vocabulary']))
-      tree.client.vocabulary();
-    if (!data && compare(path, ['data', 'documents']))
-      tree.client.documents();
+    if (!data && compare(path, ['data', 'voc']))
+      tree.client.voc();
+    if (!data && compare(path, ['data', 'doc']))
+      tree.client.doc();
   });
 };

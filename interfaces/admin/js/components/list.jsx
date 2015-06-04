@@ -192,7 +192,7 @@ class SubItem extends PureComponent {
 
   render() {
     const item = this.props.item,
-          title = this.props.model === 'documents' ?
+          title = this.context.model === 'doc' ?
             'slide' :
             item.title;
 

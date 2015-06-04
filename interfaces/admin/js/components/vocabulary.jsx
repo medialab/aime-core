@@ -13,6 +13,6 @@ import {ListLayout} from './list.jsx';
  */
 export default class Vocabulary extends PureComponent {
   render() {
-    return <ListLayout title="Vocabulary" model="vocabulary" />;
+    return <ListLayout title="Vocabulary" model="voc" />;
   }
 }

@@ -13,6 +13,6 @@ import {ListLayout} from './list.jsx';
  */
 export default class Documents extends PureComponent {
   render() {
-    return <ListLayout title="Documents" model="documents" />;
+    return <ListLayout title="Documents" model="doc" />;
   }
 }

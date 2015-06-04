@@ -28,11 +28,11 @@ const state = {
       editor: null,
       selection: null
     },
-    vocabulary: {
+    voc: {
       editor: null,
       selection: null
     },
-    documents:{
+    doc:{
       editor: null,
       selection: null
     }
@@ -41,8 +41,8 @@ const state = {
   // Misc data
   data: {
     book: null,
-    vocabulary: null,
-    documents: null
+    voc: null,
+    doc: null
   }
 };
 

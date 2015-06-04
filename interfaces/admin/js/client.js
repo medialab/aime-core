@@ -63,18 +63,18 @@ export default function(scope) {
       },
 
       // Vocabulary data
-      vocabulary: {
+      voc: {
         url: '/voc',
         success: function({result}) {
-          this.set(['data', 'vocabulary'], result);
+          this.set(['data', 'voc'], result);
         }
       },
 
       // Document data
-      documents: {
+      doc: {
         url: '/doc',
         success: function({result}) {
-          this.set(['data', 'documents'], result);
+          this.set(['data', 'doc'], result);
         }
       }
     }
