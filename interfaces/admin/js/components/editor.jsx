@@ -9,7 +9,6 @@ import PureComponent from '../lib/pure.js';
 import CodeMirror from 'codemirror';
 import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
-import parser from '../lib/parser.js';
 
 // Importing needed codemirror assets
 require('codemirror/mode/markdown/markdown');
@@ -18,6 +17,11 @@ require('codemirror/mode/markdown/markdown');
  * Markdown editor component
  */
 @branch({
+  facets(props) {
+    return {
+      parsed: props.model + 'Parsed'
+    };
+  },
   cursors(props) {
     return {
       buffer: ['states', props.model, 'editor']
@@ -64,10 +68,16 @@ export class Editor extends PureComponent {
   }
 
   render() {
+    const {vocs, docs} = this.props.parsed.data;
+
     return (
       <div className="full-height">
         <div className="editor-container">
           <textarea ref="editor" className="editor" />
+        </div>
+        <div className="entities-container">
+          {vocs.map(v => <EditorEntity key={v.id} data={v} />)}
+          {docs.map(d => <EditorEntity key={d.id} data={d} />)}
         </div>
       </div>
     );
@@ -82,18 +92,34 @@ export class Editor extends PureComponent {
 }
 
 /**
+ * Entity block
+ */
+class EditorEntity extends PureComponent {
+  render() {
+    const data = this.props.data,
+          slug = data.type === 'document' ? 'doc_' : 'voc_';
+
+    return (
+      <div className="entity">
+        {`(${slug}${data.slug_id}) ${data.title}`}
+      </div>
+    );
+  }
+}
+
+/**
  * Markdown rendered preview component
  */
 @branch({
-  cursors(props) {
+  facets(props) {
     return {
-      buffer: ['states', props.model, 'editor']
+      parsed: props.model + 'Parsed'
     };
   }
 })
 export class Preview extends PureComponent {
   render() {
-    const {markdown, data} = parser(this.props.buffer);
+    const markdown = this.props.parsed.markdown;
 
     return (
       <div className="editor-container full-height">

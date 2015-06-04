@@ -146,6 +146,14 @@ h1 {
   padding: 20px;
 }
 
+.entities-container {
+  padding: 10px;
+}
+
+.entities-container > .entity {
+  line-height: 2em;
+}
+
 .preview {
   font-size: 16px;
   width: 100%;

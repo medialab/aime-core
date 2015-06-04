@@ -4,7 +4,7 @@
  *
  * Main entry to the application.
  */
-import tree from './state.js';
+import tree from './tree.js';
 import React from 'react';
 import {root} from 'baobab-react/higher-order';
 import Application from './components/application.jsx';

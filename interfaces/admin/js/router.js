@@ -4,7 +4,7 @@
  *
  * Defining the application's routes.
  */
-import tree from './state.js';
+import tree from './tree.js';
 import Router from 'baobab-router';
 
 // NOTE: problemn is with the slash / route
