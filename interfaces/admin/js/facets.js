@@ -55,8 +55,8 @@ export default {
       const parsed = parser(edited);
 
       // Associating linked elements
-      parsed.data.vocs = parsed.data.vocs.map(v => voc[v]);
-      parsed.data.docs = parsed.data.docs.map(d => doc[d]);
+      parsed.data.vocItems = parsed.data.vocs.map(v => voc[v]);
+      parsed.data.docItems = parsed.data.docs.map(d => doc[d]);
 
       return parsed;
     }

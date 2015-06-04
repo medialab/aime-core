@@ -33,7 +33,7 @@ export default function(string) {
 
   // Paragraphs
   renderer.paragraph = function(txt) {
-    var sentences = tokenize(txt),
+    const sentences = tokenize(txt),
         docs = _(sentences)
           .map(t => (t.match(RE_DOCS) || [])[1])
           .compact()
@@ -45,20 +45,29 @@ export default function(string) {
     // Adding docs to data
     data.docs = data.docs.concat(docs);
 
-    return `<p>${txt}</p>`;
+    // Rendering
+    let renderedTxt = txt;
+
+    docs.forEach(function(doc, i) {
+      renderedTxt = renderedTxt.replace(doc, `<span class="document-item">${i}</span>`);
+    });
+
+    renderedTxt = renderedTxt.replace(/[{}]/g, '');
+
+    return `<p>${renderedTxt}</p>`;
   };
 
   // Links
-  renderer.link = function(href) {
-    var m = href.match(RE_VOC);
+  renderer.link = function(href, title, text) {
+    const m = href.match(RE_VOC);
 
     if (m)
       data.vocs.push(m[0]);
 
-    return originals.link.apply(this, arguments);
+    return `<span class="vocabulary-item">${text}</span>`;
   };
 
-  var markdown = marked(string, {renderer: renderer});
+  const markdown = marked(string, {renderer: renderer});
   return {
     markdown: markdown,
     data: data
