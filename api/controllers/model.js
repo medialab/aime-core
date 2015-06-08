@@ -155,10 +155,18 @@ module.exports = [
       slides: '?string'
     },
     action: function(req, res) {
-      console.log(req.session.user);
 
-      // Act upon method
-      return res.ok();
+      doc.create(
+        req.session.user,
+        req.lang,
+        req.body.title,
+        req.body.slides,
+        function(err, doc) {
+          if (err) return res.serverError(err);
+
+          return res.ok(doc);
+        }
+      );
     }
   }
 ];
