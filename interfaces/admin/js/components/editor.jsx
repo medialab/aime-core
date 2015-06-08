@@ -42,7 +42,8 @@ export class Editor extends PureComponent {
           underscoresBreakWords: false
         },
         theme: 'base16-light',
-        lineWrapping: true
+        lineWrapping: true,
+        viewportMargin: Infinity
       }
     );
 
