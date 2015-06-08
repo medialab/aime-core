@@ -7,6 +7,15 @@
 var _ = require('lodash'),
     types = require('typology');
 
+// Date-related helpers
+function formatDate(date) {
+  return date.toISOString().split('T')[0].replace(/-/g, '');
+}
+
+function now() {
+  return formatDate(new Date());
+}
+
 // Treat nested cypher results returned by typical AIME queries
 function treat(sub) {
   var item,
@@ -57,7 +66,9 @@ function searchRegex(query) {
 
 // Exporting
 module.exports = {
+  formatDate: formatDate,
   nested: nested,
+  now: now,
   reorder: reorder,
   searchRegex: searchRegex
 };

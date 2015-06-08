@@ -16,7 +16,11 @@ var express = require('express'),
     cors = require('cors'),
     config = require('../config.json').api,
     responses = require('./responses.js'),
-    middlewares = require('./middlewares.js');
+    middlewares = require('./middlewares.js'),
+    cache = require('./cache.js'),
+    queries = require('./queries.js').misc,
+    db = require('./connection.js'),
+    _ = require('lodash');
 
 var controllers = require('require-all')(__dirname + '/controllers');
 
@@ -34,8 +38,6 @@ function loadController(routes, auth) {
     if (auth)
       args.push(middlewares.authenticate);
 
-    args.push(middlewares.checkMethod(route.methods || ['GET']));
-
     if (route.validate)
       args.push(middlewares.validate(route.validate));
 
@@ -44,7 +46,9 @@ function loadController(routes, auth) {
 
     args.push(route.action);
 
-    router.all.apply(router, args);
+    (route.methods || ['GET']).forEach(function(method) {
+      router[method.toLowerCase()].apply(router, args);
+    })
   });
 
   return router;
@@ -112,6 +116,7 @@ app.use(authenticatedRouter);
 app.use('/crossings', crossingsRouter);
 app.use('/medias', mediasRouter);
 
+// 404
 app.use(function(req, res) {
   return res.notFound();
 });
@@ -119,4 +124,18 @@ app.use(function(req, res) {
 /**
  * Exporting
  */
+app.start = function(port, callback) {
+  db.query(queries.getMaximumSlugIds, function(err, maxima) {
+    if (err) return console.error(err);
+
+    cache.slug_ids = _(['voc', 'doc', 'res', 'ref'])
+      .zip(_.map(maxima, 'max'))
+      .object()
+      .value();
+
+    app.listen(port);
+    return callback();
+  });
+};
+
 module.exports = app;

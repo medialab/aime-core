@@ -8,5 +8,6 @@ var app = require('../api/app.js'),
     config = require('../config.json').api,
     biblib = require('../api/model/biblib.js');
 
-app.listen(config.port);
-console.log('Server online...');
+app.start(config.port, function() {
+  console.log('Server online...');
+});

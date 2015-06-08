@@ -146,5 +146,19 @@ module.exports = [
       modecross: 'modecross'
     },
     action: getRelated(doc)
+  },
+  {
+    url: '/doc',
+    methods: ['POST', 'PUT'],
+    validate: {
+      title: 'string',
+      slides: '?string'
+    },
+    action: function(req, res) {
+      console.log(req.session.user);
+
+      // Act upon method
+      return res.ok();
+    }
   }
 ];
