@@ -5,76 +5,35 @@
  * The custom markdown parser able to check some data about the given string
  * as well as rendering it correctly.
  */
-import marked, {Renderer} from 'marked';
-import tokenize from '../../../../lib/tokenizer.js';
+import {Renderer} from 'marked';
+import parser from '../../../../lib/parser.js';
 
 /**
- * Constants
+ * Custom renderer
  */
-const RE_DOCS = /{(doc_\d+(?:,doc_\d+)*)}/,
-      RE_VOC = /^voc_\d+$/;
+const renderer = new Renderer();
+
+renderer.paragraph = function(txt, docs=[]) {
+  let renderedTxt = txt;
+
+  docs.forEach(function(doc, i) {
+    renderedTxt = renderedTxt.replace(doc, `<span class="document-item">${i}</span>`);
+  });
+
+  renderedTxt = renderedTxt.replace(/[{}]/g, '');
+
+  return `<p>${renderedTxt}</p>`;
+};
+
+renderer.link = function(href, title, text) {
+  return `<span class="vocabulary-item">${text}</span>`;
+};
+
+renderer.image = function(src) {
+  return `<span class="resource-item">${src}</span>`;
+};
 
 /**
- * Parsing function
+ * Creating the function
  */
-export default function(string) {
-  const renderer = new Renderer();
-
-  string = string || '';
-
-  const data = {
-    docs: [],
-    vocs: [],
-    res: []
-  };
-
-  // Paragraphs
-  renderer.paragraph = function(txt) {
-    const sentences = tokenize(txt),
-        docs = _(sentences)
-          .map(t => (t.match(RE_DOCS) || [])[1])
-          .compact()
-          .map(t => t.split(','))
-          .flatten()
-          .uniq()
-          .value();
-
-    // Adding docs to data
-    data.docs = data.docs.concat(docs);
-
-    // Rendering
-    let renderedTxt = txt;
-
-    docs.forEach(function(doc, i) {
-      renderedTxt = renderedTxt.replace(doc, `<span class="document-item">${i}</span>`);
-    });
-
-    renderedTxt = renderedTxt.replace(/[{}]/g, '');
-
-    return `<p>${renderedTxt}</p>`;
-  };
-
-  // Links
-  renderer.link = function(href, title, text) {
-    const m = href.match(RE_VOC);
-
-    if (m)
-      data.vocs.push(m[0]);
-
-    return `<span class="vocabulary-item">${text}</span>`;
-  };
-
-  // Images
-  renderer.image = function(src) {
-    data.res.push(src);
-
-    return `<span class="resource-item">${src}</span>`;
-  };
-
-  const markdown = marked(string, {renderer: renderer});
-
-  return {
-    markdown: markdown,
-    data: data
-  };
-}
+export default parser(renderer);

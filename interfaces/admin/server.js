@@ -15,5 +15,5 @@ new Server(webpack(config), {
   if (err)
     return console.error(err);
 
-  console.log('Listening on port ' + PORT + '...\n');
+  console.log('Listening on port ' + PORT + '...\nWaiting for compilation...');
 });

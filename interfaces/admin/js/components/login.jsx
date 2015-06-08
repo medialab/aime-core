@@ -6,6 +6,7 @@
  */
 import React from 'react';
 import Input from 'react-bootstrap/lib/Input';
+import ButtonInput from 'react-bootstrap/lib/ButtonInput';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import PureComponent, {BranchedComponent} from '../lib/pure.js';
@@ -33,7 +34,7 @@ export default class Login extends BranchedComponent {
             <Input type="password"
                    placeholder="Password"
                    ref="password" />
-            <Input type="submit" value="Log" />
+            <ButtonInput type="submit" value="Log" />
           </form>
         </Col>
         <Col md={4} />
