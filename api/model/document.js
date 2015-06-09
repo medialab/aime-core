@@ -3,7 +3,8 @@
  * =========================
  *
  */
-var abstract = require('./abstract.js'),
+var marked = require('marked'),
+    abstract = require('./abstract.js'),
     cache = require('../cache.js'),
     db = require('../connection.js'),
     helpers = require('../helpers.js'),
@@ -11,8 +12,29 @@ var abstract = require('./abstract.js'),
     queries = require('../queries.js').document,
     _ = require('lodash');
 
+/**
+ * Constants
+ */
 var RE_SLIDES = /\n\n[-*_\s]*\n/g;
 
+/**
+ * Custom markdown parser
+ */
+function splitSlides(markdown) {
+  return _(markdown.split(RE_SLIDES))
+    .map(_.trim)
+    .map(function(slide) {
+      return _(slide)
+        .filter({type: 'paragraph'})
+        .map('text')
+        .value();
+    })
+    .value();
+}
+
+/**
+ * Model functions
+ */
 module.exports = _.merge(abstract(queries), {
   create: function(user, lang, title, slides, callback) {
     var batch = db.batch();
@@ -36,12 +58,18 @@ module.exports = _.merge(abstract(queries), {
     batch.relate(docNode, 'CREATED_BY', user.id);
 
     // Parsing the slides' markdown to create the other nodes
-    // TODO...
+    splitSlides(slides)
+      .forEach(function(slide) {
+        console.log(slide);
+      });
 
+    // TODO: split paragraphs
     // TODO: get raw text from markdown
+    // TODO: link to parsed entities
 
     // Committing
     // TODO: apply nested helper to retrieved data
-    batch.commit(callback);
+    // batch.commit(callback);
+    callback();
   }
 });
