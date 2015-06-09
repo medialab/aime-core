@@ -7,8 +7,11 @@ var abstract = require('./abstract.js'),
     cache = require('../cache.js'),
     db = require('../connection.js'),
     helpers = require('../helpers.js'),
+    stripper = require('../../lib/markdown_stripper.js'),
     queries = require('../queries.js').document,
     _ = require('lodash');
+
+var RE_SLIDES = /\n\n[-*_\s]*\n/g;
 
 module.exports = _.merge(abstract(queries), {
   create: function(user, lang, title, slides, callback) {
