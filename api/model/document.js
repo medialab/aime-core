@@ -35,6 +35,8 @@ module.exports = _.merge(abstract(queries), {
     // Parsing the slides' markdown to create the other nodes
     // TODO...
 
+    // TODO: get raw text from markdown
+
     // Committing
     // TODO: apply nested helper to retrieved data
     batch.commit(callback);

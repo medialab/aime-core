@@ -41,8 +41,7 @@
   },
   "license": "LGPL-3.0",
   "devDependencies": {
-    "mocha": "^2.0.1",
-    "supertest": "^0.15.0"
+    "mocha": "^2.0.1"
   },
   "dependencies": {
     "accept-language": "^2.0.13",
