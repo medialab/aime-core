@@ -35,7 +35,8 @@ function splitSlides(markdown) {
 /**
  * Model functions
  */
-module.exports = _.merge(abstract(queries), {
+
+var model = _.merge(abstract(queries), {
   create: function(user, lang, title, slides, callback) {
     var batch = db.batch();
 
@@ -73,3 +74,26 @@ module.exports = _.merge(abstract(queries), {
     callback();
   }
 });
+
+var getAll = model.getAll;
+
+model.getAll = function(lang, params, callback) {
+  getAll(lang, params, function(err, doc) {
+    if (err) return callback(err);
+
+    var sortedDoc = _.sortByOrder(
+      doc, 
+      [
+        'date',
+        function(doc){ 
+          return _.deburr(doc.title)
+        }
+      ],
+      [false, true]
+    );
+
+    return callback(null, sortedDoc);
+  });
+};
+
+module.exports = model;
