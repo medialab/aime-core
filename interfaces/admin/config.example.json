@@ -1,0 +1,5 @@
+{
+	"api": "http://localhost:7000",
+	"langs": ["en", "fr"],
+	"storageKey": "aime-admin"
+}
