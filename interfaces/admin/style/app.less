@@ -34,6 +34,7 @@ h1 {
 /*
  * Layout
  */
+
 #middle {
   text-align: center;
 }
@@ -70,15 +71,15 @@ h1 {
   font-family: "NovelMonoPro-RegularIt", Arial, sans-serif;
   font-size: 15px;
   cursor: pointer;
-}
+  
+  &:hover {
+    background-color: #cecece;
+  }
+  &.selected {
+    color: white;
+    background-color: #353535;
+  }
 
-.box:hover {
-  background-color: #cecece;
-}
-
-.box.selected {
-  color: white;
-  background-color: #353535;
 }
 
 .spaced {
@@ -93,12 +94,11 @@ h1 {
   text-align: left;
   padding: 10px 5px;
   margin-bottom: 10px;
-}
 
-.chapter-box.active, .chapter-box:hover {
-  background-color: #cecece;
+  &.active, &:hover {
+    background-color: #cecece;
+  }
 }
-
 .subheading-box {
   cursor: pointer;
   background-color: #eeeeee;
@@ -107,11 +107,11 @@ h1 {
   font-size: 15px;
   padding: 10px 5px;
   margin-bottom: 10px;
-}
 
-.subheading-box.active, .subheading-box:hover {
-  color: white;
-  background-color: #959595;
+  &.active, &:hover {
+    color: white;
+    background-color: #959595;
+  }
 }
 
 /*
@@ -132,11 +132,11 @@ h1 {
   padding-left: 10px;
   line-height: 7px;
   cursor: pointer;
-}
 
-.thumbnail-text:hover, .thumbnail-text.active {
-  color: black;
-  background-color: #eeeeee;
+  &:hover, &.active {
+    color: black;
+    background-color: #eeeeee;
+  }
 }
 
 /*
@@ -150,10 +150,10 @@ h1 {
 
 .entities-container {
   padding: 10px;
-}
 
-.entities-container > .entity {
-  line-height: 2em;
+  & > .entity {
+    line-height: 2em;
+  }
 }
 
 .entity.error {
@@ -165,23 +165,23 @@ h1 {
   width: 100%;
   padding: 20px;
   line-height: 1.65em;
-}
 
-.preview .vocabulary-item {
-  font-weight: bold;
-  background-color: #cecece;
-  padding: 5px
-}
+  .vocabulary-item {
+    font-weight: bold;
+    background-color: #cecece;
+    padding: 5px
+  }
 
-.preview .document-item {
-  vertical-align: super;
-  background-color: #cecece;
-  padding: 3px;
-  font-size: 0.8em;
-}
+  .document-item {
+    vertical-align: super;
+    background-color: #cecece;
+    padding: 3px;
+    font-size: 0.8em;
+  }
 
-.preview .resource-item {
-  background-color: #cecece;
-  padding: 5px;
-  display: block;
+  .resource-item {
+    background-color: #cecece;
+    padding: 5px;
+    display: block;
+  } 
 }
