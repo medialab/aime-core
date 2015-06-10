@@ -91,6 +91,12 @@ export default function(scope) {
 
           this.set(['data', 'doc'], result);
         }
+      },
+
+      // Creating a document
+      docCreate: {
+        url: '/doc'
+        type: 'POST'
       }
     }
   });
