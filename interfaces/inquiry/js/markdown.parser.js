@@ -92,7 +92,7 @@
       if(!docs)
         return d;
       
-      return '<span class="link doc" data-id="'+ docs.pop().replace(/_/g, '-').replace(',',' ')+'">' + d + '</span>'; // .replace(/\{doc_.*?\}/g,'')
+      return '<span class="link doc" data-id="'+ docs.pop().replace(/_/g, '-').replace(',',' ')+'">' + d.replace(/\{doc_.*?\}/g,'') + '</span>';
     })
 
 
