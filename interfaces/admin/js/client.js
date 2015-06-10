@@ -95,7 +95,7 @@ export default function(scope) {
 
       // Creating a document
       docCreate: {
-        url: '/doc'
+        url: '/doc',
         type: 'POST'
       }
     }
