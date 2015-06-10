@@ -6,7 +6,7 @@
  * as well as rendering it correctly.
  */
 import {Renderer} from 'marked';
-import parser from '../../../../lib/parser.js';
+import parser from '../../../../lib/abstract_parser.js';
 
 /**
  * Custom renderer
