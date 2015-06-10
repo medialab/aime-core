@@ -26,7 +26,7 @@
     },
     {
       "name": "Benoît Verjat",
-      "url":"https://github.com/bverjat"
+      "url": "https://github.com/bverjat"
     }
   ],
   "dependencies": {
@@ -45,8 +45,10 @@
   "devDependencies": {
     "babel-core": "^5.2.9",
     "babel-loader": "^5.0.0",
-    "css-loader": "^0.14.4",
+    "css-loader": "^0.14.5",
     "json-loader": "^0.5.1",
+    "less": "^2.5.1",
+    "less-loader": "^2.2.0",
     "react-hot-loader": "^1.2.6",
     "style-loader": "^0.12.1",
     "webpack": "^1.8.11",

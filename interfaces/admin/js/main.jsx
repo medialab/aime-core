@@ -13,9 +13,7 @@ import router from './router.js';
 import lodash from 'lodash';
 
 // Style
-require('../css/codemirror.css');
-require('../css/codemirror.theme.css');
-require('../css/app.css');
+require('!style!css!less!../style/app.less');
 
 // Composing tree
 const RootComponent = root(Application, tree);
