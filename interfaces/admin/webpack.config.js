@@ -25,7 +25,7 @@ module.exports = {
       // ES6 and jsx
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules|abstract_parser)/,
         loaders: ['react-hot', 'babel-loader']
       },
 
