@@ -11,7 +11,7 @@ import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
 
 // Importing needed codemirror assets
-require('codemirror/mode/markdown/markdown');
+require('../lib/custom_mode.js');
 
 /**
  * Markdown editor component
@@ -38,7 +38,7 @@ export class Editor extends PureComponent {
       React.findDOMNode(this.refs.editor),
       {
         mode: {
-          name: 'markdown',
+          name: 'aime-markdown',
           underscoresBreakWords: false
         },
         theme: 'base16-light',
