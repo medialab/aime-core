@@ -43,12 +43,16 @@ export class ListLayout extends PureComponent {
       return <Col md={4} />;
 
     return (
-      <Col md={4} className="full-height">
+      <Col md={4} id="editor" className="full-height">
         <h1 className="centered">Editor</h1>
         <div className="overflowing">
           <Editor model={this.props.model}
                   buffer={this.props.buffer} />
         </div>
+        <Col md={6} className="box bouton add-ressource centered">add text</Col>
+        <Col md={6} className="box bouton add-text centered">add ressources</Col>
+        <Col md={12} className="box bouton save centered">save</Col>
+
       </Col>
     );
   }
@@ -59,13 +63,15 @@ export class ListLayout extends PureComponent {
       return <Col md={4} />;
 
     return (
-      <Col md={4} className="full-height">
+      <Col md={4} id="preview" className="full-height">
         <h1 className="centered">Preview</h1>
         <div className="overflowing">
           <Preview model={this.props.model}
                    buffer={this.props.buffer} />
         </div>
+        <Col md={3} className="box bouton back centered">back</Col>
       </Col>
+
     );
   }
 
@@ -76,12 +82,13 @@ export class ListLayout extends PureComponent {
     return (
       <Row className="full-height">
         <Col className={classes({hidden: isThereAnyData && isSomethingSelected})} md={4} />
-        <Col md={4} id="middle" className="full-height">
+        <Col md={4} id="book" className="full-height">
           <h1 className="centered">{this.props.title}</h1>
           <div className="overflowing">
             <List items={this.props.data}
                   selection={this.props.selection || []} />
           </div>
+            <Col md={12} className="box bouton create-paragraph centered">create paragraph</Col>
         </Col>
         {this.renderEditor(isThereAnyData && isSomethingSelected)}
         {this.renderPreview(isThereAnyData && isSomethingSelected)}

@@ -42,6 +42,11 @@ ul {
 h1 {
   color: black;
   font-size: 15px;
+  
+  height: @m*4;
+  line-height: @m*4;
+  margin: 0;
+  padding: 0;
 
   font-family: "NovelMonoPro-Regular", Arial, sans-serif;
   .font-feature;
@@ -53,12 +58,12 @@ h1 {
 
 .full-height {
   height: 100%;
-  min-height: 100%;
 }
 
 .overflowing {
-  height: 90%;
-  overflow-y: auto;
+  height: calc(~"100% -" @m*15);
+  overflow: scroll; 
+  overflow-x:hidden;
 }
 
 .box {
@@ -82,12 +87,38 @@ h1 {
   }
 }
 
+.bouton {
+  height: @m*4;
+  line-height: @m*4;
+
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+
+  margin-top: @m;
+
+  &.save {
+
+    background: @g77;
+    color: white;
+  }
+
+  &.selected, &:hover {
+    background-color: @g42;
+  }
+}
+.actions {
+}
+
 /*
  * Lists
  */
 .chapter {
   background-color: @g4;
   color: black;
+
+  margin-right: @m;
   &.selected, &:hover {
     background-color: @g14;
     color: black;
@@ -95,6 +126,7 @@ h1 {
 }
 
 .subheading {
+   margin-right: @m;
   &.selected, &:hover {
     background-color: @g42;
     color: white;
