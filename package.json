@@ -36,7 +36,7 @@
     },
     {
       "name": "Benoît Verjat",
-      "url":"https://github.com/bverjat"
+      "url": "https://github.com/bverjat"
     }
   ],
   "homepage": "https://github.com/medialab/aime-core",
@@ -69,7 +69,6 @@
     "nodemailer-smtp-transport": "^1.0.0",
     "require-all": "^1.0.0",
     "seraph": "^0.11.2",
-    "session-file-store": "0.0.11",
     "typology": "^0.3.1",
     "uuid": "^2.0.1"
   }

@@ -65,6 +65,10 @@ module.exports = function(express) {
   };
 
   express.response.serverError = function(err) {
+
+    // TEMP: dev logging
+    console.log(err);
+
     this.status(500).json({
       status: 'error',
       error: {
