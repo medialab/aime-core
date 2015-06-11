@@ -10,7 +10,6 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
-    FileStore = require('session-file-store')(session),
     compress = require('compression'),
     morgan = require('morgan'),
     cors = require('cors'),
@@ -78,13 +77,6 @@ var sessionOptions = {
   resave: true,
   saveUninitialized: true
 };
-
-if (env === 'dev')
-  sessionOptions.store = new FileStore({
-    path: config.sessionStore,
-    ttl: 30 * 24 * 60 * 60 * 1000,
-    logFn: Function.prototype
-  });
 
 // Utilities
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));

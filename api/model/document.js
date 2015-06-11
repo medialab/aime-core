@@ -4,29 +4,48 @@
  *
  */
 var marked = require('marked'),
+    async = require('async'),
     abstract = require('./abstract.js'),
     cache = require('../cache.js'),
     db = require('../connection.js'),
     helpers = require('../helpers.js'),
     stripper = require('../../lib/markdown_stripper.js'),
-    queries = require('../queries.js').document,
+    queries = require('../queries.js'),
     _ = require('lodash');
 
 /**
  * Constants
  */
-var RE_SLIDES = /\n\n[-*_\s]*\n/g;
+var RE_SLIDES = /\n\n[-*_\s]*\n/g,
+    RE_RES = /!\[.*?]\((.*?)\)/;
 
 /**
  * Custom markdown parser
  */
-function splitSlides(markdown) {
+function parseSlides(markdown) {
   return _(markdown.split(RE_SLIDES))
     .map(_.trim)
     .map(function(slide) {
+      return marked.lexer(slide);
+    })
+    .map(function(slide) {
       return _(slide)
         .filter({type: 'paragraph'})
-        .map('text')
+        .map(function(item) {
+          var m = item.text.match(RE_RES);
+
+          if (!m)
+            return {
+              type: 'paragraph',
+              markdown: item.text
+            };
+          else
+            return {
+              type: m[1].slice(0, 3) === 'res' ? 'resource' : 'reference',
+              slug: m[1],
+              slug_id: +m[1].slice(4),
+            };
+        })
         .value();
     })
     .value();
@@ -36,8 +55,8 @@ function splitSlides(markdown) {
  * Model functions
  */
 
-var model = _.merge(abstract(queries), {
-  create: function(user, lang, title, slides, callback) {
+var model = _.merge(abstract(queries.document), {
+  create: function(user, lang, title, slidesText, callback) {
     var batch = db.batch();
 
     // Invalidating document cache
@@ -53,25 +72,91 @@ var model = _.merge(abstract(queries), {
       source_platform: 'admin',
       original: false,
       slug_id: ++cache.slug_ids.doc
-    }, 'Document');
+    });
+    batch.label(docNode, 'Document');
 
     // Linking the user
     batch.relate(docNode, 'CREATED_BY', user.id);
 
-    // Parsing the slides' markdown to create the other nodes
-    splitSlides(slides)
-      .forEach(function(slide) {
-        console.log(slide);
-      });
+    // Parsing the slides' structure from markdown content
+    var slides = parseSlides(slidesText),
+        links = _(slides)
+          .flatten()
+          .filter(function(element) {
+            return element.type !== 'paragraph';
+          })
+          .uniq(function(element) {
+            return element.type + '||' + element.slug_id;
+          })
+          .value();
 
-    // TODO: split paragraphs
-    // TODO: get raw text from markdown
-    // TODO: link to parsed entities
+    async.waterfall([
+      function retrieveLinkedItems(next) {
+        db.query(
+          queries.misc.getMediasAndReferences,
+          {
+            res_ids: _(links)
+              .filter({type: 'resource'})
+              .map('slug_id')
+              .value(),
+            ref_ids: _(links)
+              .filter({type: 'reference'})
+              .map('slug_id')
+              .value()
+          },
+          next
+        );
+      },
+      function persistDocument(linkedNodes, next) {
 
-    // Committing
-    // TODO: apply nested helper to retrieved data
-    // batch.commit(callback);
-    callback();
+        // If there are fewer linked nodes than expected, we break
+        if (links.length !== linkedNodes.length)
+          return next(new Error('models.document.create: inconsistent links.'));
+
+        // Creating the slides and their elements
+        slides.forEach(function(slideElements, slideIndex) {
+
+            // Slide node
+            var slideNode = batch.save({
+              lang: lang,
+              type: 'slide'
+            });
+
+            batch.label(slideNode, 'Slide');
+            batch.relate(docNode, 'HAS', slideNode, {order: slideIndex});
+
+            // Creating paragraph and linking external elements
+            slideElements.forEach(function(element, elementIndex) {
+
+              if (element.type === 'paragraph') {
+                var paragraphNode = batch.save({
+                  lang: lang,
+                  type: 'paragraph',
+                  markdown: element.markdown,
+                  text: stripper(element.markdown)
+                });
+
+                batch.label(paragraphNode, 'Paragraph');
+                batch.relate(slideNode, 'HAS', paragraphNode, {order: elementIndex});
+              }
+              else {
+                var linkedNode = _.find(linkedNodes, {
+                  slug_id: element.slug_id,
+                  type: element.type === 'resource' ? 'media' : 'reference'
+                });
+
+                batch.relate(slideNode, 'HAS', linkedNode, {order: elementIndex});
+              }
+            });
+          });
+
+        // Committing
+        batch.commit(next);
+      }
+    ], callback);
+
+    // TODO: format returned data correctly
+    // TODO: link to modes and crossings
   }
 });
 
@@ -82,10 +167,10 @@ model.getAll = function(lang, params, callback) {
     if (err) return callback(err);
 
     var sortedDoc = _.sortByOrder(
-      doc, 
+      doc,
       [
         'date',
-        function(doc){ 
+        function(doc) {
           return _.deburr(doc.title)
         }
       ],

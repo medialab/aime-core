@@ -160,7 +160,7 @@ module.exports = [
         req.session.user,
         req.lang,
         req.body.title,
-        req.body.slides,
+        req.body.slides || '',
         function(err, doc) {
           if (err) return res.serverError(err);
 
