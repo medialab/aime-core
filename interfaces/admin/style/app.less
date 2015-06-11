@@ -5,6 +5,19 @@
 @import 'codemirror.less';
 @import 'codemirror.theme.less';
 
+@m: 12px;
+
+@g4:  darken(white, 4%);
+@g7:  darken(white, 7%);
+@g14: darken(white, 14%);
+@g42: darken(white, 42%);
+@g77: darken(white, 77%);
+
+.font-feature{
+  font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
+  -webkit-font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
+}
+
 /*
  * Globals
  */
@@ -19,35 +32,24 @@ ul {
   list-style-type: none;
 }
 
+.centered {
+  text-align: center;
+}
+
 /*
  * Titles
  */
 h1 {
   color: black;
-  font-family: "NovelMonoPro-Regular", Arial, sans-serif;
   font-size: 15px;
-  font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
-  -webkit-font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
-  text-rendering: optimizeLegibility;
+
+  font-family: "NovelMonoPro-Regular", Arial, sans-serif;
+  .font-feature;
 }
 
 /*
  * Layout
  */
-
-#middle {
-  text-align: center;
-}
-
-.plain-list {
-  list-style-type: none;
-}
-
-.sub-list {
-  padding: 0;
-  padding-left: 10px;
-  padding-right: 10px;
-}
 
 .full-height {
   height: 100%;
@@ -59,83 +61,74 @@ h1 {
   overflow-y: auto;
 }
 
+.box {
+
+  padding: @m;
+  margin-bottom: @m;
+
+  cursor: pointer;
+  background-color: @g7;
+
+  font-family: "NovelMonoPro-RegularIt", Arial, sans-serif;
+  font-size: 15px;  
+  line-height: @m*2;
+  
+  &:hover {
+    background-color: @g14;
+  }
+  &.selected {
+    background-color: @g77;
+    color: white;
+  }
+}
+
 /*
  * Lists
  */
-
-.box {
-  height: 45px;
-  background-color: #eeeeee;
-  text-align: center;
-  line-height: 45px;
-  font-family: "NovelMonoPro-RegularIt", Arial, sans-serif;
-  font-size: 15px;
-  cursor: pointer;
-  
-  &:hover {
-    background-color: #cecece;
+.chapter {
+  background-color: @g4;
+  color: black;
+  &.selected, &:hover {
+    background-color: @g14;
+    color: black;
   }
-  &.selected {
+}
+
+.subheading {
+  &.selected, &:hover {
+    background-color: @g42;
     color: white;
-    background-color: #353535;
-  }
-
-}
-
-.spaced {
-  margin-top: 10px;
-}
-
-.chapter-box {
-  cursor: pointer;
-  background-color: #eeeeee;
-  font-family: "NovelMonoPro-RegularIt", Arial, sans-serif;
-  font-size: 15px;
-  text-align: left;
-  padding: 10px 5px;
-  margin-bottom: 10px;
-
-  &.active, &:hover {
-    background-color: #cecece;
-  }
-}
-.subheading-box {
-  cursor: pointer;
-  background-color: #eeeeee;
-  text-align: left;
-  font-family: "NovelMonoPro-RegularIt", Arial, sans-serif;
-  font-size: 15px;
-  padding: 10px 5px;
-  margin-bottom: 10px;
-
-  &.active, &:hover {
-    color: white;
-    background-color: #959595;
   }
 }
 
-/*
- * Thumbnails
- */
+.plain-list {
+  list-style-type: none;
+}
+
+.sub-list {
+  padding-left: @m;
+  padding-right: @m;
+}
 
 .thumbnail-index {
   vertical-align: top;
   font-weight: bold;
   line-height: 27px;
 }
-
 .thumbnail-text {
-  vertical-align: top;
-  text-align: left;
-  font-size: 6px;
-  padding: 5px;
-  padding-left: 10px;
-  line-height: 7px;
-  cursor: pointer;
 
-  &:hover, &.active {
+  padding: @m/2;
+  padding-left: @m;
+
+  font-size: 6px;
+  line-height: @m/2;
+
+  background: white;
+  color: @g14;
+
+  &.selected, &:hover {
+    background: white;
     color: black;
-    background-color: #eeeeee;
   }
 }
 
@@ -143,9 +136,7 @@ h1 {
  * Editor
  */
 .editor {
-  width: 100%;
-  background-color: #eeeeee;
-  padding: 20px;
+  background-color: @g4;
 }
 
 .entities-container {
@@ -161,26 +152,33 @@ h1 {
 }
 
 .preview {
+  
   font-size: 16px;
-  width: 100%;
-  padding: 20px;
-  line-height: 1.65em;
+
+  padding: @m;
+  padding-top: 1.5*@m;
+
+  line-height: @m*2;
+  font-family: "NovelPro-Regular", Times, serif;
 
   .vocabulary-item {
-    font-weight: bold;
-    background-color: #cecece;
-    padding: 5px
+    padding: @m/2 0 @m/3 0;
+
+    font-family: "NovelSansPro-Bold", Times, serif;
+    .font-feature;
+
+    background-color: @g14;
   }
 
   .document-item {
     vertical-align: super;
-    background-color: #cecece;
+    background-color: @g14;
     padding: 3px;
     font-size: 0.8em;
   }
 
   .resource-item {
-    background-color: #cecece;
+    background-color: @g14;
     padding: 5px;
     display: block;
   } 

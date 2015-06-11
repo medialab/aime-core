@@ -44,7 +44,7 @@ export class ListLayout extends PureComponent {
 
     return (
       <Col md={4} className="full-height">
-        <h1>Editor</h1>
+        <h1 className="centered">Editor</h1>
         <div className="overflowing">
           <Editor model={this.props.model}
                   buffer={this.props.buffer} />
@@ -60,7 +60,7 @@ export class ListLayout extends PureComponent {
 
     return (
       <Col md={4} className="full-height">
-        <h1>Preview</h1>
+        <h1 className="centered">Preview</h1>
         <div className="overflowing">
           <Preview model={this.props.model}
                    buffer={this.props.buffer} />
@@ -77,7 +77,7 @@ export class ListLayout extends PureComponent {
       <Row className="full-height">
         <Col className={classes({hidden: isThereAnyData && isSomethingSelected})} md={4} />
         <Col md={4} id="middle" className="full-height">
-          <h1>{this.props.title}</h1>
+          <h1 className="centered">{this.props.title}</h1>
           <div className="overflowing">
             <List items={this.props.data}
                   selection={this.props.selection || []} />
@@ -136,7 +136,7 @@ class Item extends PureComponent {
 
     return (
       <li>
-        <div className={classes('chapter-box', {active: this.props.active})}
+        <div className={classes('box', 'chapter', {selected: this.props.active})}
              onClick={this.handleClick}>
           {item.title}
         </div>
@@ -199,7 +199,7 @@ class SubItem extends PureComponent {
 
     return (
       <li>
-        <div className={classes('subheading-box', {active: this.props.active})}
+        <div className={classes('box', 'subheading', {selected: this.props.active})}
              onClick={this.handleClick}>
           {title}
         </div>
@@ -261,7 +261,7 @@ class Thumbnail extends PureComponent {
           <table>
             <tr>
               <td className="thumbnail-index">{index}</td>
-              <td className={classes('thumbnail-text', {active: active})}
+              <td className={classes('thumbnail-text box', {selected: active})}
                   onClick={this.handleClick}>
                 {text}
               </td>

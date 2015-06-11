@@ -34,9 +34,9 @@ export default class Home extends BranchedComponent {
 
   render() {
     return (
-      <Row>
+      <Row className="centered">
         <Col md={4} />
-        <Col md={4} id="middle">
+        <Col md={4} >
           <div>
             <h1>Aime Quinoa</h1>
             <Row>
