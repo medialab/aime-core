@@ -63,7 +63,7 @@ CodeMirror.defineMode("aime-markdown", function(cmCfg, modeCfg) {
   ,   taskListRE = /^\[(x| )\](?=\s)/ // Must follow ulRE or olRE
   ,   atxHeaderRE = /^#+ ?/
   ,   setextHeaderRE = /^(?:\={1,}|-{1,})$/
-  ,   textRE = /^[^#!\[\]*_\\<>` "'(~]+/;
+  ,   textRE = /^[^{#!\[\]*_\\<>` "'(~]+/;
 
   function switchInline(stream, state, f) {
     state.f = state.inline = f;
@@ -379,6 +379,10 @@ CodeMirror.defineMode("aime-markdown", function(cmCfg, modeCfg) {
       }
     } else if (state.code) {
       return getType(state);
+    }
+
+    if (ch === '{' && stream.match(/^doc_\d+(?:,doc_\d+)*\}/)) {
+      return "keyword";
     }
 
     if (ch === '!' && stream.match(/\[[^\]]*\] ?(?:\(|\[)/, false)) {
