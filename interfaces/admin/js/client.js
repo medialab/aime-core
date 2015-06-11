@@ -84,7 +84,7 @@ export default function(scope) {
                   if (e.type === 'paragraph')
                     return e.markdown;
                   else
-                    return `![${e.type}](res_${e.slug_id})`;
+                    return `![${e.type}](${e.type === 'reference' ? 'ref' : 'res'}_${e.slug_id})`;
                 }).join('\n\n');
             }).join('\n\n---\n\n');
           });
