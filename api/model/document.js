@@ -169,49 +169,126 @@ var model = _.merge(abstract(queries.document), {
   },
 
   // Updating an existing document
-  update: function(id, title, slides, callback) {
+  update: function(id, title, slidesText, callback) {
+
+    var slides = parseSlides(slidesText),
+        links = _(slides)
+          .flatten()
+          .filter(function(element) {
+            return element.type !== 'paragraph';
+          })
+          .uniq(function(element) {
+            return element.type + '||' + element.slug_id;
+          })
+          .value();
 
     async.waterfall([
-      function getAffectedDocument(next) {
+      function retrieveLinkedItems(next) {
+        db.query(
+          queries.misc.getMediasAndReferences,
+          {
+            res_ids: _(links)
+              .filter({type: 'resource'})
+              .map('slug_id')
+              .value(),
+            ref_ids: _(links)
+              .filter({type: 'reference'})
+              .map('slug_id')
+              .value()
+          },
+          next
+        );
+      },
+      function getAffectedDocument(linkedNodes, next) {
+
+        // If there are fewer linked nodes than expected, we break
+        if (links.length !== linkedNodes.length)
+          return next(new Error('models.document.update: inconsistent links.'));
+
         return db.query(queries.document.getForUpdate, {id: id}, function(err, docs) {
           if (err) return next(err);
           if (!docs[0]) return next(new Error('not-found'));
 
-          return next(null, docs[0]);
+          return next(null, {doc: docs[0], linkedNodes: linkedNodes});
         });
       },
-      function updateDocument(doc, next) {
-        console.log(doc);
-        eojf
+      function updateDocument(data, next) {
         var batch = db.batch(),
-            docNode = {id: doc.id};
+            doc = data.doc,
+            linkedNodes = data.linkedNodes,
+            docNode = {id: doc.id},
+            lang = doc.properties.lang;
+
+        // Invalidating document cache
+        cache[lang].documents = null;
 
         // Handling title
         if (title && title !== doc.title)
           batch.save(docNode, 'title', title);
 
-        // TODO: updating slides
         // TODO: beware of user bookmarks
         // TODO: modes and crossings
+        // TODO: the dedicated query here is not needed per se
 
         // Udpating the slides - a modus operandi
         // We actually need to destroy the document's slides and paragraph
         // while unlinking the proper elements to rebuild them anew.
-        // doc.children.forEach(function(slide) {
-        //   batch.delete(slide.id, true);
 
-        //   slide.children.forEach(function(element) {
+        // Deleting necessary nodes & edges
+        doc.children.forEach(function(slide) {
+          batch.delete(slide.id, true);
 
-        //     if (element.type === 'paragraph') {
-        //       batch.delete(element.id, true);
-        //     }
-        //     else ()
-        //   });
-        // });
+          slide.children.forEach(function(element) {
+            if (element.type === 'paragraph')
+              batch.delete(element.id, true);
+          });
+        });
+
+        // Re-creating items from scratch
+        slides.forEach(function(elements, slideIndex) {
+          var slideNode = batch.save({
+            lang: lang,
+            type: 'paragraph'
+          });
+          batch.label(slideNode, 'Slide');
+
+          batch.relate(docNode, 'HAS', slideNode, {order: slideIndex});
+
+          elements.forEach(function(element, elementIndex) {
+            if (element.type === 'paragraph') {
+              var paragraphNode = batch.save({
+                lang: lang,
+                type: 'paragraph',
+                markdown: element.markdown,
+                text: stripper(element.markdown)
+              });
+
+              batch.label(paragraphNode, 'Paragraph');
+              batch.relate(slideNode, 'HAS', paragraphNode, {order: elementIndex});
+            }
+            else {
+              var linkedNode = _.find(linkedNodes, {
+                slug_id: element.slug_id,
+                type: element.type === 'resource' ? 'media' : 'reference'
+              });
+
+              batch.relate(slideNode, 'HAS', linkedNode, {order: elementIndex});
+            }
+          });
+        });
 
         return next();
         // return batch.commit(next);
-      }
+      },
+      // function retrieveCreateDocument(results, next) {
+      //   var id = results[0].id;
+
+      //   model.getByIds([id], function(err, docs) {
+      //     if (err) return next(err);
+
+      //     return next(null, docs[0]);
+      //   });
+      // }
     ], callback);
   }
 });
@@ -242,6 +319,6 @@ model.getAll = function(lang, params, callback) {
 
 module.exports = model;
 
-// model.update(14960, 'Fancy Title', '', function(err, doc) {
-//   console.log(err);
+// model.update(14960, 'Fancy Title', 'Slide n°1\n\n---\n\nSlide n°2', function(err, doc) {
+//   console.log(err, doc);
 // });
