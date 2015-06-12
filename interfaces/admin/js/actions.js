@@ -95,6 +95,23 @@ const actions = {
   },
 
   /**
+   * Adding from modal 
+   */
+  'modal:create': function({data: {model,data}}) {
+    console.log('modal:create', model,data);
+  },   
+
+  /**
+   * Opening modal 
+   */
+  'modal:open': function({data: {model,type}}) {
+    this.set(['states', model, 'modal'], type);
+  },
+  'modal:dismiss': function({data: {model}}) {
+    this.set(['states', model, 'modal'], null);
+  },
+
+  /**
    * Updating the editor's buffer
    */
   'buffer:change': function({data: {model, markdown}}) {

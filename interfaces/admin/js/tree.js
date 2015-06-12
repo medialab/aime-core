@@ -52,4 +52,10 @@ tree.client = bindClient(tree);
 bindFetching(tree);
 tree.on(actions);
 
+//
+tree.on(function(e){
+  const msg = ['update','get','select','invalid'];
+  if(!~msg.indexOf(e.type)) console.log('event',e.type, e.data);
+});
+
 export default tree;

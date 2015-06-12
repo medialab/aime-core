@@ -13,6 +13,7 @@ import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
 import autobind from 'autobind-decorator';
 import {ActionButton} from './misc.jsx';
+import {Modal} from './modal.jsx';
 
 /**
  * List layout generic component
@@ -23,11 +24,16 @@ import {ActionButton} from './misc.jsx';
 
     return {
       data: ['data', model],
+      modal: ['states', model, 'modal'],
       selection: ['states', model, 'selection']
     };
   }
 })
 export class ListLayout extends PureComponent {
+  static contextTypes = {
+    tree: PropTypes.baobab
+  };
+
   static childContextTypes = {
     model: React.PropTypes.string
   };
@@ -42,9 +48,6 @@ export class ListLayout extends PureComponent {
   renderEditor(visible) {
     if (!visible)
       return <Col md={4} />;
-
-    const action = () => console.log("yeah !");
-
     return (
       <Col md={4} id="editor" className="full-height">
         <h1 className="centered">Editor</h1>
@@ -54,7 +57,7 @@ export class ListLayout extends PureComponent {
         </div>
         <div className="actions"> 
           <ActionButton size={12} label="add item"/>
-          <ActionButton size={12} type="save"label="save"/>
+          <ActionButton size={12} label="save"/>
         </div>
       </Col>
     );
@@ -77,26 +80,43 @@ export class ListLayout extends PureComponent {
     );
   }
 
+  @autobind
+  renderModal(visible){
+
+    var titles = {"doc":"Create document"};
+    
+    if (!!visible)
+      return (
+        <Col md={4}>
+          <Modal title={titles[this.props.model]}/>
+        </Col>
+      );
+  }
+
   render() {
     const model = this.props.model,
           isSomethingSelected = (this.props.selection || []).length > (1 - (model === 'doc')),
           isThereAnyData = !!this.props.data;
 
 
+    const open = () => {
+      this.context.tree.emit('modal:open', {model: this.props.model, type: 'creation'});
+    };
+
     return (
       <Row className="full-height">
         <Col className={classes({hidden: isThereAnyData && isSomethingSelected})} md={4} />
         <Col md={4} id="book" className="full-height">
-          <h1 className="centered">{this.props.title}</h1>
+          <h1 className="centered">{this.props.title }</h1>
           <div className="overflowing">
             <List items={this.props.data}
                   selection={this.props.selection || []} />
             {(model === 'book') &&  <ActionButton size={12} label="add chapter"/>}
-
           </div>
-
-          {(model === 'doc') &&  <ActionButton size={12} label="add text"/>}
+          {(model === 'doc') &&  <ActionButton size={12} action={open} label="add document"/>}
         </Col>
+
+        {this.renderModal(this.props.modal)}
         {this.renderEditor(isThereAnyData && isSomethingSelected)}
         {this.renderPreview(isThereAnyData && isSomethingSelected)}
       </Row>
