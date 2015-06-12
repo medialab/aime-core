@@ -19,6 +19,13 @@
   -webkit-font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
 }
 
+.ligned {
+  background-size: 100% 2*@m;
+  background-image: 
+  linear-gradient(#000 1px, transparent 1px);
+}
+
+
 /*
  * Globals
  */
@@ -65,7 +72,9 @@ h1 {
   overflow: scroll; 
   overflow-x:hidden;
 }
-
+.CodeMirror-lines {
+    .ligned;
+}
 .box {
 
   padding: @m;
