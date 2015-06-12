@@ -21,10 +21,9 @@
 
 .ligned {
   background-size: 100% 2*@m;
-  background-image: 
-  linear-gradient(#000 1px, transparent 1px);
+  background-position-y: 16px;
+  background-image:linear-gradient(@g14 1px, transparent 1px);
 }
-
 
 /*
  * Globals
@@ -72,8 +71,9 @@ h1 {
   overflow: scroll; 
   overflow-x:hidden;
 }
-.CodeMirror-lines {
+.CodeMirror-scroll {
     .ligned;
+    line-height: @m*2;
 }
 .box {
 
@@ -130,8 +130,14 @@ h1 {
 
 .editor {
 
+  line-height: @m;
   width: 100%;
-  height: 20*@m;
+  height: 10*@m;
+outline: none;
+  border: 0;
+
+  .ligned;
+  line-height: @m*2;
 
 }
 
@@ -190,9 +196,6 @@ h1 {
 /*
  * Editor
  */
-.editor {
-  background-color: @g4;
-}
 
 .entities-container {
   padding: 10px;
