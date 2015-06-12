@@ -54,8 +54,9 @@ function parseSlides(markdown) {
 /**
  * Model functions
  */
-
 var model = _.merge(abstract(queries.document), {
+
+  // Creating a document
   create: function(user, lang, title, slidesText, callback) {
     var batch = db.batch();
 
@@ -150,16 +151,74 @@ var model = _.merge(abstract(queries.document), {
             });
           });
 
+        // TODO: link to modes and crossings
+
         // Committing
         batch.commit(next);
+      },
+      function retrieveCreateDocument(results, next) {
+        var id = results[0].id;
+
+        model.getByIds([id], function(err, docs) {
+          if (err) return next(err);
+
+          return next(null, docs[0]);
+        });
       }
     ], callback);
+  },
 
-    // TODO: format returned data correctly
-    // TODO: link to modes and crossings
+  // Updating an existing document
+  update: function(id, title, slides, callback) {
+
+    async.waterfall([
+      function getAffectedDocument(next) {
+        return db.query(queries.document.getForUpdate, {id: id}, function(err, docs) {
+          if (err) return next(err);
+          if (!docs[0]) return next(new Error('not-found'));
+
+          return next(null, docs[0]);
+        });
+      },
+      function updateDocument(doc, next) {
+        console.log(doc);
+        eojf
+        var batch = db.batch(),
+            docNode = {id: doc.id};
+
+        // Handling title
+        if (title && title !== doc.title)
+          batch.save(docNode, 'title', title);
+
+        // TODO: updating slides
+        // TODO: beware of user bookmarks
+        // TODO: modes and crossings
+
+        // Udpating the slides - a modus operandi
+        // We actually need to destroy the document's slides and paragraph
+        // while unlinking the proper elements to rebuild them anew.
+        // doc.children.forEach(function(slide) {
+        //   batch.delete(slide.id, true);
+
+        //   slide.children.forEach(function(element) {
+
+        //     if (element.type === 'paragraph') {
+        //       batch.delete(element.id, true);
+        //     }
+        //     else ()
+        //   });
+        // });
+
+        return next();
+        // return batch.commit(next);
+      }
+    ], callback);
   }
 });
 
+/**
+ * Overriding sorting
+ */
 var getAll = model.getAll;
 
 model.getAll = function(lang, params, callback) {
@@ -182,3 +241,7 @@ model.getAll = function(lang, params, callback) {
 };
 
 module.exports = model;
+
+// model.update(14960, 'Fancy Title', '', function(err, doc) {
+//   console.log(err);
+// });
