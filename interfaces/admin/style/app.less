@@ -8,9 +8,9 @@
 
 @m: 12px;
 
-@g4:  darken(white, 4%);
-@g7:  darken(white, 7%);
-@g14: darken(white, 14%);
+@g4:  darken(white, 6%);
+@g7:  darken(white, 9%);
+@g14: darken(white, 15%);
 @g42: darken(white, 42%);
 @g77: darken(white, 77%);
 
@@ -23,7 +23,6 @@
  * Globals
  */
 html, body {
-  width: 100%;
   height: 100%;
   font-family: "NovelMonoPro-Regular", Arial, sans-serif;
   text-rendering: optimizeLegibility;
@@ -50,6 +49,7 @@ h1 {
 
   font-family: "NovelMonoPro-Regular", Arial, sans-serif;
   .font-feature;
+  .centered;
 }
 
 /*
@@ -97,17 +97,35 @@ h1 {
   padding-bottom: 0;
 
   margin-top: @m;
+  background: @g14;
+  color: black;
+  
+  &.selected {
+    background-color: @g42;
+  }
 
-  &.save, &.add {
-
-    background: @g77;
+  &:hover {
+    background-color: @g77;
     color: white;
   }
 
-  &.selected, &:hover {
-    background-color: @g42;
+  &.inactive {
+    background-color: @g14;
+    color: @g42;
   }
+
 }
+/*
+ * Modal
+ */
+
+.editor {
+
+  width: 100%;
+  height: 20*@m;
+
+}
+
 
 /*
  * Lists
@@ -115,8 +133,6 @@ h1 {
 .chapter {
   background-color: @g4;
   color: black;
-
-  margin-right: @m;
   &.selected, &:hover {
     background-color: @g14;
     color: black;
@@ -124,7 +140,6 @@ h1 {
 }
 
 .subheading {
-   margin-right: @m;
   &.selected, &:hover {
     background-color: @g42;
     color: white;
@@ -133,6 +148,7 @@ h1 {
 
 .plain-list {
   list-style-type: none;
+  padding-right: @m;
 }
 
 .sub-list {
@@ -145,8 +161,8 @@ h1 {
   font-weight: bold;
   line-height: 27px;
 }
-.thumbnail-text {
 
+.thumbnail-text {
   padding: @m/2;
   padding-left: @m;
 
