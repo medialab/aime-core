@@ -12,6 +12,7 @@ import {Editor, Preview} from './editor.jsx';
 import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
 import autobind from 'autobind-decorator';
+import {ActionButton} from './misc.jsx';
 
 /**
  * List layout generic component
@@ -42,6 +43,8 @@ export class ListLayout extends PureComponent {
     if (!visible)
       return <Col md={4} />;
 
+    const action = () => console.log("yeah !");
+
     return (
       <Col md={4} id="editor" className="full-height">
         <h1 className="centered">Editor</h1>
@@ -49,10 +52,10 @@ export class ListLayout extends PureComponent {
           <Editor model={this.props.model}
                   buffer={this.props.buffer} />
         </div>
-        <Col md={6} className="box bouton add-ressource centered">add text</Col>
-        <Col md={6} className="box bouton add-text centered">add ressources</Col>
-        <Col md={12} className="box bouton save centered">save</Col>
-
+        <div className="actions"> 
+          <ActionButton size={12} label="add item"/>
+          <ActionButton size={12} type="save"label="save"/>
+        </div>
       </Col>
     );
   }
@@ -69,15 +72,16 @@ export class ListLayout extends PureComponent {
           <Preview model={this.props.model}
                    buffer={this.props.buffer} />
         </div>
-        <Col md={3} className="box bouton back centered">back</Col>
       </Col>
 
     );
   }
 
   render() {
-    const isSomethingSelected = (this.props.selection || []).length > (1 - (this.props.model === 'doc')),
+    const model = this.props.model,
+          isSomethingSelected = (this.props.selection || []).length > (1 - (model === 'doc')),
           isThereAnyData = !!this.props.data;
+
 
     return (
       <Row className="full-height">
@@ -87,8 +91,11 @@ export class ListLayout extends PureComponent {
           <div className="overflowing">
             <List items={this.props.data}
                   selection={this.props.selection || []} />
+            {(model === 'book') &&  <ActionButton size={12} label="add chapter"/>}
+
           </div>
-            <Col md={12} className="box bouton create-paragraph centered">create paragraph</Col>
+
+          {(model === 'doc') &&  <ActionButton size={12} label="add text"/>}
         </Col>
         {this.renderEditor(isThereAnyData && isSomethingSelected)}
         {this.renderPreview(isThereAnyData && isSomethingSelected)}

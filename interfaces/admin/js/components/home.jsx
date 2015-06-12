@@ -55,7 +55,7 @@ export default class Home extends BranchedComponent {
             </Row>
             {models.map(m => (
                 <Row key={m.id}>
-                  <Col md={12} className="spaced">
+                  <Col md={12}>
                     <Box onClick={this.changeView.bind(this, m.id)}>
                       {m.label}
                     </Box>
