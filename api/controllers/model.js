@@ -149,27 +149,44 @@ module.exports = [
   },
   {
     url: '/doc',
-    methods: ['POST', 'PUT'],
+    methods: ['POST'],
     validate: {
       title: 'string',
       slides: '?string'
     },
     action: function(req, res) {
+      return doc.create(
+        req.session.user,
+        req.lang,
+        req.body.title,
+        req.body.slides || '',
+        function(err, doc) {
+          if (err) return res.serverError(err);
 
-      if (req.method === 'POST')
-        doc.create(
-          req.session.user,
-          req.lang,
-          req.body.title,
-          req.body.slides || '',
-          function(err, doc) {
-            if (err) return res.serverError(err);
+          return res.ok(doc);
+        }
+      );
+    }
+  },
+  {
+    url: '/doc/:id',
+    methods: ['PUT'],
+    validate: {
+      title: '?string',
+      slides: '?string'
+    },
+    action: function(req, res) {
+      return doc.update(
+        req.params.id,
+        req.body.title || null,
+        req.body.slides || '',
+        function(err, doc) {
+          if (err.message === 'not-found') return res.notFound();
+          if (err) return res.serverError(err);
 
-            return res.ok(doc);
-          }
-        );
-      else
-        return res.notImplemented();
+          return res.ok(doc);
+        }
+      );
     }
   }
 ];

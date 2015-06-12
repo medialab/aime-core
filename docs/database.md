@@ -16,3 +16,4 @@ WIP
 * (Chapter)-[:HAS]->(Subheading)
 * (Subheading/Document/Vocabulary)-[:RELATES_TO]->(Mode/Crossing)
 * (Paragraph)-[:TRANSLATES]->(Paragraph)
+* (User)-[:BOOKMARKED]->(Paragraph)
