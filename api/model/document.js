@@ -23,6 +23,11 @@ var RE_SLIDES = /\n\n[-*_\s]*\n/g,
  * Custom markdown parser
  */
 function parseSlides(markdown) {
+
+  // We should always have at least an empty slide
+  if (!markdown)
+    return [[{type: 'paragraph', markdown: ''}]];
+
   return _(markdown.split(RE_SLIDES))
     .map(_.trim)
     .map(function(slide) {
@@ -156,7 +161,7 @@ var model = _.merge(abstract(queries.document), {
         // Committing
         batch.commit(next);
       },
-      function retrieveCreateDocument(results, next) {
+      function retrieveCreatedDocument(results, next) {
         var id = results[0].id;
 
         model.getByIds([id], function(err, docs) {
@@ -280,7 +285,7 @@ var model = _.merge(abstract(queries.document), {
         return next();
         // return batch.commit(next);
       },
-      // function retrieveCreateDocument(results, next) {
+      // function retrieveCreatedDocument(results, next) {
       //   var id = results[0].id;
 
       //   model.getByIds([id], function(err, docs) {

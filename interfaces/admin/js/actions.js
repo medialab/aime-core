@@ -95,14 +95,15 @@ const actions = {
   },
 
   /**
-   * Adding from modal 
+   * Adding from modal
    */
   'modal:create': function({data: {model,data}}) {
     console.log('modal:create', model,data);
-  },   
+    this.client.createDoc({data: {title: data}});
+  },
 
   /**
-   * Opening modal 
+   * Opening modal
    */
   'modal:open': function({data: {model,type}}) {
     this.set(['states', model, 'modal'], type);
