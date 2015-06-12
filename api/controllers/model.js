@@ -156,17 +156,20 @@ module.exports = [
     },
     action: function(req, res) {
 
-      doc.create(
-        req.session.user,
-        req.lang,
-        req.body.title,
-        req.body.slides || '',
-        function(err, doc) {
-          if (err) return res.serverError(err);
+      if (req.method === 'POST')
+        doc.create(
+          req.session.user,
+          req.lang,
+          req.body.title,
+          req.body.slides || '',
+          function(err, doc) {
+            if (err) return res.serverError(err);
 
-          return res.ok(doc);
-        }
-      );
+            return res.ok(doc);
+          }
+        );
+      else
+        return res.notImplemented();
     }
   }
 ];

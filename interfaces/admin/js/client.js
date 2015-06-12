@@ -94,9 +94,15 @@ export default function(scope) {
       },
 
       // Creating a document
-      docCreate: {
+      createDoc: {
         url: '/doc',
         type: 'POST'
+      },
+
+      // Updating a document
+      updateDoc: {
+        url: '/doc',
+        type: 'PUT'
       }
     }
   });
