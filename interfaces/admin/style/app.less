@@ -32,7 +32,6 @@ html, body {
 ul {
   list-style-type: none;
 }
-
 .centered {
   text-align: center;
 }
@@ -77,7 +76,6 @@ h1 {
   background-color: @g7;
 
   font-family: "NovelMonoPro-RegularIt", Arial, sans-serif;
-  font-size: 15px;
   line-height: @m*2;
 
   &:hover {
@@ -100,7 +98,7 @@ h1 {
 
   margin-top: @m;
 
-  &.save {
+  &.save, &.add {
 
     background: @g77;
     color: white;
@@ -109,8 +107,6 @@ h1 {
   &.selected, &:hover {
     background-color: @g42;
   }
-}
-.actions {
 }
 
 /*
@@ -140,8 +136,8 @@ h1 {
 }
 
 .sub-list {
-  padding-left: @m;
-  padding-right: @m;
+  padding-left: @m*2;
+  padding-right: @m*2;
 }
 
 .thumbnail-index {
