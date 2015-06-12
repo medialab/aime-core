@@ -282,18 +282,17 @@ var model = _.merge(abstract(queries.document), {
           });
         });
 
-        return next();
-        // return batch.commit(next);
+        return batch.commit(next);
       },
-      // function retrieveCreatedDocument(results, next) {
-      //   var id = results[0].id;
+      function retrieveCreatedDocument(results, next) {
+        var id = results[0].id;
 
-      //   model.getByIds([id], function(err, docs) {
-      //     if (err) return next(err);
+        model.getByIds([id], function(err, docs) {
+          if (err) return next(err);
 
-      //     return next(null, docs[0]);
-      //   });
-      // }
+          return next(null, docs[0]);
+        });
+      }
     ], callback);
   }
 });
@@ -323,7 +322,3 @@ model.getAll = function(lang, params, callback) {
 };
 
 module.exports = model;
-
-// model.update(14960, 'Fancy Title', 'Slide n°1\n\n---\n\nSlide n°2', function(err, doc) {
-//   console.log(err, doc);
-// });
