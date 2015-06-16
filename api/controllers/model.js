@@ -177,7 +177,7 @@ module.exports = [
     },
     action: function(req, res) {
       return doc.update(
-        req.params.id,
+        +req.params.id,
         req.body.title || null,
         req.body.slides || '',
         function(err, doc) {
@@ -193,7 +193,7 @@ module.exports = [
     url: '/doc/:id',
     methods: ['DELETE'],
     action: function(req, res) {
-      return doc.destroy(req.params.id, function(err, doc) {
+      return doc.destroy(+req.params.id, function(err, doc) {
         if (err && err.message === 'not-found') return res.notFound();
         if (err) return res.serverError(err);
 
