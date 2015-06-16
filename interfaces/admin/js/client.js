@@ -6,6 +6,7 @@
  */
 import Client from 'djax-client';
 import config from '../config.json';
+import {generateDocMarkdown} from './lib/helpers.js';
 
 export default function(scope) {
   return new Client({
@@ -78,15 +79,7 @@ export default function(scope) {
 
           // Generating the monolithic markdown version
           const data = result.forEach(function(doc) {
-            doc.markdown = doc.children.map(function(slide) {
-              return slide.children
-                .map(e => {
-                  if (e.type === 'paragraph')
-                    return e.markdown;
-                  else
-                    return `![${e.type}](${e.type === 'reference' ? 'ref' : 'res'}_${e.slug_id})`;
-                }).join('\n\n');
-            }).join('\n\n---\n\n');
+            doc.markdown = generateDocMarkdown(doc);
           });
 
           this.set(['data', 'doc'], result);
@@ -101,7 +94,7 @@ export default function(scope) {
 
       // Updating a document
       updateDoc: {
-        url: '/doc',
+        url: '/doc/:id',
         type: 'PUT'
       }
     }
