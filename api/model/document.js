@@ -294,6 +294,39 @@ var model = _.merge(abstract(queries.document), {
         });
       }
     ], callback);
+  },
+
+  // Destroying an existing document
+  destroy: function(id, callback) {
+    async.waterfall([
+      function getAffectedDocument(next) {
+        model.getByIds([id], function(err, docs) {
+          if (err) return next(err);
+          if (!docs[0]) return next(new Error('not-found'));
+
+          return next(null, docs[0]);
+        });
+      },
+      function deleteDocument(doc, next) {
+        var batch = db.batch();
+
+        batch.delete(doc.id, true);
+
+        doc.children.forEach(function(slide) {
+          batch.delete(slide.id, true);
+
+          slide.children.forEach(function(element) {
+            if (element.type === 'paragraph')
+              batch.delete(element.id, true);
+          });
+        });
+
+        batch.commit(function(err) {
+          if (err) return next(err);
+          return next(null, doc);
+        });
+      }
+    ], callback);
   }
 });
 

@@ -181,12 +181,24 @@ module.exports = [
         req.body.title || null,
         req.body.slides || '',
         function(err, doc) {
-          if (err.message === 'not-found') return res.notFound();
+          if (err && err.message === 'not-found') return res.notFound();
           if (err) return res.serverError(err);
 
           return res.ok(doc);
         }
       );
+    }
+  },
+  {
+    url: '/doc/:id',
+    methods: ['DELETE'],
+    action: function(req, res) {
+      return doc.destroy(req.params.id, function(err, doc) {
+        if (err && err.message === 'not-found') return res.notFound();
+        if (err) return res.serverError(err);
+
+        return res.ok(doc);
+      });
     }
   }
 ];
