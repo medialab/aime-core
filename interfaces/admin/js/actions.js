@@ -100,8 +100,6 @@ const actions = {
    */
   'modal:create': function({data: {model,data}}) {
 
-    console.log('modal:create', model , data);
-    
     this.client.createDoc(
       {data: {title: data}},
       (err, data) => {
@@ -113,6 +111,18 @@ const actions = {
       }
     );
   },
+
+  /**
+   * update element 
+   */
+
+  'element:save': function({data: {model} }) {
+    this.client.updateDoc(
+      {data: {slides:this.data.states[model].editor}, params: {id:this.data.states[model].selection[0]}},
+      (err, data) => {}
+    )
+  },
+
   /**
    * Opening modal
    */

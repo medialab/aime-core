@@ -46,6 +46,11 @@ export class ListLayout extends PureComponent {
 
   @autobind
   renderEditor(visible) {
+
+    const model = this.props.model,
+          save = () => {
+            this.context.tree.emit('element:save', {model: model});
+          };
     if (!visible)
       return <Col md={4} />;
     return (
@@ -56,8 +61,8 @@ export class ListLayout extends PureComponent {
                   buffer={this.props.buffer} />
         </div>
         <div className="actions"> 
-          <ActionButton size={12} label="add item"/>
-          <ActionButton size={12} label="save"/>
+          {(model === 'book') &&  <ActionButton size={12} label="add item"/>}
+          <ActionButton size={12} action={save} label="save"/>
         </div>
       </Col>
     );
