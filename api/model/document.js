@@ -285,8 +285,6 @@ var model = _.merge(abstract(queries.document), {
         return batch.commit(next);
       },
       function retrieveCreatedDocument(results, next) {
-        var id = results[0].id;
-
         model.getByIds([id], function(err, docs) {
           if (err) return next(err);
 
