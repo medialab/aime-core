@@ -57,7 +57,7 @@ export default {
       d = _.pull(d,  undefined);
 
       return _.indexBy(d, item => { 
-        return (item.type === "reference" ? "ref" : "res") + item.slug_id
+        return (item.type === "reference" ? "ref" : "res") + "_" + item.slug_id
       });
     }
   },

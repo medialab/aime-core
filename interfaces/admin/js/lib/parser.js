@@ -7,6 +7,7 @@
  */
 import {Renderer} from 'marked';
 import parser from '../../../../lib/abstract_parser.js';
+import tree from '../tree.js';
 
 /**
  * Custom renderer
@@ -30,7 +31,12 @@ renderer.link = function(href, title, text) {
 };
 
 renderer.image = function(src) {
-  return `<span class="resource-item">${src}</span>`;
+
+  var index = tree.facets.resIndex.get();
+
+  console.log(index[src]);
+
+  return `<p class="resource-item ${index[src].type} ${index[src].kind} ">${index[src].html}</p>`;
 };
 
 /**
