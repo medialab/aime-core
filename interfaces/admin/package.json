@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "autobind-decorator": "^1.2.0",
-    "baobab": "^1.1.0",
+    "baobab": "^1.1.1",
     "baobab-react": "^0.1.1",
     "baobab-router": "git+https://github.com/jacomyal/baobab-router.git",
     "classnames": "^2.0.0",

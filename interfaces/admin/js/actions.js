@@ -5,6 +5,7 @@
  * Actions updating the application's state.
  */
 import _ from 'lodash';
+import {generateDocMarkdown} from './lib/helpers.js';
 
 const actions = {
 
@@ -98,10 +99,20 @@ const actions = {
    * Adding from modal
    */
   'modal:create': function({data: {model,data}}) {
-    console.log('modal:create', model,data);
-    this.client.createDoc({data: {title: data}});
-  },
 
+    console.log('modal:create', model , data);
+    
+    this.client.createDoc(
+      {data: {title: data}},
+      (err, data) => {
+
+        data.result.markdown = generateDocMarkdown(data.result);
+
+        this.unshift(['data', model], data.result)
+        this.emit('selection:change', {model:model, level:0, target:data.result.id});
+      }
+    );
+  },
   /**
    * Opening modal
    */
