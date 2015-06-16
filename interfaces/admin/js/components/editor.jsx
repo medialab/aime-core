@@ -7,7 +7,6 @@
 import React from 'react';
 import PureComponent from '../lib/pure.js';
 import CodeMirror from 'codemirror';
-import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
 
 // Importing needed codemirror assets
@@ -16,18 +15,6 @@ require('../lib/custom_mode.js');
 /**
  * Markdown editor component
  */
-@branch({
-  facets(props) {
-    return {
-      parsed: props.model + 'Parsed'
-    };
-  },
-  cursors(props) {
-    return {
-      buffer: ['states', props.model, 'editor']
-    };
-  }
-})
 export class Editor extends PureComponent {
   static contextTypes = {
     tree: PropTypes.baobab
@@ -118,13 +105,6 @@ class EditorEntity extends PureComponent {
 /**
  * Markdown rendered preview component
  */
-@branch({
-  facets(props) {
-    return {
-      parsed: props.model + 'Parsed'
-    };
-  }
-})
 export class Preview extends PureComponent {
   render() {
     const markdown = this.props.parsed.markdown,

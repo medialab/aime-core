@@ -6,13 +6,13 @@
  */
 import React from 'react';
 import PureComponent from '../lib/pure.js';
-import {ListLayout} from './list.jsx';
+import {Layout} from './list.jsx';
 
 /**
  * Main component
  */
 export default class Documents extends PureComponent {
   render() {
-    return <ListLayout title="Documents" model="doc" />;
+    return <Layout title="Documents" model="doc" />;
   }
 }

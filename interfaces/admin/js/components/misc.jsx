@@ -25,13 +25,13 @@ export class Box extends PureComponent {
 /**
  * Button generic component
  */
-
 export class ActionButton extends PureComponent {
   render(){
     let {size, action = () => console.log(this.props.label,"pressed") , state='default-state', label, saving, loadinglabel } = this.props,
           classString = `box bouton centered`;
 
-    if(saving) label = loadinglabel;
+    if(saving)
+      label = loadingLabel;
 
     return (
       <Col md={size} className={classString} onClick={action}>{label}</Col>

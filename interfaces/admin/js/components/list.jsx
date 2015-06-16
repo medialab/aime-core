@@ -15,8 +15,12 @@ import autobind from 'autobind-decorator';
 import {ActionButton} from './misc.jsx';
 import {Modal} from './modal.jsx';
 
+const MODAL_TITLES = {
+  doc: 'create document'
+};
+
 /**
- * List layout generic component
+ * Layout component
  */
 @branch({
   cursors(props) {
@@ -30,7 +34,7 @@ import {Modal} from './modal.jsx';
     };
   }
 })
-export class ListLayout extends PureComponent {
+export class Layout extends PureComponent {
   static contextTypes = {
     tree: PropTypes.baobab
   };
@@ -45,88 +49,128 @@ export class ListLayout extends PureComponent {
     };
   }
 
-  @autobind
-  renderEditor(visible) {
+  render() {
+    const model = this.props.model,
+          isAModalDisplayed = !!this.props.modal,
+          isSomethingSelected = (this.props.selection || []).length > (1 - (model === 'doc')),
+          isThereAnyData = !!this.props.data,
+          editionMode = isSomethingSelected && isThereAnyData && !isAModalDisplayed;
 
+    // Actions
+    const open = () => {
+      this.context.tree.emit('modal:open', {
+        model: model,
+        type: 'creation'
+      });
+    };
+
+    // NOTE: columns
+    //  --1: potentially hidden column
+    //  --2: list containing the items
+    //  --3: the editor or a modal
+    //  --4: a preview or a search helper
+
+    // TODO: refactor ListPanel
+
+    return (
+      <Row className="full-height">
+        <Col md={4} className={classes({hidden: editionMode || isAModalDisplayed})}/>
+
+        <Col md={4} className="full-height">
+          <h1 className="centered">{this.props.title}</h1>
+          <div className="overflowing">
+            <ListPanel items={this.props.data} model={model} />
+          </div>
+          {(model === 'doc') &&
+            <ActionButton size={12}
+                          label="add document"
+                          action={open} />}
+        </Col>
+
+        <Col md={4} className="full-height">
+          {isAModalDisplayed ?
+            <Modal title={MODAL_TITLES[model]} /> :
+            editionMode && <EditorPanel model={model} />}
+        </Col>
+
+        <Col md={4} className="full-height">
+          {editionMode && <PreviewPanel model={model} />}
+        </Col>
+      </Row>
+    );
+  }
+}
+
+/**
+ * Editor panel component
+ */
+@branch({
+  facets(props) {
+    return {
+      parsed: props.model + 'Parsed'
+    };
+  },
+  cursors(props) {
+    return {
+      buffer: ['states', props.model, 'editor']
+    };
+  }
+})
+class EditorPanel extends PureComponent {
+  static contextTypes = {
+    tree: PropTypes.baobab
+  };
+
+  render() {
     const model = this.props.model,
           save = () => {
             this.context.tree.emit('element:save', {model: model});
           };
 
-    if (!visible)
-      return <Col md={4} />;
     return (
-      <Col md={4} id="editor" className="full-height">
+      <div className="full-height">
         <h1 className="centered">Editor</h1>
         <div className="overflowing">
-          <Editor model={this.props.model}
-                  buffer={this.props.buffer} />
+          <Editor model={model}
+                  buffer={this.props.buffer}
+                  parsed={this.props.parsed} />
         </div>
-        <div className="actions"> 
-          {(model === 'book') && <ActionButton size={12} label="add item"/>}
-          <ActionButton size={12} action={save} label="save"  saving={this.props.saving} loadinglabel="saving document …"/>
+        <div className="actions">
+          {(model === 'book') && <ActionButton size={12} label="add item" />}
+          <ActionButton size={12}
+                        action={save}
+                        label="save"
+                        saving={this.props.saving}
+                        loadingLabel="saving document …" />
         </div>
-      </Col>
+      </div>
     );
   }
+}
 
-  @autobind
-  renderPreview(visible) {
-    if (!visible)
-      return <Col md={4} />;
+/**
+ * Preview panel component
+ */
+@branch({
+  facets(props) {
+    return {
+      parsed: props.model + 'Parsed'
+    };
+  },
+})
+class PreviewPanel extends PureComponent {
+
+  render() {
+    const model = this.props.model;
 
     return (
-      <Col md={4} id="preview" className="full-height">
+      <div className="full-height">
         <h1 className="centered">Preview</h1>
         <div className="overflowing">
           <Preview model={this.props.model}
-                   buffer={this.props.buffer} />
+                   parsed={this.props.parsed} />
         </div>
-      </Col>
-
-    );
-  }
-
-  @autobind
-  renderModal(visible){
-
-    var titles = {"doc":"Create document"};
-    
-    if (!!visible)
-      return (
-        <Col md={4}>
-          <Modal title={titles[this.props.model]}/>
-        </Col>
-      );
-  }
-
-  render() {
-    const model = this.props.model,
-          isSomethingSelected = (this.props.selection || []).length > (1 - (model === 'doc')),
-          isThereAnyData = !!this.props.data,
-          open = () => {
-            this.context.tree.emit('modal:open', {model: this.props.model, type: 'creation'});
-            
-            // this.context.tree.set(['states',this.props.model ,'saving'], true);
-          };
-
-    return (
-      <Row className="full-height">
-        <Col className={classes({hidden: isThereAnyData && isSomethingSelected})} md={4} />
-        <Col md={4} id="book" className="full-height">
-          <h1 className="centered">{this.props.title }</h1>
-          <div className="overflowing">
-            <List items={this.props.data}
-                  selection={this.props.selection || []} />
-            {(model === 'book') &&  <ActionButton size={12} label="add chapter"/>}
-          </div>
-          {(model === 'doc') && <ActionButton size={12} action={open} label="add document" />}
-        </Col>
-
-        {this.renderModal(this.props.modal)}
-        {this.renderEditor(isThereAnyData && isSomethingSelected)}
-        {this.renderPreview(isThereAnyData && isSomethingSelected)}
-      </Row>
+      </div>
     );
   }
 }
@@ -134,14 +178,23 @@ export class ListLayout extends PureComponent {
 /**
  * List generic component
  */
-class List extends PureComponent {
+@branch({
+  cursors(props, context) {
+    return {
+      selection: ['states', props.model, 'selection']
+    };
+  }
+})
+class ListPanel extends PureComponent {
 
   @autobind
   renderItem(item) {
+    const selection = this.props.selection || [];
+
     return <Item key={item.id}
                  item={item}
-                 selection={this.props.selection}
-                 active={this.props.selection[0] === item.id} />;
+                 selection={selection}
+                 active={selection[0] === item.id} />;
   }
 
   render() {
