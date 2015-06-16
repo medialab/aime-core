@@ -39,7 +39,7 @@ export default {
     }
   },
 
-  // Resource index
+  // Resources index
   resIndex: {
     cursors: {
       data: ['data', 'doc']
@@ -51,17 +51,15 @@ export default {
           return slide.children.map(e => {
             if (e.type !== 'paragraph') return e;
           });
-        });
+        })
       });
-
       d = _.flatten(d, 3);
       d = _.pull(d,  undefined);
 
       return _.indexBy(d, item => { 
         return (item.type === "reference" ? "ref" : "res") + item.slug_id
       });
-
-    };
+    }
   },
 
   // Book parsed buffer
