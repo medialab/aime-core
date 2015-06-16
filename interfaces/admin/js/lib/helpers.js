@@ -1,6 +1,5 @@
 export function generateDocMarkdown(doc){
-
-  return doc.children.map(function(slide) {
+  return doc.children.map(slide => {
     return slide.children
       .map(e => {
         if (e.type === 'paragraph')
