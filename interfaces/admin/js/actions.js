@@ -117,9 +117,13 @@ const actions = {
    */
 
   'element:save': function({data: {model} }) {
+    
+    this.set(['states','doc','saving'], true);    
     this.client.updateDoc(
       {data: {slides:this.data.states[model].editor}, params: {id:this.data.states[model].selection[0]}},
-      (err, data) => {}
+      (err, data) => {
+        this.set(['states','doc','saving'], false);
+      }
     )
   },
 

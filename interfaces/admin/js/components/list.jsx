@@ -25,7 +25,8 @@ import {Modal} from './modal.jsx';
     return {
       data: ['data', model],
       modal: ['states', model, 'modal'],
-      selection: ['states', model, 'selection']
+      selection: ['states', model, 'selection'],
+      saving: ['states', model, 'saving']
     };
   }
 })
@@ -51,6 +52,7 @@ export class ListLayout extends PureComponent {
           save = () => {
             this.context.tree.emit('element:save', {model: model});
           };
+
     if (!visible)
       return <Col md={4} />;
     return (
@@ -61,8 +63,8 @@ export class ListLayout extends PureComponent {
                   buffer={this.props.buffer} />
         </div>
         <div className="actions"> 
-          {(model === 'book') &&  <ActionButton size={12} label="add item"/>}
-          <ActionButton size={12} action={save} label="save"/>
+          {(model === 'book') && <ActionButton size={12} label="add item"/>}
+          <ActionButton size={12} action={save} label="save"  saving={this.props.saving} loadinglabel="saving document …"/>
         </div>
       </Col>
     );
@@ -101,12 +103,12 @@ export class ListLayout extends PureComponent {
   render() {
     const model = this.props.model,
           isSomethingSelected = (this.props.selection || []).length > (1 - (model === 'doc')),
-          isThereAnyData = !!this.props.data;
-
-
-    const open = () => {
-      this.context.tree.emit('modal:open', {model: this.props.model, type: 'creation'});
-    };
+          isThereAnyData = !!this.props.data,
+          open = () => {
+            this.context.tree.emit('modal:open', {model: this.props.model, type: 'creation'});
+            
+            // this.context.tree.set(['states',this.props.model ,'saving'], true);
+          };
 
     return (
       <Row className="full-height">
@@ -118,7 +120,7 @@ export class ListLayout extends PureComponent {
                   selection={this.props.selection || []} />
             {(model === 'book') &&  <ActionButton size={12} label="add chapter"/>}
           </div>
-          {(model === 'doc') &&  <ActionButton size={12} action={open} label="add document"/>}
+          {(model === 'doc') && <ActionButton size={12} action={open} label="add document" />}
         </Col>
 
         {this.renderModal(this.props.modal)}

@@ -74,7 +74,7 @@ export default function(scope) {
       // Document data
       // TODO: drop the limit when not debugging anymore
       doc: {
-        url: '/doc?limit=15',
+        url: '/doc?limit=150',
         success: function({result}) {
 
           // Generating the monolithic markdown version
