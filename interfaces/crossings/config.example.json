@@ -1,0 +1,20 @@
+{
+  "settings": {
+    "dev": {
+      "domain":"http://localhost:5000",
+      "inquiryUrl":"http://localhost:8000",
+      "crossingsUrl":"http://localhost:5000",
+      "apiUrl":"http://localhost:7000",
+      "pdfUrl":"http://localhost:5000/Viewer.js/#http://www.modesofexistence.org/inquiry/storage?url=",
+      "adminIfFreeForAll": true
+    },
+    "prod": {
+      "domain":"http://www.modesofexistence.org",
+      "inquiryUrl":"http://www.modesofexistence.org/inquiry",
+      "crossingsUrl":"http://www.modesofexistence.org/crossings",
+      "apiUrl":"http://www.modesofexistence.org/crossings_server",
+      "pdfUrl":"http://www.modesofexistence.org/crossings/Viewer.js/#../../../inquiry/storage?url=",
+      "adminIfFreeForAll": false
+    }
+  }
+}
