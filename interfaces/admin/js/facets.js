@@ -39,6 +39,31 @@ export default {
     }
   },
 
+  // Resource index
+  resIndex: {
+    cursors: {
+      data: ['data', 'doc']
+    },
+    get: function({data}) {
+
+      let d = _.map(data, doc => {
+        return doc.children.map( slide => {
+          return slide.children.map(e => {
+            if (e.type !== 'paragraph') return e;
+          });
+        });
+      });
+
+      d = _.flatten(d, 3);
+      d = _.pull(d,  undefined);
+
+      return _.indexBy(d, item => { 
+        return (item.type === "reference" ? "ref" : "res") + item.slug_id
+      });
+
+    };
+  },
+
   // Book parsed buffer
   bookParsed: {
     facets: {
