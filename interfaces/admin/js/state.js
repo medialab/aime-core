@@ -25,6 +25,11 @@ export default {
       editor: null,
       selection: null,
       modal: null
+    },
+    res:{
+      editor: null,
+      selection: null,
+      modal: null
     }
   },
 
@@ -32,6 +37,7 @@ export default {
   data: {
     book: null,
     voc: null,
-    doc: null
+    doc: null,
+    res: null
   }
 };

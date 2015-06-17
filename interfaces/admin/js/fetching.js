@@ -24,6 +24,7 @@ export default function(tree) {
       tree.client.book();
       tree.client.voc();
       tree.client.doc();
+      tree.client.res();
     }
   });
 };

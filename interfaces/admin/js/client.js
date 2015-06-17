@@ -71,6 +71,14 @@ export default function(scope) {
         }
       },
 
+      // Ressource data
+      res: {
+        url: '/res',
+        success: function({result}) {
+          this.set(['data', 'res'], result);
+        }
+      },
+
       // Document data
       // TODO: drop the limit when not debugging anymore
       doc: {
