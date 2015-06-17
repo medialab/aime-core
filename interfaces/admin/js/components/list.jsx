@@ -13,10 +13,11 @@ import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
 import autobind from 'autobind-decorator';
 import {ActionButton} from './misc.jsx';
-import {Modal} from './modal.jsx';
+import {Modal, ModalRessouces} from './modal.jsx';
 
 const MODAL_TITLES = {
-  doc: 'create document'
+  doc: 'add document',
+  res: 'add ressource'
 };
 
 /**
@@ -59,7 +60,8 @@ export class Layout extends PureComponent {
     const open = () => {
       this.context.tree.emit('modal:open', {
         model: model,
-        type: 'creation'
+        type: 'creation',
+        title: 'create'
       });
     };
 
@@ -71,6 +73,10 @@ export class Layout extends PureComponent {
 
     // TODO: refactor ListPanel
 
+    const modal = model === "doc" ? 
+      <Modal title={MODAL_TITLES[model]} /> :
+      <ModalRessouces title={MODAL_TITLES[model]} />;
+
     return (
       <Row className="full-height">
         <Col md={4} className={classes({hidden: editionMode || isAModalDisplayed})}/>
@@ -80,15 +86,15 @@ export class Layout extends PureComponent {
           <div className="overflowing">
             <ListPanel items={this.props.data} model={model} />
           </div>
-          {(model === 'doc' && isThereAnyData) &&
+          {( (model === 'doc' || model === 'res')   && isThereAnyData) &&
             <ActionButton size={12}
-                          label="create document"
+                          label="create"
                           action={open} />}
         </Col>
 
         <Col md={4} className="full-height">
           {isAModalDisplayed ?
-            <Modal title={MODAL_TITLES[model]} /> :
+            modal  :
             editionMode && <EditorPanel model={model} />}
         </Col>
 
@@ -227,12 +233,21 @@ class Item extends PureComponent {
 
   render() {
     const item = this.props.item;
+    let shortenedText;
+
+    if(item.reference !== null && this.context.model === 'res') 
+      shortenedText = _.trunc(item.reference.text, 50);
 
     return (
       <li>
         <div className={classes('box', 'chapter', {selected: this.props.active})}
              onClick={this.handleClick}>
-          {item.title}
+
+          {this.context.model === 'res' && 
+            <span className="kind">{item.kind} ] </span>
+          }
+          {item.title || shortenedText}
+
         </div>
         {this.context.model === 'book' &&
           <SubList items={item.children}

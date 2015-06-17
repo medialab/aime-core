@@ -13,6 +13,6 @@ import {Layout} from './list.jsx';
  */
 export default class Resources extends PureComponent {
   render() {
-    return <div>TODO</div>;
+    return <Layout title="Resources" model="res" />;
   }
 }
