@@ -29,8 +29,7 @@ const MODAL_TITLES = {
     return {
       data: ['data', model],
       modal: ['states', model, 'modal'],
-      selection: ['states', model, 'selection'],
-      saving: ['states', model, 'saving']
+      selection: ['states', model, 'selection']
     };
   }
 })
@@ -112,7 +111,8 @@ export class Layout extends PureComponent {
   },
   cursors(props) {
     return {
-      buffer: ['states', props.model, 'editor']
+      buffer: ['states', props.model, 'editor'],
+      saving: ['states', props.model, 'saving']
     };
   }
 })
@@ -122,7 +122,7 @@ class EditorPanel extends PureComponent {
   };
 
   render() {
-    const model = this.props.model,
+    const {model, saving} = this.props,
           save = () => {
             this.context.tree.emit('element:save', {model: model});
           };
@@ -140,8 +140,8 @@ class EditorPanel extends PureComponent {
           <ActionButton size={12}
                         action={save}
                         label="save"
-                        saving={this.props.saving}
-                        loadingLabel="saving document …" />
+                        state={saving ? 'saving' : 'normal'}
+                        loadingLabel="saving document…" />
         </div>
       </div>
     );
