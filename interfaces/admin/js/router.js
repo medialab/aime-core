@@ -56,6 +56,17 @@ export default new Router(tree, {
       }
     },
 
+    // Documents
+    {
+      path: '/res',
+      facets: {
+        logged: true
+      },
+      state: {
+        view: 'res'
+      }
+    },
+
     // Login
     {
       path: '/login',

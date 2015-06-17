@@ -13,12 +13,14 @@ import Home from './home.jsx';
 import Login from './login.jsx';
 import Book from './book.jsx';
 import Documents from './documents.jsx';
+import Resources from './resources.jsx';
 
 const views = x => ({
   login: Login,
   home: Home,
   book: Book,
-  doc: Documents
+  doc: Documents,
+  res: Resources
 })[x];
 
 @branch({
