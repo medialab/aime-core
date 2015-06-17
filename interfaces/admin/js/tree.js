@@ -52,10 +52,16 @@ tree.client = bindClient(tree);
 bindFetching(tree);
 tree.on(actions);
 
-//
+// Debugging
 tree.on(function(e){
-  const msg = ['update','get','select','invalid'];
-  if(!~msg.indexOf(e.type)) console.log('event',e.type, e.data);
+  const msg = ['update', 'get', 'select', 'invalid', 'buffer:change'];
+
+  if (!~msg.indexOf(e.type))
+    console.log(
+      '[Event]',
+      e.type,
+      e.data
+    );
 });
 
 export default tree;
