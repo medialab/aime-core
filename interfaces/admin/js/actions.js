@@ -117,11 +117,29 @@ const actions = {
    */
   'element:save': function({data: {model} }) {
 
+    // Starting to save
     this.set(['states','doc','saving'], true);
+
     this.client.updateDoc(
-      {data: {slides:this.data.states[model].editor}, params: {id:this.data.states[model].selection[0]}},
+      {
+        data: {
+          slides:this.data.states[model].editor
+        },
+        params: {
+          id:this.data.states[model].selection[0]
+        }
+      },
       (err, data) => {
+        const doc = data.result;
+
+        // Generating markdown slide
+        doc.markdown = generateDocMarkdown(doc);
+
+        // We are done saving
         this.set(['states','doc','saving'], false);
+
+        // We update the data
+        this.set(['data', model, {id: doc.id}], doc);
       }
     )
   },
