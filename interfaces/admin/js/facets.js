@@ -48,16 +48,16 @@ export default {
 
       let d = _.map(data, doc => {
         return doc.children.map( slide => {
-          return slide.children.map(e => {
-            if (e.type !== 'paragraph') return e;
+          return slide.children.filter(e => {
+            return e.type !== 'paragraph';
           });
-        })
+        });
       });
-      d = _.flatten(d, 3);
-      d = _.pull(d,  undefined);
 
-      return _.indexBy(d, item => { 
-        return (item.type === "reference" ? "ref" : "res") + "_" + item.slug_id
+      d = _.flatten(d, 3);
+
+      return _.indexBy(d, item => {
+        return (item.type === "reference" ? "ref" : "res") + "_" + item.slug_id;
       });
     }
   },
