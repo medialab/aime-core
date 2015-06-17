@@ -18,12 +18,14 @@ module.exports = {
   en: {
     book: null,
     vocabulary: null,
-    documents: null
+    documents: null,
+    resources: null
   },
   fr: {
     book: null,
     vocabulary: null,
-    documents: null
+    documents: null,
+    resources: null
   },
   slug_ids: {
     voc: 0,
