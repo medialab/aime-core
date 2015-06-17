@@ -80,9 +80,9 @@ export class Layout extends PureComponent {
           <div className="overflowing">
             <ListPanel items={this.props.data} model={model} />
           </div>
-          {(model === 'doc') &&
+          {(model === 'doc' && isThereAnyData) &&
             <ActionButton size={12}
-                          label="add document"
+                          label="create document"
                           action={open} />}
         </Col>
 
