@@ -15,7 +15,8 @@ import {Box} from './misc.jsx';
 
 const models = [
   {id: 'book', label: 'the book'},
-  {id: 'doc', label: 'documents'}
+  {id: 'doc', label: 'documents'},
+  {id: 'res', label: 'resources'}
 ];
 
 @branch({

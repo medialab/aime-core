@@ -7,6 +7,7 @@
 var book = require('../model/book.js'),
     voc = require('../model/vocabulary.js'),
     doc = require('../model/document.js'),
+    res = require('../model/resource.js'),
     types = require('../typology.js'),
     _ = require('lodash');
 
@@ -200,5 +201,12 @@ module.exports = [
         return res.ok(doc);
       });
     }
-  }
+  },
+
+  // Resource
+  {
+    url: '/res',
+    cache: 'resources',
+    action: getAll(res)
+  },
 ];

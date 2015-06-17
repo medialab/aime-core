@@ -115,7 +115,7 @@ const actions = {
   /**
    * update element
    */
-  'element:save': function({data: {model} }) {
+  'element:save': function({data: {model}}) {
 
     // Starting to save
     this.set(['states','doc','saving'], true);
