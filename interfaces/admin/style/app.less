@@ -236,8 +236,26 @@ outline: none;
   }
 
   .resource-item {
-    background-color: @g14;
-    padding: 5px;
-    display: block;
+    background-color: @g7;
+    color: @g77;
+    padding: @m*1;
+
+    a { color: black; }
   }
+
+  .creator {
+    font-weight: bold;
+  }
+  .media {
+
+    &.image {
+      padding: 0;
+      img {.img-responsive();}
+      .caption {
+        padding:@m;
+        margin-top: 0;
+      }
+    }
+  }
+
 }
