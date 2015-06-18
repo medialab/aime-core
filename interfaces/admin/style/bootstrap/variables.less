@@ -102,9 +102,9 @@
 @line-height-large:         1.3333333; // extra decimals for Win 8.1 Chrome
 @line-height-small:         1.5;
 
-@border-radius-base:        4px;
-@border-radius-large:       6px;
-@border-radius-small:       3px;
+@border-radius-base:        0px;
+@border-radius-large:       0px;
+@border-radius-small:       0px;
 
 //** Global color for active items (e.g., navs or dropdowns).
 @component-active-color:    #fff;
@@ -194,11 +194,11 @@
 //** Small `.form-control` border radius
 @input-border-radius-small:      @border-radius-small;
 
-//** Border color for inputs on focus
-@input-border-focus:             #66afe9;
+//** Border color for inputs on focus //#66afe9;
+@input-border-focus:             @g42;
 
 //** Placeholder text color
-@input-color-placeholder:        #999;
+@input-color-placeholder:        @g14;
 
 //** Default `.form-control` height
 @input-height-base:              (@line-height-computed + (@padding-base-vertical * 2) + 2);

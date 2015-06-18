@@ -106,8 +106,6 @@ export class ModalRessouces extends Component {
               <option value="pdf"> pdf </option>
             </select>
           </div>
-
-        <hr/>
         {kind === "pdf" &&   
           <div className="form-group">
             <label >title</label>
@@ -148,11 +146,12 @@ export class ModalRessouces extends Component {
                     placeholder="http://website.com/folder/file.ext" className="form-control" />
           </div>
         }
+      </form>
+      
         <ActionButton size={6} action={dismiss} label="dismiss"/>
 
         {kind !== "null" && 
           <ActionButton size={6} action={save} label="save"/>}
-        </form>
       </div>
     );
   }
