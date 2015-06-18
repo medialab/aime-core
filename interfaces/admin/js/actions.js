@@ -57,6 +57,10 @@ const actions = {
     const cursor = this.select('states', model, 'selection'),
           selection = cursor.get();
 
+
+    this.set(['states', model, 'modal'], null);
+
+
     // Ensuring we are acting on an array
     if (!selection)
       cursor.set([]);
