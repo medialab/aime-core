@@ -69,7 +69,7 @@ export class Editor extends PureComponent {
     const {vocs, docs, vocItems=[], docItems=[]} = this.props.parsed.data;
     const item = _.find(app.get('data', this.props.model), {id: app.get(["states","doc","selection"])[0]});
 
-    console.log(app.get(["states","doc","selection"])[0]);
+//    console.log(app.get(["states","doc","selection"])[0]);
 
     return (
       <div className="full-height">

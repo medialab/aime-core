@@ -16,8 +16,8 @@ import {ActionButton} from './misc.jsx';
 import {Modal, ModalRessouces} from './modal.jsx';
 
 const MODAL_TITLES = {
-  doc: 'add document',
-  res: 'add ressource'
+  doc: 'create document',
+  res: 'create ressource'
 };
 
 /**
@@ -233,10 +233,10 @@ class Item extends PureComponent {
 
   render() {
     const item = this.props.item;
-    let shortenedText;
+    let text;
 
     if(item.reference !== null && this.context.model === 'res') 
-      shortenedText = _.trunc(item.reference.text, 50);
+      text = item.reference.text;
 
     return (
       <li>
@@ -246,7 +246,7 @@ class Item extends PureComponent {
           {this.context.model === 'res' && 
             <span className="kind">{item.kind} ] </span>
           }
-          {item.title || shortenedText}
+          {item.title || text}
 
         </div>
         {this.context.model === 'book' &&
