@@ -23,7 +23,7 @@ export class Modal extends Component {
 
   constructor (props,context) {
     super(props,context);
-    this.state = {}
+    this.state = {title:""}
   }
   
   render() {
@@ -40,11 +40,18 @@ export class Modal extends Component {
     return (
       <div className='Modal'>
         <h1>{title}</h1>
-        <form className="form-horizontal">
-          <textarea value={this.state.title} onChange={(e) => this.setState({title: e.target.value})} className="editor"/>
-        </form>
-        <ActionButton size={6} action={dismiss} label="dismiss"/>
-        <ActionButton size={6} action={save} label="save"/>
+          <form>
+            <label >title</label>
+            <input value={this.state.title} 
+                    onChange={(e) => this.setState({title: e.target.value})} 
+                    placeholder="title" className="form-control" />
+              
+
+              <ActionButton size={6} action={dismiss} label="dismiss"/>
+              {this.state.title !== "" && 
+                <ActionButton size={6} action={save} label="save"/>
+              }
+          </form>
       </div>
     );
   }
