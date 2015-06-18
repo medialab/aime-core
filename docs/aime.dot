@@ -6,7 +6,7 @@ digraph {
   subgraph {
 
     node [ shape="rectangle"]
-    f_html f_url f_text f_original f_filename file f_title
+    f_html f_url f_text f_original f_filename f_file f_title
   }
 
 	book -> chapter -> subheading -> paragraph
@@ -19,7 +19,7 @@ digraph {
   quote -> {f_text}
   rich  -> {f_html, f_url}
   html  -> {f_html, f_url}
-  image -> {f_original, f_filename, file, f_url}
+  image -> {f_file, f_url}
   pdf   -> {f_title}
 
   {html,video,rich,image,quote,pdf} -> reference
