@@ -20,6 +20,11 @@ export class Editor extends PureComponent {
     tree: PropTypes.baobab
   };
 
+  constructor (props,context) {
+    super(props,context);
+    this.state = {title:""}
+  }
+
   componentDidMount() {
     this.editor = CodeMirror.fromTextArea(
       React.findDOMNode(this.refs.editor),
@@ -55,13 +60,23 @@ export class Editor extends PureComponent {
       this.editor.doc.setValue(props.buffer);
   }
 
+
+
+
   render() {
     const {vocs, docs, vocItems=[], docItems=[]} = this.props.parsed.data;
+    const item = _.find(app.get('data', 'doc'), {id: app.get(["states","doc","selection"])[0]});
 
     return (
       <div className="full-height">
         <div className="editor-container">
+            <div className="form-group">
+              <input value={item.title} defaultValue={item.title}
+                    onChange={(e) => this.setState({title: e.target.value})} 
+                    placeholder="title" className="form-control" />
+            </div>
           <textarea ref="editor" className="editor" />
+
         </div>
         <div className="entities-container">
           {vocItems.map((v, i) => <EditorEntity key={v ? v.id : i} data={v} slug={vocs[i]} />)}
