@@ -14,6 +14,15 @@
 @g42: darken(white, 42%);
 @g77: darken(white, 77%);
 
+.userselection(@color: blue){
+  *::selection {
+    background: @color; /* WebKit/Blink Browsers */
+  }
+  *::-moz-selection {
+    background: @color; /* Gecko Browsers */
+  }
+}
+
 .font-feature{
   font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
   -webkit-font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
@@ -37,6 +46,8 @@ html, body {
   height: 100%;
   font-family: "NovelMonoPro-Regular", Arial, sans-serif;
   text-rendering: optimizeLegibility;
+
+  .userselection(@g14);
 }
 
 ul {
