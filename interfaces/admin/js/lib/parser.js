@@ -46,6 +46,9 @@ renderer.image = function(src) {
         break;
 
       case "image":
+
+        // WORKS ONLY FOR AIME—INQUIRY UPLOADED IMAGES 
+
         const rawfilename = index[src].filename.slice(0, -4);
         const imgsrc = config.imageUrl + rawfilename +"/710x710-" + index[src].filename ;
 

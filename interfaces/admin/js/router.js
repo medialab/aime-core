@@ -56,7 +56,7 @@ export default new Router(tree, {
       }
     },
 
-    // Documents
+    // Ressources
     {
       path: '/res',
       facets: {
