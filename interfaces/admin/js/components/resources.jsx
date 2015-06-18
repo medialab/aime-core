@@ -6,7 +6,7 @@
  */
 import React from 'react';
 import PureComponent from '../lib/pure.js';
-import {Layout} from './list.jsx';
+import {Layout} from './layout.jsx';
 
 /**
  * Main component
