@@ -67,22 +67,21 @@ export class Editor extends PureComponent {
 
 
     const {vocs, docs, vocItems=[], docItems=[]} = this.props.parsed.data;
-    const item = _.find(app.get('data', this.props.model), {id: app.get(["states","doc","selection"])[0]});
-
-//    console.log(app.get(["states","doc","selection"])[0]);
-
-    return (
-      <div className="full-height">
-        <div className="editor-container">
-
-          { this.props.model !== "book" &&
+  // const item = _.find(app.get('data', this.props.model), {id: app.get(["states","doc","selection"])[0]}) && 'none';
+  /*          { this.props.model !== "book" &&
             <div className="form-group">
               <input value={item.title} defaultValue={item.title}
                     onChange={(e) => this.setState({title: e.target.value})} 
                     placeholder="title" className="form-control" />
             </div>
-          }
+          }*/
 
+    return (
+      <div className="full-height">
+        <div className="editor-container">
+            <div className="form-group">
+              <input placeholder="title" className="form-control" />
+            </div>
           <textarea ref="editor" className="editor" />
 
         </div>

@@ -12,7 +12,7 @@ import {Editor, Preview} from './editor.jsx';
 import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
 import autobind from 'autobind-decorator';
-import {ActionButton} from './misc.jsx';
+import {ActionButton, Toolbar} from './misc.jsx';
 import {Modal, ModalRessouces} from './modal.jsx';
 
 const MODAL_TITLES = {
@@ -82,7 +82,9 @@ export class Layout extends PureComponent {
         <Col md={4} className={classes({hidden: editionMode || isAModalDisplayed})}/>
 
         <Col md={4} className="full-height">
+
           <h1 className="centered">{this.props.title}</h1>
+
           <div className="overflowing">
             <ListPanel items={this.props.data} model={model} />
           </div>
@@ -101,6 +103,8 @@ export class Layout extends PureComponent {
         <Col md={4} className="full-height">
           {editionMode && <PreviewPanel model={model} />}
         </Col>
+              <Toolbar/>
+
       </Row>
     );
   }

@@ -147,7 +147,7 @@ export class ModalRessouces extends Component {
           </div>
         }
       </form>
-      
+
         <ActionButton size={6} action={dismiss} label="dismiss"/>
 
         {kind !== "null" && 
