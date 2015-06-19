@@ -2,6 +2,18 @@
  * URL: http://www.myfonts.com/fonts/burodunst/novel-[\w-]+/[\w-]+/
  * Copyright: Copyright (c) 2010 by Christoph Dunst. All rights reserved.
  */
+
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'),
+       url('../fonts/glyphicons-halflings-regular.woff') format('woff'),
+       url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'),
+       url('../fonts/glyphicons-halflings-regular.svg#@{icon-font-svg-id}') format('svg');
+}
+
 @font-face {
   font-family: 'NovelSansPro-Regular';
   src: url('../fonts/NovelSansPro-Regular.eot');
