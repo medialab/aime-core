@@ -36,13 +36,13 @@ export class ActionButton extends PureComponent {
       loadingLabel
     } = this.props;
 
-    const classString = `box bouton centered`;
+    const classString = `bouton col-md-12`;
 
     if (state === 'saving')
       label = loadingLabel;
 
     return (
-      <Col md={size} className={classString} onClick={action}>{label}</Col>
+      <button className={classString} onClick={action}>{label}</button>
     );
   };
 };
