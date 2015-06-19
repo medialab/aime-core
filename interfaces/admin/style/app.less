@@ -14,6 +14,11 @@
 @g42: darken(white, 42%);
 @g77: darken(white, 77%);
 
+
+/*
+ * Utils
+ */
+
 .userselection(@color: blue){
   *::selection {
     background: @color; /* WebKit/Blink Browsers */
@@ -22,7 +27,13 @@
     background: @color; /* Gecko Browsers */
   }
 }
-
+.transition (@transition) {
+  -webkit-transition: @transition;  
+  -moz-transition:    @transition;
+  -ms-transition:     @transition; 
+  -o-transition:      @transition;  
+  transition:         @transition;  
+}
 .font-feature{
   font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
   -webkit-font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
@@ -33,15 +44,11 @@
   background-position-y: 16px;
   background-image:linear-gradient(@g14 1px, transparent 1px);
 }
-.elipse {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
 
 /*
  * Globals
  */
+
 html, body {
   height: 100%;
   font-family: "NovelMonoPro-Regular", Arial, sans-serif;
@@ -57,9 +64,6 @@ ul {
   text-align: center;
 }
 
-/*
- * Titles
- */
 h1 {
   color: black;
   font-size: 15px;
@@ -74,30 +78,8 @@ h1 {
   .centered;
 }
 
-/*
- * Layout
- */
-
-.full-height {
-  height: 100%;
-}
-
-.overflowing {
-  height: calc(~"100% -" @m*15);
-  overflow: scroll; 
-  overflow-x:hidden;
-}
-.CodeMirror-scroll {
-    .ligned;
-    line-height: @m*2;
-}
-
-.list {
-    padding-left:0;
-
-}
-
 .box {
+  .transition(background-color .2s);
 
   padding: @m;
   margin-bottom: @m;
@@ -130,7 +112,8 @@ h1 {
   margin-top: @m;
   background: @g14;
   color: black;
-  
+  border:none;
+
   &.selected {
     background-color: @g42;
   }
@@ -144,11 +127,24 @@ h1 {
     background-color: @g14;
     color: @g42;
   }
+  .transition(background-color .2s);
 
 }
 
-.actions {
+/*
+ * Layout
+ */
+
+.full-height {
+  height: 100%;
 }
+
+.overflowing {
+  height: calc(~"100% -" @m*15);
+  overflow: scroll; 
+  overflow-x:hidden;
+}
+
 /*
  * Modal
  */
@@ -171,6 +167,10 @@ h1 {
  * Lists
  */
 
+.list {
+  padding-left:0;
+}
+
 .chapter {
   background-color: @g4;
   color: black;
@@ -178,7 +178,7 @@ h1 {
     background-color: @g14;
     color: black;
   }
-  .elipse();
+  .text-overflow();
 }
 
 .subheading {
@@ -186,7 +186,7 @@ h1 {
     background-color: @g42;
     color: white;
   }
-  .elipse();
+  .text-overflow();
 }
 
 .plain-list {
@@ -195,8 +195,8 @@ h1 {
 }
 
 .sub-list {
-  padding-left: @m*2;
-  padding-right: @m*2;
+  padding-left: @m;
+  padding-right: @m;
 }
 
 .thumbnail-index {
@@ -224,6 +224,11 @@ h1 {
 /*
  * Editor
  */
+
+ .CodeMirror-scroll {
+    .ligned;
+    line-height: @m*2;
+}
 
 .entities-container {
   padding: 10px;
@@ -343,14 +348,19 @@ form {
   margin: 0;
 
   button {
+    .bouton;
+
+    background: none;
+
     line-height: @m*2;
     width: @m*4;
-    padding: @m;
+
     margin: 0;
     border:none;
     margin-bottom: @m;
 
     text-align: center;
+
     &:hover {
       background: @g77;
       color: white;
