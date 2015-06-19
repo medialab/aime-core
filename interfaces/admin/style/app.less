@@ -48,8 +48,6 @@ html, body {
   text-rendering: optimizeLegibility;
 
   .userselection(@g14);
-
-  margin-left: 20px;
 }
 
 ul {
@@ -93,6 +91,12 @@ h1 {
     .ligned;
     line-height: @m*2;
 }
+
+.list {
+    padding-left:0;
+
+}
+
 .box {
 
   padding: @m;
@@ -142,6 +146,9 @@ h1 {
   }
 
 }
+
+.actions {
+}
 /*
  * Modal
  */
@@ -163,6 +170,7 @@ h1 {
 /*
  * Lists
  */
+
 .chapter {
   background-color: @g4;
   color: black;
@@ -313,7 +321,7 @@ form {
   }
 
   input, textarea {
-    line-height: @m*6;
+    line-height: @m*2;
   }
 
   .pre {
@@ -325,12 +333,34 @@ form {
     border-radius: @border-radius-base;
   }
 }
+#mount {
 
+  margin-left: 5*@m;
+}
 #toolbar {
   position: absolute;
-  width: 40px;
+  width: @m*5;
+  margin: 0;
 
-  top:0;
+  button {
+    line-height: @m*2;
+    width: @m*4;
+    padding: @m;
+    margin: 0;
+    border:none;
+    margin-bottom: @m;
+
+    text-align: center;
+    &:hover {
+      background: @g77;
+      color: white;
+    }
+    span {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  top: @m*4;
   left: 0;
 
 }

@@ -213,7 +213,7 @@ class ListPanel extends PureComponent {
     if (!items)
       return <div>...</div>;
     else
-      return <ul>{items.map(this.renderItem)}</ul>;
+      return <ul className="list">{items.map(this.renderItem)}</ul>;
   }
 }
 
