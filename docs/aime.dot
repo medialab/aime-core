@@ -6,21 +6,21 @@ digraph {
   subgraph {
 
     node [ shape="rectangle"]
-    f_html f_url f_text f_original f_filename f_file f_title
+    _html _url _text _file _title
   }
 
-	book -> chapter -> subheading -> paragraph
+	book -> chapter -> subheading -> paragraph -> { media, document}
 
 	document -> slide -> { media, paragraph }
 
   media -> {html,video,rich,image,quote,pdf}
 
-  video -> {f_url}
-  quote -> {f_text}
-  rich  -> {f_html, f_url}
-  html  -> {f_html, f_url}
-  image -> {f_file, f_url}
-  pdf   -> {f_title}
+  video -> {_url}
+  quote -> {_text}
+  rich  -> {_html, _url}
+  html  -> {_html, _url}
+  image -> {_file, _url}
+  pdf   -> {_title}
 
   {html,video,rich,image,quote,pdf} -> reference
 
