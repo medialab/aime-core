@@ -94,6 +94,13 @@ export default function(scope) {
         }
       },
 
+
+      // Creating a ressource
+      createRes: {
+        url: '/res',
+        type: 'POST'
+      },
+
       // Creating a document
       createDoc: {
         url: '/doc',

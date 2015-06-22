@@ -21,15 +21,15 @@ export default {
       editor: null,
       selection: null
     },
-    doc:{
+    doc: {
       editor: null,
       selection: null,
       modal: null
     },
-    res:{
+    res: {
       editor: null,
       selection: null,
-      modal: null
+      modal:null
     }
   },
 

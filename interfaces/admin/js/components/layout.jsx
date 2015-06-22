@@ -12,11 +12,12 @@ import {Editor, Preview} from './editor.jsx';
 import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
 import autobind from 'autobind-decorator';
-import {ActionButton} from './misc.jsx';
-import {Modal} from './modal.jsx';
+import {ActionButton, Toolbar} from './misc.jsx';
+import {Modal, ModalRessouces} from './modal.jsx';
 
 const MODAL_TITLES = {
-  doc: 'create document'
+  doc: 'create document',
+  res: 'create ressource'
 };
 
 /**
@@ -59,7 +60,8 @@ export class Layout extends PureComponent {
     const open = () => {
       this.context.tree.emit('modal:open', {
         model: model,
-        type: 'creation'
+        type: 'creation',
+        title: 'create'
       });
     };
 
@@ -71,30 +73,38 @@ export class Layout extends PureComponent {
 
     // TODO: refactor ListPanel
 
+    const modal = model === "doc" ? 
+      <Modal title={MODAL_TITLES[model]} /> :
+      <ModalRessouces title={MODAL_TITLES[model]} />;
+
     return (
       <Row className="full-height">
         <Col md={4} className={classes({hidden: editionMode || isAModalDisplayed})}/>
 
         <Col md={4} className="full-height">
+
           <h1 className="centered">{this.props.title}</h1>
+
           <div className="overflowing">
             <ListPanel items={this.props.data} model={model} />
           </div>
-          {(model === 'doc' && isThereAnyData) &&
+          {( (model === 'doc' || model === 'res')   && isThereAnyData) &&
             <ActionButton size={12}
-                          label="create document"
+                          label="create"
                           action={open} />}
         </Col>
 
         <Col md={4} className="full-height">
           {isAModalDisplayed ?
-            <Modal title={MODAL_TITLES[model]} /> :
+            modal  :
             editionMode && <EditorPanel model={model} />}
         </Col>
 
         <Col md={4} className="full-height">
           {editionMode && <PreviewPanel model={model} />}
         </Col>
+              <Toolbar/>
+
       </Row>
     );
   }
@@ -203,7 +213,7 @@ class ListPanel extends PureComponent {
     if (!items)
       return <div>...</div>;
     else
-      return <ul>{items.map(this.renderItem)}</ul>;
+      return <ul className="list">{items.map(this.renderItem)}</ul>;
   }
 }
 
@@ -227,12 +237,21 @@ class Item extends PureComponent {
 
   render() {
     const item = this.props.item;
+    let text;
+
+    if(item.reference !== null && this.context.model === 'res') 
+      text = item.reference.text;
 
     return (
       <li>
         <div className={classes('box', 'chapter', {selected: this.props.active})}
              onClick={this.handleClick}>
-          {item.title}
+
+          {this.context.model === 'res' && 
+            <span className="kind">{item.kind} ] </span>
+          }
+          {item.title || text}
+
         </div>
         {this.context.model === 'book' &&
           <SubList items={item.children}

@@ -35,8 +35,6 @@ renderer.image = function(src) {
 
   var index = tree.facets.resIndex.get();
 
-  console.log(index[src].type, index[src].kind, index[src]);
-
   if(index[src].type === "media") {
 
     switch (index[src].kind) {
@@ -46,6 +44,9 @@ renderer.image = function(src) {
         break;
 
       case "image":
+
+        // WORKS ONLY FOR AIME—INQUIRY UPLOADED IMAGES 
+
         const rawfilename = index[src].filename.slice(0, -4);
         const imgsrc = config.imageUrl + rawfilename +"/710x710-" + index[src].filename ;
 
@@ -68,19 +69,28 @@ renderer.image = function(src) {
                   ${index[src].text}
                 </p>`;
       case "rich":
-        return `<p class="resource-item ${index[src].type} ${index[src].kind}"> ${index[src].reference.text} ${index[src].html} </p>`;
+        return `<p class="resource-item ${index[src].type} ${index[src].kind}">
+                  ${index[src].reference.text} ${index[src].html} 
+                </p>`;
         break;
       
       case "video":
-        return `<p class="resource-item ${index[src].type} ${index[src].kind} ${index[src].host}"> ${index[src].iframe} </p>`;
+        return `<p class="resource-item ${index[src].type} ${index[src].kind} ${index[src].host}"> 
+                  ${index[src].iframe} 
+                </p>`;
         break;
       
       default:
         return `<p class="resource-item ${index[src].type}">res_${index[src].type}</p>`;
     }
   }
+  if(index[src].type === "reference"){
+    return `<p class="resource-item ${index[src].type} ">${index[src].text}</p>`;
+  }
 
-  return `<p class="resource-item ${index[src].type} ${index[src].kind} ">${index[src].html}</p>`;
+  return `<p class="resource-item ${index[src].type} ${index[src].kind} ">
+            ${index[src].type}_${index[src].slug_id}
+          </p>`;
 };
 
 /**

@@ -6,13 +6,13 @@
  */
 import React from 'react';
 import PureComponent from '../lib/pure.js';
-import {Layout} from './list.jsx';
+import {Layout} from './layout.jsx';
 
 /**
  * Main component
  */
 export default class Resources extends PureComponent {
   render() {
-    return <div>TODO</div>;
+    return <Layout title="Resources" model="res" />;
   }
 }

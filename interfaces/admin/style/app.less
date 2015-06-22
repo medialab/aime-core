@@ -14,6 +14,26 @@
 @g42: darken(white, 42%);
 @g77: darken(white, 77%);
 
+
+/*
+ * Utils
+ */
+
+.userselection(@color: blue){
+  *::selection {
+    background: @color; /* WebKit/Blink Browsers */
+  }
+  *::-moz-selection {
+    background: @color; /* Gecko Browsers */
+  }
+}
+.transition (@transition) {
+  -webkit-transition: @transition;  
+  -moz-transition:    @transition;
+  -ms-transition:     @transition; 
+  -o-transition:      @transition;  
+  transition:         @transition;  
+}
 .font-feature{
   font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
   -webkit-font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
@@ -28,10 +48,13 @@
 /*
  * Globals
  */
+
 html, body {
   height: 100%;
   font-family: "NovelMonoPro-Regular", Arial, sans-serif;
   text-rendering: optimizeLegibility;
+
+  .userselection(@g14);
 }
 
 ul {
@@ -41,9 +64,6 @@ ul {
   text-align: center;
 }
 
-/*
- * Titles
- */
 h1 {
   color: black;
   font-size: 15px;
@@ -58,24 +78,8 @@ h1 {
   .centered;
 }
 
-/*
- * Layout
- */
-
-.full-height {
-  height: 100%;
-}
-
-.overflowing {
-  height: calc(~"100% -" @m*15);
-  overflow: scroll; 
-  overflow-x:hidden;
-}
-.CodeMirror-scroll {
-    .ligned;
-    line-height: @m*2;
-}
 .box {
+  .transition(background-color .2s);
 
   padding: @m;
   margin-bottom: @m;
@@ -108,7 +112,8 @@ h1 {
   margin-top: @m;
   background: @g14;
   color: black;
-  
+  border:none;
+
   &.selected {
     background-color: @g42;
   }
@@ -122,8 +127,24 @@ h1 {
     background-color: @g14;
     color: @g42;
   }
+  .transition(background-color .2s);
 
 }
+
+/*
+ * Layout
+ */
+
+.full-height {
+  height: 100%;
+}
+
+.overflowing {
+  height: calc(~"100% -" @m*15);
+  overflow: scroll; 
+  overflow-x:hidden;
+}
+
 /*
  * Modal
  */
@@ -133,7 +154,7 @@ h1 {
   line-height: @m;
   width: 100%;
   height: 10*@m;
-outline: none;
+  outline: none;
   border: 0;
 
   .ligned;
@@ -145,6 +166,11 @@ outline: none;
 /*
  * Lists
  */
+
+.list {
+  padding-left:0;
+}
+
 .chapter {
   background-color: @g4;
   color: black;
@@ -152,6 +178,7 @@ outline: none;
     background-color: @g14;
     color: black;
   }
+  .text-overflow();
 }
 
 .subheading {
@@ -159,6 +186,7 @@ outline: none;
     background-color: @g42;
     color: white;
   }
+  .text-overflow();
 }
 
 .plain-list {
@@ -167,8 +195,8 @@ outline: none;
 }
 
 .sub-list {
-  padding-left: @m*2;
-  padding-right: @m*2;
+  padding-left: @m;
+  padding-right: @m;
 }
 
 .thumbnail-index {
@@ -196,6 +224,11 @@ outline: none;
 /*
  * Editor
  */
+
+ .CodeMirror-scroll {
+    .ligned;
+    line-height: @m*2;
+}
 
 .entities-container {
   padding: 10px;
@@ -243,8 +276,17 @@ outline: none;
     a { color: black; }
   }
 
+  .reference {
+    background-color: white;
+
+    border: 1px @g42 solid;
+
+  }
+
+
   .creator {
-    font-weight: bold;
+    font-family: "NovelSansPro-Bold", Times, serif;
+    .font-feature;
   }
   .media {
     
@@ -256,5 +298,80 @@ outline: none;
         margin-top: 0;
       }
     }
+
+  }
+
+  .video {
+    .embed-responsive();
+    .embed-responsive-16by9()
   }
 }
+
+/*
+ * Forms
+ */
+
+form {
+
+  padding: @m;
+
+  label { 
+    font-size: @m;
+    font-family: "NovelMonoPro-Regular", Arial, sans-serif;
+    .font-feature;
+    .centered;
+    width: 100%;
+    line-height: @m*2;
+    color: @g77;
+  }
+
+  input, textarea {
+    line-height: @m*2;
+  }
+
+  .pre {
+    min-height: @m*20;
+    padding: 2px 4px;
+    font-size: 90%;
+    color: @code-color;
+    background-color: @g7;
+    border-radius: @border-radius-base;
+  }
+}
+#mount {
+
+  margin-left: 5*@m;
+}
+#toolbar {
+  position: absolute;
+  width: @m*5;
+  margin: 0;
+
+  button {
+    .bouton;
+
+    background: none;
+
+    line-height: @m*2;
+    width: @m*4;
+
+    margin: 0;
+    border:none;
+    margin-bottom: @m;
+
+    text-align: center;
+
+    &:hover {
+      background: @g77;
+      color: white;
+    }
+    span {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  top: @m*4;
+  left: 0;
+
+}
+

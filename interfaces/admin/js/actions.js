@@ -57,6 +57,10 @@ const actions = {
     const cursor = this.select('states', model, 'selection'),
           selection = cursor.get();
 
+
+    this.set(['states', model, 'modal'], null);
+
+
     // Ensuring we are acting on an array
     if (!selection)
       cursor.set([]);
@@ -100,16 +104,24 @@ const actions = {
    */
   'modal:create': function({data: {model,data}}) {
 
-    this.client.createDoc(
-      {data: {title: data}},
-      (err, data) => {
-
-        data.result.markdown = generateDocMarkdown(data.result);
-
-        this.unshift(['data', model], data.result)
-        this.emit('selection:change', {model:model, level:0, target:data.result.id});
-      }
-    );
+    if(model == "doc"){
+      this.client.createDoc(
+        {data: {title: data}},
+        (err, data) => {
+          data.result.markdown = generateDocMarkdown(data.result);
+          this.unshift(['data', model], data.result);
+          this.emit('selection:change', {model:model, level:0, target:data.result.id});
+        }
+      );
+    }
+    if(model == "res"){
+      this.client.createRes(
+        {data: data},
+        (err, data) => {
+          this.unshift(['data', model], data.result);
+        }
+      );
+    }
   },
 
   /**
