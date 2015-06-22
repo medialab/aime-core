@@ -40,26 +40,22 @@ renderer.image = function(src) {
 
   if(index[src].type === "media") {
 
-    if(index[src].reference) var ref = `<p class="caption reference "> ${index[src].reference.html || index[src].reference.text}</p>`;
-    else var ref = '';
-
+    var ref = index[src].reference ? `<p class="caption reference "> ${index[src].reference.html || index[src].reference.text}</p>` : '';
 
     switch (index[src].kind) {
 
       case "link":
-        return  `<p class="resource-item ${index[src].type} ${index[src].kind}">${index[src].html}</p>`;
+        return  `<div class="resource-item ${index[src].type}
+                  <p>${index[src].kind}">${index[src].html}</p>
+                  ${ref}
+                </div>`;
 
       case "image":
-        if(index[src].internal){
-          // WORKS ONLY FOR AIME—INQUIRY UPLOADED IMAGES
-          const rawfilename = index[src].filename.slice(0, -4);
-          var imgsrc = config.imageUrl + rawfilename +"/710x710-" + index[src].filename;
-        }else{
-          var imgsrc = index[src].url;
-        }
+
+      var imgsrc = index[src].internal ? `<img src="${config.imageUrl}${index[src].filename.replace(/\.[^/.]+$/, "")}/710x710${index[src].filename}" />` : index[src].html
 
         return  `<div class="resource-item ${index[src].type} ${index[src].kind}">
-                  <img src="${imgsrc}">
+                  ${imgsrc}
                   ${ref}
                 </div>
                 `;
