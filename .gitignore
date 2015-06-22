@@ -3,5 +3,5 @@ node_modules
 config.json
 Notes.md
 *.log
-external
+resources
 .sessions

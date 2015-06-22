@@ -20,7 +20,7 @@
     {{#if preview}}
       {{#each preview.children}}
         <div class='paragraph'><!-- type: {{type}}, kind: {{kind}}  -->
-          
+
           {{#if_eq type compare='paragraph'}}
             <span class="number">- {{display_number}} -</span>
             <div class="text content">{{{decorate markdown}}}</div>
@@ -58,7 +58,7 @@
             {{#if_eq kind compare='image'}}
             <span class="number unselectable">- {{display_number}} -</span>
             <div class="media unselectable">
-              <div><img class="image" data-src="http://www.modesofexistence.org/inquiry/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
+              <div><img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
             </div>
             {{/if_eq}}
 
@@ -120,7 +120,7 @@
                 {{#if_eq kind compare='image'}}
                 <span class="number unselectable">- {{display_number}} -</span>
                 <div class="media unselectable">
-                  <div><img class="image" data-src="http://www.modesofexistence.org/inquiry/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
+                  <div><img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
                 </div>
                 {{/if_eq}}
 
@@ -153,11 +153,11 @@
         </div>
       </div>
       <div class='slides-wrapper {{#if_gt children.length compare=1}}with-navigation{{/if_gt}}' data-length="{{children.length}}">
-        
+
         {{#foreach children}}
           <div class='slide' data-index="{{$index}}" style='left: {{multiply $index 100}}%;'>
             {{#each children}}
-             
+
             <div class='paragraph' id="dp-{{id}}"><!-- type: {{type}}, kind: {{kind}}  -->
               {{#if_eq type compare='paragraph'}}
                 <span class="number">- {{display_number}} -</span>
@@ -197,7 +197,7 @@
                 {{#if_eq kind compare='image'}}
                 <span class="number unselectable">- {{display_number}} -</span>
                 <div class="media unselectable">
-                  <div><img class="image" data-src="http://www.modesofexistence.org/inquiry/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
+                  <div><img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
                 </div>
                 {{/if_eq}}
 
@@ -234,4 +234,4 @@
     </div>
 
   </div>
-</div> 
+</div>
