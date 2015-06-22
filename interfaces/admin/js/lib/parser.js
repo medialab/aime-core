@@ -35,11 +35,18 @@ renderer.image = function(src) {
 
   var index = tree.facets.resIndex.get();
 
+  console.log(index[src]);
+
+
   if(index[src].type === "media") {
+
+    if(index[src].reference) var ref = `<p class="caption reference "> ${index[src].reference.html || index[src].reference.text}</p>`;
+    else var ref = '';
+
 
     switch (index[src].kind) {
 
-      case "html":
+      case "link":
         return  `<p class="resource-item ${index[src].type} ${index[src].kind}">${index[src].html}</p>`;
 
       case "image":
@@ -51,34 +58,35 @@ renderer.image = function(src) {
           var imgsrc = index[src].url;
         }
 
-        if(index[src].reference)  var refsrc = `<p class="caption">${index[src].reference.html}</p>`;
-        else  var refsrc = "";
-
         return  `<div class="resource-item ${index[src].type} ${index[src].kind}">
                   <img src="${imgsrc}">
-                  ${refsrc}
+                  ${ref}
                 </div>
                 `;
 
       case "pdf":
-        return  `<p class="resource-item ${index[src].type} ${index[src].kind}">
-                  ${index[src].title}, ${index[src].reference.html}
-                </p>`;
+        return  `<div class="resource-item ${index[src].type} ${index[src].kind}">
+                  ${index[src].html || index[src].title }
+                  ${ref}
+                </div>`;
 
       case "quote":
-        return `<p class="resource-item ${index[src].type} ${index[src].kind}">
-                  ${index[src].text}
-                </p>`;
+        return `<div class="resource-item ${index[src].type} ${index[src].kind}">
+                  <p>${index[src].text}</p>
+                  ${ref}
+                </div>`;
 
       case "rich":
-        return `<p class="resource-item ${index[src].type} ${index[src].kind}">
+        return `<div class="resource-item ${index[src].type} ${index[src].kind}">
                  ${index[src].html}
-                </p>`;
+                 ${ref}
+                </div>`;
 
       case "video":
-        return `<p class="resource-item ${index[src].type} ${index[src].kind} ${index[src].host}">
+        return `<div class="resource-item ${index[src].type} ${index[src].kind} ${index[src].host}">
                   ${index[src].iframe || index[src].html}
-                </p>`;
+                  ${ref}
+                </div>`;
 
       default:
         return `<p class="resource-item ${index[src].type}">res_${index[src].type}</p>`;
