@@ -4,6 +4,35 @@
  *
  */
 var abstract = require('./abstract.js'),
-    queries = require('../queries.js').resource;
+    queries = require('../queries.js').resource,
+    cache = require('../cache.js'),
+    db = require('../connection.js'),
+    _ = require('lodash');
 
-module.exports = abstract(queries);
+/**
+ * Helpers
+ */
+function invalidCache(lang) {
+  cache[lang].resources = null;
+}
+
+/**
+ * Model functions
+ */
+module.exports = _.merge(abstract(queries), {
+  create: function(lang, kind, data, callback) {
+
+    // Invalidating cache
+    invalidCache(lang);
+
+    var batch = db.batch();
+
+    // Creating media node
+    var mediaNode = batch.save({
+      type: 'media',
+      internal: false,
+      kind: kind
+    });
+    batch.label(mediaNode, 'Media');
+  }
+});
