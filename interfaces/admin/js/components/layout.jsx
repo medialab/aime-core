@@ -215,7 +215,7 @@ class ListPanel extends PureComponent {
     const items = this.props.items;
 
     if (!items)
-      return <div>...</div>;
+      return <div className="centered">...</div>;
     else
       return <ul className="list">{items.map(this.renderItem)}</ul>;
   }
