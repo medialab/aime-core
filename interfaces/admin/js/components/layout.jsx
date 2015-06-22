@@ -73,7 +73,7 @@ export class Layout extends PureComponent {
 
     // TODO: refactor ListPanel
 
-    const modal = model === "doc" ? 
+    const modal = model === "doc" ?
       <Modal title={MODAL_TITLES[model]} /> :
       <ModalRessouces title={MODAL_TITLES[model]} />;
 
@@ -122,6 +122,7 @@ export class Layout extends PureComponent {
   cursors(props) {
     return {
       buffer: ['states', props.model, 'editor'],
+      title: ['states', props.model, 'title'],
       saving: ['states', props.model, 'saving']
     };
   }
@@ -143,7 +144,10 @@ class EditorPanel extends PureComponent {
         <div className="overflowing">
           <Editor model={model}
                   buffer={this.props.buffer}
-                  parsed={this.props.parsed} />
+                  title={this.props.title}
+                  parsed={this.props.parsed}
+                  selected={this.props.selected}
+                   />
         </div>
         <div className="actions">
           {(model === 'book') && <ActionButton size={12} label="add item" />}
@@ -239,7 +243,7 @@ class Item extends PureComponent {
     const item = this.props.item;
     let text;
 
-    if(item.reference !== null && this.context.model === 'res') 
+    if(item.reference !== null && this.context.model === 'res')
       text = item.reference.text;
 
     return (
@@ -247,7 +251,7 @@ class Item extends PureComponent {
         <div className={classes('box', 'chapter', {selected: this.props.active})}
              onClick={this.handleClick}>
 
-          {this.context.model === 'res' && 
+          {this.context.model === 'res' &&
             <span className="kind">{item.kind} ] </span>
           }
           {item.title || text}

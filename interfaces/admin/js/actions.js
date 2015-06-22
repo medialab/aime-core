@@ -70,6 +70,8 @@ const actions = {
     // If we are handling a document, there is only one level
     if (model === 'doc') {
       const item = _.find(this.get('data', model), {id: target});
+      cursor.up().set('title', item.title);
+
       return cursor.up().set('editor', item.markdown);
     }
 
@@ -135,7 +137,8 @@ const actions = {
     this.client.updateDoc(
       {
         data: {
-          slides:this.data.states[model].editor
+          slides:this.data.states[model].editor,
+          title:this.data.states[model].title,
         },
         params: {
           id:this.data.states[model].selection[0]
@@ -171,6 +174,14 @@ const actions = {
    */
   'buffer:change': function({data: {model, markdown}}) {
     this.set(['states', model, 'editor'], markdown);
+    this.commit();
+  },
+
+  /**
+   * Updating the title's buffer
+   */
+  'title:change': function({data: {model, title}}) {
+    this.set(['states', model, 'title'], title);
     this.commit();
   }
 };

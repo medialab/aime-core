@@ -23,6 +23,7 @@ export default {
     },
     doc: {
       editor: null,
+      title: null,
       selection: null,
       modal: null
     },
