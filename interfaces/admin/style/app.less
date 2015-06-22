@@ -311,23 +311,11 @@ h1 {
  * Forms
  */
 
+
 form {
 
   padding: @m;
 
-  label {
-    font-size: @m;
-    font-family: "NovelMonoPro-Regular", Arial, sans-serif;
-    .font-feature;
-    .centered;
-    width: 100%;
-    line-height: @m*2;
-    color: @g77;
-  }
-
-  input, textarea {
-    line-height: @m*2;
-  }
 
   .pre {
     min-height: @m*20;
@@ -338,6 +326,21 @@ form {
     border-radius: @border-radius-base;
   }
 }
+
+label {
+  font-size: @m;
+  font-family: "NovelMonoPro-Regular", Arial, sans-serif;
+  .font-feature;
+  .centered;
+  width: 100%;
+  line-height: @m*2;
+  color: @g77;
+}
+
+input, textarea {
+  line-height: @m*2;
+}
+
 #mount {
 
   margin-left: 5*@m;
