@@ -58,7 +58,13 @@
             {{#if_eq kind compare='image'}}
             <span class="number unselectable">- {{display_number}} -</span>
             <div class="media unselectable">
-              <div><img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
+              <div>
+                {{#if internal}}
+                  <img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/>
+                {{else}}
+                  {{{html}}}
+                {{/if}}
+              </div>
             </div>
             {{/if_eq}}
 
@@ -120,7 +126,13 @@
                 {{#if_eq kind compare='image'}}
                 <span class="number unselectable">- {{display_number}} -</span>
                 <div class="media unselectable">
-                  <div><img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
+                  <div>
+                    {{#if internal}}
+                      <img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/>
+                    {{else}}
+                      {{{html}}}
+                    {{/if}}
+                  </div>
                 </div>
                 {{/if_eq}}
 
@@ -197,7 +209,13 @@
                 {{#if_eq kind compare='image'}}
                 <span class="number unselectable">- {{display_number}} -</span>
                 <div class="media unselectable">
-                  <div><img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/></div>
+                  <div>
+                    {{#if internal}}
+                      <img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/>
+                    {{else}}
+                      {{{html}}}
+                    {{/if}}
+                  </div>
                 </div>
                 {{/if_eq}}
 
