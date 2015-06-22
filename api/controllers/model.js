@@ -209,4 +209,25 @@ module.exports = [
     cache: 'resources',
     action: getAll(res)
   },
+  {
+    url: '/res',
+    methods: ['POST'],
+    action: function(req, res) {
+      return res.notImplemented();
+    }
+  },
+  {
+    url: '/res/:id',
+    methods: ['PUT'],
+    action: function(req, res) {
+      return res.notImplemented();
+    }
+  },
+  {
+    url: '/res/:id',
+    methods: ['DELETE'],
+    action: function(req, res) {
+      return res.notImplemented();
+    }
+  }
 ];

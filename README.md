@@ -24,7 +24,7 @@ cp config.example.json config.json
 npm run migrate
 ```
 
-## External resources (reminder)
+## Resources (external to this repository)
 
 Not included in this repository for obvious reasons.
 

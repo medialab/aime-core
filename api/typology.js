@@ -21,6 +21,11 @@ module.exports = new Typology({
   // List of integer ids
   ids: ['integer'],
 
+  // Possible media kinds
+  kind: function(v) {
+    return !!~['image', 'quote', 'video', 'pdf', 'link', 'rich'].indexOf(v);
+  },
+
   // Possible lang identifier
   lang: function(v) {
     return v === 'en' || v === 'fr';

@@ -7,7 +7,7 @@
     Handlebars.registerHelper('paragraph_number', function( number ) {
       return +number + 1;
     });
-    
+
     Handlebars.registerHelper('basename', function( text ) {
       if( typeof text == "undefined" )
         return '';
@@ -213,4 +213,8 @@
     Handlebars.registerHelper('read_more', function() {
       return maze.i18n.lang == 'fr' ? '[en savoir plus]' : '[read more]';
 
+    });
+
+    Handlebars.registerHelper('CONFIG', function(key) {
+      return CONFIG[key];
     });

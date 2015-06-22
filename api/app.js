@@ -96,9 +96,9 @@ var loginRouter = loadController(controllers.login),
 /**
  * Serving static files
  */
-var mediasRouter = express.Router();
-mediasRouter.use(middlewares.authenticate);
-mediasRouter.use(express.static(config.external));
+var resourcesRouters = express.Router();
+resourcesRouters.use(middlewares.authenticate);
+resourcesRouters.use(express.static(config.resources));
 
 /**
  * Mounting
@@ -106,7 +106,7 @@ mediasRouter.use(express.static(config.external));
 app.use(loginRouter);
 app.use(authenticatedRouter);
 app.use('/crossings', crossingsRouter);
-app.use('/medias', mediasRouter);
+app.use('/resources', resourcesRouters);
 
 // 404
 app.use(function(req, res) {
