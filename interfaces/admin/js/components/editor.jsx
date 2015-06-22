@@ -71,7 +71,7 @@ export class Editor extends PureComponent {
   /*          { this.props.model !== "book" &&
             <div className="form-group">
               <input value={item.title} defaultValue={item.title}
-                    onChange={(e) => this.setState({title: e.target.value})} 
+                    onChange={(e) => this.setState({title: e.target.value})}
                     placeholder="title" className="form-control" />
             </div>
           }*/
@@ -80,7 +80,12 @@ export class Editor extends PureComponent {
       <div className="full-height">
         <div className="editor-container">
             <div className="form-group">
-              <input placeholder="title" className="form-control" />
+              <label >chapter title</label>
+              <input placeholder="chapter …" className="form-control" />
+            </div>
+             <div className="form-group">
+             <label >heading title</label>
+              <input placeholder="heading …" className="form-control" />
             </div>
           <textarea ref="editor" className="editor" />
 

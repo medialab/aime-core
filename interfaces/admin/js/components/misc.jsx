@@ -36,7 +36,7 @@ export class ActionButton extends PureComponent {
       loadingLabel
     } = this.props;
 
-    const classString = `bouton col-md-12`;
+    const classString = `button col-md-12`;
 
     if (state === 'saving')
       label = loadingLabel;

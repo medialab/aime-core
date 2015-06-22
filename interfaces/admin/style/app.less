@@ -28,11 +28,11 @@
   }
 }
 .transition (@transition) {
-  -webkit-transition: @transition;  
+  -webkit-transition: @transition;
   -moz-transition:    @transition;
-  -ms-transition:     @transition; 
-  -o-transition:      @transition;  
-  transition:         @transition;  
+  -ms-transition:     @transition;
+  -o-transition:      @transition;
+  transition:         @transition;
 }
 .font-feature{
   font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
@@ -67,7 +67,7 @@ ul {
 h1 {
   color: black;
   font-size: 15px;
-  
+
   height: @m*4;
   line-height: @m*4;
   margin: 0;
@@ -100,7 +100,7 @@ h1 {
   }
 }
 
-.bouton {
+.button {
   height: @m*4;
   line-height: @m*4;
 
@@ -141,7 +141,7 @@ h1 {
 
 .overflowing {
   height: calc(~"100% -" @m*15);
-  overflow: scroll; 
+  overflow: scroll;
   overflow-x:hidden;
 }
 
@@ -289,7 +289,7 @@ h1 {
     .font-feature;
   }
   .media {
-    
+
     &.image {
       padding: 0;
       img {.img-responsive();}
@@ -311,23 +311,11 @@ h1 {
  * Forms
  */
 
+
 form {
 
   padding: @m;
 
-  label { 
-    font-size: @m;
-    font-family: "NovelMonoPro-Regular", Arial, sans-serif;
-    .font-feature;
-    .centered;
-    width: 100%;
-    line-height: @m*2;
-    color: @g77;
-  }
-
-  input, textarea {
-    line-height: @m*2;
-  }
 
   .pre {
     min-height: @m*20;
@@ -338,6 +326,21 @@ form {
     border-radius: @border-radius-base;
   }
 }
+
+label {
+  font-size: @m;
+  font-family: "NovelMonoPro-Regular", Arial, sans-serif;
+  .font-feature;
+  .centered;
+  width: 100%;
+  line-height: @m*2;
+  color: @g77;
+}
+
+input, textarea {
+  line-height: @m*2;
+}
+
 #mount {
 
   margin-left: 5*@m;
@@ -348,7 +351,7 @@ form {
   margin: 0;
 
   button {
-    .bouton;
+    .button;
 
     background: none;
 
