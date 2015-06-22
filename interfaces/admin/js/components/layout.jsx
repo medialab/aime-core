@@ -14,6 +14,8 @@ import PropTypes from 'baobab-react/prop-types';
 import autobind from 'autobind-decorator';
 import {ActionButton, Toolbar} from './misc.jsx';
 import {Modal, ModalRessouces} from './modal.jsx';
+import ResourceSelector from './resourceSelector.jsx';
+
 
 const MODAL_TITLES = {
   doc: 'create document',
@@ -30,7 +32,8 @@ const MODAL_TITLES = {
     return {
       data: ['data', model],
       modal: ['states', model, 'modal'],
-      selection: ['states', model, 'selection']
+      selection: ['states', model, 'selection'],
+      searching: ['states', model, 'searching']
     };
   }
 })
@@ -100,10 +103,18 @@ export class Layout extends PureComponent {
             editionMode && <EditorPanel model={model} />}
         </Col>
 
-        <Col md={4} className="full-height">
+        <Col md={4} className={classes({'full-height': true, hidden: this.props.searching})}>
           {editionMode && <PreviewPanel model={model} />}
         </Col>
-              <Toolbar/>
+
+        {this.props.searching && 
+
+          <Col md={4} className="full-height">
+            <ResourceSelector title="select ressource"/>
+          </Col>
+        }
+
+        <Toolbar/>
 
       </Row>
     );
@@ -150,7 +161,7 @@ class EditorPanel extends PureComponent {
                    />
         </div>
         <div className="actions">
-          {(model === 'book') && <ActionButton size={12} label="add item" />}
+          <ActionButton size={12} label="add item" />
           <ActionButton size={12}
                         action={save}
                         label="save"

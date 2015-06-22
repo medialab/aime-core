@@ -25,7 +25,8 @@ export default {
       editor: null,
       title: null,
       selection: null,
-      modal: null
+      modal: null,
+      searching: false
     },
     res: {
       editor: null,
