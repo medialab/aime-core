@@ -37,50 +37,49 @@ renderer.image = function(src) {
 
   if(index[src].type === "media") {
 
-
     switch (index[src].kind) {
 
-      case "html": 
+      case "html":
         return  `<p class="resource-item ${index[src].type} ${index[src].kind}">${index[src].html}</p>`;
-        break;
 
       case "image":
+        if(index[src].internal){
+          // WORKS ONLY FOR AIME—INQUIRY UPLOADED IMAGES
+          const rawfilename = index[src].filename.slice(0, -4);
+          var imgsrc = config.imageUrl + rawfilename +"/710x710-" + index[src].filename;
+        }else{
+          var imgsrc = index[src].url;
+        }
 
-        // WORKS ONLY FOR AIME—INQUIRY UPLOADED IMAGES 
-
-        const rawfilename = index[src].filename.slice(0, -4);
-        const imgsrc = config.imageUrl + rawfilename +"/710x710-" + index[src].filename ;
+        if(index[src].reference)  var refsrc = `<p class="caption">${index[src].reference.html}</p>`;
+        else  var refsrc = "";
 
         return  `<div class="resource-item ${index[src].type} ${index[src].kind}">
                   <img src="${imgsrc}">
-                  <p class="caption">
-                    ${index[src].reference.html}
-                  </p>
+                  ${refsrc}
                 </div>
                 `;
-      break;
 
       case "pdf":
         return  `<p class="resource-item ${index[src].type} ${index[src].kind}">
                   ${index[src].title}, ${index[src].reference.html}
                 </p>`;
-      break;
-      case "quote": 
+
+      case "quote":
         return `<p class="resource-item ${index[src].type} ${index[src].kind}">
                   ${index[src].text}
                 </p>`;
+
       case "rich":
         return `<p class="resource-item ${index[src].type} ${index[src].kind}">
-                 ${index[src].html} 
+                 ${index[src].html}
                 </p>`;
-        break;
-      
+
       case "video":
-        return `<p class="resource-item ${index[src].type} ${index[src].kind} ${index[src].host}"> 
-                  ${index[src].iframe} 
+        return `<p class="resource-item ${index[src].type} ${index[src].kind} ${index[src].host}">
+                  ${index[src].iframe}
                 </p>`;
-        break;
-      
+
       default:
         return `<p class="resource-item ${index[src].type}">res_${index[src].type}</p>`;
     }
