@@ -33,6 +33,16 @@ module.exports = {
       return next();
   },
 
+  // Verify whether the user is admin or not
+  admin: function(req, res, next) {
+    var user = (req.session.user || {});
+
+    if (!req.session.authenticated || user.role !== 'admin')
+      return res.unauthorized();
+    else
+      return next();
+  },
+
   // Checking cache before anything
   cache: function(name) {
     return function(req, res, next) {
