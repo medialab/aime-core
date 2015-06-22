@@ -20,6 +20,13 @@ var RE_SLIDES = /\n\n[-*_\s]*\n/g,
     RE_RES = /!\[.*?]\((.*?)\)/;
 
 /**
+ * Helpers
+ */
+function invalidCache(lang) {
+  cache[lang].documents = null;
+}
+
+/**
  * Custom markdown parser
  */
 function parseSlides(markdown) {
@@ -66,7 +73,7 @@ var model = _.merge(abstract(queries.document), {
     var batch = db.batch();
 
     // Invalidating document cache
-    cache[lang].documents = null;
+    invalidCache(lang);
 
     // Creating the document node
     var docNode = batch.save({
@@ -225,7 +232,7 @@ var model = _.merge(abstract(queries.document), {
             lang = doc.properties.lang;
 
         // Invalidating document cache
-        cache[lang].documents = null;
+        invalidCache(lang);
 
         // Handling title
         if (title && title !== doc.title)
@@ -307,6 +314,9 @@ var model = _.merge(abstract(queries.document), {
       },
       function deleteDocument(doc, next) {
         var batch = db.batch();
+
+        // Invalidating cache
+        invalidCache(doc.lang);
 
         batch.delete(doc.id, true);
 
