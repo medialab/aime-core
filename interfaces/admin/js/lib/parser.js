@@ -37,6 +37,7 @@ renderer.image = function(src) {
 
   if(index[src].type === "media") {
 
+
     switch (index[src].kind) {
 
       case "html": 
@@ -70,7 +71,7 @@ renderer.image = function(src) {
                 </p>`;
       case "rich":
         return `<p class="resource-item ${index[src].type} ${index[src].kind}">
-                  ${index[src].reference.text} ${index[src].html} 
+                 ${index[src].html} 
                 </p>`;
         break;
       
