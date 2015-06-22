@@ -77,7 +77,7 @@ renderer.image = function(src) {
 
       case "video":
         return `<p class="resource-item ${index[src].type} ${index[src].kind} ${index[src].host}">
-                  ${index[src].iframe}
+                  ${index[src].iframe || index[src].html}
                 </p>`;
 
       default:
