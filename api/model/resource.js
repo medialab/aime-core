@@ -20,6 +20,8 @@ function invalidCache(lang) {
  * Model functions
  */
 module.exports = _.merge(abstract(queries), {
+
+  // Creating a resource
   create: function(lang, kind, data, callback) {
 
     // Invalidating cache
@@ -34,5 +36,10 @@ module.exports = _.merge(abstract(queries), {
       kind: kind
     });
     batch.label(mediaNode, 'Media');
+  },
+
+  // Updating a resource
+  update: function(id, data, callback) {
+
   }
 });
