@@ -52,7 +52,7 @@ renderer.image = function(src) {
 
       case "image":
 
-      var imgsrc = index[src].internal ? `<img src="${config.imageUrl}${index[src].filename.replace(/\.[^/.]+$/, "")}/710x710${index[src].filename}" />` : index[src].html
+      var imgsrc = index[src].internal ? `<img src="${config.imageUrl}${index[src].filename.replace(/\.[^/.]+$/, "")}/710x710-${index[src].filename}" />` : index[src].html
 
         return  `<div class="resource-item ${index[src].type} ${index[src].kind}">
                   ${imgsrc}
