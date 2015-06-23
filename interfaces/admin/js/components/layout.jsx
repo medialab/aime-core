@@ -110,7 +110,7 @@ export class Layout extends PureComponent {
         {this.props.searching && 
 
           <Col md={4} className="full-height">
-            <ResourceSelector title="select ressource"/>
+            <ResourceSelector title="select ressource" model={model} />
           </Col>
         }
 
@@ -265,7 +265,8 @@ class Item extends PureComponent {
           {this.context.model === 'res' &&
             <span className="kind">{item.kind} ] </span>
           }
-          {item.title || text}
+          {item.title || text || item.url || item.original}
+
 
         </div>
         {this.context.model === 'book' &&
