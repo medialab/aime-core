@@ -13,7 +13,6 @@ import PropTypes from 'baobab-react/prop-types';
 /**
  * Box generic component
  */
-
 export class Modal extends Component {
 
   static contextTypes = {
@@ -56,22 +55,25 @@ export class Modal extends Component {
     );
   }
 }
+
 export class ModalRessouces extends Component {
   static contextTypes = {
     tree: PropTypes.baobab,
     model: React.PropTypes.string
   };
 
-  constructor (props,context) {
-    super(props,context);
+  constructor(props,context) {
+    super(props, context);
+
     this.state = {
-      kind:"null",
-      html:'',
-      url:'',
-      text:'',
-      file:'',
-      title:''
-    }
+      kind: null,
+      html: '',
+      url: '',
+      text: '',
+      file: '',
+      title: '',
+      reference: ''
+    };
   };
 
   render() {
@@ -93,7 +95,7 @@ export class ModalRessouces extends Component {
           <div className="form-group">
             <label >kind</label>
             <select name="kind"
-                    defaultValue="null"
+                    defaultValue={null}
                     value={this.state.kind}
                     onChange={(e) => this.setState({kind: e.target.value})}
                     className="form-control">
@@ -108,7 +110,7 @@ export class ModalRessouces extends Component {
           </div>
         {kind === "pdf" &&
           <div className="form-group">
-            <label >title</label>
+            <label>title</label>
             <input value={this.state.title}
                     onChange={(e) => this.setState({title: e.target.value})}
                     placeholder="title" className="form-control" />
@@ -124,7 +126,7 @@ export class ModalRessouces extends Component {
         }
         {(kind === "quote") &&
           <div className="form-group">
-            <label >text</label>
+            <label>text</label>
             <textarea value={this.state.text}
                       onChange={(e) => this.setState({text: e.target.value})}
                       placeholder="text …" className="editor" />
@@ -132,7 +134,7 @@ export class ModalRessouces extends Component {
         }
         {(kind === "pdf" || kind === "image") &&
           <div className="form-group">
-            <label >file</label>
+            <label>file</label>
             <input value={this.state.file}
                     onChange={(e) => this.setState({file: e.target.value})}
                     className="form-control" type="file" size="40"/>
@@ -140,12 +142,18 @@ export class ModalRessouces extends Component {
         }
         {(kind === "html" || kind === "rich" || kind === "video" || kind === "image") &&
           <div className="form-group">
-            <label >url</label>
+            <label>url</label>
             <input value={this.state.url}
                     onChange={(e) => this.setState({url: e.target.value})}
                     placeholder="http://website.com/folder/file.ext" className="form-control" />
           </div>
         }
+        <div className="form-group">
+            <label>reference</label>
+            <textarea value={this.state.reference}
+                      onChange={(e) => this.setState({reference: e.target.value})}
+                      placeholder="text …" className="editor" />
+          </div>
       </form>
 
         <ActionButton size={6} action={dismiss} label="dismiss"/>
