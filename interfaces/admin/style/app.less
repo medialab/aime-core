@@ -99,7 +99,10 @@ h1 {
     color: white;
   }
 }
-
+.form-control {
+  min-height: @m*4;
+  line-height: @m*4;
+}
 .button {
   height: @m*4;
   line-height: @m*4;
@@ -162,7 +165,12 @@ h1 {
 
 }
 
-
+.searching {
+  padding: 0 @m 0 @m;
+  .form-control {
+    margin-bottom: @m - 1;
+  }
+}
 /*
  * Lists
  */
