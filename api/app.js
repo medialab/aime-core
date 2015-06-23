@@ -7,6 +7,7 @@
 var express = require('express'),
     env = process.env.NODE_ENV || 'dev',
     path = require('path'),
+    url = require('url'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
@@ -96,9 +97,23 @@ var loginRouter = loadController(controllers.login),
 /**
  * Serving static files
  */
-var resourcesRouters = express.Router();
-resourcesRouters.use(middlewares.authenticate);
-resourcesRouters.use(express.static(config.resources));
+var resourcesRouter = express.Router();
+resourcesRouter.use(middlewares.authenticate);
+
+// Appending correct headers for PDF files
+resourcesRouter.use(function(req, res, next) {
+  var parsedUrl = url.parse(req.originalUrl),
+      pathname = parsedUrl.pathname;
+
+  if (/\.pdf$/.test(pathname)) {
+    res.set('Access-Control-Allow-Headers', 'Range');
+    res.set('Access-Control-Expose-Headers', 'Accept-Ranges, Content-Encoding, Content-Length, Content-Range');
+  }
+
+  return next();
+});
+
+resourcesRouter.use(express.static(config.resources));
 
 /**
  * Mounting
@@ -106,7 +121,7 @@ resourcesRouters.use(express.static(config.resources));
 app.use(loginRouter);
 app.use(authenticatedRouter);
 app.use('/crossings', crossingsRouter);
-app.use('/resources', resourcesRouters);
+app.use('/resources', resourcesRouter);
 
 // 404
 app.use(function(req, res) {

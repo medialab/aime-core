@@ -15,7 +15,7 @@
     });
 
     Handlebars.registerHelper('storage_url', function(url) {
-      return maze.settings.storage_url + url;
+      return CONFIG.endpoint + '/resources/pdfs/' + url;
     })
 
     Handlebars.registerHelper('slides_navigation', function( length ) {

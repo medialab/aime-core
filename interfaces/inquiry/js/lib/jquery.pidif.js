@@ -8,7 +8,7 @@
 //
 //
 //
-// usage scenario with handlebars template: 
+// usage scenario with handlebars template:
 // <div class="pdf-wrapper">
 //       <canvas/>
 //       <div class="fullscreen button"><i class="icon-fullscreen"></i> click to read</div>
@@ -54,7 +54,7 @@
             padding: 20,
             height: 300,
             verbose: true,
-            template: Handlebars.template.pdf, // COMPILED Handlebar template for the viewer
+            template: maze.engine.template.pdf, // COMPILED Handlebar template for the viewer
           }, options),
           listeners = {},
           view = {
@@ -262,7 +262,7 @@
         Initialize
       */
       PDFJS.disableWorker = true;
-      PDFJS.getDocument( settings.url ).then( function(pdf){
+      PDFJS.getDocument({url: settings.url, withCredentials: true}).then( function(pdf){
         log( "getDocument:", settings.url );
         view.pdf = pdf;
         view.num_pages = pdf.numPages;
@@ -285,7 +285,7 @@
         _self.on("click", '.adjust-height', function(event){fit(BOTH_DIMENSIONS)});
 
         $(window).trigger('pdfLoaded', {
-          target: _self 
+          target: _self
         });
 
       });
