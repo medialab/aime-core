@@ -148,17 +148,20 @@ export class ModalRessouces extends Component {
                     placeholder="http://website.com/folder/file.ext" className="form-control" />
           </div>
         }
-        <div className="form-group">
+
+        {kind !== null &&
+          <div className="form-group">
             <label>reference</label>
             <textarea value={this.state.reference}
                       onChange={(e) => this.setState({reference: e.target.value})}
                       placeholder="text …" className="editor" />
           </div>
+        }
       </form>
 
         <ActionButton size={6} action={dismiss} label="dismiss"/>
 
-        {kind !== "null" &&
+        {kind !== null &&
           <ActionButton size={6} action={save} label="save"/>}
       </div>
     );
