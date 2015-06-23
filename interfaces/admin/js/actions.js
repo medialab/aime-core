@@ -21,6 +21,13 @@ const actions = {
   },
 
   /**
+   * Logout
+   */
+  'logout': function() {
+    this.client.logout();
+  },
+
+  /**
    * Changing the current language
    */
   'lang:change': function({data}) {

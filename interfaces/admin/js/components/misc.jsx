@@ -72,6 +72,10 @@ export class Toolbar extends PureComponent {
       this.context.tree.emit('lang:change', lang === 'en' ? 'fr' : 'en');
     };
 
+    const logout = () => {
+      this.context.tree.emit('logout');
+    };
+
     return (
         <div className="col-md-1" id="toolbar">
           <button type="button" className="btn btn-default" aria-label="Left Align" onClick={changeView}>
@@ -80,7 +84,7 @@ export class Toolbar extends PureComponent {
           <button type="button" className="btn btn-default" aria-label="Left Align" onClick={changeLang}>
             {lang.toUpperCase()}
           </button>
-          <button type="button" className="btn btn-default" aria-label="Left Align">
+          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={logout}>
             <span className="glyphicon glyphicon-off" aria-hidden="true" />
           </button>
       </div>
