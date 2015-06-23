@@ -5,7 +5,6 @@ var CONFIG = {
   "crossings_home": "/",
   "crossings_modecrossids_host": "",
   "debug": true,
-  "storage_url": "/storage?url=",
   "endpoint": "",
   "help_link": "/help"
 };
