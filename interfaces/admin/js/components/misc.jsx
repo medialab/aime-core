@@ -8,6 +8,7 @@ import classes from 'classnames';
 import PureComponent from '../lib/pure.js';
 import Col from 'react-bootstrap/lib/Col';
 import PropTypes from 'baobab-react/prop-types';
+import {branch} from 'baobab-react/decorators';
 
 /**
  * Box generic component
@@ -48,34 +49,45 @@ export class ActionButton extends PureComponent {
 };
 
 /**
- * toolbar
+ * Toolbar
  */
+@branch({
+  cursors: {
+    lang: ['lang']
+  }
+})
 export class Toolbar extends PureComponent {
-
   static contextTypes = {
     tree: PropTypes.baobab
   };
 
   render() {
-  const action = () => {
+    const lang = this.props.lang;
+
+    const changeView = () => {
       this.context.tree.emit('view:change', 'home');
     };
+
+    const changeLang = () => {
+      this.context.tree.emit('lang:change', lang === 'en' ? 'fr' : 'en');
+    };
+
     return (
         <div className="col-md-1" id="toolbar">
-          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={action}>
-            <span className="glyphicon glyphicon-home" aria-hidden="true"  ></span>
+          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={changeView}>
+            <span className="glyphicon glyphicon-home" aria-hidden="true" />
           </button>
-          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={action}>
-            EN
+          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={changeLang}>
+            {lang.toUpperCase()}
           </button>
-          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={action}>
-            <span className="glyphicon glyphicon-user" aria-hidden="true"  ></span>
+          <button type="button" className="btn btn-default" aria-label="Left Align">
+            <span className="glyphicon glyphicon-user" aria-hidden="true" />
           </button>
-          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={action}>
-            <span className="glyphicon glyphicon-off" aria-hidden="true"  ></span>
+          <button type="button" className="btn btn-default" aria-label="Left Align">
+            <span className="glyphicon glyphicon-off" aria-hidden="true" />
           </button>
-          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={action}>
-            <span className="glyphicon glyphicon-option-horizontal" aria-hidden="true"  ></span>
+          <button type="button" className="btn btn-default" aria-label="Left Align">
+            <span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />
           </button>
       </div>
     );

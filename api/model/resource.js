@@ -4,6 +4,7 @@
  *
  */
 var abstract = require('./abstract.js'),
+    essence = require('essence').init(),
     queries = require('../queries.js').resource,
     cache = require('../cache.js'),
     db = require('../connection.js'),
