@@ -1,6 +1,5 @@
 {
 	"api": "http://localhost:7000",
 	"langs": ["en", "fr"],
-	"storageKey": "aime-admin",
-  "imageUrl" : "http://www.modesofexistence.org/inquiry/images/uploaded/"
+	"storageKey": "aime-admin"
 }
