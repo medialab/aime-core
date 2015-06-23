@@ -60,7 +60,7 @@ export class Layout extends PureComponent {
           editionMode = isSomethingSelected && isThereAnyData && !isAModalDisplayed;
 
     // Actions
-    const open = () => {
+    const modalOpen = () => {
       this.context.tree.emit('modal:open', {
         model: model,
         type: 'creation',
@@ -94,7 +94,7 @@ export class Layout extends PureComponent {
           {( (model === 'doc' || model === 'res')   && isThereAnyData) &&
             <ActionButton size={12}
                           label="create"
-                          action={open} />}
+                          action={modalOpen} />}
         </Col>
 
         <Col md={4} className="full-height">
@@ -147,6 +147,9 @@ class EditorPanel extends PureComponent {
     const {model, saving} = this.props,
           save = () => {
             this.context.tree.emit('element:save', {model: model});
+          },
+          openSelector = () => {
+            this.context.tree.emit('resSelector:open', {model: model});
           };
 
     return (
@@ -161,7 +164,7 @@ class EditorPanel extends PureComponent {
                    />
         </div>
         <div className="actions">
-          <ActionButton size={12} label="add item" />
+          <ActionButton size={12} action={openSelector} label="add item" />
           <ActionButton size={12}
                         action={save}
                         label="save"

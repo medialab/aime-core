@@ -34,13 +34,10 @@ renderer.link = function(href, title, text) {
 renderer.image = function(src) {
 
   var index = tree.facets.resIndex.get();
-
-  console.log(index[src]);
-
-
   if(index[src].type === "media") {
 
-    var ref = index[src].reference ? `<p class="caption reference "> ${index[src].reference.html || index[src].reference.text}</p>` : '';
+    var ref = index[src].reference
+              ? `<p class="caption reference ">${index[src].reference.html || index[src].reference.text}</p>` : '';
 
     switch (index[src].kind) {
 
@@ -52,7 +49,9 @@ renderer.image = function(src) {
 
       case "image":
 
-      var imgsrc = index[src].internal ? `<img src="${config.imageUrl}${index[src].filename.replace(/\.[^/.]+$/, "")}/710x710-${index[src].filename}" />` : index[src].html
+      var imgsrc = index[src].internal ?
+                  `<img src="${config.imageUrl}${index[src].filename.replace(/\.[^/.]+$/, "")}/710x710-${index[src].filename}" />`
+                  : index[src].html
 
         return  `<div class="resource-item ${index[src].type} ${index[src].kind}">
                   ${imgsrc}

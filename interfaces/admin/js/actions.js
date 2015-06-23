@@ -112,7 +112,7 @@ const actions = {
         (err, data) => {
           data.result.markdown = generateDocMarkdown(data.result);
           this.unshift(['data', model], data.result);
-          this.emit('selection:change', {model:model, level:0, target:data.result.id});
+          this.emit('selection:change',{model:model, level:0, target:data.result.id});
         }
       );
     }
@@ -172,11 +172,29 @@ const actions = {
   /**
    * Updating the editor's buffer
    */
+
+  'resSelector:add': function({data: {model, slug_id, type}}) {
+
+    console.log(model, slug_id, type);
+    // this.set(['states', model, 'searching'], true);
+    // this.commit();
+  },
+  'resSelector:open': function({data: {model}}) {
+    this.set(['states', model, 'searching'], true);
+    this.commit();
+  },
+  'resSelector:dismiss': function({data: {model}}) {
+    this.set(['states', model, 'searching'], false);
+    this.commit();
+  },
+
+  /**
+   * Updating the editor's buffer
+   */
   'buffer:change': function({data: {model, markdown}}) {
     this.set(['states', model, 'editor'], markdown);
     this.commit();
   },
-
   /**
    * Updating the title's buffer
    */

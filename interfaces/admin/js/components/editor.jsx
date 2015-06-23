@@ -20,6 +20,18 @@ export class Editor extends PureComponent {
     tree: PropTypes.baobab
   };
 
+  componentWillMount(){
+    this.listener = (e) => {
+
+      var i =  e.data;
+
+
+      this.editor.doc.replaceSelection(`![${i.type}](res_${i.slug_id})\n`);
+
+    };
+    this.context.tree.on("resSelector:add", this.listener);
+  }
+
   componentDidMount() {
     this.editor = CodeMirror.fromTextArea(
       React.findDOMNode(this.refs.editor),
@@ -46,6 +58,10 @@ export class Editor extends PureComponent {
     };
 
     this.editor.on('update', this.listener);
+  }
+
+  componentWillUnmount(){
+    this.context.tree.off("resSelector:add", this.listener);
   }
 
   componentWillReceiveProps(props) {
