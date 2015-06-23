@@ -29,6 +29,11 @@ function buildItemTitle(item) {
 
 export default class ResourceSelector extends Component {
 
+  static contextTypes = {
+    tree: PropTypes.baobab,
+    model: React.PropTypes.string
+  };
+
   constructor (props,context) {
     super(props,context);
     this.state = {
@@ -60,7 +65,10 @@ export default class ResourceSelector extends Component {
   }
 
   render() {
-    const items = this.state.filteredItems;
+    const items = this.state.filteredItems,
+          dismiss = () => {
+            this.context.tree.emit('resSelector:dismiss', {model: this.context.model})
+          };
 
     return (
       <Row className="full-height">
@@ -76,6 +84,9 @@ export default class ResourceSelector extends Component {
             && <div className="centered">no result</div>
           }
           { items && <ul className="list">{items.map(this.renderItem)}</ul>}
+        </div>
+        <div className="form-group">
+          <ActionButton size={6} action={dismiss} label="dismiss"/>
         </div>
       </Row>
     );
