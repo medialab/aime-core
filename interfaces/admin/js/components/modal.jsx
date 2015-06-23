@@ -66,7 +66,7 @@ export class ModalRessouces extends Component {
     super(props, context);
 
     this.state = {
-      kind: null,
+      kind: "null",
       html: '',
       url: '',
       text: '',
@@ -103,7 +103,7 @@ export class ModalRessouces extends Component {
               <option value="video"> video </option>
               <option value="quote"> quote </option>
               <option value="rich"> rich </option>
-              <option value="html"> html </option>
+              <option value="link"> link </option>
               <option value="image"> image </option>
               <option value="pdf"> pdf </option>
             </select>
@@ -116,7 +116,7 @@ export class ModalRessouces extends Component {
                     placeholder="title" className="form-control" />
           </div>
         }
-        {(kind === "html" || kind === "rich") &&
+        {(kind === "rich") &&
           <div className="form-group">
             <label>html</label>
             <textarea value={this.state.html}
@@ -140,7 +140,7 @@ export class ModalRessouces extends Component {
                     className="form-control" type="file" size="40"/>
           </div>
         }
-        {(kind === "html" || kind === "rich" || kind === "video" || kind === "image") &&
+        {(kind === "link" || kind === "rich" || kind === "video" || kind === "image") &&
           <div className="form-group">
             <label>url</label>
             <input value={this.state.url}
