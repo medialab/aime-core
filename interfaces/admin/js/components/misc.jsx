@@ -81,13 +81,7 @@ export class Toolbar extends PureComponent {
             {lang.toUpperCase()}
           </button>
           <button type="button" className="btn btn-default" aria-label="Left Align">
-            <span className="glyphicon glyphicon-user" aria-hidden="true" />
-          </button>
-          <button type="button" className="btn btn-default" aria-label="Left Align">
             <span className="glyphicon glyphicon-off" aria-hidden="true" />
-          </button>
-          <button type="button" className="btn btn-default" aria-label="Left Align">
-            <span className="glyphicon glyphicon-option-horizontal" aria-hidden="true" />
           </button>
       </div>
     );
