@@ -42,39 +42,30 @@ export default {
   // Resources index
   resIndex: {
     cursors: {
-      data: ['data', 'res']
+      resData: ['data', 'res'],
+      docData: ['data', 'doc']
     },
-    get: function({data}) {
+    get: function({resData, docData}) {
 
-
-
-      const resIndex = _.indexBy(data, item => {
-        return "res_" + item.slug_id;
+      const resIndex = _.indexBy(resData, item => {
+        return 'res_' + item.slug_id;
       });
 
-      const refIndex = _(data)
-                        .map('reference')
-                        .compact()
-                        .indexBy(item => "ref_" + item.slug_id)
-                        .value()
+      const refIndex = _(resData)
+        .map('reference')
+        .compact()
+        .indexBy(item => 'ref_' + item.slug_id)
+        .value();
 
+      const docRefIndex = _(docData)
+        .map('children')
+        .map(d => _.map(d, 'children'))
+        .flattenDeep()
+        .filter({type: 'reference'})
+        .indexBy(item => 'ref_' + item.slug_id)
+        .value();
 
-      return _.extend(refIndex, resIndex);
-
-
-      // let d = _.map(data, doc => {
-      //   return doc.children.map( slide => {
-      //     return slide.children.filter(e => {
-      //       return e.type !== 'paragraph';
-      //     });
-      //   });
-      // });
-
-      // // d = _.flatten(d, 3);
-
-      // return _.indexBy(d, item => {
-      //   return (item.type === "reference" ? "ref" : "res") + "_" + item.slug_id;
-      // });
+      return _.extend(refIndex, resIndex, docRefIndex);
     }
   },
 
