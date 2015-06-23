@@ -172,6 +172,13 @@ const actions = {
   /**
    * Updating the editor's buffer
    */
+
+  'resSelector:add': function({data: {model, slug_id, type}}) {
+
+    console.log(model, slug_id, type);
+    // this.set(['states', model, 'searching'], true);
+    // this.commit();
+  },
   'resSelector:open': function({data: {model}}) {
     this.set(['states', model, 'searching'], true);
     this.commit();

@@ -104,10 +104,10 @@ class SelectorItem extends PureComponent {
 
   @autobind
   handleClick() {
-    this.context.tree.emit('selection:change', {
+    this.context.tree.emit('resSelector:add', {
       model: this.context.model,
-      level: 0,
-      target: this.props.item.id
+      slug_id: this.props.item.slug_id,
+      type: this.props.item.type
     });
   }
 
