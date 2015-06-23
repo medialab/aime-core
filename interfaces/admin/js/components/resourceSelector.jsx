@@ -117,7 +117,7 @@ class SelectorItem extends PureComponent {
       <li>
         <div className={classes('box', 'chapter', {selected: this.props.active})}
              onClick={this.handleClick}>
-            <span className={classes('glyphicon',item.kind )} aria-hidden="true">`
+            <span className={classes('glyphicon',item.kind )} aria-hidden="true">
             </span> {buildItemTitle(item)}
         </div>
       </li>
