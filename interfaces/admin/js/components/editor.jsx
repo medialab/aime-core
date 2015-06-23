@@ -22,12 +22,8 @@ export class Editor extends PureComponent {
 
   componentWillMount(){
     this.listener = (e) => {
-
       var i =  e.data;
-
-
       this.editor.doc.replaceSelection(`![${i.type}](res_${i.slug_id})\n`);
-
     };
     this.context.tree.on("resSelector:add", this.listener);
   }

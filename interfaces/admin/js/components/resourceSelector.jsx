@@ -73,12 +73,10 @@ export default class ResourceSelector extends Component {
     return (
       <Row className="full-height">
         <h1>{this.props.title}</h1>
-        <div className="form-group">
           <input value={this.state.title}
                  onChange={_.throttle(this.filterItems, 1000)}
                  placeholder="what are you looking for?"
                  className="form-control" size="40"/>
-        </div>
         <div className="overflowing">
           { (this.state.search !== "" && items.length < 1)
             && <div className="centered">no result</div>

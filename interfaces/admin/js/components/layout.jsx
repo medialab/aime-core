@@ -103,13 +103,13 @@ export class Layout extends PureComponent {
             editionMode && <EditorPanel model={model} />}
         </Col>
 
-        <Col md={4} className={classes({'full-height': true, hidden: this.props.searching})}>
+        <Col md={4} className={classes({'full-height':true, hidden: this.props.searching})}>
           {editionMode && <PreviewPanel model={model} />}
         </Col>
 
         {this.props.searching && 
 
-          <Col md={4} className="full-height">
+          <Col md={4} className="full-height searching">
             <ResourceSelector title="select ressource" model={model} />
           </Col>
         }
