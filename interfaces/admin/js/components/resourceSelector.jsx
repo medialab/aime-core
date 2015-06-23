@@ -13,6 +13,11 @@ import {branch} from 'baobab-react/decorators';
 import PureComponent from '../lib/pure.js';
 import autobind from 'autobind-decorator';
 
+function buildItemTitle(item) {
+      var text = false;
+      if(item.reference !== null) text = item.reference.text;
+      return (item.title || text || item.url || item.original || item.text);
+}
 
 /**
  * Box generic component
@@ -24,56 +29,58 @@ import autobind from 'autobind-decorator';
 
 export default class ResourceSelector extends Component {
 
-  render() {
-    return (
-      <Row className="full-height">
-        <h1>{this.props.title}</h1>
-
-        <div className="form-group">
-          <input placeholder="what are you looking for?"  className="form-control" size="40"/>
-        </div>
-
-        <div className="overflowing">
-          <SelectorListPanel items={this.props.data} model='res' />
-        </div>
-
-      </Row>
-    );
+  constructor (props,context) {
+    super(props,context);
+    this.state = {
+      filteredItems: [],
+      search:""
+    }
   }
-}
-
-/**
- * List generic component
- */
-@branch({
-  cursors(props, context) {
-    return {
-      selection: ['states', props.model, 'selection']
-    };
-  }
-})
-class SelectorListPanel extends PureComponent {
 
   @autobind
   renderItem(item) {
     const selection = this.props.selection || [];
-
     return <SelectorItem key={item.id}
-                 item={item}
-                 selection={selection}
-                 active={selection[0] === item.id} />;
+                         item={item} />;
+  }
+
+  @autobind
+  filterItems (e){
+
+    const search = e.target.value;
+    let data = this.props.data;
+
+    if(search !== ""){
+      data = _.filter(data, function(n) {
+        return ~buildItemTitle(n).indexOf(search);
+      });
+    }else{ data = []; }
+
+    this.setState({filteredItems: data, search: search});
   }
 
   render() {
-    const items = this.props.items;
+    const items = this.state.filteredItems;
 
-    if (!items)
-      return <div className="centered">...</div>;
-    else
-      return <ul className="list">{items.map(this.renderItem)}</ul>;
+    return (
+      <Row className="full-height">
+        <h1>{this.props.title}</h1>
+        <div className="form-group">
+          <input value={this.state.title}
+                 onChange={_.throttle(this.filterItems, 1000)}
+                 placeholder="what are you looking for?"
+                 className="form-control" size="40"/>
+        </div>
+        <div className="overflowing">
+          { (this.state.search !== "" && items.length < 1)
+            && <div className="centered">no result</div>
+          }
+          { items && <ul className="list">{items.map(this.renderItem)}</ul>}
+        </div>
+      </Row>
+    );
   }
 }
-
 
 /**
  * A generic list item
@@ -97,25 +104,12 @@ class SelectorItem extends PureComponent {
     const item = this.props.item;
     let text;
 
-    if(item.reference !== null && this.context.model === 'res')
-      text = item.reference.text;
-
-
-    switch (item.kind) {
-      case "link": var icon = 'glyphicon-new-window';break;
-      case "image":var icon = 'glyphicon-picture';break;
-      case "pdf":  var icon = 'glyphicon-book';break;
-      case "quote":var icon = 'glyphicon-comment';break;
-      case "rich":  var icon = 'glyphicon-cloud';break;
-      case "video": var icon = 'glyphicon-film';break;
-    }
-
     return (
       <li>
         <div className={classes('box', 'chapter', {selected: this.props.active})}
              onClick={this.handleClick}>
-            <span className={classes('glyphicon',icon )} aria-hidden="true">
-            </span> {item.title || text || item.url || item.original || item.text}
+            <span className={classes('glyphicon',item.kind )} aria-hidden="true">`
+            </span> {buildItemTitle(item)}
         </div>
       </li>
     );
