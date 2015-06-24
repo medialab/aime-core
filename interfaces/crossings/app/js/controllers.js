@@ -319,6 +319,9 @@ angular.module('myApp.controllers', ['underscore','config'])
 		$scope.updateShapeshiftDelayed = function() {
 			$scope.loading = false;
 
+			var seenTutorial = localStorage.getItem("seenTutorial");
+			console.log('seenTutorial',seenTutorial)
+
 			// do it when the DOM is rendered !
 			setTimeout(function() {
 
@@ -335,7 +338,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 					$(".mosaicscroller").scrollTop(0);
 					$(".sidebarscroller").scrollTop(0);
 
-					if($scope.willLaunchTutorial && !$scope.isAdmin()) {
+					if($scope.willLaunchTutorial && !$scope.isAdmin() && !seenTutorial) {
 						$scope.willLaunchTutorial = false;
 						$scope.toggleTutorial(true);
 					}
@@ -896,6 +899,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 		$scope.toggleTutorial = function(show) {
 			if(!$scope.tutorial && show) {
 				$scope.tutorial = true;
+				localStorage.setItem("seenTutorial", 1);
 
 				$scope.headerOpened = false;
 				$scope.onTriangle = false;
