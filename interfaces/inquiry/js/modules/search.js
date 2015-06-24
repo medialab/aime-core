@@ -20,7 +20,7 @@
         var query = _input.val().trim();
         if( query.length > 2 && event.keyCode==13)
           _self.search( query );
-        else maze.toast( maze.i18n.translate('Must be at least 3 characters') , {stayTime:3000, cleanup: true});
+        else if (event.keyCode==13) maze.toast( maze.i18n.translate('Must be at least 3 characters') , {stayTime:3000, cleanup: true});
 
       });
 
@@ -34,7 +34,7 @@
         var query = _input.val().trim();
         if( query.length > 2 )
           _self.search( query );
-        else maze.toast( maze.i18n.translate('Must be at least 3 characters') , {stayTime:3000, cleanup: true});
+        else if (event.keyCode==13) maze.toast( maze.i18n.translate('Must be at least 3 characters') , {stayTime:3000, cleanup: true});
 
       }); // the html box element
 
