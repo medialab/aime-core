@@ -318,9 +318,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 
 		$scope.updateShapeshiftDelayed = function() {
 			$scope.loading = false;
-
 			var seenTutorial = localStorage.getItem("seenTutorial");
-			console.log('seenTutorial',seenTutorial)
 
 			// do it when the DOM is rendered !
 			setTimeout(function() {
