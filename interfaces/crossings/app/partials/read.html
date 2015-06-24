@@ -6,7 +6,7 @@
 	>
 	<!-- ui-keyup="{'esc':'customKeyUp($event)'}" -->
 
-	
+
 	<!-- /////////////////////////////////////////////////////////////// -->
 	<div class="headerwrapper" id="tutoheaderwrapper" ng-class="{collapsed: !headerOpened}">
 
@@ -92,7 +92,7 @@
 				<button ng-click="authLogOut()" ng-disabled="!isAdmin()">logout</button>
 				<button ng-click="authTest()">test</button>
 				-->
-			
+
 		</div>
 
 		<div class="menuborder"></div>
@@ -120,9 +120,9 @@
 					<div class="loadingspin" ng-class="{loaded:gridLoaded}"><i class="fa fa-spinner fa-spin"></i></div>
 
 					<!-- ////////////////////////////// ADMIN ACTIONS ON TILES -->
-					
+
 					<div
-						ng-show="isAdmin() && !scene && !editing && !scenar" 
+						ng-show="isAdmin() && !scene && !editing && !scenar"
 						class="tilesmanager"
 						ng-class="{opened:doAdd}"
 						ng-mouseenter="doAdd=true;"
@@ -188,7 +188,7 @@
 
 						<!-- ////////////////////////////// LEFT PANEL -->
 						<div class="about" id="tutoabout" ng-class="{hidden:onTriangle, transparent:scene}">
-						
+
 							<div class="title">
 								<div class="modecross" id="modecross">[<span class="smallcaps">{{modecross | middot}}</span>]</div>
 							</div>
@@ -246,7 +246,7 @@
 										<div
 											ng-repeat="m in legend"
 											id="legend_{{m.name}}"
-											class="matrixlegend smallcaps"				
+											class="matrixlegend smallcaps"
 											style="left:{{m.x}}px;top:{{m.y}}px;"
 											ng-click="goToModecross(m.name,true)"
 											ng-mouseenter="hoverMatrixCell(m.name,true)"
@@ -258,6 +258,7 @@
 							</div>
 
 							<!-- ////////////////////////////// 4 BUBBLES BYTYPE -->
+							<!--
 							<div class="bytype">
 								<div class="sidebartitle">{{'click below to display all the tiles of the inquiry'|t:lang}}</div>
 								<div class="type" ng-class="{active:modecross=='BOOK'}" ng-click="goToModecross('BOOK',false)">
@@ -281,6 +282,7 @@
 									<div class="tip">{{'contributions'|t:lang}}</div>
 								</div>
 							</div>
+							-->
 
 							<!-- ////////////////////////////// SEARCH FIELD -->
 
@@ -312,7 +314,7 @@
 		ng-class="{active:theatreCurrent}"
 		ng-click="headerOpened=false"
 		>
-		
+
 		<!-- ////////////////////////////// BUTTON choose/unchoose -->
 		<div
 			ng-if="editing"
@@ -397,7 +399,7 @@
 			</div>
 		</nav>
 
-		
+
 		<!-- QAD switch between admin-editable list / normal-only-viewable list -->
 
 		<!-- ////////////////////////////// FULLSCREEN REPEAT VIEW -->
