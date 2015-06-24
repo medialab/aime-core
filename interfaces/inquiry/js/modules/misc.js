@@ -48,7 +48,8 @@
     this.triggers.events.session__initialized = function(controller) {
       $('#header').replaceWith(maze.engine.template.header({
         settings: maze.settings,
-        user: controller.get('user')
+        user: controller.get('user'),
+        lang: maze.i18n.lang
       }));
       $("#wrapper").fadeIn();
       $("#loader").fadeOut();
@@ -68,7 +69,7 @@
           toggle_menu.text('more');
         }
       });
-    
+
       // activate logout
       header.on('click', '.signout', function(e) {
         e.preventDefault();
@@ -86,11 +87,11 @@
       // ask for status
       $.getJSON('http://aime.medialab.sciences-po.fr/tweets-aime.json', function(res) {
         tweets = res.splice(0,10)
-        
+
         twitterbox.append(tweets.map(function(d) {
           return maze.engine.template.tweet({tweet: d});
         }))
-        
+
         $("#twitter-box .down").on('click', next_tweet);
         $("#twitter-box .up").on('click', prev_tweet);
         header.addClass('ready');
@@ -98,7 +99,7 @@
       });
       _self.log('More', '@session__initialized');
     }
-      
+
 
     /*
       Reload user profile on opdate
@@ -108,7 +109,7 @@
       header.find('.username').text(user.name || user.surname)
     }
 
-    
+
   };
 
 
