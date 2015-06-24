@@ -16,7 +16,7 @@ import autobind from 'autobind-decorator';
 function buildItemTitle(item) {
       var text = false;
       if(item.reference !== null) text = item.reference.text;
-      return (item.title || text || item.url || item.original || item.text);
+      return (item.title || text || item.url || item.original || item.text || item.path || "?");
 }
 
 /**
