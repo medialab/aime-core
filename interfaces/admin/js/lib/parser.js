@@ -33,66 +33,69 @@ renderer.link = function(href, title, text) {
 
 renderer.image = function(src) {
 
-  var index = tree.facets.resIndex.get();
-  if(index[src].type === "media") {
+  var index = tree.facets.resIndex.get(),
+      res = index[src];
 
-    var ref = index[src].reference
-              ? `<p class="caption reference ">${index[src].reference.html || index[src].reference.text}</p>` : '';
 
-    switch (index[src].kind) {
+  if(res.type === "media") {
+
+    var ref = res.reference
+              ? `<p class="caption reference ">${res.reference.html || res.reference.text}</p>` : '';
+
+    switch (res.kind) {
 
       case "link":
-        return  `<div class="resource-item ${index[src].type}
-                  <p>${index[src].kind}">${index[src].html}</p>
+        return  `<div class="resource-item ${res.type}
+                  <p>${res.kind}">${res.html}</p>
                   ${ref}
                 </div>`;
 
       case "image":
 
-      var imgsrc = index[src].internal ?
-                  `<img src="${config.api}/resources/images/uploaded/${index[src].filename.replace(/\.[^/.]+$/, "")}/710x710-${index[src].filename}" />`
-                  : index[src].html
+      var imgsrc = res.internal ?
+                  `<img src="${config.api}/resources/images/${res.path}" />`
+                  : res.html
 
-        return  `<div class="resource-item ${index[src].type} ${index[src].kind}">
+        return  `<div class="resource-item ${res.type} ${res.kind}">
                   ${imgsrc}
                   ${ref}
                 </div>
                 `;
 
       case "pdf":
-        return  `<div class="resource-item ${index[src].type} ${index[src].kind}">
-                  ${index[src].html || index[src].title }
+        return  `<div class="resource-item ${res.type} ${res.kind}">
+                  ${res.html || res.title }
                   ${ref}
                 </div>`;
 
       case "quote":
-        return `<div class="resource-item ${index[src].type} ${index[src].kind}">
-                  <p>${index[src].text}</p>
+        return `<div class="resource-item ${res.type} ${res.kind}">
+                  <p>${res.text}</p>
                   ${ref}
                 </div>`;
 
       case "rich":
-        return `<div class="resource-item ${index[src].type} ${index[src].kind}">
-                 ${index[src].html}
+        return `<div class="resource-item ${res.type} ${res.kind}">
+                 ${res.html}
                  ${ref}
                 </div>`;
 
       case "video":
-        return `<div class="resource-item ${index[src].type} ${index[src].kind} ${index[src].host}">
-                  ${index[src].iframe || index[src].html}
+        return `<div class="resource-item ${res.type} ${res.kind} ${res.host}">
+                  ${res.iframe || res.html}
                   ${ref}
                 </div>`;
 
       default:
-        return `<p class="resource-item ${index[src].type}">res_${index[src].type}</p>`;
+        return `<p class="resource-item ${res.type}">res_${res.type}</p>`;
     }
   }
-  if(index[src].type === "reference"){
-    return `<p class="resource-item ${index[src].type} ">${index[src].text}</p>`;
+  if(res.type === "reference"){
+    return `<p class="resource-item ${res.type} ">${res.text}</p>`;
   }
 
-  return `<p class="resource-item ${index[src].type} ${index[src].kind} ">
-            ${index[src].type}_${index[src].slug_id}
+  return `<p class="resource-item ${res.type} ${res.kind} ">
+            ${res.type}_${res.slug_id}
           </p>`;
 };
 
