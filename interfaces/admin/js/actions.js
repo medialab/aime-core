@@ -17,7 +17,10 @@ const actions = {
       return;
 
     // Calling service
-    this.client.login({data: data});
+    this.set('login', true);
+    this.client.login({data: data}, err => {
+      this.set('login', false);
+    });
   },
 
   /**

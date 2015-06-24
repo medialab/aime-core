@@ -11,6 +11,9 @@ export default {
   user: null,
   view: 'home',
 
+  // Basic state
+  login: false,
+
   // Views states
   states: {
     book: {
