@@ -101,7 +101,7 @@ function getDocumentThumbnail(doc) {
       if (element.kind === 'image')
         candidates.unshift({
           type: 'img',
-          content: ensureUrl(element.filename)
+          content: element.internal ? ensureUrl(element.filename) : element.url
         });
 
       if (element.kind === 'video' && element.host === 'vimeo')
