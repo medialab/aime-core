@@ -18,20 +18,24 @@
       _input = $('#search-query');
       _input.on('keypress', function( event ){
         var query = _input.val().trim();
-        if( query.length > 0 && event.keyCode==13)
+        if( query.length > 2 && event.keyCode==13)
           _self.search( query );
+        else maze.toast( maze.i18n.translate('Must be at least 3 characters') , {stayTime:3000, cleanup: true});
+
       });
 
-      _input.on('change', function( event ){
-        var query = _input.val().trim();
-        if( query.length > 0 )
-          _self.search( query );
-      });
+      // _input.on('change', function( event ){
+      //   var query = _input.val().trim();
+      //   if( query.length > 2 )
+      //     _self.search( query );
+      // });
 
       $('#search-button').on('click', function(event){
         var query = _input.val().trim();
-        if( query.length > 0 )
+        if( query.length > 2 )
           _self.search( query );
+        else maze.toast( maze.i18n.translate('Must be at least 3 characters') , {stayTime:3000, cleanup: true});
+
       }); // the html box element
 
       _self.log('Search', '@session__initialized');

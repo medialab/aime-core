@@ -258,7 +258,7 @@ body {
 }
 
 .privatetitle {
-  
+
   color: @privatecolor;
 
   &:before {
@@ -277,7 +277,7 @@ body {
 }
 
 .biblib {
-  
+
   font-family: 'NovelPro-It';
 
   text-align: left !important;
@@ -293,14 +293,14 @@ body {
     font-family: 'NovelPro-It';
   }
   .date, .publication_places, .publishers {
-    font-family: 'NovelPro-Regular'; 
+    font-family: 'NovelPro-Regular';
   }
   .url a {
     text-decoration: none;
     color: gray;
     &:hover {
       color: black;
-    } 
+    }
   }
 }
 .citation {
@@ -312,7 +312,7 @@ body {
 /* SEARCH TEXTFIELD */
 #search {
   display: inline-block;
-  
+
   margin-top: 20px;
 
   /*line-height: @headerH;*/
@@ -392,7 +392,7 @@ body {
         display: table-cell;
         padding-left: @padmenu;
         vertical-align: middle;
-        
+
         div {
           text-align: center;
           width: 280px;
@@ -643,7 +643,7 @@ body {
 @tahover: gray;
 
 .tilesmanager {
-  
+
   background: white;
   width: @mosW;
   margin-bottom: 5px;
@@ -653,7 +653,7 @@ body {
   &.opened {
     height: @mosH/2;
   }
-  
+
   .mayadd {
     height: 100%;
     text-align: center;
@@ -681,7 +681,7 @@ body {
       cursor: pointer;
     }
     .one {
-      
+
     }
     .two {
       border-top: 1px solid rgb(235, 235, 235);
@@ -752,7 +752,7 @@ body {
   /* the real scroller is a little bit wider to hide scrollbar ! */
   .sidebarscroller {
     overflow-x: hidden;
-    overflow-y: scroll; 
+    overflow-y: scroll;
     width: @sidebarW + @scrollbarW;
     height: 100%;
   }
@@ -875,9 +875,9 @@ ul.scenarii {
   padding: 0;
   padding-left: @padsidebar;
   padding-right: @padsidebar;
-  
+
   li {
-    
+
     margin-bottom: 2px;
 
     div {
@@ -887,7 +887,7 @@ ul.scenarii {
 
       &:hover {
         cursor: pointer;
-        color: @red;  
+        color: @red;
       }
 
     }
@@ -936,7 +936,7 @@ ul.scenarii {
 
 /* QUESTIONS */
 .questionscontainer {
-  
+
   .proregular;
 
   padding: @padsidebar;
@@ -961,7 +961,7 @@ ul.scenarii {
       font-family: "NovelPro-Light";
       color: gray;
     }
-  } 
+  }
 }
 
 /* CONTRIBUTION BUTTON UNDER DESCRIPTION */
@@ -1009,7 +1009,7 @@ ul.scenarii {
 
 /* h1 BY TYPE BUTTONS UNDER MATRIX */
 .bytype {
-  
+
   @typsize: 30px;
   margin-top: 40px;
   padding-left: @padsidebar * 2;
@@ -1039,7 +1039,7 @@ ul.scenarii {
       top: -@typsize;
       left: 1px;
       text-align: center;
-      
+
       .smallcaps();
 
       color: @gray_medium;
@@ -1060,7 +1060,7 @@ ul.scenarii {
       text-align: center;
       .action();
       color: @gray_medium;
-      
+
       opacity: 0;
       /*.transition(opacity,0.2s);*/
     }
@@ -1252,7 +1252,7 @@ ul.scenarii {
       text-align: center;
       i {
         font-size: 30px;
-        color: lightgray;
+        color: black;
       }
     }
 
@@ -1280,7 +1280,7 @@ ul.scenarii {
       .mosaic {
         position: relative;
         margin-bottom: 100px; /* respiration at bottom */
-        
+
         /* title/readmore  heights */
         @mostitH: 50px;
         @mostitBigH: 70px;
@@ -1318,7 +1318,7 @@ ul.scenarii {
           }
           .ss-cloned-child {
             position: absolute;
-            border: 1px dotted blue; 
+            border: 1px dotted blue;
             color:blue;
           }
 
@@ -1434,7 +1434,7 @@ ul.scenarii {
             &.cit {
               padding: @mospad;
               font-size: @thumbfs;
-              
+
               .citation();
             }
             &.bib {
@@ -1460,19 +1460,19 @@ ul.scenarii {
               margin: @mospadsmall;
               height: @mosH - @mostitH - 2*@mospadsmall ;
               div {
-                position: relative; 
+                position: relative;
                 top: -100%;
                 left: -100%;
                 width: 300%;
                 height: 300%;
               }
               img {
-                position: absolute; 
-                top: 0; 
-                left: 0; 
-                right: 0; 
-                bottom: 0; 
-                margin: auto; 
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
                 max-width: 100%;
                 max-height: 100%;
               }
@@ -1500,11 +1500,11 @@ ul.scenarii {
             /*background-position: left 6px;
             background-image: url('../img/display/dot-single-gray-horizontal-line.png');
             background-repeat: repeat-x;*/
-            
+
             background: white;
 
             .transition(top, @delayreadmore);
-            
+
             text-align: center;
 
             span {
@@ -1517,11 +1517,11 @@ ul.scenarii {
               }
             }
           }
-          
+
           &:hover {
             .ellipsis {
               top: -@mosmore;
-            }            
+            }
           }
 
           .ellipsis.fade {
@@ -1624,7 +1624,7 @@ ul.scenarii {
   @topbutw: 24px;
 
   z-index: 85;
-  position: absolute; 
+  position: absolute;
   width: @topbutw;
   padding: 10px 9px 10px 9px;
   border-radius: 40px;
@@ -1657,15 +1657,15 @@ ul.scenarii {
     left: -@subtw/2 + @topbutw/2 + 10px;
     top: 64px;
     text-align: center;
-    
+
     pointer-events: none;
     .action();
     color: @gray_medium;
-    
+
     opacity: 0;
     .transition(opacity, @delaybuttons);
   }
-  
+
   &:hover {
     background: rgba(29, 29, 29, 0.8);
     .subtitle {
@@ -1701,7 +1701,7 @@ ul.scenarii {
     /*width: is set in @media*/
     height: 100%;
     top: 0;
-    
+
     /*.transition(opacity, @delaybuttons);
     opacity: 0.1;
     &:hover {
@@ -1715,7 +1715,7 @@ ul.scenarii {
       border-radius: 40px;
       cursor: pointer;
       pointer-events: all;
-      
+
       .transition(background, @delaybuttons);
       background: rgba(29, 29, 29, @buttonopacity);
       &:hover {
@@ -1801,7 +1801,7 @@ textarea#editcontent {
     text-align: center;
 
     background: white;
-    
+
     display: none;
     &.center, &.left, &.right {
       display: block;
@@ -1836,7 +1836,7 @@ textarea#editcontent {
         border-bottom: 1px solid lightgray;
 
         background: white;
-        z-index:79;    
+        z-index:79;
         position: absolute;
         left:0;
         right:0;
@@ -1938,7 +1938,7 @@ textarea#editcontent {
       }
 
       .theatretitle {
-        background-color: @editingunchoosen; 
+        background-color: @editingunchoosen;
       }
       &.choosen {
         .theatretitle {
@@ -1967,7 +1967,7 @@ textarea#editcontent {
           padding-top: @theatitHreal + @contentTopPadding;
         }
         &.bsc, &.cont {
-          padding-top: @theatitHDoublereal + @contentTopPadding; 
+          padding-top: @theatitHDoublereal + @contentTopPadding;
         }
 
         min-height: 70%;

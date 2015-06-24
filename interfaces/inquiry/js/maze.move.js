@@ -194,7 +194,7 @@
 			complete();
 			return;
 		}
-    
+
 		var paragraphs = el.find(".paragraphs"),
 			ellipsis = el.find(".ellipsis"),
       actions = paragraphs.find(".actions"),
@@ -216,7 +216,7 @@
 			});
 		} else {
 			maze.log('>>>  maze.move.open: from .preview, adjusting height=', height);
-      
+
       paragraphs.stop().animate({height: height}, {
 					easing: maze.move.easing,
 					duration:maze.move.calculate_duration(height),
@@ -509,11 +509,16 @@
         url: media.attr('data-pdf')
       });
     });
-    
+
     el.find("[data-video]").each( function( i, e ){
     	var media = $(e);
     	media.empty().html('<div>' + media.attr('data-video') + '</div>')
     });
+
+		el.find("[data-html]").each( function( i, e ){
+	      var media = $(e);
+	      media.empty().html('<div>' + media.attr('data-html') + '</div>');
+	  });
 
 
     complete();
