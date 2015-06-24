@@ -8,10 +8,11 @@ import classes from 'classnames';
 import Col from 'react-bootstrap/lib/Col';
 import {ActionButton} from './misc.jsx';
 import PropTypes from 'baobab-react/prop-types';
+import bibtex from 'bibtex-parser';
 
 
 /**
- * Box generic component
+ * Generic modal component
  */
 export class Modal extends Component {
 
@@ -56,6 +57,9 @@ export class Modal extends Component {
   }
 }
 
+/**
+ * Resources creation modal
+ */
 export class ModalRessouces extends Component {
   static contextTypes = {
     tree: PropTypes.baobab,
@@ -66,15 +70,15 @@ export class ModalRessouces extends Component {
     super(props, context);
 
     this.state = {
-      kind: "null",
-      html: '',
-      url: '',
-      text: '',
-      file: '',
-      title: '',
-      reference: ''
+      kind: null,
+      html: null,
+      url: null,
+      text: null,
+      file: null,
+      title: null,
+      reference: null
     };
-  };
+  }
 
   render() {
 
@@ -85,8 +89,20 @@ export class ModalRessouces extends Component {
           save = () => {
             this.context.tree.emit('modal:create', {model: this.context.model, data: this.state});
             this.context.tree.emit('modal:dismiss', {model: this.context.model})
-          }
-    let kind = this.state.kind;
+          };
+
+    const {reference} = this.state;
+
+    let kind = this.state.kind,
+        validReference = !!reference;
+
+    try {
+      const parsed = bibtex(reference);
+      validReference = !!Object.keys(parsed).length;
+    }
+    catch (e) {
+      validReference = false;
+    }
 
     return (
       <div className='Modal'>
@@ -99,7 +115,7 @@ export class ModalRessouces extends Component {
                     value={this.state.kind}
                     onChange={(e) => this.setState({kind: e.target.value})}
                     className="form-control">
-              <option value="null">select kind …</option>
+              <option value={null}>select kind …</option>
               <option value="video"> video </option>
               <option value="quote"> quote </option>
               <option value="rich"> rich </option>
@@ -136,25 +152,26 @@ export class ModalRessouces extends Component {
           <div className="form-group">
             <label>file</label>
             <input value={this.state.file}
-                    onChange={(e) => this.setState({file: e.target.value})}
-                    className="form-control" type="file" size="40"/>
+                   onChange={(e) => this.setState({file: e.target.value})}
+                   className="form-control" type="file" size="40"/>
           </div>
         }
         {(kind === "link" || kind === "rich" || kind === "video" || kind === "image") &&
           <div className="form-group">
             <label>url</label>
             <input value={this.state.url}
-                    onChange={(e) => this.setState({url: e.target.value})}
-                    placeholder="http://website.com/folder/file.ext" className="form-control" />
+                   onChange={(e) => this.setState({url: e.target.value})}
+                   placeholder="http://website.com/folder/file.ext" className="form-control" />
           </div>
         }
 
         {kind !== null &&
           <div className="form-group">
             <label>reference</label>
-            <textarea value={this.state.reference}
+            <textarea value={reference}
                       onChange={(e) => this.setState({reference: e.target.value})}
-                      placeholder="text …" className="editor" />
+                      placeholder="bibtex …"
+                      className={classes('editor', {error: !validReference})} />
           </div>
         }
       </form>

@@ -34,6 +34,7 @@
     "baobab": "^1.1.1",
     "baobab-react": "^0.1.1",
     "baobab-router": "git+https://github.com/jacomyal/baobab-router.git",
+    "bibtex-parser": "0.0.0",
     "classnames": "^2.0.0",
     "codemirror": "^5.2.0",
     "djax-client": "^0.1.0",
