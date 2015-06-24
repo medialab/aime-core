@@ -53,7 +53,7 @@ renderer.image = function(src) {
       case "image":
 
       var imgsrc = res.internal ?
-                  `<img src="${config.api}/resources/images${res.path}" />`
+                  `<img src="${config.api}/resources/images/${res.path}" />`
                   : res.html
 
         return  `<div class="resource-item ${res.type} ${res.kind}">
