@@ -4,9 +4,28 @@
  *
  * Some useful custom types for the application.
  */
-var Typology = require('typology');
+var Typology = require('typology'),
+    bibtex = require('bibtex-parser');
 
 module.exports = new Typology({
+
+  // Bibtex reference
+  bibtex: function(v) {
+    if (typeof v !== 'string')
+      return false;
+
+    var valid;
+
+    try {
+      var parsed = bibtex(v);
+      valid = !!Object.keys(v).length;
+    }
+    catch (e) {
+      valid = false;
+    }
+
+    return valid;
+  },
 
   // NOTE: will coerce strings
   integer: function(v) {
