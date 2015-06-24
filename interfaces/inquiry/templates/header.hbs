@@ -39,18 +39,16 @@
           <div class="links">
             <ul>
               <!-- link to the crossings platform with current lang -->
-              <li><a href='{{settings.crossings_home}}/#/{{settings.language}}' target='_blank'>{{t 'croisements'}}</a></li>
+              <li><a href='{{settings.crossings_home}}/#/{{lang}}' target='_blank'>{{t 'croisements'}}</a></li>
               <li><a href='{{settings.base_url}}' target='_blank'>{{t 'accueil'}}</a></li>
               <li><a href='mailto:contact@modesofexistence.org'>contact</a></li>
             </ul>
           </div>
           <div class="language">
             <div class="langBloc" data-lang="fr">{{t 'french'}}</div>
-          <img src="http://www.modesofexistence.org/inquiry/images/_or.png">
-            <div class="langBloc" data-lang="en">
-    {{t 'english'}} </div>
+              <img src="images/_or.png">
+            <div class="langBloc" data-lang="en">{{t 'english'}} </div>
           </div>
-
 
             <ul style='display:none;'>
               <li><span style='opacity:.2;cursor:default;'>font size</span></li>
@@ -73,7 +71,7 @@
       <div class="menu">
         <div class="logo">
           <a href="{{settings.base_url}}">
-            <img src='images/menu_logo.png'/>
+            <img src='images/logo_aime_{{lang}}.png'/>
           </a>
         </div>
 
