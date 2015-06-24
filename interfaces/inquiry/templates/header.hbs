@@ -114,9 +114,9 @@
               </div>
             </div>
             {{#if user.avatar}}
-            <img src='http://www.modesofexistence.org/inquiry/images/uploaded/{{basename user.avatar}}/36x36-{{user.avatar}}'/><!-- user image will be here -->
+              <img src='{{CONFIG "endpoint"}}/resources/images/{{path}}'/><!-- user image will be here -->
             {{else}}
-            <i class="fa fa-user"></i>
+              <i class="fa fa-user"></i>
             {{/if}}
 
           </div>
