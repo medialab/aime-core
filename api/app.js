@@ -36,7 +36,7 @@ function loadController(routes, auth) {
     var args = [route.url];
 
     if (auth)
-      args.push(middlewares.authenticate);
+      args.push(auth);
 
     if (route.validate)
       args.push(middlewares.validate(route.validate));
@@ -91,7 +91,10 @@ app.use(middlewares.language);
  * Routers
  */
 var loginRouter = loadController(controllers.login),
-    authenticatedRouter = loadController(controllers.model, true),
+    modelRouter = loadController(controllers.model, middlewares.authenticate),
+
+    // TODO: add stricter clearance to the write model
+    writeModelRouter = loadController(controllers.model_write, middlewares.authenticate),
     crossingsRouter = loadController(controllers.crossings, false);
 
 /**
@@ -119,7 +122,8 @@ resourcesRouter.use(express.static(config.resources));
  * Mounting
  */
 app.use(loginRouter);
-app.use(authenticatedRouter);
+app.use(modelRouter);
+app.use(writeModelRouter);
 app.use('/crossings', crossingsRouter);
 app.use('/resources', resourcesRouter);
 
