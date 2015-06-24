@@ -51,7 +51,7 @@
                 <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}"></div>
               {{else}}
                 <div class="media pdf unselectable">
-                  {{{html}}}
+                  <div class="media pdf unselectable" data-html="{{html}}"></div>
                 </div>
               {{/if}}
             {{/if_eq}}
@@ -68,7 +68,7 @@
                 {{#if internal}}
                   <img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/>
                 {{else}}
-                  {{{html}}}
+                  <div class="media pdf unselectable" data-html="{{html}}"></div>
                 {{/if}}
               </div>
             </div>
@@ -125,7 +125,7 @@
                     <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}"></div>
                   {{else}}
                     <div class="media pdf unselectable">
-                      {{{html}}}
+                      <div class="media pdf unselectable" data-html="{{html}}"></div>
                     </div>
                   {{/if}}
                 {{/if_eq}}
@@ -142,7 +142,7 @@
                     {{#if internal}}
                       <img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/>
                     {{else}}
-                      {{{html}}}
+                      <div class="media pdf unselectable" data-html="{{html}}"></div>
                     {{/if}}
                   </div>
                 </div>
@@ -213,9 +213,7 @@
                   {{#if internal}}
                     <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}"></div>
                   {{else}}
-                    <div class="media pdf unselectable">
-                      {{{html}}}
-                    </div>
+                    <div class="media pdf unselectable" data-html="{{html}}"></div>
                   {{/if}}
                 {{/if_eq}}
 
@@ -231,7 +229,7 @@
                     {{#if internal}}
                       <img class="image" data-src="{{CONFIG "endpoint"}}/resources/images/uploaded/{{basename filename}}/710x710-{{filename}}"/>
                     {{else}}
-                      {{{html}}}
+                      <div class="media pdf unselectable" data-html="{{html}}"></div>
                     {{/if}}
                   </div>
                 </div>

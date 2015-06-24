@@ -172,6 +172,10 @@
                 	url:media.attr('data-pdf')
                 });
             });
+						el.find("[data-html]").each( function( i, e ){
+                var media = $(e);
+                media.empty().html('<div>' + media.attr('data-html') + '</div>');
+            });
 						complete();
 					}
 			});
