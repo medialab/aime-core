@@ -43,7 +43,10 @@ export class ActionButton extends PureComponent {
       label = loadingLabel;
 
     return (
-      <button className={classString} onClick={action}>{label}</button>
+      <button className={classString}
+              onClick={e => {e.preventDefault(); action(e);}}>
+        {label}
+      </button>
     );
   };
 };
