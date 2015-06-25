@@ -15,7 +15,7 @@ require('../lib/custom_mode.js');
 /**
  * Markdown editor component
  */
-export class Editor extends PureComponent {
+export default class Editor extends PureComponent {
   static contextTypes = {
     tree: PropTypes.baobab
   };
@@ -125,48 +125,6 @@ class EditorEntity extends PureComponent {
     return (
       <div className="entity">
         {`(${this.props.slug}) ${data.title}`}
-      </div>
-    );
-  }
-}
-
-/**
- * Markdown rendered preview component
- */
-export class Preview extends PureComponent {
-  render() {
-    const markdown = this.props.parsed.markdown,
-          {docs, docItems=[]} = this.props.parsed.data;
-
-    return (
-      <div className="editor-container full-height">
-        <div className="preview"
-             dangerouslySetInnerHTML={{__html: markdown}}/>
-
-        {docItems.map((d, i) => <FootNote key={d ? d.id : i} data={d} index={i} />)}
-      </div>
-    );
-  }
-}
-
-/**
- * Document footnote component
- */
-class FootNote extends PureComponent {
-  render() {
-    const {index, data} = this.props;
-
-    // If data doesn't exist
-    if (!data)
-      return (
-        <div className="entity error">
-          {`${index}. Non-existent`}
-        </div>
-      );
-
-    return (
-      <div className="entity">
-        {`${index}. ${data.title}`}
       </div>
     );
   }
