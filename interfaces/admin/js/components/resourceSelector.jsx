@@ -15,9 +15,18 @@ import autobind from 'autobind-decorator';
 import {ResourceIcon} from './misc.jsx';
 
 function buildItemTitle(item) {
-      var text = false;
-      if(item.reference !== null) text = item.reference.text;
-      return (item.title || text || item.url || item.original || item.text || item.path || "?");
+  let text = false;
+
+  if (item.reference !== null)
+    text = item.reference.text;
+
+  return item.title ||
+         text ||
+         item.url ||
+         item.original ||
+         item.text ||
+         item.path ||
+         '?';
 }
 
 /**
@@ -37,30 +46,33 @@ export default class ResourceSelector extends Component {
 
   constructor (props,context) {
     super(props,context);
+
     this.state = {
       filteredItems: [],
-      search:""
-    }
+      search: ''
+    };
   }
 
   @autobind
   renderItem(item) {
-    const selection = this.props.selection || [];
     return <SelectorItem key={item.id}
                          item={item} />;
   }
 
   @autobind
-  filterItems (e){
+  filterItems({target: {value=''}}) {
+    const search = value;
 
-    const search = e.target.value;
     let data = this.props.data;
 
-    if(search !== ""){
+    if (search.length > 2) {
       data = _.filter(data, function(n) {
         return ~buildItemTitle(n).indexOf(search);
       });
-    }else{ data = []; }
+    }
+    else {
+      data = [];
+    }
 
     this.setState({filteredItems: data, search: search});
   }
@@ -71,6 +83,17 @@ export default class ResourceSelector extends Component {
             this.context.tree.emit('resSelector:dismiss', {model: this.context.model})
           };
 
+    let result;
+
+    if (!this.state.search && !items.length)
+      result = null;
+    else if (this.state.search.length < 3 && !items.length)
+      result = <div className="centered">type more characters</div>;
+    else if (this.state.search.length > 2 && !items.length)
+      result = <div className="centered">no results</div>;
+    else
+      result = <ul className="list">{items.map(this.renderItem)}</ul>;
+
     return (
       <Row className="full-height">
         <h1>{this.props.title}</h1>
@@ -79,10 +102,7 @@ export default class ResourceSelector extends Component {
                  placeholder="what are you looking for?"
                  className="form-control" size="40"/>
         <div className="overflowing">
-          { (this.state.search !== "" && items.length < 1)
-            && <div className="centered">no result</div>
-          }
-          { items && <ul className="list">{items.map(this.renderItem)}</ul>}
+          {result}
         </div>
         <div className="form-group">
           <ActionButton size={6} action={dismiss} label="dismiss"/>
