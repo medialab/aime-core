@@ -72,6 +72,11 @@ module.exports = [
   {
     url: '/res',
     methods: ['POST'],
+    validate: {
+      kind: 'kind',
+      reference: '?bibtex',
+      url: '?string'
+    },
     action: function(req, res) {
       return res.notImplemented();
     }

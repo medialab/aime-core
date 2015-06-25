@@ -12,6 +12,7 @@ import PropTypes from 'baobab-react/prop-types';
 import {branch} from 'baobab-react/decorators';
 import PureComponent from '../lib/pure.js';
 import autobind from 'autobind-decorator';
+import {ResourceIcon} from './misc.jsx';
 
 function buildItemTitle(item) {
       var text = false;
@@ -117,8 +118,8 @@ class SelectorItem extends PureComponent {
       <li>
         <div className={classes('box', 'chapter', {selected: this.props.active})}
              onClick={this.handleClick}>
-            <span className={classes('glyphicon',item.kind )} aria-hidden="true">
-            </span> {buildItemTitle(item)}
+          <ResourceIcon kind={item.kind} />
+          {' ' + buildItemTitle(item)}
         </div>
       </li>
     );

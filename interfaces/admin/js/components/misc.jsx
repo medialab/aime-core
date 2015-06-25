@@ -94,3 +94,13 @@ export class Toolbar extends PureComponent {
     );
   };
 };
+
+/**
+ * Resource icon component
+ */
+export class ResourceIcon extends PureComponent {
+  render() {
+    return <span className={classes('glyphicon', this.props.kind)}
+                 aria-hidden="true" />;
+  }
+}
