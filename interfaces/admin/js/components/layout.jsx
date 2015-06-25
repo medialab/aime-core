@@ -1,18 +1,21 @@
 /**
- * AIME-admin Misc Components
- * ===========================
+ * AIME-admin Layout Components
+ * =============================
  *
+ * Components dealing with the edition views layout and placing lists, editor,
+ * preview, selector etc.
  */
 import React from 'react';
 import PureComponent from '../lib/pure.js';
 import classes from 'classnames';
+import {branch} from 'baobab-react/decorators';
+import PropTypes from 'baobab-react/prop-types';
+import autobind from 'autobind-decorator';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Editor from './editor.jsx';
 import Preview from './preview.jsx';
-import {branch} from 'baobab-react/decorators';
-import PropTypes from 'baobab-react/prop-types';
-import autobind from 'autobind-decorator';
+import List from './list.jsx';
 import {ActionButton, Toolbar} from './misc.jsx';
 import {Modal, ModalRessouces} from './modal.jsx';
 import ResourceSelector from './resourceSelector.jsx';
@@ -116,9 +119,27 @@ export class Layout extends PureComponent {
         }
 
         <Toolbar/>
-
       </Row>
     );
+  }
+}
+
+/**
+ * List generic component
+ */
+@branch({
+  cursors(props, context) {
+    return {
+      selection: ['states', props.model, 'selection']
+    };
+  }
+})
+class ListPanel extends PureComponent {
+  render() {
+    if (!this.props.items)
+      return <div className="centered">...</div>;
+    else
+      return <List {...this.props} />;
   }
 }
 
@@ -200,208 +221,6 @@ class PreviewPanel extends PureComponent {
                    parsed={this.props.parsed} />
         </div>
       </div>
-    );
-  }
-}
-
-/**
- * List generic component
- */
-@branch({
-  cursors(props, context) {
-    return {
-      selection: ['states', props.model, 'selection']
-    };
-  }
-})
-class ListPanel extends PureComponent {
-
-  @autobind
-  renderItem(item) {
-    const selection = this.props.selection || [];
-
-    return <Item key={item.id}
-                 item={item}
-                 selection={selection}
-                 active={selection[0] === item.id} />;
-  }
-
-  render() {
-    const items = this.props.items;
-
-    if (!items)
-      return <div className="centered">...</div>;
-    else
-      return <ul className="list">{items.map(this.renderItem)}</ul>;
-  }
-}
-
-/**
- * A generic list item
- */
-class Item extends PureComponent {
-  static contextTypes = {
-    tree: PropTypes.baobab,
-    model: React.PropTypes.string
-  };
-
-  @autobind
-  handleClick() {
-    this.context.tree.emit('selection:change', {
-      model: this.context.model,
-      level: 0,
-      target: this.props.item.id
-    });
-  }
-
-  render() {
-    const item = this.props.item;
-    let text;
-
-    if(item.reference !== null && this.context.model === 'res')
-      text = item.reference.text;
-
-    return (
-      <li>
-        <div className={classes('box', 'chapter', {selected: this.props.active})}
-             onClick={this.handleClick}>
-
-          {this.context.model === 'res' &&
-            <span className="kind">{item.kind} ] </span>
-          }
-          {item.title || text || item.url || item.original}
-
-
-        </div>
-        {this.context.model === 'book' &&
-          <SubList items={item.children}
-                   selection={this.props.selection.slice(1)}
-                   visible={this.props.active} />}
-      </li>
-    );
-  }
-}
-
-/**
- * Sublist generic component
- */
-class SubList extends PureComponent {
-
-  @autobind
-  renderItem(item) {
-    return <SubItem key={item.id}
-                    item={item}
-                    selection={this.props.selection.slice(1)}
-                    active={this.props.selection[0] === item.id} />;
-  }
-
-  render() {
-    const {items, visible} = this.props;
-
-    return (
-      <ul className={classes({hidden: !visible, 'sub-list': true})}>
-        {items.map(this.renderItem)}
-      </ul>
-    );
-  }
-}
-
-/**
- * A generic sublist item
- */
-class SubItem extends PureComponent {
-  static contextTypes = {
-    tree: PropTypes.baobab,
-    model: React.PropTypes.string
-  };
-
-  @autobind
-  handleClick() {
-    this.context.tree.emit('selection:change', {
-      model: this.context.model,
-      level: 1,
-      target: this.props.item.id
-    });
-  }
-
-  render() {
-    const item = this.props.item,
-          title = this.context.model === 'doc' ?
-            'slide' :
-            item.title;
-
-    return (
-      <li>
-        <div className={classes('box', 'subheading', {selected: this.props.active})}
-             onClick={this.handleClick}>
-          {title}
-        </div>
-        {this.props.active ?
-          <ThumbnailList items={item.children}
-                         selection={this.props.selection} /> :
-          null}
-      </li>
-    );
-  }
-}
-
-/**
- * Thumbnail list component
- */
-class ThumbnailList extends PureComponent {
-
-  @autobind
-  renderThumbnail(item, index) {
-    return <Thumbnail key={index}
-                      index={index}
-                      item={item}
-                      active={this.props.selection[0] === index} />;
-  }
-
-  render() {
-    return (
-      <ul className="sub-list">
-        {this.props.items.map(this.renderThumbnail)}
-      </ul>
-    );
-  }
-}
-
-/**
- * Thumbnail generic component
- */
-class Thumbnail extends PureComponent {
-  static contextTypes = {
-    tree: PropTypes.baobab,
-    model: React.PropTypes.string
-  };
-
-  @autobind
-  handleClick() {
-    this.context.tree.emit('selection:change', {
-      model: this.context.model,
-      level: 2,
-      target: this.props.index
-    });
-  }
-
-  render() {
-    const {active, index, item: {text}} = this.props;
-
-    return (
-      <li>
-        <div className="thumbnail-box">
-          <table>
-            <tr>
-              <td className="thumbnail-index">{index}</td>
-              <td className={classes('thumbnail-text box', {selected: active})}
-                  onClick={this.handleClick}>
-                {text}
-              </td>
-            </tr>
-          </table>
-        </div>
-      </li>
     );
   }
 }

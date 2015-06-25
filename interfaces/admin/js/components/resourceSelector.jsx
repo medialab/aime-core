@@ -13,30 +13,16 @@ import {branch} from 'baobab-react/decorators';
 import PureComponent from '../lib/pure.js';
 import autobind from 'autobind-decorator';
 import {ResourceIcon} from './misc.jsx';
-
-function buildItemTitle(item) {
-  let text = false;
-
-  if (item.reference !== null)
-    text = item.reference.text;
-
-  return item.title ||
-         text ||
-         item.url ||
-         item.original ||
-         item.text ||
-         item.path ||
-         '?';
-}
+import {resourceName} from '../lib/helpers.js';
 
 /**
  * Box generic component
  */
-
 @branch({
-  cursors:{data:['data', 'res']}
+  cursors: {
+    data:['data', 'res']
+  }
 })
-
 export default class ResourceSelector extends Component {
 
   static contextTypes = {
@@ -67,7 +53,7 @@ export default class ResourceSelector extends Component {
 
     if (search.length > 2) {
       data = _.filter(data, function(n) {
-        return ~buildItemTitle(n).indexOf(search);
+        return ~resourceName(n).indexOf(search);
       });
     }
     else {
@@ -139,7 +125,7 @@ class SelectorItem extends PureComponent {
         <div className={classes('box', 'chapter', {selected: this.props.active})}
              onClick={this.handleClick}>
           <ResourceIcon kind={item.kind} />
-          {' ' + buildItemTitle(item)}
+          {' ' + resourceName(item)}
         </div>
       </li>
     );
