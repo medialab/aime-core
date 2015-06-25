@@ -93,13 +93,6 @@ export default function(scope) {
         }
       },
 
-
-      // Creating a ressource
-      createRes: {
-        url: '/res',
-        type: 'POST'
-      },
-
       // Creating a document
       createDoc: {
         url: '/doc',
@@ -110,6 +103,12 @@ export default function(scope) {
       updateDoc: {
         url: '/doc/:id',
         type: 'PUT'
+      },
+
+      // Creating a resource
+      createRes: {
+        url: '/res/:kind',
+        type: 'POST'
       }
     }
   });

@@ -72,6 +72,15 @@ module.exports = {
     };
   },
 
+  // Cleaning the cache
+  cleanCache: function(req, res, next) {
+    ['en', 'fr'].forEach(function(lang) {
+      ['book', 'vocabulary', 'documents', 'resources'].forEach(function(k) {
+        cache[lang][k] = null;
+      });
+    });
+  },
+
   // Checking request language
   language: function(req, res, next) {
 

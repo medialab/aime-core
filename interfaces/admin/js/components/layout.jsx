@@ -86,7 +86,7 @@ export class Layout extends PureComponent {
 
     return (
       <Row className="full-height">
-        <Col md={4} className={classes({hidden: editionMode || isAModalDisplayed})}/>
+        <Col md={4} className={classes({hidden: editionMode || isAModalDisplayed})} />
 
         <Col md={4} className="full-height">
 

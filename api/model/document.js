@@ -5,8 +5,8 @@
  */
 var marked = require('marked'),
     async = require('async'),
-    abstract = require('./abstract.js'),
     cache = require('../cache.js'),
+    abstract = require('./abstract.js'),
     db = require('../connection.js'),
     helpers = require('../helpers.js'),
     stripper = require('../../lib/markdown_stripper.js'),
@@ -18,13 +18,6 @@ var marked = require('marked'),
  */
 var RE_SLIDES = /\n\n[-*_\s]*\n/g,
     RE_RES = /!\[.*?]\((.*?)\)/;
-
-/**
- * Helpers
- */
-function invalidCache(lang) {
-  cache[lang].documents = null;
-}
 
 /**
  * Custom markdown parser
@@ -71,9 +64,6 @@ var model = _.merge(abstract(queries.document), {
   // Creating a document
   create: function(user, lang, title, slidesText, callback) {
     var batch = db.batch();
-
-    // Invalidating document cache
-    invalidCache(lang);
 
     // Creating the document node
     var docNode = batch.save({
@@ -231,9 +221,6 @@ var model = _.merge(abstract(queries.document), {
             docNode = {id: doc.id},
             lang = doc.properties.lang;
 
-        // Invalidating document cache
-        invalidCache(lang);
-
         // Handling title
         if (title && title !== doc.title)
           batch.save(docNode, 'title', title);
@@ -314,9 +301,6 @@ var model = _.merge(abstract(queries.document), {
       },
       function deleteDocument(doc, next) {
         var batch = db.batch();
-
-        // Invalidating cache
-        invalidCache(doc.lang);
 
         batch.delete(doc.id, true);
 

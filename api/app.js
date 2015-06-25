@@ -29,7 +29,7 @@ responses(express);
 /**
  * Helpers
  */
-function loadController(routes, auth) {
+function loadController(routes, auth, additionalMiddlewares) {
   var router = express.Router();
 
   routes.forEach(function(route) {
@@ -43,6 +43,11 @@ function loadController(routes, auth) {
 
     if (route.cache)
       args.push(middlewares.cache(route.cache));
+
+    if (additionalMiddlewares)
+      additionalMiddlewares.forEach(function(m) {
+        args.push(m);
+      });
 
     args.push(route.action);
 
@@ -91,11 +96,14 @@ app.use(middlewares.language);
  * Routers
  */
 var loginRouter = loadController(controllers.login),
+    crossingsRouter = loadController(controllers.crossings, false),
     modelRouter = loadController(controllers.model, middlewares.authenticate),
 
     // TODO: add stricter clearance to the write model
-    writeModelRouter = loadController(controllers.model_write, middlewares.authenticate),
-    crossingsRouter = loadController(controllers.crossings, false);
+    writeModelRouter = loadController(
+      controllers.model_write,
+      middlewares.authenticate
+    );
 
 /**
  * Serving static files

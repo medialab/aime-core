@@ -1,6 +1,6 @@
 /**
  * AIME-core Write Model Controller
- * ===========================
+ * =================================
  *
  * Collection of routes enabling to edit model data. Those routes should only
  * be accessible to users with enough clearance.
@@ -70,14 +70,14 @@ module.exports = [
 
   // Resources
   {
-    url: '/res',
+    url: '/res/image',
     methods: ['POST'],
     validate: {
-      kind: 'kind',
       reference: '?bibtex',
       url: '?string'
     },
     action: function(req, res) {
+      console.log(req.params, req.files);
       return res.notImplemented();
     }
   },
