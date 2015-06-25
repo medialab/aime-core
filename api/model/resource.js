@@ -5,7 +5,10 @@
  */
 var abstract = require('./abstract.js'),
     essence = require('essence').init(),
+    biblib = require('./biblib.js'),
+    cache = require('../cache.js'),
     queries = require('../queries.js').resource,
+    storagePath = require('../../config.json').api.resources,
     db = require('../connection.js'),
     _ = require('lodash');
 
@@ -15,16 +18,34 @@ var abstract = require('./abstract.js'),
 module.exports = _.merge(abstract(queries), {
 
   // Creating a resource
-  create: function(lang, kind, data, callback) {
+  create: function(kind, lang, data, callback) {
     var batch = db.batch();
 
-    // Creating media node
-    var mediaNode = batch.save({
+    // Data
+    var mediaData = {
       type: 'media',
-      internal: false,
-      kind: kind
-    });
+      kind: kind,
+      slug_id: ++cache.slug_ids.res
+    };
+
+    // Specific to kind
+    if (kind === 'image') {
+      if (data.url) {
+        mediaData.internal = false;
+        mediaData.url = data.url;
+        mediaData.html = '<img src="' + data.url + '" />';
+      }
+    }
+
+    // Creating node
+    var mediaNode = batch.save(mediaData);
     batch.label(mediaNode, 'Media');
+
+    // TODO: adding the reference
+
+    // Committing
+    // TODO: retrieve the item
+    batch.commit(callback);
   },
 
   // Updating a resource

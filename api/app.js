@@ -86,7 +86,7 @@ var sessionOptions = {
 
 // Utilities
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
-app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(cookieParser());
 app.use(session(sessionOptions));
 app.use(compress());
@@ -102,7 +102,8 @@ var loginRouter = loadController(controllers.login),
     // TODO: add stricter clearance to the write model
     writeModelRouter = loadController(
       controllers.model_write,
-      middlewares.authenticate
+      middlewares.authenticate,
+      [middlewares.cleanCache]
     );
 
 /**

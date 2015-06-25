@@ -10,7 +10,7 @@ import {generateDocMarkdown} from './lib/helpers.js';
 const actions = {
 
   /**
-   * Login to the API
+   * Login
    */
   'login:attempt': function({data}) {
     if (!data.email || !data.password)
@@ -114,9 +114,9 @@ const actions = {
   /**
    * Adding from modal
    */
-  'modal:create': function({data: {model,data}}) {
+  'modal:create': function({data: {model, data}}) {
 
-    if(model == "doc"){
+    if (model === 'doc') {
       this.client.createDoc(
         {data: {title: data}},
         (err, data) => {
@@ -126,11 +126,18 @@ const actions = {
         }
       );
     }
-    if(model == "res"){
+
+    else if (model === 'res') {
       this.client.createRes(
-        {data: data},
+        {
+          data: data,
+          params: {
+            kind: data.kind
+          }
+        },
         (err, data) => {
-          this.unshift(['data', model], data.result);
+          console.log('res saved', err, data);
+          // this.unshift(['data', model], data.result);
         }
       );
     }
@@ -175,20 +182,14 @@ const actions = {
   'modal:open': function({data: {model,type}}) {
     this.set(['states', model, 'modal'], type);
   },
+
   'modal:dismiss': function({data: {model}}) {
     this.set(['states', model, 'modal'], null);
   },
 
   /**
-   * Updating the editor's buffer
+   * Adding a resource through the selector
    */
-
-  'resSelector:add': function({data: {model, slug_id, type}}) {
-
-    console.log(model, slug_id, type);
-    // this.set(['states', model, 'searching'], true);
-    // this.commit();
-  },
   'resSelector:open': function({data: {model}}) {
     this.set(['states', model, 'searching'], true);
     this.commit();
@@ -205,6 +206,7 @@ const actions = {
     this.set(['states', model, 'editor'], markdown);
     this.commit();
   },
+
   /**
    * Updating the title's buffer
    */

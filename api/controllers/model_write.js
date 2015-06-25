@@ -74,10 +74,13 @@ module.exports = [
     methods: ['POST'],
     validate: {
       reference: '?bibtex',
-      url: '?string'
+      url: '?url'
     },
     action: function(req, res) {
-      console.log(req.params, req.files);
+
+      // If no url and no files ERROR
+      // Add files to validate?
+      console.log(req.body, req.files);
       return res.notImplemented();
     }
   },

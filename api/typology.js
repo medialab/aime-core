@@ -5,7 +5,8 @@
  * Some useful custom types for the application.
  */
 var Typology = require('typology'),
-    bibtex = require('bibtex-parser');
+    bibtex = require('bibtex-parser'),
+    validator = require('validator');
 
 module.exports = new Typology({
 
@@ -71,5 +72,8 @@ module.exports = new Typology({
       v.every(function(e) {
         return !!~e.search(/\w{3}_\d+/);
       });
-  }
+  },
+
+  // Url,
+  url: validator.isURL
 });

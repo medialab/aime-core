@@ -79,6 +79,8 @@ module.exports = {
         cache[lang][k] = null;
       });
     });
+
+    return next();
   },
 
   // Checking request language

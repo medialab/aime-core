@@ -34,17 +34,21 @@ export class ActionButton extends PureComponent {
       action = () => console.log(this.props.label,"pressed"),
       state='normal',
       label,
-      loadingLabel
+      loadingLabel,
+      disabledLabel
     } = this.props;
 
-    const classString = `button col-md-12`;
+    const classString = classes('button', 'col-md-12', {disabled: state === 'disabled'});
 
     if (state === 'saving')
       label = loadingLabel;
+    else if (state === 'disabled')
+      label = disabledLabel;
 
     return (
       <button className={classString}
-              onClick={e => {e.preventDefault(); action(e);}}>
+              onClick={e => {e.preventDefault(); action(e);}}
+              disabled={state === 'disabled'}>
         {label}
       </button>
     );

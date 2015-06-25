@@ -37,3 +37,16 @@ export function resourceName(res) {
          res.path ||
          '?';
 }
+
+/**
+ * Reading an input file
+ */
+export function readInputFile(file, callback) {
+  const reader = new FileReader();
+
+  reader.onloadend = function(e) {
+    return callback(null, e.target.result);
+  };
+
+  reader.readAsDataURL(file);
+}
