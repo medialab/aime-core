@@ -13,14 +13,12 @@ import PropTypes from 'baobab-react/prop-types';
  */
 export default class Preview extends PureComponent {
   render() {
-    const markdown = this.props.parsed.markdown,
-          {docs, docItems=[]} = this.props.parsed.data;
+    const {html, data} = this.props.parsed,
+          {docs, docItems=[]} = data;
 
     return (
       <div className="editor-container full-height">
-        <div className="preview"
-             dangerouslySetInnerHTML={{__html: markdown}}/>
-
+        <div className="preview" dangerouslySetInnerHTML={{__html: html}}/>
         {docItems.map((d, i) => <FootNote key={d ? d.id : i} data={d} index={i} />)}
       </div>
     );
