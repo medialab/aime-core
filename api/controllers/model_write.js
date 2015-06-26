@@ -10,6 +10,16 @@ var docModel = require('../model/document.js'),
     types = require('../typology.js'),
     _ = require('lodash');
 
+// Forge
+function createResource(kind) {
+  return function(req, res) {
+    resModel.create(kind, req.lang, req.body, function(err, resource) {
+      if (err) return res.serverError(err);
+      return res.ok(resource);
+    });
+  };
+}
+
 module.exports = [
 
   // Documents
@@ -76,13 +86,7 @@ module.exports = [
       reference: '?bibtex|string',
       url: '?url'
     },
-    action: function(req, res) {
-
-      // If no url and no files ERROR
-      // Add files to validate?
-      console.log(req.body);
-      return res.notImplemented();
-    }
+    action: createResource('image')
   },
   {
     url: '/res/quote',
@@ -91,13 +95,17 @@ module.exports = [
       text: 'string',
       reference: '?bibtex|string'
     },
-    action: function(req, res) {
-      resModel.create('quote', req.lang, req.body, function(err, resource) {
-        if (err) return res.serverError(err);
-
-        return res.ok(resource);
-      });
-    }
+    action: createResource('quote')
+  },
+  {
+    url: '/res/link',
+    methods: ['POST'],
+    validate: {
+      url: 'url',
+      reference: '?bibtex|string',
+      title: '?string'
+    },
+    action: createResource('link')
   },
   {
     url: '/res/:id',

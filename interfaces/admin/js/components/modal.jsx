@@ -103,14 +103,19 @@ export class ModalRessouces extends Component {
   }
 
   validate(state) {
+    const kind = state.kind;
 
     // Different for each kind
-    if (state.kind === 'image') {
+    if (kind === 'image') {
       if (!state.url || !state.file)
         return false;
     }
-    else if (state.kind === 'quote') {
+    else if (kind === 'quote') {
       if (!state.text)
+        return false;
+    }
+    else if (kind === 'link') {
+      if (!state.url || !isURL(state.url))
         return false;
     }
     else {
@@ -218,6 +223,11 @@ export class ModalRessouces extends Component {
         }
         {(kind === "link" || kind === "rich" || kind === "video" || kind === "image") &&
           <div className="form-group">
+            <label>title</label>
+            <input value={this.state.title}
+                   onChange={(e) => this.setState({title: e.target.value})}
+                   placeholder="title to be displayed"
+                   className="form-control" />
             <label>url</label>
             <input value={this.state.url}
                    onChange={(e) => this.setState({url: e.target.value})}

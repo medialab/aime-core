@@ -8,6 +8,7 @@ var abstract = require('./abstract.js'),
     biblib = require('./biblib.js'),
     cache = require('../cache.js'),
     queries = require('../queries.js').resource,
+    types = require('../typology.js'),
     storagePath = require('../../config.json').api.resources,
     db = require('../connection.js'),
     _ = require('lodash');
@@ -40,6 +41,13 @@ var model = _.merge(abstract(queries), {
     else if (kind === 'quote') {
       mediaData.lang = lang;
       mediaData.text = data.text;
+      mediaData.internal = true;
+    }
+
+    else if (kind === 'link') {
+      mediaData.internal = false;
+      mediaData.html = '<a href="' + data.url + '" target="_blank">' + (data.title || data.url) + '</a>';
+      mediaData.url = data.url;
     }
 
     // Creating node
@@ -47,9 +55,25 @@ var model = _.merge(abstract(queries), {
     batch.label(mediaNode, 'Media');
 
     // TODO: adding the reference
+    if (data.reference) {
+      var isBiblib = types.check(data.reference, 'bibtex'),
+          refData;
+
+      if (!isBiblib) {
+        refData = {
+          lang: lang,
+          type: 'reference',
+          text: data.reference,
+          slug_id: ++cache.slug_ids.ref
+        };
+      }
+
+      var refNode = batch.save(refData);
+      batch.label(refNode, 'Reference');
+      batch.relate(refNode, 'DESCRIBES', mediaNode);
+    }
 
     // Committing
-    // TODO: retrieve the item
     batch.commit(function(err, nodes) {
       if (err) return callback(err);
 
