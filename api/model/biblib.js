@@ -20,6 +20,12 @@ var model = {
       function(err, response) {
         if (err) return callback(err);
 
+        if (response.error) {
+          err = new Error('jsonrpc-fault');
+          err.data = response.error;
+          return callback(err);
+        }
+
         return callback(null, response.result);
       }
     );
