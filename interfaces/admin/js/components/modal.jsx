@@ -33,7 +33,7 @@ export class Modal extends Component {
           },
           save = () => {
             this.context.tree.emit('modal:create', {model: this.context.model, data: this.state.title});
-            this.context.tree.emit('modal:dismiss', {model: this.context.model})
+            dimiss();
           };
 
     return (
@@ -107,7 +107,7 @@ export class ModalRessouces extends Component {
 
     // Different for each kind
     if (kind === 'image') {
-      if (!state.url || !state.file)
+      if (!state.url && !state.file)
         return false;
     }
     else if (kind === 'quote') {
@@ -185,7 +185,7 @@ export class ModalRessouces extends Component {
               {KINDS.map(k => <option key={k} value={k}>{k}</option>)}
             </select>
           </div>
-        {kind === "pdf" &&
+        {(kind === 'pdf' || kind === 'link') &&
           <div className="form-group">
             <label>title</label>
             <input value={this.state.title}
@@ -194,7 +194,7 @@ export class ModalRessouces extends Component {
                    className="form-control" />
           </div>
         }
-        {(kind === "rich") &&
+        {(kind === 'rich') &&
           <div className="form-group">
             <label>html</label>
             <textarea value={this.state.html}
@@ -203,7 +203,7 @@ export class ModalRessouces extends Component {
                       className="editor pre" />
           </div>
         }
-        {(kind === "quote") &&
+        {(kind === 'quote') &&
           <div className="form-group">
             <label>text</label>
             <textarea value={this.state.text}
@@ -212,7 +212,7 @@ export class ModalRessouces extends Component {
                       className="editor" />
           </div>
         }
-        {(kind === "pdf" || kind === "image") &&
+        {(kind === 'pdf' || kind === 'image') &&
           <div className="form-group">
             <label>file</label>
             <input onChange={(e) => this.handleFile(e)}
@@ -221,13 +221,8 @@ export class ModalRessouces extends Component {
                    size={40} />
           </div>
         }
-        {(kind === "link" || kind === "rich" || kind === "video" || kind === "image") &&
+        {(kind === 'link' || kind === 'rich' || kind === 'video' || kind === 'image') &&
           <div className="form-group">
-            <label>title</label>
-            <input value={this.state.title}
-                   onChange={(e) => this.setState({title: e.target.value})}
-                   placeholder="title to be displayed"
-                   className="form-control" />
             <label>url</label>
             <input value={this.state.url}
                    onChange={(e) => this.setState({url: e.target.value})}

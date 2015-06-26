@@ -46,21 +46,22 @@ export default class ResourceSelector extends Component {
   }
 
   @autobind
-  filterItems({target: {value=''}}) {
-    const search = value;
+  search({target: {value=''}}) {
+    const search = value,
+          data = this.props.data;
 
-    let data = this.props.data;
+    let filteredItems;
 
     if (search.length > 2) {
-      data = _.filter(data, function(n) {
-        return ~resourceName(n).indexOf(search);
+      filteredItems = _.filter(data, function(n) {
+        return ~resourceName(n).toLowerCase().indexOf(search.toLowerCase());
       });
     }
     else {
-      data = [];
+      filteredItems = [];
     }
 
-    this.setState({filteredItems: data, search: search});
+    this.setState({filteredItems: filteredItems, search: search});
   }
 
   render() {
@@ -84,7 +85,7 @@ export default class ResourceSelector extends Component {
       <Row className="full-height">
         <h1>{this.props.title}</h1>
           <input value={this.state.title}
-                 onChange={_.throttle(this.filterItems, 1000)}
+                 onChange={this.search}
                  placeholder="what are you looking for?"
                  className="form-control" size="40"/>
         <div className="overflowing">

@@ -6,12 +6,26 @@
 var abstract = require('./abstract.js'),
     essence = require('essence').init(),
     biblib = require('./biblib.js'),
+    uuid = require('uuid'),
     cache = require('../cache.js'),
     queries = require('../queries.js').resource,
     types = require('../typology.js'),
     storagePath = require('../../config.json').api.resources,
     db = require('../connection.js'),
+    fse = require('fs-extra'),
     _ = require('lodash');
+
+/**
+ * Helpers
+ */
+function parseDataUrl(dataUrl) {
+  var matches = dataUrl.slice(0, 50).match(/^(data:.+\/(.+);base64,)/);
+
+  return {
+    extension: matches[2],
+    buffer: new Buffer(dataUrl.slice(matches[1].length), 'base64')
+  }
+}
 
 /**
  * Model functions
@@ -35,6 +49,18 @@ var model = _.merge(abstract(queries), {
         mediaData.internal = false;
         mediaData.url = data.url;
         mediaData.html = '<img src="' + data.url + '" />';
+      }
+      else {
+        var hash = uuid.v4().replace(/-/g, ''),
+            file = parseDataUrl(data.file);
+
+        mediaData.internal = true;
+        mediaData.path = 'admin/' + hash + '.' + file.extension;
+
+        fse.mkdirpSync(storagePath + '/images/admin');
+
+        // Writing file on disk
+        fse.writeFileSync(storagePath + '/images/' + mediaData.path, file.buffer);
       }
     }
 

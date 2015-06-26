@@ -84,7 +84,8 @@ module.exports = [
     methods: ['POST'],
     validate: {
       reference: '?bibtex|string',
-      url: '?url'
+      url: '?url',
+      file: '?dataUrl'
     },
     action: createResource('image')
   },

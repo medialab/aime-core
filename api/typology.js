@@ -28,6 +28,11 @@ module.exports = new Typology({
     return valid;
   },
 
+  // Data URL
+  dataUrl: function(v) {
+    return /^data:.+\/.+;base64,.+/.test(v.slice(0, 50));
+  },
+
   // NOTE: will coerce strings
   integer: function(v) {
     if (isNaN(v))
