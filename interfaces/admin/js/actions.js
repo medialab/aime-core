@@ -136,8 +136,7 @@ const actions = {
           }
         },
         (err, data) => {
-          console.log('res saved', err, data);
-          // this.unshift(['data', model], data.result);
+          this.unshift(['data', model], data.result);
         }
       );
     }

@@ -4,10 +4,10 @@
  *
  * Defining the application routes able to return the inquiry's data.
  */
-var book = require('../model/book.js'),
-    voc = require('../model/vocabulary.js'),
-    doc = require('../model/document.js'),
-    res = require('../model/resource.js'),
+var bookModel = require('../model/book.js'),
+    vocModel = require('../model/vocabulary.js'),
+    docModel = require('../model/document.js'),
+    resModel = require('../model/resource.js'),
     types = require('../typology.js'),
     _ = require('lodash');
 
@@ -74,21 +74,21 @@ module.exports = [
   {
     url: '/book',
     cache: 'book',
-    action: getAll(book)
+    action: getAll(bookModel)
   },
   {
     url: '/book/search/:query',
     validate: {
       query: 'string'
     },
-    action: search(book)
+    action: search(bookModel)
   },
   {
     url: '/book/related/:modecross',
     validate: {
       modecross: 'modecross'
     },
-    action: getRelated(book)
+    action: getRelated(bookModel)
   },
 
   // Vocabulary
@@ -99,25 +99,25 @@ module.exports = [
       offset: '?integer'
     },
     cache: 'vocabulary',
-    action: getAll(voc)
+    action: getAll(vocModel)
   },
   {
     url: '/voc/:ids',
-    action: getByIds(voc)
+    action: getByIds(vocModel)
   },
   {
     url: '/voc/search/:query',
     validate: {
       query: 'string'
     },
-    action: search(voc)
+    action: search(vocModel)
   },
   {
     url: '/voc/related/:modecross',
     validate: {
       modecross: 'modecross'
     },
-    action: getRelated(voc)
+    action: getRelated(vocModel)
   },
 
   // Documents
@@ -128,31 +128,31 @@ module.exports = [
       offset: '?integer'
     },
     cache: 'documents',
-    action: getAll(doc)
+    action: getAll(docModel)
   },
   {
     url: '/doc/:ids',
-    action: getByIds(doc)
+    action: getByIds(docModel)
   },
   {
     url: '/doc/search/:query',
     validate: {
       query: 'string'
     },
-    action: search(doc)
+    action: search(docModel)
   },
   {
     url: '/doc/related/:modecross',
     validate: {
       modecross: 'modecross'
     },
-    action: getRelated(doc)
+    action: getRelated(docModel)
   },
 
   // Resource
   {
     url: '/res',
     cache: 'resources',
-    action: getAll(res)
+    action: getAll(resModel)
   }
 ];

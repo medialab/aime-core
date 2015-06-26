@@ -119,7 +119,7 @@ function getDocumentThumbnail(doc) {
  * Model
  */
 module.exports = {
-  getInfo: function(lang, callback) {
+  getInfo: function(lang, callback) {
     db.rows(queries.getInfo, {lang: lang}, function(err, results) {
       if (err) return callback(err);
 

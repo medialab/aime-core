@@ -72,7 +72,7 @@ module.exports = {
     db.query(queries.update, {id: id, properties: {reset_token: uuid.v4()}}, function(err, result) {
       if (err) return callback(err);
 
-      return callback(null, (result[0] || {}).reset_token);
+      return callback(null, (result[0] || {}).reset_token);
     })
   },
   update: function(id, properties, callback) {

@@ -15,7 +15,7 @@ var abstract = require('./abstract.js'),
 /**
  * Model functions
  */
-module.exports = _.merge(abstract(queries), {
+var model = _.merge(abstract(queries), {
 
   // Creating a resource
   create: function(kind, lang, data, callback) {
@@ -37,6 +37,11 @@ module.exports = _.merge(abstract(queries), {
       }
     }
 
+    else if (kind === 'quote') {
+      mediaData.lang = lang;
+      mediaData.text = data.text;
+    }
+
     // Creating node
     var mediaNode = batch.save(mediaData);
     batch.label(mediaNode, 'Media');
@@ -45,7 +50,16 @@ module.exports = _.merge(abstract(queries), {
 
     // Committing
     // TODO: retrieve the item
-    batch.commit(callback);
+    batch.commit(function(err, nodes) {
+      if (err) return callback(err);
+
+      // Retrieving the created item
+      model.getByIds([nodes[0].id], function(err, resources) {
+        if (err) return callback(err);
+
+        return callback(null, resources[0]);
+      });
+    });
   },
 
   // Updating a resource
@@ -53,3 +67,5 @@ module.exports = _.merge(abstract(queries), {
 
   }
 });
+
+module.exports = model;

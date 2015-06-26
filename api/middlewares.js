@@ -35,7 +35,7 @@ module.exports = {
 
   // Verify whether the user is admin or not
   admin: function(req, res, next) {
-    var user = (req.session.user || {});
+    var user = (req.session.user || {});
 
     if (!req.session.authenticated || user.role !== 'admin')
       return res.unauthorized();

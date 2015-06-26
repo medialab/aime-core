@@ -9,7 +9,6 @@ import Col from 'react-bootstrap/lib/Col';
 import {ActionButton} from './misc.jsx';
 import PropTypes from 'baobab-react/prop-types';
 import bibtex from 'bibtex-parser';
-import autobind from 'autobind-decorator';
 import {isURL} from 'validator';
 import {readInputFile} from '../lib/helpers.js';
 
@@ -75,7 +74,7 @@ export class ModalRessouces extends Component {
     model: React.PropTypes.string
   };
 
-  constructor(props,context) {
+  constructor(props, context) {
     super(props, context);
 
     this.state = {
@@ -96,11 +95,43 @@ export class ModalRessouces extends Component {
     };
   }
 
-  @autobind
   handleFile(e) {
     this.setState({uploading: true});
     readInputFile(e.target.files[0], (err, dataUrl) => {
       this.setState({uploading: false, file: dataUrl});
+    });
+  }
+
+  validate(state) {
+
+    // Different for each kind
+    if (state.kind === 'image') {
+      if (!state.url || !state.file)
+        return false;
+    }
+    else if (state.kind === 'quote') {
+      if (!state.text)
+        return false;
+    }
+    else {
+      console.log('Kind not supported yet.');
+      return false;
+    }
+
+    return true;
+  }
+
+  submit() {
+    if (!this.validate(this.state))
+      return;
+
+    this.context.tree.emit('modal:create', {
+      model: this.context.model,
+      data: this.state
+    });
+
+    this.context.tree.emit('modal:dismiss', {
+      model: this.context.model
     });
   }
 
@@ -115,17 +146,6 @@ export class ModalRessouces extends Component {
 
     // Actions
     const dismiss = () => {
-      this.context.tree.emit('modal:dismiss', {
-        model: this.context.model
-      });
-    };
-
-    const save = () => {
-      this.context.tree.emit('modal:create', {
-        model: this.context.model,
-        data: this.state
-      });
-
       this.context.tree.emit('modal:dismiss', {
         model: this.context.model
       });
@@ -190,8 +210,7 @@ export class ModalRessouces extends Component {
         {(kind === "pdf" || kind === "image") &&
           <div className="form-group">
             <label>file</label>
-            <input value={this.state.file}
-                   onChange={this.handleFile}
+            <input onChange={(e) => this.handleFile(e)}
                    className="form-control"
                    type="file"
                    size={40} />
@@ -209,11 +228,11 @@ export class ModalRessouces extends Component {
 
         {kind !== null &&
           <div className="form-group">
-            <label>reference</label>
+            <label>reference{validReference && ' - (valid bibtex)'}</label>
             <textarea value={reference}
                       onChange={(e) => this.setState({reference: e.target.value})}
-                      placeholder="bibtex …"
-                      className={classes('editor', {error: !validReference})} />
+                      placeholder="bibtex or text …"
+                      className="editor" />
           </div>
         }
       </form>
@@ -222,7 +241,7 @@ export class ModalRessouces extends Component {
 
         {kind !== null &&
           <ActionButton size={6}
-                        action={save}
+                        action={(e) => this.submit(e)}
                         label="save"
                         disabledLabel="uploading file …"
                         state={this.state.uploading ? 'disabled' : 'normal'} />}

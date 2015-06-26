@@ -5,8 +5,8 @@
  * Collection of routes enabling to edit model data. Those routes should only
  * be accessible to users with enough clearance.
  */
-var doc = require('../model/document.js'),
-    res = require('../model/resource.js'),
+var docModel = require('../model/document.js'),
+    resModel = require('../model/resource.js'),
     types = require('../typology.js'),
     _ = require('lodash');
 
@@ -21,7 +21,7 @@ module.exports = [
       slides: '?string'
     },
     action: function(req, res) {
-      return doc.create(
+      return docModel.create(
         req.session.user,
         req.lang,
         req.body.title,
@@ -42,7 +42,7 @@ module.exports = [
       slides: '?string'
     },
     action: function(req, res) {
-      return doc.update(
+      return docModel.update(
         +req.params.id,
         req.body.title || null,
         req.body.slides || '',
@@ -59,7 +59,7 @@ module.exports = [
     url: '/doc/:id',
     methods: ['DELETE'],
     action: function(req, res) {
-      return doc.destroy(+req.params.id, function(err, doc) {
+      return docModel.destroy(+req.params.id, function(err, doc) {
         if (err && err.message === 'not-found') return res.notFound();
         if (err) return res.serverError(err);
 
@@ -73,15 +73,30 @@ module.exports = [
     url: '/res/image',
     methods: ['POST'],
     validate: {
-      reference: '?bibtex',
+      reference: '?bibtex|string',
       url: '?url'
     },
     action: function(req, res) {
 
       // If no url and no files ERROR
       // Add files to validate?
-      console.log(req.body, req.files);
+      console.log(req.body);
       return res.notImplemented();
+    }
+  },
+  {
+    url: '/res/quote',
+    methods: ['POST'],
+    validate: {
+      text: 'string',
+      reference: '?bibtex|string'
+    },
+    action: function(req, res) {
+      resModel.create('quote', req.lang, req.body, function(err, resource) {
+        if (err) return res.serverError(err);
+
+        return res.ok(resource);
+      });
     }
   },
   {
