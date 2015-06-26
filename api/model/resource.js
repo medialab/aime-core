@@ -80,7 +80,7 @@ var model = _.merge(abstract(queries), {
     var mediaNode = batch.save(mediaData);
     batch.label(mediaNode, 'Media');
 
-    // TODO: adding the reference
+    // Adding the reference
     if (data.reference) {
       var isBiblib = types.check(data.reference, 'bibtex'),
           refData;
