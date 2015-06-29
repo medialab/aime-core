@@ -31,7 +31,7 @@ var model = {
         return callback(null, response.result.map(function(rec) {
           return {
             rec_id: rec.rec_id,
-            html: rec.mla[1]
+            html: rec.mla
           };
         }));
       }
