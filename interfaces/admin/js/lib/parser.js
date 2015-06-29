@@ -64,7 +64,7 @@ renderer.image = function(src) {
 
       case "pdf":
         return  `<div class="resource-item ${res.type} ${res.kind}">
-                  ${res.html || res.title }
+                  ${res.html || res.path}
                   ${ref}
                 </div>`;
 

@@ -48,7 +48,7 @@
             {{#if_eq kind compare='pdf'}}
               <span class="number unselectable">- {{display_number}} -</span>
               {{#if internal}}
-                <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}"></div>
+                <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url path}}"></div>
               {{else}}
                 <div class="media pdf unselectable">
                   <div class="media pdf unselectable" data-html="{{html}}"></div>
@@ -122,7 +122,7 @@
                 {{#if_eq kind compare='pdf'}}
                   <span class="number unselectable">- {{display_number}} -</span>
                   {{#if internal}}
-                    <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}"></div>
+                    <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url path}}"></div>
                   {{else}}
                     <div class="media pdf unselectable">
                       <div class="media pdf unselectable" data-html="{{html}}"></div>
@@ -211,7 +211,7 @@
                 {{#if_eq kind compare='pdf'}}
                   <span class="number unselectable">- {{display_number}} -</span>
                   {{#if internal}}
-                    <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url title}}"></div>
+                    <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url path}}"></div>
                   {{else}}
                     <div class="media pdf unselectable" data-html="{{html}}"></div>
                   {{/if}}
