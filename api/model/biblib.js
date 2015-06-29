@@ -9,6 +9,8 @@ var jayson = require('jayson'),
     client = jayson.client.http(config.host);
 
 var model = {
+
+  // Retrieve records by list of ids
   getByIds: function(ids, callback) {
     var stringIds = ids.map(function(ids) {
       return '' + ids;
@@ -30,12 +32,33 @@ var model = {
       }
     );
   },
+
+  // Retrieve a single record
   getById: function(id, callback) {
     model.getByIds([id], function(err, result) {
       if (err) return callback(err);
 
       return callback(null, result[0]);
     });
+  },
+
+  // Saving a record
+  save: function(bibtex, callback) {
+    client.request(
+      'save',
+      [config.corpus, bibtex, 'bibtex'],
+      function(err, response) {
+        if (err) return callback(err);
+
+        if (response.error) {
+          err = new Error('jsonrpc-fault');
+          err.data = response.error;
+          return callback(err);
+        }
+
+        return callback(null, response.result.rec_id);
+      }
+    );
   }
 };
 
