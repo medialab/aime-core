@@ -28,7 +28,12 @@ var model = {
           return callback(err);
         }
 
-        return callback(null, response.result);
+        return callback(null, response.result.map(function(rec) {
+          return {
+            rec_id: rec.rec_id,
+            html: rec.mla[1]
+          };
+        }));
       }
     );
   },

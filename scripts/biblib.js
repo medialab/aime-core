@@ -29,15 +29,15 @@ async.waterfall([
 
     references.forEach(function(r) {
       var bid = '' + r.biblib_id,
-          mla = (docIndex[bid] || {}).mla;
+          html = (docIndex[bid] || {}).html;
 
-      if (!mla) {
+      if (!html) {
         console.log('No reference found for:', r);
         return;
       }
 
-      r.html = mla;
-      r.text = cheerio(mla).text();
+      r.html = html;
+      r.text = cheerio(html).text();
 
       batch.save(r);
     });

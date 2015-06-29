@@ -5,6 +5,7 @@
  */
 var abstract = require('./abstract.js'),
     async = require('async'),
+    cheerio = require('cheerio'),
     essence = require('essence').init(),
     biblib = require('./biblib.js'),
     uuid = require('uuid'),
@@ -88,25 +89,31 @@ var model = _.merge(abstract(queries), {
         next();
       },
       function createBiblibReference(next) {
-        if (data.reference && types.check(data.reference, 'bibtex')) {
+        if (data.reference && types.check(data.reference, 'bibtex'))
+          biblib.save(data.reference, function(err, rec_id) {
+            if (err) return next(err);
 
-        }
-        else {
+            return biblib.getById(rec_id, next);
+          });
+        else
           process.nextTick(next.bind(null, null, null));
-        }
       },
-      function createReference(biblibItem, next) {
-        var refData;
+      function createReference(record, next) {
+        var refData = {
+          lang: lang,
+          type: 'reference',
+          slug_id: ++cache.slug_ids.ref
+        };
 
         // Adding the reference
         if (data.reference) {
-          if (!biblibItem) {
-            refData = {
-              lang: lang,
-              type: 'reference',
-              text: data.reference,
-              slug_id: ++cache.slug_ids.ref
-            };
+          if (!record) {
+            refData.text = data.reference;
+          }
+          else {
+            refData.biblib_id = record.rec_id;
+            refData.html = record.html;
+            refData.text = cheerio(record.html).text();
           }
 
           var refNode = batch.save(refData);

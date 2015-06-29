@@ -19,7 +19,7 @@ module.exports = new Typology({
 
     try {
       var parsed = bibtex(v);
-      valid = !!Object.keys(v).length;
+      valid = !!Object.keys(parsed).length;
     }
     catch (e) {
       valid = false;
