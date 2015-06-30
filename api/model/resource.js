@@ -40,7 +40,20 @@ var model = _.merge(abstract(queries), {
         mediaNode;
 
     async.waterfall([
-      function createMedia(next) {
+      function checkExternalResource(next) {
+        if (kind === 'video')
+          essence.extract(data.url, function(err, infos) {
+            if (err) return next(err);
+
+            if (infos.type !== 'video')
+              return next(new Error('wrong-external-resource-type'));
+
+            return next(null, infos);
+          });
+        else
+          process.nextTick(next.bind(null, null, null));
+      },
+      function createMedia(infos, next) {
 
         // Data
         var mediaData = {
@@ -98,6 +111,12 @@ var model = _.merge(abstract(queries), {
           mediaData.internal = false;
           mediaData.html = '<a href="' + data.url + '" target="_blank">' + (data.title || data.url) + '</a>';
           mediaData.url = data.url;
+        }
+
+        else if (kind === 'video') {
+          mediaData.internal = false;
+          mediaData.url = data.url;
+          mediaData.html = infos.html;
         }
 
         // Creating node

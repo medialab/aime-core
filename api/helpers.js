@@ -4,8 +4,10 @@
  *
  * Miscellaneous helper functions.
  */
-var _ = require('lodash'),
-    types = require('typology');
+var types = require('typology'),
+    regexEscape = require('escape-regexp'),
+    _ = require('lodash');
+
 
 // Date-related helpers
 function formatDate(date) {
@@ -61,7 +63,7 @@ function reorder(target, order, key) {
 }
 
 function searchRegex(query) {
-  return "(?i).*" + query + ".*";
+  return "(?i).*" + regexEscape(query) + ".*";
 }
 
 // Exporting

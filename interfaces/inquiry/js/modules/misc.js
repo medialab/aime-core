@@ -85,7 +85,7 @@
       twitterbox = $("#twitter-box .tweets");
       // and, last but not least, the tweeetters
       // ask for status
-      $.getJSON('http://aime.medialab.sciences-po.fr/tweets-aime.json', function(res) {
+      $.getJSON(maze.settings.json_feed, function(res) {
         tweets = res.splice(0,10)
 
         twitterbox.append(tweets.map(function(d) {

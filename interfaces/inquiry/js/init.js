@@ -74,11 +74,11 @@ $(document).ready(function() {
       window.location = redirectTo;
     }
 
-    maze.debug = maze.settings.debug || true;
-    maze.verbose = maze.settings.debug || true;
-    domino.settings('verbose', true);
+    maze.debug = !!maze.settings.debug;
+    maze.verbose = !!maze.settings.debug;
 
-
+    if (maze.debug)
+      domino.settings('verbose', true);
 
     $("#terms-popup").appendTo("body");
     $("#legal-popup").appendTo("body");

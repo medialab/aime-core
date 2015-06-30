@@ -8,7 +8,10 @@ var db = require('../connection.js'),
     helpers = require('../helpers.js'),
     _ = require('lodash');
 
-module.exports = function(queries) {
+module.exports = function(queries, sortFunction) {
+
+  sortFunction = sortFunction || _.identity;
+
   return {
     getByIds: function(ids, callback) {
 
@@ -54,7 +57,7 @@ module.exports = function(queries) {
         // On typical error
         if (err) return callback(err);
 
-        return callback(null, helpers.nested(result));
+        return callback(null, sortFunction(helpers.nested(result)));
       });
     },
     getAll: function(lang, params, callback) {
@@ -72,7 +75,7 @@ module.exports = function(queries) {
         // Treating incoming data
         var data = helpers.nested(result);
 
-        return callback(null, data);
+        return callback(null, sortFunction(data));
       });
     },
     search: function(lang, query, callback) {
@@ -84,7 +87,7 @@ module.exports = function(queries) {
       db.rows(queries.search, {lang: lang, query: query}, function(err, result) {
         if (err) return callback(err);
 
-        return callback(null, helpers.nested(result));
+        return callback(null, sortFunction(helpers.nested(result)));
       });
     }
   };
