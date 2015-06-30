@@ -136,7 +136,7 @@ export class Layout extends PureComponent {
 class ListPanel extends PureComponent {
   render() {
     if (!this.props.items)
-      return <div className="centered">...</div>;
+      return <div className="centered"><span className="glyphicon glyphicon-lg glyphicon-refresh spinning"></span></div>;
     else
       return <List {...this.props} />;
   }
