@@ -6,5 +6,6 @@ var CONFIG = {
   "crossings_modecrossids_host": "",
   "debug": true,
   "endpoint": "",
-  "help_link": "/help"
+  "help_link": "/help",
+  "json_feed": "http://aime.medialab.sciences-po.fr/tweets-aime.json"
 };
