@@ -14,7 +14,7 @@ import PropTypes from 'baobab-react/prop-types';
 import {Box} from './misc.jsx';
 
 const models = [
-  {id: 'book', label: 'the book'},
+  // {id: 'book', label: 'the book'},
   {id: 'doc', label: 'documents'},
   {id: 'res', label: 'resources'}
 ];
