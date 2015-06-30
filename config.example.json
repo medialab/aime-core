@@ -38,6 +38,10 @@
       "database": "aime_crossings_prod"
     }
   },
+  "interfaces": {
+    "crossings": "http://localhost:3000",
+    "inquiry": "http://localhost:8000"
+  },
   "mail": {
     "host": "localhost",
     "port": 25
