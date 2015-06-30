@@ -33,7 +33,7 @@ export class Modal extends Component {
           },
           save = () => {
             this.context.tree.emit('modal:create', {model: this.context.model, data: this.state.title});
-            dimiss();
+            dismiss();
           };
 
     return (
