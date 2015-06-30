@@ -118,6 +118,15 @@ module.exports = [
     action: createResource('link')
   },
   {
+    url: '/res/video',
+    methods: ['POST'],
+    validate: {
+      url: 'url',
+      reference: '?bibtex|string'
+    },
+    action: createResource('video')
+  },
+  {
     url: '/res/:id',
     methods: ['PUT'],
     action: function(req, res) {

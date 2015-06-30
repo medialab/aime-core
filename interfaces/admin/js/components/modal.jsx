@@ -64,8 +64,7 @@ const KINDS = [
   'link',
   'pdf',
   'image',
-  'video',
-  'rich'
+  'video'
 ];
 
 export class ModalRessouces extends Component {
@@ -112,6 +111,10 @@ export class ModalRessouces extends Component {
     }
     if (kind === 'pdf') {
       if (!state.file)
+        return false;
+    }
+    if (kind === 'video') {
+      if (!state.url)
         return false;
     }
     else if (kind === 'quote') {
