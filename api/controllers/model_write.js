@@ -90,6 +90,15 @@ module.exports = [
     action: createResource('image')
   },
   {
+    url: '/res/pdf',
+    methods: ['POST'],
+    validate: {
+      reference: '?bibtex|string',
+      file: 'dataUrl'
+    },
+    action: createResource('pdf')
+  },
+  {
     url: '/res/quote',
     methods: ['POST'],
     validate: {

@@ -70,6 +70,24 @@ var model = _.merge(abstract(queries), {
           }
         }
 
+        else if (kind === 'pdf') {
+          if (data.url) {
+            // TODO: ...
+          }
+          else {
+            var hash = uuid.v4().replace(/-/g, ''),
+                file = parseDataUrl(data.file);
+
+            mediaData.internal = true;
+            mediaData.path = 'admin/' + hash + '.' + file.extension;
+
+            fse.mkdirpSync(storagePath + '/pdfs/admin');
+
+            // Writing file on disk
+            fse.writeFileSync(storagePath + '/pdfs/' + mediaData.path, file.buffer);
+          }
+        }
+
         else if (kind === 'quote') {
           mediaData.lang = lang;
           mediaData.text = data.text;
