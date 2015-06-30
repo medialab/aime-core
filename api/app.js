@@ -96,6 +96,7 @@ app.use(middlewares.language);
  * Routers
  */
 var loginRouter = loadController(controllers.login),
+    shortenerRouter = loadController(controllers.shortener),
     crossingsRouter = loadController(controllers.crossings, false),
     modelRouter = loadController(controllers.model, middlewares.authenticate),
 
@@ -133,6 +134,7 @@ resourcesRouter.use(express.static(config.resources));
 app.use(loginRouter);
 app.use(modelRouter);
 app.use(writeModelRouter);
+app.use('/short', shortenerRouter);
 app.use('/crossings', crossingsRouter);
 app.use('/resources', resourcesRouter);
 
