@@ -57,9 +57,23 @@ function parseSlides(markdown) {
 }
 
 /**
+ * Sorting function
+ */
+function sortingFunction(docs) {
+  return _.sortByOrder(
+    docs,
+    [
+      'date',
+      function(doc) { return _.deburr(doc.title); }
+    ],
+    [false, true]
+  );
+}
+
+/**
  * Model functions
  */
-var model = _.merge(abstract(queries.document), {
+var model = _.merge(abstract(queries.document, sortingFunction), {
 
   // Creating a document
   create: function(user, lang, title, slidesText, callback) {
@@ -321,29 +335,5 @@ var model = _.merge(abstract(queries.document), {
     ], callback);
   }
 });
-
-/**
- * Overriding sorting
- */
-var getAll = model.getAll;
-
-model.getAll = function(lang, params, callback) {
-  getAll(lang, params, function(err, doc) {
-    if (err) return callback(err);
-
-    var sortedDoc = _.sortByOrder(
-      doc,
-      [
-        'date',
-        function(doc) {
-          return _.deburr(doc.title)
-        }
-      ],
-      [false, true]
-    );
-
-    return callback(null, sortedDoc);
-  });
-};
 
 module.exports = model;
