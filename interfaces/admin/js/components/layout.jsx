@@ -19,6 +19,8 @@ import List from './list.jsx';
 import {ActionButton, Toolbar} from './misc.jsx';
 import {Modal, ModalRessouces} from './modal.jsx';
 import ResourceSelector from './resourceSelector.jsx';
+import ResourceEditor from './resourceEditor.jsx';
+
 
 const MODAL_TITLES = {
   doc: 'create document',
@@ -58,7 +60,7 @@ export class Layout extends PureComponent {
   render() {
     const model = this.props.model,
           isAModalDisplayed = !!this.props.modal,
-          isSomethingSelected = (this.props.selection || []).length > (1 - (model === 'doc')),
+          isSomethingSelected = (this.props.selection || []).length > (1 - (model === 'doc' || model === 'res')),
           isThereAnyData = !!this.props.data,
           editionMode = isSomethingSelected && isThereAnyData && !isAModalDisplayed;
 
@@ -101,13 +103,16 @@ export class Layout extends PureComponent {
         </Col>
 
         <Col md={4} className="full-height">
+
           {isAModalDisplayed ?
             modal  :
             editionMode && <EditorPanel model={model} />}
+
+
         </Col>
 
         <Col md={4} className={classes({'full-height':true, hidden: this.props.searching})}>
-          {editionMode && <PreviewPanel model={model} />}
+          {(editionMode && model !== "res")  && <PreviewPanel model={model} />}
         </Col>
 
         {this.props.searching && 
@@ -147,14 +152,13 @@ class ListPanel extends PureComponent {
  */
 @branch({
   facets(props) {
-    return {
-      parsed: props.model + 'Parsed'
-    };
+    if(props.model === "doc") return { parsed: props.model + 'Parsed'};
+    else return {};
   },
   cursors(props) {
     return {
       buffer: ['states', props.model, 'editor'],
-      title: ['states', props.model, 'title'],
+      title: [ 'states', props.model, 'title'],
       saving: ['states', props.model, 'saving']
     };
   }
@@ -177,15 +181,20 @@ class EditorPanel extends PureComponent {
       <div className="full-height">
         <h1 className="centered">Editor</h1>
         <div className="overflowing">
+
+          {this.props.model === "doc" ?
           <Editor model={model}
                   buffer={this.props.buffer}
                   title={this.props.title}
                   parsed={this.props.parsed}
-                  selected={this.props.selected}
                    />
+          :
+          <ResourceEditor
+                  model={model}
+                  />}
         </div>
         <div className="actions">
-          <ActionButton size={12} action={openSelector} label="add item" />
+          {this.props.model === "doc" && <ActionButton size={12} action={openSelector} label="add item" />}
           <ActionButton size={12}
                         action={save}
                         label="save"
@@ -202,9 +211,8 @@ class EditorPanel extends PureComponent {
  */
 @branch({
   facets(props) {
-    return {
-      parsed: props.model + 'Parsed'
-    };
+    if(props.model === "doc") return { parsed: props.model + 'Parsed'};
+    else return {};
   },
 })
 class PreviewPanel extends PureComponent {

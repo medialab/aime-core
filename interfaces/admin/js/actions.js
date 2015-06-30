@@ -70,6 +70,9 @@ const actions = {
 
     this.set(['states', model, 'modal'], null);
 
+    console.log(selection);
+
+
 
     // Ensuring we are acting on an array
     if (!selection)
@@ -83,6 +86,11 @@ const actions = {
       cursor.up().set('title', item.title);
 
       return cursor.up().set('editor', item.markdown);
+    }
+
+    if(model === 'res'){
+      const item = _.find(this.get('data', model), {id: target});
+      this.set(['states', model, 'editor'], item);
     }
 
     // If level is 1, we initialize the editor
