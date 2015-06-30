@@ -110,6 +110,10 @@ export class ModalRessouces extends Component {
       if (!state.url && !state.file)
         return false;
     }
+    if (kind === 'pdf') {
+      if (!state.file)
+        return false;
+    }
     else if (kind === 'quote') {
       if (!state.text)
         return false;
@@ -185,7 +189,7 @@ export class ModalRessouces extends Component {
               {KINDS.map(k => <option key={k} value={k}>{k}</option>)}
             </select>
           </div>
-        {(kind === 'pdf' || kind === 'link') &&
+        {(kind === 'link') &&
           <div className="form-group">
             <label>title</label>
             <input value={this.state.title}
