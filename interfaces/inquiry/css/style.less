@@ -21,6 +21,7 @@
 @gold: rgb(255,215,0, .2);
 @cyan: rgb(29, 112, 183, 1);
 @cyan_alpha: rgb(29, 112, 183, .2);
+@blue: #1d70b7;
 
 @magenta: rgb(192, 96, 27, 1);
 @magenta_alpha: rgba(192, 96, 27, .28);
@@ -928,6 +929,10 @@ ul > li{
 
 #column-doc {
   .document {
+
+    &.contribution > .subtitle p {
+      color: @blue;
+    }
 
     position: relative;
 

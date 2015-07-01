@@ -14,7 +14,9 @@ var bookModel = require('../model/book.js'),
 // Forge
 function getAll(model) {
   return function(req, res) {
-    model.getAll(req.lang, req.query, function(err, result) {
+    var params = _.extend({}, req.query, {user_id: req.session.user.id});
+
+    model.getAll(req.lang, params, function(err, result) {
       if (err) return res.serverError(err);
 
       return res.ok(result);
@@ -24,7 +26,7 @@ function getAll(model) {
 
 function search(model) {
   return function(req, res) {
-    model.search(req.lang, req.params.query, function(err, ids) {
+    model.search(req.session.user, req.lang, req.params.query, function(err, ids) {
       if (err) return res.serverError(err);
 
       return res.ok(ids);

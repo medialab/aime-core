@@ -39,7 +39,7 @@ module.exports = {
       return callback(null, data);
     });
   },
-  search: function(lang, query, callback) {
+  search: function(user, lang, query, callback) {
 
     // Formatting query
     query = helpers.searchRegex(query);

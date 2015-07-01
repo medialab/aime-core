@@ -63,7 +63,8 @@ module.exports = function(queries, sortFunction) {
     getAll: function(lang, params, callback) {
       params = _.extend({}, {lang: lang}, {
         offset: +params.offset || 0,
-        limit: +params.limit || 100000
+        limit: +params.limit || 100000,
+        user_id: params.user_id
       });
 
       // Executing query
@@ -78,13 +79,19 @@ module.exports = function(queries, sortFunction) {
         return callback(null, sortFunction(data));
       });
     },
-    search: function(lang, query, callback) {
+    search: function(user, lang, query, callback) {
 
       // Formatting query
       query = helpers.searchRegex(query);
 
+      var params = {
+        lang: lang,
+        query: query,
+        user_id: user.id
+      };
+
       // Executing query
-      db.rows(queries.search, {lang: lang, query: query}, function(err, result) {
+      db.rows(queries.search, params, function(err, result) {
         if (err) return callback(err);
 
         return callback(null, sortFunction(helpers.nested(result)));

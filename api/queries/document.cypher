@@ -1,6 +1,7 @@
 // name: getAll
 // Retrieve every document sorted alphabetically
-MATCH (a:User)<-[:CREATED_BY]-(d:Document {lang: {lang}, status: "public"})-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
+MATCH (a:User)<-[:CREATED_BY]-(d:Document {lang: {lang}})-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
+WHERE d.status = "public" OR id(a) = {user_id}
 
 OPTIONAL MATCH (e)<-[:DESCRIBES]-(r:Reference)
 WITH e, d, a, s, rs, re, head(collect(r)) AS ref
@@ -45,7 +46,7 @@ RETURN {
 
 // name: getBySlugIds
 // Retrieve one or more document by their slug ids.
-MATCH (a:User)<-[:CREATED_BY]-(d:Document {status: "public"})-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
+MATCH (a:User)<-[:CREATED_BY]-(d:Document)-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
 WHERE d.slug_id IN {slug_ids}
 
 OPTIONAL MATCH (e)<-[:DESCRIBES]-(r:Reference)
@@ -90,7 +91,7 @@ RETURN {
 
 // name: getByIds
 // Retrieve one or more document by their neo4j ids.
-MATCH (a:User)<-[:CREATED_BY]-(d:Document {status: "public"})-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
+MATCH (a:User)<-[:CREATED_BY]-(d:Document)-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
 WHERE id(d) IN {ids}
 
 OPTIONAL MATCH (e)<-[:DESCRIBES]-(r:Reference)
@@ -203,7 +204,8 @@ RETURN {
 
 // name: search
 // Search for a precise string in a LIKE manner across documents
-MATCH (a:User)<-[:CREATED_BY]-(d:Document {status: "public"})-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
+MATCH (a:User)<-[:CREATED_BY]-(d:Document)-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
+WHERE d.status = "public" OR id(a) = {user_id}
 OPTIONAL MATCH (e)<-[:DESCRIBES]-(r:Reference)
 WITH a, d, rs, s, re, e, r
 WHERE (
