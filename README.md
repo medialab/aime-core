@@ -2,7 +2,9 @@
 
 This repository holds the source code driving the new core of the AIME project.
 
-It mainly consist of a centralized data model stored within a Neo4j database and served through a single API server written in node. Once this API is setup, each one of the three AIME interfaces (`inquiry`, `crossings` and `admin`) will plug themselves on this API to function.
+It mainly consist of a centralized data model stored within a Neo4j database and served through a single API server written in node.
+
+Once the API is online, each one of the three AIME interfaces (`inquiry`, `crossings` and `admin`) will plug themselves on it to function.
 
 ## Installation
 
