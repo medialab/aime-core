@@ -201,13 +201,13 @@ module.exports = {
       };
 
       // Scenars
-      data.scenars = results.info.scenars.map(function(s) {
+      data.scenars = results.info.scenars.map(function(s, i) {
         return {
           lang: lang,
           modecross: results.info.name,
           name: s.scenario.title,
-          id: 'test',
-          sid: s.scenario.id,
+          _id: '' + i,
+          sid: '' + i,
           status: 'published',
           items: s.items.map(function(i) {
             return slugs[i.type] + '_' + i.slug_id;
