@@ -804,8 +804,15 @@ angular.module('myApp.controllers', ['underscore','config'])
 		/////////////////////////////////////////////////////////////
 		$scope.toggleLightbox = function(data) {
 			//console.log("Toggle lightbox: ", data);
-			if(data) $scope.lightboxed = data;
-			else $scope.lightboxed = null;
+			if(data) {
+				$scope.lightboxed = {
+					url: $scope.getImgSrc(data),
+					ref: data.ref
+				};
+			}
+			else {
+				$scope.lightboxed = null;
+			}
 		};
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -894,6 +901,14 @@ angular.module('myApp.controllers', ['underscore','config'])
 				return $sce.trustAsResourceUrl("http://player.vimeo.com/video/"+ vimeoid +"?title=0&byline=0&portrait=0&color=ffffff");
 			} else
 				return "-nosrc-";
+		};
+		$scope.getImgSrc = function(m) {
+			var endpoint = settings.apiUrl;
+
+			if (m.internal)
+				return endpoint + '/resources/images/' + m.content;
+			else
+				return m.content;
 		};
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

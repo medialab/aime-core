@@ -113,7 +113,7 @@
 			<div ng-switch-when="img" class="row">
 				<div class="lightboxbutton" ng-click="toggleLightbox(m.lightboxcontent)"><i class="fa fa-search"></i></div>
 				<div class="paragraph">
-					<img id="{{m.id}}" ng-src="{{conf.domain}}/{{m.content}}" class="draggableimage"/>
+					<img id="{{m.id}}" ng-src="{{getImgSrc(m)}}" class="draggableimage"/>
 				</div>
 			</div>
 

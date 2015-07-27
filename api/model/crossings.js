@@ -57,13 +57,6 @@ function formatDate(date) {
   return (new Date(y, m, j).toISOString())
 }
 
-// TODO: relative url!
-function ensureUrl(url) {
-  if (url[0] === '/')
-    return url.replace(/\/[^\/]*/, '');
-  return url;
-}
-
 function getDocumentThumbnail(doc) {
   var candidates = [];
 
@@ -98,7 +91,8 @@ function getDocumentThumbnail(doc) {
       if (element.kind === 'image')
         candidates.unshift({
           type: 'img',
-          content: element.internal ? ensureUrl(element.path) : element.url
+          internal: element.internal,
+          content: element.path || element.url
         });
 
       // In case of vimeo
@@ -255,6 +249,19 @@ module.exports = {
                 type: 'bib',
                 content: element.html || element.text,
                 pindex: -1
+              };
+
+            if (element.kind === 'image')
+              return {
+                type: 'img',
+                internal: element.internal,
+                content: element.path || element.url,
+                pindex: -1,
+                lightboxcontent: {
+                  content: element.path || element.url,
+                  internal: element.internal,
+                  ref: element.reference && element.reference.text
+                }
               };
 
             if (element.kind === 'video' && element.host === 'vimeo')
