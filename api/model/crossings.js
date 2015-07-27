@@ -259,6 +259,13 @@ module.exports = {
                 pindex: -1
               };
 
+            if (element.kind === 'video')
+              return {
+                type: 'video',
+                iframe: element.html,
+                pindex: -1
+              };
+
             if (element.kind === 'quote')
               return {
                 type: 'cit',

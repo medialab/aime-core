@@ -130,6 +130,11 @@
 				</div>
 			</div>
 
+			<div ng-switch-when="video" class="row">
+				<div class="paragraph" ng-bind-html="m.iframe">
+				</div>
+			</div>
+
 			<div ng-switch-when="pdf" class="paragraph">
 				<iframe
 					ng-if="c.id==theatreCurrent.id"

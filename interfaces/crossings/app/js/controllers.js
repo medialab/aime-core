@@ -11,6 +11,10 @@ angular.module('underscore', [])
 
 angular.module('myApp.controllers', ['underscore','config'])
 
+	// BEWARE
+	.config(['$sceProvider', function($sceProvider) {
+		$sceProvider.enabled(false);
+	}])
 	.controller('CrossingsCtrl',
 			["$scope","$rootScope","Api","$document","$location","$route","$routeParams","$timeout","_","settings","$sce", //"$cookies","$cookieStore"
 			function($scope,$rootScope,Api,$document,$location,$route,$routeParams,$timeout,_,settings,$sce) { //$cookies,$cookieStore
