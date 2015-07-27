@@ -38,8 +38,8 @@ function submatches(r, t) {
 }
 
 function questionTokenizer(txt) {
-  var qm = submatches(/\s\d\)\s*([^?]+\?)/g, txt),
-      am = submatches(/\?\s?(.*?)(?:\s\d\)|$)/g, txt);
+  var qm = submatches(/\s\w\)\s*([^?:]+[?:])/g, txt),
+      am = submatches(/[?:]\s?(.*?)(?:\s\w\)|$)/g, txt);
 
   return qm.map(function(qme, i) {
     return {
@@ -101,7 +101,7 @@ function getDocumentThumbnail(doc) {
       if (element.kind === 'image')
         candidates.unshift({
           type: 'img',
-          content: element.internal ? ensureUrl(element.filename) : element.url
+          content: element.internal ? ensureUrl(element.path) : element.url
         });
 
       if (element.kind === 'video' && element.host === 'vimeo')
