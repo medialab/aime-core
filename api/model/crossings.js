@@ -291,6 +291,7 @@ module.exports = {
           author: {
             name: d.author.name + ' ' + d.author.surname
           },
+          original: d.original,
           choosen: true,
           date: formatDate(d.date),
           id: slugs[d.type] + '_' + d.slug_id,
