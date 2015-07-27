@@ -74,10 +74,8 @@ function getDocumentThumbnail(doc) {
     slide.children.forEach(function(element) {
 
       // In case of text
-      if (element.type === 'paragraph' &&
-          !candidates.length &&
-          /[^:]$/.test(element.text))
-        candidates.unshift({
+      if (element.type === 'paragraph')
+        candidates.push({
           type: 'txt',
           content: truncate(element.text)
         });
@@ -89,25 +87,32 @@ function getDocumentThumbnail(doc) {
           content: truncate(element.text)
         });
 
-      // In case of biblib
-      if (element.type === 'reference' &&
-          !!element.biblib_id &&
-          !candidates.length)
-        candidates.unshift({
+      // In case of reference
+      if (element.type === 'reference')
+        candidates.push({
           type: 'bib',
           content: truncate(element.text || element.biblib_id)
         });
 
+      // In case of image
       if (element.kind === 'image')
         candidates.unshift({
           type: 'img',
           content: element.internal ? ensureUrl(element.path) : element.url
         });
 
+      // In case of vimeo
       if (element.kind === 'video' && element.host === 'vimeo')
         candidates.unshift({
           type: 'vimeo',
           content: element.identifier
+        });
+
+      // In case of pdf
+      if (element.kind === 'pdf')
+        candidates.push({
+          type: 'txt',
+          content: truncate(element.path)
         });
     });
   });
