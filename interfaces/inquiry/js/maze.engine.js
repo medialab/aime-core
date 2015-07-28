@@ -1,5 +1,5 @@
 'use strict';
-	
+
 ( function( $, w, undefined ){
 	maze                 = w.maze || {};
 	maze.engine          = {};
@@ -26,12 +26,12 @@
 	}
 
 	/*
-		@return a enriched signle vocabulary item 
-	*/	
+		@return a enriched signle vocabulary item
+	*/
 	maze.engine.parser.vocabulary_item = function(item) {
 		var crossing = item.title.match(/^\[([A-Z]{2,3})(·([A-Z]{2,3}))?\]$/)
     if(crossing) {
-      item.crossing = maze.settings.crossings_home + crossing[1] + (crossing[3]? '-' + crossing[3]: '');
+      item.crossing = maze.settings.crossings_home +'#/'+ item.lang +'/'+ crossing[1] + (crossing[3]? '-' + crossing[3]: '');
     	item.crossing = item.crossing.toLowerCase();
     }
     return item;
@@ -39,14 +39,14 @@
 
 	/*
 		@return a enriched collection of documents
-	*/	
+	*/
 	maze.engine.parser.documents = function(items, options) {
 		var options = options || {};
 		return items.map(function(d) {
       if(!d.children.length)
         return d;
 
-      d.references = []; // search for biblib references to prefetch  
+      d.references = []; // search for biblib references to prefetch
       var display_number = 0,
       		slides_matches = []; // only if options.query is set
 
@@ -89,7 +89,7 @@
               display_number: 1,
               children: d.children[0].children.slice(0, 1) // export the first paragraph only
             }
-          ]; 
+          ];
         } else { // export slides_matches for each object
         	d.slides_matches = slides_matches;
         }
@@ -677,7 +677,7 @@
 	 	aka generic items
 
 		Server side, here is how it works :
-			
+
 			DOCUMENT
 
 		const TYPE_DOCUMENT = 0;
@@ -699,7 +699,7 @@
 		const TYPE_URL = 4;
 		const TYPE_TXT_REF = 5;
 		const TYPE_BIB_REF = 6;
-		
+
 	*/
 	maze.ITEM_TYPE_BOOKMARK = "-1";
 	maze.ITEM_TYPE_TITLE = "0";
@@ -777,7 +777,7 @@
 
 			            if( obj.author )
 			              item.author = obj.author;
-						
+
 						// authorid / belonging are useful to distinguish my contributions from the others'
 						item.belonging = 'other';
 
@@ -807,7 +807,7 @@
               }
             };
 			            //obj.id == "4278" && maze.log('eeeeeeeeee', obj, maze.engine.helpers.paragraph(obj));
-						
+
 						item.force_open = item.title.content.match(/\w+, \d+/) != null;
 						items.push(item);
 						break;
@@ -873,7 +873,7 @@
 
 						slide.content.push( slide_content );
 						break;
-					
+
 					case maze.ITEM_TYPE_MEDIA:
 						// CASE FOR CONTRIBUTIONS (MEDIA meaning URL)
 						if (namespace === 'contributions') {
@@ -903,9 +903,9 @@
 									) {
 								item.media.video = 'video-on';
 								guessed_type = 'video';
-							} else 
+							} else
 								item.media.link = 'link-on';
-							
+
 							num++;
 							slide_content = {
 								id: obj.id,
@@ -980,7 +980,7 @@
 								}
 							};
 						}
-						
+
 						if( obj_is_contribution ){
 							slide.reference = obj.content
 						}
