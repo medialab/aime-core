@@ -97,7 +97,7 @@ app.use(middlewares.language);
  */
 var loginRouter = loadController(controllers.login),
     shortenerRouter = loadController(controllers.shortener),
-    crossingsRouter = loadController(controllers.crossings, false),
+    crossingsRouter = loadController(controllers.crossings, middlewares.authenticate),
     modelRouter = loadController(controllers.model, middlewares.authenticate),
 
     // TODO: add stricter clearance to the write model

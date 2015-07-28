@@ -19,15 +19,15 @@ angular.module('myApp.services', [])
 					method: 	'GET',
 					url: 		b+"/crossings/config",
 					params: 	params,
-				}).then(function(data){
-					if(data.data.blocked) {
+				}).success(function(data){
 
-						// redirect to login page, with #crossings/.../ hash to redirect here after that
-						$window.location.href = params.redirectUrl;
+					// returning fetched data
+					return callback({data: data.data.result});
+				}).error(function(data, status, headers, config) {
 
-					} else {
-						callback({data: data.data.result});
-					}
+					// redirect to inquiry's login page, with #crossings/.../ hash to redirect here after that
+					if (status === 401)
+						return $window.location.href = params.redirectUrl;
 				});
 			},
 

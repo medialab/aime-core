@@ -183,7 +183,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 		$scope.initConfig = function() {
 			Api.fetchConfig({
 				lang: $scope.lang,
-				redirectUrl: $scope.conf.inquiryUrl + "/?lang=" + $scope.lang + "#crossings/#/" + $scope.lang + "/" + $scope.modecross.toLowerCase()
+				redirectUrl: $scope.conf.inquiryUrl + '#redirect=' + encodeURIComponent(window.location.href)
 			}, function(res){
 				console.log("Fetched config: ",res.data);
 				$scope.order = res.data.order;

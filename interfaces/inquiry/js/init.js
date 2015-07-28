@@ -67,13 +67,6 @@ $(document).ready(function() {
 
   maze.init = function(){
 
-    if( /^#crossings/.test(window.location.hash) ) {
-      var crossUrl = window.location.hash.replace("#crossings","");
-      var redirectTo = maze.settings.crossings_home + crossUrl;
-      console.log("redirects to: ",redirectTo);
-      window.location = redirectTo;
-    }
-
     maze.debug = !!maze.settings.debug;
     maze.verbose = !!maze.settings.debug;
 

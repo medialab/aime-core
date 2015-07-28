@@ -1646,6 +1646,13 @@
           },
           url: maze.urls.login,
           success: function(data, params) {
+            if( /^#redirect=/.test(window.location.hash) ) {
+              var crossUrl = window.location.hash.replace("#redirect=","");
+              var redirectTo = decodeURIComponent(crossUrl);
+              console.log("redirects to: ",redirectTo);
+              return window.location = redirectTo;
+            }
+
             if(data.status="ok") {
               this.update('authorization', maze.AUTHORIZATION_AUTHORIZED);
               this.update('user', data.result);
