@@ -14,12 +14,12 @@
 		ng-class="{collapsed: titleCollapsed}"
 		>
 		<div class="bookmeta chapterindex">
-			<span class="index" ng-if="c.parentindex>0">{{c.parentindex}}</span> 
+			<span class="index" ng-if="c.parentindex>0">{{c.parentindex}}</span>
 		</div>
 		<div class="bookmeta chapter">
 			<div class="heading smallcaps" ng-bind-html="textify(c.parenttitle,true,true)"></div>
 			<div class="subheading smallcaps">
-				<span class="index">{{c.index}}</span> 
+				<span class="index">{{c.index}}</span>
 				<span ng-bind-html="textify(c.title,true,true)"></span>
 			</div>
 		</div>
@@ -87,7 +87,7 @@
 
 		<!-- /////////////////////////////////////// DOC -->
 		<div
-			ng-if="c.cat=='doc'"
+			ng-if="c.cat=='doc' || c.cat=='cont'"
 			ng-repeat="m in c.slides_medias_flattened"
 			ng-switch="m.type"
 			id="media_{{m.id}}"
@@ -95,7 +95,7 @@
 			in-view="mediaInView($element,$inview,$inviewpart)"
 			>
 
-			<div ng-switch-when="txt" class="paragraph">	
+			<div ng-switch-when="txt" class="paragraph">
 				<span class="number">- {{m.pindex}} -</span>
 				<div class="text" ng-bind-html="textify(m.content,true,true,true)"></div>
 			</div>
@@ -113,7 +113,7 @@
 			<div ng-switch-when="img" class="row">
 				<div class="lightboxbutton" ng-click="toggleLightbox(m.lightboxcontent)"><i class="fa fa-search"></i></div>
 				<div class="paragraph">
-					<img id="{{m.id}}" ng-src="{{conf.domain}}/{{m.content}}" class="draggableimage"/>
+					<img id="{{m.id}}" ng-src="{{getImgSrc(m)}}" class="draggableimage"/>
 				</div>
 			</div>
 
@@ -127,6 +127,11 @@
 						frameborder="0"
 						webkitallowfullscreen mozallowfullscreen allowfullscreen>
 					</iframe>
+				</div>
+			</div>
+
+			<div ng-switch-when="video" class="row">
+				<div class="paragraph" ng-bind-html="m.iframe">
 				</div>
 			</div>
 
@@ -147,7 +152,7 @@
 		<!-- /////////////////////////////////////// CONT -->
 		<!-- first slide is a content txt, always visible -->
 		<div
-			ng-if="c.cat=='cont'"
+			ng-if="c.cat=='DEPRECATED_CONT'"
 			class="media" in-view="mediaInView($element,$inview,$inviewpart)">
 			<span class="number">- 1 -</span>
 			<div class="paragraph">
@@ -156,12 +161,12 @@
 		</div>
 		<!-- followings -->
 		<div
-			ng-if="c.cat=='cont'"
+			ng-if="c.cat=='DEPRECATED_CONT'"
 			ng-repeat="s in c.slides_medias_flattened"
 			class="media {{s.document.type}}"
 			in-view="mediaInView($element,$inview,$inviewpart)"
 			>
-			
+
 			<div ng-if="s.text">
 				<span class="number">- {{s.pindex + 1}} -</span>
 				<div class="paragraph">
@@ -177,7 +182,7 @@
 				</div>
 			</div>
 
-			<!-- simple <a> links, or plain <iframe> like scribd objects -->
+			simple <a> links, or plain <iframe> like scribd objects
 			<div ng-if="s.document.type=='link'" class="paragraph link">
 				<div ng-bind-html="updateTrustHtml(s.document.html)"></div>
 			</div>

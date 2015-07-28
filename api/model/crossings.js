@@ -38,8 +38,8 @@ function submatches(r, t) {
 }
 
 function questionTokenizer(txt) {
-  var qm = submatches(/\s\d\)\s*([^?]+\?)/g, txt),
-      am = submatches(/\?\s?(.*?)(?:\s\d\)|$)/g, txt);
+  var qm = submatches(/\s\w\)\s*([^?:]+[?:])/g, txt),
+      am = submatches(/[?:]\s?(.*?)(?:\s\w\)|$)/g, txt);
 
   return qm.map(function(qme, i) {
     return {
@@ -57,13 +57,6 @@ function formatDate(date) {
   return (new Date(y, m, j).toISOString())
 }
 
-// TODO: relative url!
-function ensureUrl(url) {
-  if (url[0] === '/')
-    return url.replace(/\/[^\/]*/, '');
-  return url;
-}
-
 function getDocumentThumbnail(doc) {
   var candidates = [];
 
@@ -74,10 +67,8 @@ function getDocumentThumbnail(doc) {
     slide.children.forEach(function(element) {
 
       // In case of text
-      if (element.type === 'paragraph' &&
-          !candidates.length &&
-          /[^:]$/.test(element.text))
-        candidates.unshift({
+      if (element.type === 'paragraph')
+        candidates.push({
           type: 'txt',
           content: truncate(element.text)
         });
@@ -89,25 +80,33 @@ function getDocumentThumbnail(doc) {
           content: truncate(element.text)
         });
 
-      // In case of biblib
-      if (element.type === 'reference' &&
-          !!element.biblib_id &&
-          !candidates.length)
-        candidates.unshift({
+      // In case of reference
+      if (element.type === 'reference')
+        candidates.push({
           type: 'bib',
           content: truncate(element.text || element.biblib_id)
         });
 
+      // In case of image
       if (element.kind === 'image')
         candidates.unshift({
           type: 'img',
-          content: element.internal ? ensureUrl(element.filename) : element.url
+          internal: element.internal,
+          content: element.path || element.url
         });
 
+      // In case of vimeo
       if (element.kind === 'video' && element.host === 'vimeo')
         candidates.unshift({
           type: 'vimeo',
           content: element.identifier
+        });
+
+      // In case of pdf
+      if (element.kind === 'pdf')
+        candidates.push({
+          type: 'txt',
+          content: truncate(element.path)
         });
     });
   });
@@ -201,13 +200,13 @@ module.exports = {
       };
 
       // Scenars
-      data.scenars = results.info.scenars.map(function(s) {
+      data.scenars = results.info.scenars.map(function(s, i) {
         return {
           lang: lang,
           modecross: results.info.name,
           name: s.scenario.title,
-          id: 'test',
-          sid: s.scenario.id,
+          _id: '' + i,
+          sid: '' + i,
           status: 'published',
           items: s.items.map(function(i) {
             return slugs[i.type] + '_' + i.slug_id;
@@ -252,10 +251,30 @@ module.exports = {
                 pindex: -1
               };
 
+            if (element.kind === 'image')
+              return {
+                type: 'img',
+                internal: element.internal,
+                content: element.path || element.url,
+                pindex: -1,
+                lightboxcontent: {
+                  content: element.path || element.url,
+                  internal: element.internal,
+                  ref: element.reference && element.reference.text
+                }
+              };
+
             if (element.kind === 'video' && element.host === 'vimeo')
               return {
                 type: 'vimeo',
                 content_id: element.identifier,
+                pindex: -1
+              };
+
+            if (element.kind === 'video')
+              return {
+                type: 'video',
+                iframe: element.html,
                 pindex: -1
               };
 
@@ -291,6 +310,7 @@ module.exports = {
           author: {
             name: d.author.name + ' ' + d.author.surname
           },
+          original: d.original,
           choosen: true,
           date: formatDate(d.date),
           id: slugs[d.type] + '_' + d.slug_id,

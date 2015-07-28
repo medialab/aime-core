@@ -10,12 +10,12 @@
 
 		<div ng-switch-when="bsc">
 			<div class="bookmeta chapterindex">
-				<span class="index" ng-if="c.parentindex>0">{{c.parentindex}}</span> 
+				<span class="index" ng-if="c.parentindex>0">{{c.parentindex}}</span>
 			</div>
 			<div class="bookmeta chapter">
 				<div class="heading" ng-bind-html="textify(c.parenttitle,true,true,false,18)"></div>
 				<div class="subheading">
-					<span class="index">{{c.index}}</span> 
+					<span class="index">{{c.index}}</span>
 					<span ng-bind-html="textify(c.title,true,true,false,20)"></span>
 				</div>
 			</div>
@@ -24,7 +24,7 @@
 		<div ng-if="c.cat=='Vocabulary_Voc' || c.cat=='Vocabulary_Mode' || c.cat=='Vocabulary_Cross'" ng-bind-html="textify(c.title,true,true,false,21)"></div>
 
 		<div ng-switch-when="doc" ng-bind-html="textify(c.title,true,true,false,21)"></div>
-		
+
 		<div ng-switch-when="cont">
 			<div class="conttitle {{c.status}}title" ng-bind-html="textify(c.title,true,true,false,20)"></div>
 			<div class="contauthor">{{c.author.name}}</div>
@@ -47,7 +47,7 @@
 			</iframe>
 		</div>
 		<div ng-switch-when="img">
-			<img ng-src="{{c.thumbnail.content}}" alt=""/>
+			<img ng-src="{{getImgSrc(c.thumbnail)}}" alt=""/>
 		</div>
 		<div ng-switch-when="bib">
 			<div ng-bind-html="c.thumbnail.content"></div>
