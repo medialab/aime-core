@@ -78,6 +78,7 @@ module.exports = {
       ['book', 'vocabulary', 'documents', 'resources'].forEach(function(k) {
         cache[lang][k] = null;
       });
+      cache[lang].modecross = {};
     });
 
     return next();

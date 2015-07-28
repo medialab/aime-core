@@ -22,7 +22,7 @@ angular.module('myApp.services', [])
 				}).success(function(data){
 
 					// returning fetched data
-					return callback({data: data.data.result});
+					return callback({data: data.result});
 				}).error(function(data, status, headers, config) {
 
 					// redirect to inquiry's login page, with #crossings/.../ hash to redirect here after that

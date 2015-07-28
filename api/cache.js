@@ -19,13 +19,15 @@ module.exports = {
     book: null,
     vocabulary: null,
     documents: null,
-    resources: null
+    resources: null,
+    modecross: {}
   },
   fr: {
     book: null,
     vocabulary: null,
     documents: null,
-    resources: null
+    resources: null,
+    modecross: {}
   },
   slug_ids: {
     voc: 0,
