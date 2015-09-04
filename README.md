@@ -135,6 +135,13 @@ npm start
 
 We currently use the [`pm2`](https://github.com/Unitech/pm2) npm package to run the API server while serving the interfaces through Apache. But you are free to use whatever fits your needs.
 
+Don't forget to pass the `harmony` flag to node (required by the [`essence`](https://github.com/essence/essence.js/tree/master) library) in order to be able to run the API server:
+
+
+```bash
+pm2 start --node-args='harmony' ./scripts/start.js
+```
+
 ## Misc information
 
 ### Folder Structure
