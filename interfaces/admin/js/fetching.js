@@ -7,7 +7,7 @@
  */
 function compare(a1, a2) {
   for (let i = 0, l = a2.length; i < l; i++) {
-    if (!a1[i] || a1[i] !== a2[i])
+    if (!a1[i] || a1[i] !== a2[i])
       return false;
   }
 

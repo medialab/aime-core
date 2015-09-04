@@ -17,7 +17,7 @@ export default class PureComponent extends Component{
 }
 
 export class BranchedComponent extends PureComponent {
-  static contextTypes = {
+  static contextTypes = {
     tree: PropTypes.baobab,
     cursors: PropTypes.cursors
   };

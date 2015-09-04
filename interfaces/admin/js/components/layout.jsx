@@ -60,7 +60,7 @@ export class Layout extends PureComponent {
   render() {
     const model = this.props.model,
           isAModalDisplayed = !!this.props.modal,
-          isSomethingSelected = (this.props.selection || []).length > (1 - (model === 'doc' || model === 'res')),
+          isSomethingSelected = (this.props.selection || []).length > (1 - (model === 'doc' || model === 'res')),
           isThereAnyData = !!this.props.data,
           editionMode = isSomethingSelected && isThereAnyData && !isAModalDisplayed;
 
@@ -115,7 +115,7 @@ export class Layout extends PureComponent {
           {(editionMode && model !== "res")  && <PreviewPanel model={model} />}
         </Col>
 
-        {this.props.searching && 
+        {this.props.searching &&
 
           <Col md={4} className="full-height searching">
             <ResourceSelector title="select ressource" model={model} />
