@@ -4,6 +4,7 @@
   "description": "The AIME project's admin UI.",
   "main": "index.js",
   "scripts": {
+    "build": "webpack --colors --progress -p --config ./webpack.production.config.js",
     "start": "node server.js"
   },
   "license": "LGPL-3.0",
