@@ -2,9 +2,13 @@
 
 This repository holds the source code driving the new core of the AIME project.
 
+*This project has been built for a research project which has received funding from the European Research Council under the European Union’s Seventh Framework Programme (FP7/2007-2013) / erc Grant ‘IDEAS’ 2010 n° 269567”.*
+
 It mainly consist of a centralized data model stored within a Neo4j database and served through a single API server written in node.
 
 Once the API is online, each one of the three AIME interfaces (`inquiry`, `crossings` and `admin`) will plug itself on it to function.
+
+
 
 ## Installation
 
