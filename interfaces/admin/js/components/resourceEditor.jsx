@@ -40,6 +40,11 @@ export default class ResourceEditor extends Component {
     this.setState({item: props.states.editor})
   }
 
+  setStateDeep (newState){
+    console.log(this.state, newState, _.merge({}, this.state, newState));
+    return _.merge({}, this.state, newState);
+  }
+
   render() {
 
     return (
@@ -49,7 +54,7 @@ export default class ResourceEditor extends Component {
           <div className="form-group">
             <label>title</label>
             <input value={this.state.item.title}
-                   onChange={(e) => this.setState({item: {title:e.target.value}})}
+                   onChange={(e) => this.setStateDeep({item: {title:e.target.value}})}
                    placeholder="title"
                    className="form-control" />
           </div>
@@ -59,29 +64,51 @@ export default class ResourceEditor extends Component {
          <div className="form-group">
             <label>html</label>
             <textarea value={this.state.item.html}
-                      onChange={(e) => this.setState({item: {html: e.target.value}})}
+                      onChange={(e) => this.setStateDeep({item: {html: e.target.value}})}
                       placeholder="<html>"
                       className="editor pre" />
           </div>}
 
         {this.state.item.text &&
-        <div className="form-group">
-            <label>text</label>
-            <textarea value={this.state.item.text}
-                      onChange={(e) => this.setState({item: {text: e.target.value}})}
-                      placeholder="text …"
-                      className="editor" />
-        </div>}
+          <div className="form-group">
+              <label>text</label>
+              <textarea value={this.state.item.text}
+                        onChange={(e) => this.setStateDeep({item: {text: e.target.value}})}
+                        placeholder="text …"
+                        className="editor" />
+          </div>
+        }
 
         {this.state.item.url &&
           <div className="form-group">
             <label>url</label>
             <input value={this.state.item.url}
-                   onChange={(e) => this.setState({item: {url: e.target.value}})}
+                   onChange={(e) => this.setStateDeep({item: {url: e.target.value}})}
                    placeholder="http://website.com/folder/file.ext"
                    className={classes('form-control')} />
           </div>
         }
+
+        {this.state.item.path &&
+          <div className="form-group">
+            <label>path</label>
+            <input value={this.state.item.path}
+                   disabled="disabled"
+                   placeholder="http://website.com/folder/file.ext"
+                   className={classes('form-control')} />
+          </div>
+        }
+
+        {(this.state.item.reference || {}).text &&
+          <div className="form-group">
+              <label>reference</label>
+              <textarea value={this.state.item.reference.text}
+                        disabled="disabled"
+                        placeholder="text …"
+                        className="editor pre" />
+          </div>
+        }
+
         </form>
       </Row>
     );
