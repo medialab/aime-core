@@ -20,8 +20,10 @@ angular.module('myApp.controllers', ['underscore','config'])
 			function($scope,$rootScope,Api,$document,$location,$route,$routeParams,$timeout,_,settings,$sce) { //$cookies,$cookieStore
 
 		$scope.conf = settings;
-		$scope.showAdmin = false; // by default. may be overriden after that.
+		$scope.showAdmin = true; // by default. may be overriden after that.
 		console.log("==================== Page!Reload - domain is: "+$scope.conf.domain);
+
+		window.showAdmin = $scope.showAdmin;
 
 		var analytic = function(page) {
 			if(!$scope.isAdmin()) {
