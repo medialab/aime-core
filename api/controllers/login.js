@@ -4,7 +4,8 @@
  *
  * Log users in or out. Nothing too impressive.
  */
-var model = require('../model/users.js');
+var model = require('../model/users.js'),
+    postman = require('../postman.js');
 
 module.exports = [
 
@@ -38,7 +39,12 @@ module.exports = [
       model.create(req.body, function(err, user) {
         if (err) return res.serverError(err);
 
-        return res.json(user);
+        // Sending the mail
+        postman.registration(req.lang, user.email, user.token, function(err, info) {
+          if (err) return res.serverError(err);
+
+          return res.json(user);
+        });
       });
     }
   },
