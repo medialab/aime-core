@@ -7,7 +7,8 @@
 var nodemailer = require('nodemailer'),
     smtp = require('nodemailer-smtp-transport'),
     config = require('../config.json').mail,
-    inquiryHost = require('../config.json').interfaces.inquiry
+    inquiryHost = require('../config.json').interfaces.inquiry,
+    _ = require('lodash');
 
 // Creating transport
 var transport = nodemailer.createTransport(smtp(config));
