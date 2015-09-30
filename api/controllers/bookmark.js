@@ -8,14 +8,14 @@ var model = require('../model/bookmark.js');
 
 module.exports = [
   {
-    url: '/',
+    url: '/notebook',
     methods: ['GET'],
     action: function(req, res) {
       return res.notImplemented();
     }
   },
   {
-    url: '/:id',
+    url: 'bookmark/:id',
     methods: ['POST'],
     validate: {
       id: 'number'
@@ -28,7 +28,7 @@ module.exports = [
     }
   },
   {
-    url: '/:id',
+    url: 'bookmark/:id',
     methods: ['DELETE'],
     validate: {
       id: 'number'

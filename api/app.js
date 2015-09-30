@@ -135,7 +135,7 @@ resourcesRouter.use(express.static(config.resources));
 app.use(loginRouter);
 app.use(modelRouter);
 app.use(writeModelRouter);
-app.use('/bookmarks', bookmarkRouter);
+app.use(bookmarkRouter);
 app.use('/short', shortenerRouter);
 app.use('/crossings', crossingsRouter);
 app.use('/resources', resourcesRouter);
