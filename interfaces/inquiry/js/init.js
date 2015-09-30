@@ -23,6 +23,8 @@ $(document).ready(function() {
     search_vocabulary: '/voc/search/::query',
     search_documents: '/doc/search/::query',
 
+    bookmark: '/bookmark/::id',
+
     list_comments: 'documentItems/items',
     get_comments: 'documentItems/items',
     fetch_comments: 'documentItems/items',

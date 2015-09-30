@@ -699,6 +699,31 @@
             //}
           }
         },
+        {
+          // @dcfvg
+          triggers: 'delete_bookmark',
+          method: function(e){
+
+            console.log(e);
+
+            this.request('login', {
+              data: res.data,
+              shortcuts: { id: e.data.id}
+            });
+
+          }
+        },
+        {
+          triggers: 'create_bookmark',
+          method: function(e){
+            console.log(e);
+
+            this.request('create_bookmark', {
+              shortcuts: { id: e.data.id}
+            });
+          }
+        },
+
         /*
           Sticky hacks
           ---
@@ -3004,6 +3029,37 @@
           },
           error: function(data, params) {
             console.log('%c (Service)','background-color: crimson; color: white', 'get_crossing failed...');
+          }
+        },
+        {
+          // @dcfvg
+          id: 'create_bookmark',
+          type: 'POST',
+          description: 'add bookmark',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.bookmark,
+          success: function(data, params) {
+            console.log(arguments)
+          },
+          error: function() {
+            console.log(arguments)
+          }
+        },
+        {
+          id: 'delete_bookmark',
+          type: 'DELETE',
+          description: 'add bookmark',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.bookmark,
+          success: function(data, params) {
+            console.log(arguments)
+          },
+          error: function() {
+            console.log(arguments)
           }
         }
       ]

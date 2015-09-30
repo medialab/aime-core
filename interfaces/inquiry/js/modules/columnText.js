@@ -1217,8 +1217,14 @@
     maze.on("click", "#column-text.closed .chapter",  _closed.open );
 
     maze.on("click", ".star.bookmark", function(e){
-        console.log(e.currentTarget.getAttribute("type"), e.currentTarget.getAttribute("id"));
+
         $(this).find('i').toggleClass("fa-star-o").toggleClass("fa-star");
+
+        var isBookmarked = +e.currentTarget.getAttribute("bookmarked")
+
+        if(isBookmarked) _self.dispatchEvent('delete_bookmark', {id:+e.currentTarget.getAttribute("id")});
+        else _self.dispatchEvent('create_bookmark', {id:+e.currentTarget.getAttribute("id")});
+
     });
 
     this.box.scroll( function( event ){
