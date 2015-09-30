@@ -1705,13 +1705,11 @@
           },
           url: maze.urls.activate,
           success: function(data, params) {
-            if(data.user) {
-              location.search ='';
-              //this.dispatchEvent(['resize', 'scene__initialize']);
-            }
+            location.href = location.pathname;
           },
           error: function(message, xhr, params) {
             console.log('activate user failed with ', message, xhr.status);
+            location.href = location.pathname;
           }
         },
         {
