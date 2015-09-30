@@ -1706,7 +1706,7 @@
           url: maze.urls.activate,
           success: function(data, params) {
             if(data.user) {
-              location.search ='';
+              location.href = location.pathname;
               //this.dispatchEvent(['resize', 'scene__initialize']);
             }
           },
