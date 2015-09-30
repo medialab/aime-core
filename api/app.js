@@ -99,6 +99,7 @@ var loginRouter = loadController(controllers.login),
     shortenerRouter = loadController(controllers.shortener),
     crossingsRouter = loadController(controllers.crossings, middlewares.authenticate),
     modelRouter = loadController(controllers.model, middlewares.authenticate),
+    bookmarkRouter = loadController(controllers.bookmark, middlewares.authenticate),
 
     // TODO: add stricter clearance to the write model
     writeModelRouter = loadController(
@@ -134,6 +135,7 @@ resourcesRouter.use(express.static(config.resources));
 app.use(loginRouter);
 app.use(modelRouter);
 app.use(writeModelRouter);
+app.use(bookmarkRouter);
 app.use('/short', shortenerRouter);
 app.use('/crossings', crossingsRouter);
 app.use('/resources', resourcesRouter);
