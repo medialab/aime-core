@@ -115,6 +115,10 @@ cp config.example.json config.json
 vim config.json
 ```
 
+**blog**
+
+See our ghost fork [poltergeist](https://github.com/medialab/ghost/tree/poltergeist).
+
 ### Installing Biblib
 
 Follow the instructions [here](https://github.com/medialab/reference_manager) and import the data from an existing corpus.
