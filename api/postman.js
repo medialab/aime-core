@@ -36,7 +36,7 @@ module.exports = {
       from: config.from,
       to: to,
       subject: templates[lang].registrationSubject,
-      text: render({host: inquiryHost, token: token})
+      text: render({host: inquiryHost.replace(/\/$/, ''), token: token})
     };
 
     transport.sendMail(options, callback);
