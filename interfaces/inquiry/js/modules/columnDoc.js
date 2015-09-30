@@ -67,7 +67,7 @@
       var query = controller.get('scene_query'),
           contents = controller.get('data_docContents');
       _self.box.highlight(query);
-      
+
       //_self.box.find('.highlight').each(function(d, i) {
       //  $(this).closest('.paragraph').addClass('match');
       //})
@@ -170,7 +170,7 @@
         return false;
 
       var doc = $(event.currentTarget).closest(".document");
-      
+
       maze.move.toggle_preview( doc, {
         callback: function(doc){
           if(!doc.hasClass('preview') && doc.attr('data-enable-slider'))
@@ -179,7 +179,7 @@
         args: [doc]
       });
     };
-    
+
 
     _search.set_leader = function( event ){
       event.preventDefault();
@@ -296,7 +296,7 @@
         return false;
       var action = maze.domino.controller.get('scene_action'),
           doc = $( '#' + $(event.currentTarget).closest(".document").attr('data-id') );
-          
+
       if( action == maze.ACTION_NOTEBOOK || action == maze.ACTION_SEARCH )
         maze.move.show_collapsed( doc,{
           callback: maze.move.scrollto,
@@ -340,15 +340,15 @@
       ---
 
     */
-    
-    
+
+
     /*maze.on("click", "#column-voc .static-sticky .toggle-preview", _self.sticky_preview);
     maze.on("click", "#column-voc .static-sticky .action.set-leader", _startup.set_leader);
 
     maze.on("click", "#column-voc .term .toggle-preview",  _self.toggle_preview );
     maze.on("click", "#column-voc .term .action.set-leader",  _self.set_leader );
     maze.on("click", "#column-voc .term .read-more",  _self.read_more );
-    
+
     maze.on("click", "#column-voc.leader .link",  _self.link);
     */
 
@@ -367,7 +367,7 @@
     maze.on("click", "#column-doc.startup .document .set-leader", _startup.set_leader );
 
     maze.on("click", "#column-doc.slave_opened .document .toggle-preview", _slave_opened.toggle_preview );
-    
+
 
     maze.on("click", "#column-doc.search .document .toggle-preview",  _search.toggle_preview );
     maze.on("click", "#column-doc.search .document .set-leader",  _startup.set_leader );
@@ -375,18 +375,12 @@
 
     maze.on("click", "#column-doc.notebook .document .toggle-preview",  _search.toggle_preview );
     maze.on("click", "#column-doc.notebook .document .set-leader",  _startup.set_leader );
-    
+
     maze.on("click", "#column-doc.notebook .document .paragraph",  _search.set_leader );
 
     //maze.on("click", "#column-doc.notebook .document .paragraph",  _search.set_leader );
 
     maze.on("click", "#column-doc.closed .document", _closed.open );
-
-
-
-
-
-
 
     /*
 

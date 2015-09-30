@@ -9,7 +9,9 @@
     <div class="pusher"></div>
     {{#foreach children}}
       <div class="paragraph {{#if $first}}first{{/if}} {{#if $last}}last{{/if}} {{#if_eq type compare="match"}}match{{/if_eq}}" id="tp-{{id}}">
-        <span class="number">- {{paragraph_number $index}} -</span>
+        <div class="number">- {{paragraph_number $index}} -
+              <div class="star bookmark" type="{{type}}" id="{{id}}"><i class="fa fa-star-o fa-lg"></i></div>
+        </div>
         <div class="content">{{{decorate markdown}}}</div>
       </div>
     {{/foreach}}

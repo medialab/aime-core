@@ -13,13 +13,19 @@
         {{!-- <div class="icon icon-toggle-preview toggle-preview"></div> --}}
         {{!-- <div class="action set-leader"><i class="fa fa-thumb-tack"></i></div> --}}
       </div>
+
+      {{!-- {{{log .}}} --}}
       <div class="paragraphs">
         <div class="pusher grab"></div>
         {{#each children}}
           <div class="paragraph" id="{{id}}" data-page="{{page}}">
-          <span class="number">- {{paragraph_number @index}} -</span>
+          <div class="number">- {{paragraph_number @index}} -
+            <div class="star bookmark" type="{{type}}" id="{{id}}"><i class="fa fa-star-o fa-lg"></i></div>
+          </div>
+
+
           <div class="ex-actions">
-          <div class="anchor"><i class="icon-link"></i></div>
+            <div class="anchor"><i class="icon-link"></i></div>
           </div>
           <div class="bookmarklet"><i class="icon-bookmark"></i></div>
           <div class="content">{{{decorate markdown}}}</div></div>

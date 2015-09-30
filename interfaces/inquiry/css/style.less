@@ -229,6 +229,9 @@ ul > li{
 
   .chapter {
 
+    .star { display: none;}
+    .subtitle:not(.preview) .star { display: block;}
+
     .title {
 
       .table {
@@ -245,14 +248,16 @@ ul > li{
           display: table-cell;
           vertical-align: middle;
           padding: 13px 0 12px 0;
-
+          text-align: center;
         }
+
 
         .number {
           width: 40px;
           text-align: center;
           font: 13px/25px 'NovelSansPro-Regular';
           .font-feature();
+
         }
 
         .text {

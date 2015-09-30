@@ -277,9 +277,9 @@
             contents = controller.get('data_bookContents'),
             _omissis = {};
         //_self.log('searching text column for .link[data-id*="' + data_id + '"] objects...');
-        
+
         for(var c in contents) { // for each chapter, does subheading contains one of the given paragraphs?
-            
+
             var chapter_matches = contents[c].children.filter(function(subheading) {
                 var subheading_matches = subheading.children.filter(function(paragraph) {
                     var paragraph_matches = false;
@@ -288,21 +288,21 @@
                         paragraph_matches=true;
                     }
                     return paragraph_matches;
-                    
+
                 }).length;
-                
+
                 if(subheading_matches){
                     $('#' + subheading.id).addClass('match');
                 }
-                    
+
                 return subheading_matches;
             }).length;
             if(chapter_matches) {
                 $('#' + contents[c].id).addClass('match');
             }
-           
+
         }
-        
+
         _self.toggle_shadow();
         return;
 
@@ -378,7 +378,7 @@
                 current_page = chapter.attr('data-page');
                 current_bookmark.chapter = '#' + chapters[i];
                 _self.sticky_chapter.height = chapter.find('.title').height();//first_visible_chapter.height;
-                    
+
 
                 if( chapters[i] !== maze.cursor.chapter ){
                     maze.cursor.chapter = chapters[i];
@@ -615,7 +615,7 @@
           maze.log('columnText: quit text_extract_inlinks trigger, wrong Scene');
           return;
         }
-        
+
         for( var i in chapters ){
             var chapter = $( document.getElementById( chapters[i] ) ),
                 t = chapter.position().top;
@@ -758,7 +758,7 @@
           }
         });
 
-              
+
 
     };
 
@@ -1131,10 +1131,10 @@
 
 
     /*
-      
+
       Emulate click events on sticky (when sticky has pointer-e)
       ===
-      
+
     */
     $("#column-text").click(function(event) {
       var chapter_id = _self.chapter.attr('data-id'),
@@ -1147,11 +1147,11 @@
       if(chapter_id) {
         chapter_bounds = _self.chapter[0].getBoundingClientRect();
         subheading_bounds = _self.subheading[0].getBoundingClientRect();
-          
+
         if(event.pageY > chapter_bounds.top && event.pageY < chapter_bounds.bottom && event.pageX > chapter_bounds.left && event.pageX < chapter_bounds.right) {
           event.stopImmediatePropagation();
           event.preventDefault();
-        
+
           chapter = $('#' + chapter_id, _self.box);
 
           maze.move.text.chapter.show(chapter, {
@@ -1215,6 +1215,11 @@
     maze.on("click", "#column-text.notebook .subtitle .omissis", _search.subheading.omissis );
 
     maze.on("click", "#column-text.closed .chapter",  _closed.open );
+
+    maze.on("click", ".star.bookmark", function(e){
+        console.log(e.currentTarget.getAttribute("type"), e.currentTarget.getAttribute("id"));
+        $(this).find('i').toggleClass("fa-star-o").toggleClass("fa-star");
+    });
 
     this.box.scroll( function( event ){
         _self.toggle_shadow();
