@@ -60,7 +60,7 @@ module.exports = [
 
         return res.ok(_.extend({
           order: MODES_ORDER[req.lang],
-          platformuser: 'user'
+          platformuser: req.session.user.role
         }, stats));
       });
     }

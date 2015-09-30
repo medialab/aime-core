@@ -16,7 +16,8 @@ var keep = [
   'name',
   'surname',
   'id',
-  'token'
+  'token',
+  'role'
 ];
 
 module.exports = {
