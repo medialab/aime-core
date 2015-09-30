@@ -8,6 +8,9 @@ var db = require('../connection.js'),
 
 module.exports = {
   create: function(userId, targetId, callback) {
-
+    db.query(queries.create, {user_id: userId, target_id: targetId}, callback);
+  },
+  destroy: function(userId, targetId, callback) {
+    db.query(queries.destroy, {user_id: userId, target_id: targetId}, callback);
   }
 };

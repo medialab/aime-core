@@ -15,13 +15,29 @@ module.exports = [
     }
   },
   {
-    url: '/',
+    url: '/:id',
     methods: ['POST'],
     validate: {
       id: 'number'
     },
     action: function(req, res) {
-      return res.notImplemented();
+      model.create(req.session.user.id, req.params.id, function(err) {
+        if (err) return res.serverError(err);
+        return res.ok();
+      });
+    }
+  },
+  {
+    url: '/:id',
+    methods: ['DELETE'],
+    validate: {
+      id: 'number'
+    },
+    action: function(req, res) {
+      model.destroy(req.session.user.id, req.params.id, function(err) {
+        if (err) return res.serverError(err);
+        return res.ok();
+      });
     }
   }
 ];
