@@ -9,10 +9,10 @@ var db = require('../connection.js'),
     _ = require('lodash');
 
 module.exports = {
-  getAll: function(lang, params, callback) {
+  getAll: function(user, lang, params, callback) {
 
     // Executing query
-    db.rows(queries.getAll, {lang: lang}, function(err, result) {
+    db.rows(queries.getAll, {lang: lang, user_id: user.id}, function(err, result) {
 
       // On typical error
       if (err) return callback(err);
