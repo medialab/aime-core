@@ -714,6 +714,8 @@
              this.request('delete_bookmark', {
               shortcuts: { id: e.data.id}
             });
+
+
           }
         },
         {
@@ -1679,6 +1681,12 @@
               var redirectTo = decodeURIComponent(crossUrl);
               console.log("redirects to: ",redirectTo);
               return window.location = redirectTo;
+            }
+
+            if(data.result.bookmarks) {
+              this.update('bookmarks', data.result.bookmarks.reduce(
+                  function(o, v, i) { o[v] = true; return o;}, {}
+              ));
             }
 
             if(data.status="ok") {
