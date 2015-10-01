@@ -994,8 +994,12 @@ angular.module('myApp.controllers', ['underscore','config'])
 
 		/////////////////////////////////////////////////////////////
 		$scope.switchLang = function(lang) {
-			$scope.headerOpened = false;
-			$location.path( "/"+lang+"/"+modetrans($scope.modecross,lang).toLowerCase() );
+			Api.changeLang(lang, function() {
+				$location.path( "/"+lang+"/"+modetrans($scope.modecross,lang).toLowerCase() );
+			});
+
+			// $scope.headerOpened = false;
+			// $location.path( "/"+lang+"/"+modetrans($scope.modecross,lang).toLowerCase() );
 		};
 
 		///////////////////////////////////////////////////////////// INIT
