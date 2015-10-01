@@ -6,7 +6,8 @@
  */
 var model = require('../model/users.js'),
     bookmarks = require('../model/bookmark.js'),
-    postman = require('../postman.js');
+    postman = require('../postman.js'),
+    _ = require('lodash');
 
 module.exports = [
 
@@ -97,7 +98,7 @@ module.exports = [
     action: function(req, res) {
       var email = req.body.email;
 
-      model.authenticate(email, req.body.password, function(err, user) {
+      return model.authenticate(email, req.body.password, function(err, user) {
         if (err) return res.serverError(err);
         if (!user) return res.forbidden();
 
@@ -106,7 +107,10 @@ module.exports = [
         req.session.user = user;
         req.session.authenticated = true;
 
-        return res.ok(user);
+        return bookmarks.get(user.id, function(err, result) {
+          if (err) return res.serverError(err);
+          return res.ok(_.merge({}, user, {bookmarks: result}));
+        });
       });
     }
   },
