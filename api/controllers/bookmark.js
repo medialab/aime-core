@@ -15,26 +15,26 @@ module.exports = [
     }
   },
   {
-    url: 'bookmark/:id',
+    url: '/bookmark/:id',
     methods: ['POST'],
     validate: {
-      id: 'number'
+      id: 'string'
     },
     action: function(req, res) {
-      model.create(req.session.user.id, req.params.id, function(err) {
+      model.create(req.session.user.id, +req.params.id, function(err) {
         if (err) return res.serverError(err);
         return res.ok();
       });
     }
   },
   {
-    url: 'bookmark/:id',
+    url: '/bookmark/:id',
     methods: ['DELETE'],
     validate: {
-      id: 'number'
+      id: 'string'
     },
     action: function(req, res) {
-      model.destroy(req.session.user.id, req.params.id, function(err) {
+      model.destroy(req.session.user.id, +req.params.id, function(err) {
         if (err) return res.serverError(err);
         return res.ok();
       });
