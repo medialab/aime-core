@@ -16,7 +16,7 @@ function getAll(model) {
   return function(req, res) {
     var params = _.extend({}, req.query, {user_id: req.session.user.id});
 
-    model.getAll(req.session.user, req.lang, params, function(err, result) {
+    model.getAll(req.lang, params, function(err, result) {
       if (err) return res.serverError(err);
 
       return res.ok(result);
