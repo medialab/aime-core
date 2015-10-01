@@ -11,7 +11,11 @@ module.exports = [
     url: '/notebook',
     methods: ['GET'],
     action: function(req, res) {
-      return res.notImplemented();
+      model.getByModels(req.session.user.id, function(err, bookmarks) {
+        if (err) return res.serverError(err);
+
+        return res.ok(bookmarks);
+      });
     }
   },
   {
