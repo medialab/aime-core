@@ -16,7 +16,7 @@ RETURN id(target) AS target;
 START user=node({user_id})
 
 OPTIONAL MATCH (user)-[:BOOKMARKED]->(b:BookItem)
-WITH user, collect(b.slug_id) AS book
+WITH user, collect(id(b)) AS book
 
 OPTIONAL MATCH (user)-[:BOOKMARKED]->()<-[:HAS]-(v:Vocabulary)
 WITH user, book, collect(v.slug_id) AS voc

@@ -1560,14 +1560,14 @@
                 if (data.result.voc.length) {
                   services.push({
                     service: 'get_vocabulary_item',
-                    shortcuts: {ids: data.result.voc.map(function(e) { return 'voc_' + e; })}
+                    shortcuts: {ids: data.result.voc}
                   });
                 }
 
                 if (data.result.doc.length) {
                   services.push({
                     service: 'get_documents_item',
-                    shortcuts: {ids: data.result.doc.map(function(e) { return 'doc_' + e; })}
+                    shortcuts: {ids: data.result.doc}
                   });
                 }
 
@@ -1577,6 +1577,11 @@
                     maze.domino.controller.dispatchEvent('scrolling_text sticky_show');
                   }
                 });
+
+                this.update('data_search_bookIdsArray', data.result.book);
+                setTimeout(function() {
+                  maze.domino.controller.dispatchEvent('text_matches_highlight', {ids: data.result.book});
+                }, 300);
               }
             });
 
