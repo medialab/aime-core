@@ -890,7 +890,6 @@ angular.module('myApp.controllers', ['underscore','config'])
 		};
 		$scope.getIframeSrc = function(m) {
 
-			console.log(m);
 			//return $sce.trustAsResourceUrl("http://localhost/PDF/Viewer.js/#../../aime-api-MEDIAS/"+m.content_id);
 			// CONTRIBUTION document pdf
 			if(m.html) {
