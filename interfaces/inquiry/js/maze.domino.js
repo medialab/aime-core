@@ -706,10 +706,10 @@
 
             console.log(e);
 
-            this.request('login', {
-              data: res.data,
-              shortcuts: { id: e.data.id}
-            });
+            // this.request('login', {
+            //   data: res.data,
+            //   shortcuts: { id: e.data.id}
+            // });
 
           }
         },
