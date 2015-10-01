@@ -104,7 +104,7 @@ var loginRouter = loadController(controllers.login),
     // TODO: add stricter clearance to the write model
     writeModelRouter = loadController(
       controllers.model_write,
-      middlewares.authenticate,
+      middlewares.admin,
       [middlewares.cleanCache]
     );
 
