@@ -227,10 +227,14 @@ ul > li{
     .font-feature();
   }
 
-  .chapter {
+  // bookmarks
 
-    .star { display: none; padding-left: 1px; color: lighten(@gray, 30%);}
-    .subtitle:not(.preview) .star { display: block;}
+  .star { display: none; padding-left: 1px; color: lighten(@gray, 30%);}
+  .opened .star{display: block;}
+  .subtitle:not(.preview) .star { display: block;}
+  .number { background:none !important; }
+
+  .chapter {
 
     .title {
 
@@ -249,7 +253,6 @@ ul > li{
           vertical-align: middle;
           padding: 13px 0 12px 0;
         }
-
 
         .number {
           width: 40px;
