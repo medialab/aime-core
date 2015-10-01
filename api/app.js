@@ -100,8 +100,6 @@ var loginRouter = loadController(controllers.login),
     crossingsRouter = loadController(controllers.crossings, middlewares.authenticate),
     modelRouter = loadController(controllers.model, middlewares.authenticate),
     bookmarkRouter = loadController(controllers.bookmark, middlewares.authenticate),
-
-    // TODO: add stricter clearance to the write model
     writeModelRouter = loadController(
       controllers.model_write,
       middlewares.admin,
