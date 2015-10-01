@@ -96,7 +96,7 @@ app.use(middlewares.language);
  * Routers
  */
 var loginRouter = loadController(controllers.login),
-    shortenerRouter = loadController(controllers.shortener),
+    shortenerRouter = loadController(controllers.shortener, middlewares.authenticate),
     crossingsRouter = loadController(controllers.crossings, middlewares.authenticate),
     modelRouter = loadController(controllers.model, middlewares.authenticate),
     bookmarkRouter = loadController(controllers.bookmark, middlewares.authenticate),
@@ -136,7 +136,7 @@ app.use(loginRouter);
 app.use(modelRouter);
 app.use(writeModelRouter);
 app.use(bookmarkRouter);
-app.use('/short', shortenerRouter);
+app.use('/aime', shortenerRouter);
 app.use('/crossings', crossingsRouter);
 app.use('/resources', resourcesRouter);
 

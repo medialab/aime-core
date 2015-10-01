@@ -23,3 +23,16 @@ UNION
 MATCH (r:Reference)
 WHERE r.slug_id IN {ref_ids}
 RETURN r AS nodes
+
+// name: exists
+MATCH (d {type: {type}})
+WHERE d.slug_id = {slug_id}
+RETURN d LIMIT 1;
+
+// name: getModecrossVoc
+MATCH (modecross)<-[:DEFINES]-(v:Vocabulary)
+WHERE
+  (modecross:Mode OR modecross:Crossing) AND
+  modecross.name = {modecross} AND
+  v.lang = {lang}
+RETURN v LIMIT 1;

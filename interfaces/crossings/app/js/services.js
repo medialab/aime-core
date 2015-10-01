@@ -14,6 +14,15 @@ angular.module('myApp.services', [])
 
 		return {
 
+			changeLang: function(newLang, callback) {
+				$http({
+					method: 'POST',
+					url: b+'/lang/' + newLang
+				}).success(function(data) {
+					callback();
+				}).error(function() {callback();});
+			},
+
 			fetchConfig: function(params,callback) {
 				$http({
 					method: 	'GET',
