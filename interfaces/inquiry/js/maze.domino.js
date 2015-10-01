@@ -1552,33 +1552,61 @@
         {
           triggers: 'fill_notebook', // notebook TODO
           method: function(e) {
-            var services = [
-              {
-                service: 'get_notes_book',
-                query: e.data.query
-              },
-              {
-                service: 'get_notes_vocabulary',
-                query: e.data.query
-              },
-              {
-                service: 'get_notes_documents',
-                query: e.data.query
-              },
-              {
-                service: 'get_notes_contributions',
-                query: e.data.query
-              }
-            ];
 
-            this.request(services, {
-              success: function() {
+            this.request('notebook', {
+              success: function(data) {
+                var services = [];
 
-                maze.domino.controller.dispatchEvent('unlock');
-                maze.domino.controller.dispatchEvent('scrolling_text sticky_show');
+                if (data.result.voc.length) {
+                  services.push({
+                    service: 'get_vocabulary_item',
+                    shortcuts: {ids: data.result.voc.map(function(e) { return 'voc_' + e; })}
+                  });
+                }
 
+                if (data.result.doc.length) {
+                  services.push({
+                    service: 'get_documents_item',
+                    shortcuts: {ids: data.result.doc.map(function(e) { return 'doc_' + e; })}
+                  });
+                }
+
+                this.request(services, {
+                  success: function() {
+                    maze.domino.controller.dispatchEvent('unlock');
+                    maze.domino.controller.dispatchEvent('scrolling_text sticky_show');
+                  }
+                });
               }
             });
+
+            // var services = [
+            //   {
+            //     service: 'get_notes_book',
+            //     query: e.data.query
+            //   },
+            //   {
+            //     service: 'get_notes_vocabulary',
+            //     query: e.data.query
+            //   },
+            //   {
+            //     service: 'get_notes_documents',
+            //     query: e.data.query
+            //   },
+            //   {
+            //     service: 'get_notes_contributions',
+            //     query: e.data.query
+            //   }
+            // ];
+
+            // this.request(services, {
+            //   success: function() {
+
+            //     maze.domino.controller.dispatchEvent('unlock');
+            //     maze.domino.controller.dispatchEvent('scrolling_text sticky_show');
+
+            //   }
+            // });
 
           }
         },
@@ -3079,6 +3107,15 @@
           },
           error: function() {
             console.log(arguments)
+          }
+        },
+        {
+          id: 'notebook',
+          type: 'GET',
+          url: maze.urls.notebook,
+          description: 'retrieve the notebook',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
           }
         }
       ]
