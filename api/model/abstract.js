@@ -64,7 +64,7 @@ module.exports = function(queries, sortFunction) {
       params = _.extend({}, {lang: lang}, {
         offset: +params.offset || 0,
         limit: +params.limit || 100000,
-        user_id: params.user_id
+        user_id: user.id
       });
 
       // Executing query

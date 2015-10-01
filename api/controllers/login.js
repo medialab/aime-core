@@ -5,6 +5,7 @@
  * Log users in or out. Nothing too impressive.
  */
 var model = require('../model/users.js'),
+    bookmarks = require('../model/bookmark.js'),
     postman = require('../postman.js');
 
 module.exports = [
@@ -13,10 +14,19 @@ module.exports = [
   {
     url: '/session',
     action: function(req, res) {
-      return res.ok({
-        lang: req.lang,
-        user: req.session.user
-      });
+      if (!req.session.user) {
+        return res.ok({lang: req.lang});
+      }
+      else {
+        return bookmarks.get(req.session.user.id, function(err, results) {
+          if (err) return res.serverError(err);
+          return res.ok({
+            lang: req.lang,
+            user: req.session.user,
+            bookmarks: results
+          });
+        });
+      }
     }
   },
 

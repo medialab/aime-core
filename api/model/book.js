@@ -12,7 +12,7 @@ module.exports = {
   getAll: function(user, lang, params, callback) {
 
     // Executing query
-    db.rows(queries.getAll, {lang: lang, user_id: user.id}, function(err, result) {
+    db.rows(queries.getAll, {lang: lang}, function(err, result) {
 
       // On typical error
       if (err) return callback(err);

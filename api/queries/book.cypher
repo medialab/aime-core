@@ -2,13 +2,9 @@
 // Retrieving the whole book and ordering it through edge data.
 MATCH (b:Book {lang: {lang}})-[rc:HAS]-(c:Chapter)-[rs:HAS]-(s:Subheading)-[rp:HAS]-(p:Paragraph)
 
-OPTIONAL MATCH (u:User)-[bookmarked:BOOKMARKED]->(p)
-WHERE id(u) = {user_id}
-
 WITH s, c, p, rs, rc, rp, {
   id: id(p),
-  properties: p,
-  bookmarked: coalesce(bookmarked, false)
+  properties: p
 } AS paragraphs
 ORDER BY rp.order ASC
 

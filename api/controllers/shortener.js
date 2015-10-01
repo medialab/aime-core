@@ -7,7 +7,7 @@
  */
 module.exports = [
   {
-    url: '/:model/:id',
+    url: '/:lang/:model/:slug_id',
     action: function(req, res) {
 
       // TODO: decide whether it's possible to keep the original ids or not!
@@ -15,3 +15,5 @@ module.exports = [
     }
   }
 ];
+
+// /aime/{lang}/{voc-doc-bsc}/{id}
