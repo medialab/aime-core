@@ -1,4 +1,6 @@
-
+    Handlebars.registerHelper("log", function(something) {
+      console.log(">>>>",something);
+    });
 
     Handlebars.registerHelper('chapter_number', function( number ) {
       return new Handlebars.SafeString(number || '&middot;');
