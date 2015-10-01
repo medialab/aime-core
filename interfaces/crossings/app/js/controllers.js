@@ -889,6 +889,8 @@ angular.module('myApp.controllers', ['underscore','config'])
 			return $sce.trustAsHtml(html);
 		};
 		$scope.getIframeSrc = function(m) {
+
+			console.log(m);
 			//return $sce.trustAsResourceUrl("http://localhost/PDF/Viewer.js/#../../aime-api-MEDIAS/"+m.content_id);
 			// CONTRIBUTION document pdf
 			if(m.html) {
@@ -896,7 +898,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 			}
 			// DOCUMENT media
 			else if(m.type=='pdf') {
-				return $sce.trustAsResourceUrl($scope.conf.pdfUrl + m.content_id);
+				return $sce.trustAsResourceUrl($scope.conf.pdfUrl + m.path);
 			} else if(m.type=='vimeo') {
 				var vimeoid = m.hasOwnProperty('content_id') ? m.content_id : m.content;
 				//console.log("vimeo id: "+vimeoid);
