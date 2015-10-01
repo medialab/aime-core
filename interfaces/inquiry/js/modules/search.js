@@ -17,6 +17,9 @@
     this.triggers.events.session__initialized = function(controller) {
       _input = $('#search-query');
       _input.on('keypress', function( event ){
+        if (!controller.get('user').id)
+          return;
+
         var query = _input.val().trim();
         if( query.length > 2 && event.keyCode==13)
           _self.search( query );
