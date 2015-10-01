@@ -134,7 +134,7 @@ app.use(loginRouter);
 app.use(modelRouter);
 app.use(writeModelRouter);
 app.use(bookmarkRouter);
-app.use('/aime', shortenerRouter);
+app.use('/shortener', shortenerRouter);
 app.use('/crossings', crossingsRouter);
 app.use('/resources', resourcesRouter);
 
