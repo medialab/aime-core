@@ -145,8 +145,14 @@ module.exports = {
   },
   getRelatedToModecross: function(lang, modecross, callback) {
     async.parallel({
+
+
       info: function(next) {
+
+      console.log(queries.modecross, modecross,lang );
+
         db.rows(queries.modecross, {name: modecross, lang: lang}, function(err, result) {
+
           if (err) return next(err);
 
           return next(null, result[0]);
@@ -171,8 +177,14 @@ module.exports = {
         scenars: []
       };
 
+      // Handling cases like MET-PRE with no paragraphs
+      results.info = results.info || {
+        paragraphs: [{text: '', question: 'description'}],
+        scenars: []
+      };
+
       var questions = _(results.info.paragraphs.slice(1))
-        .map(function(p) {
+        .map(function(p){
           return questionTokenizer(p.text);
         })
         .flatten()
@@ -288,6 +300,7 @@ module.exports = {
             if (element.kind === 'pdf')
               return {
                 type: 'pdf',
+                path: element.path,
                 content_id: element.title,
                 pindex: -1
               };

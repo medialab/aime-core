@@ -22,31 +22,51 @@
         <div class='paragraph'><!-- type: {{type}}, kind: {{kind}}  -->
 
           {{#if_eq type compare='paragraph'}}
-            <span class="number">- {{display_number}} -</span>
+            <div class="number">- {{display_number}} -
+              <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+              </div>
+            </div>
             <div class="text content">{{{decorate markdown}}}</div>
           {{/if_eq}}
 
           {{#if_eq type compare='reference'}}
-            <span class="number unselectable">- {{display_number}} -</span>
+            <div class="number unselectable">- {{display_number}} -
+              <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+              </div>
+            </div>
             <div class="ref unselectable" data-id="{{biblib_id}}"><div class="content unselectable" data-ref="ref-{{biblib_id}}">{{text}}</div></div>
           {{/if_eq}}
 
 
           {{#if_eq type compare='media'}}
             {{#if_eq kind compare='quote'}}
-            <span class="number">- {{display_number}} -</span>
+            <div class="number">- {{display_number}} -
+              <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+              </div>
+            </div>
             <div class="citation"><div class="content">{{{text}}}</div></div>
             {{/if_eq}}
 
             {{#if_eq kind compare='link'}}
-            <span class="number">- {{display_number}} -</span>
+            <div class="number">- {{display_number}} -
+              <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+              </div>
+            </div>
             <div class="citation">
               <div class="content">{{{html}}}</div>
             </div>
             {{/if_eq}}
 
             {{#if_eq kind compare='pdf'}}
-              <span class="number unselectable">- {{display_number}} -</span>
+              <div class="number unselectable">- {{display_number}} -
+                <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                  <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                </div>
+              </div>
               {{#if internal}}
                 <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url path}}"></div>
               {{else}}
@@ -57,12 +77,20 @@
             {{/if_eq}}
 
             {{#if_eq kind compare='video'}}
-              <span class="number unselectable">- {{display_number}} -</span>
+              <div class="number unselectable">- {{display_number}} -
+                <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                  <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                </div>
+              </div>
               <div class="media video unselectable" id="video-{{display_number}}" data-video="{{html}}"></div>
             {{/if_eq}}
 
             {{#if_eq kind compare='image'}}
-            <span class="number unselectable">- {{display_number}} -</span>
+            <div class="number unselectable">- {{display_number}} -
+              <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+              </div>
+            </div>
             <div class="media unselectable">
               <div>
                 {{#if internal}}
@@ -95,12 +123,20 @@
           {{#each children}}
             <div class='paragraph match' data-slide-index="{{../display_number}}" id="dp-m-{{id}}">
               {{#if_eq type compare='paragraph'}}
-                <span class="number">- {{display_number}} -</span>
+                <div class="number">- {{display_number}} -
+                  <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                    <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                  </div>
+                </div>
                 <div class="text content">{{{decorate markdown}}}</div>
               {{/if_eq}}
 
               {{#if_eq type compare='reference'}}
-                <span class="number unselectable">- {{display_number}} -</span>
+                <div class="number unselectable">- {{display_number}} -
+                  <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                   <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                  </div>
+                </div>
                 <div class="ref unselectable" data-id="{{biblib_id}}"><div class="content unselectable" data-ref="ref-{{biblib_id}}">{{text}}</div></div>
               {{/if_eq}}
 
@@ -108,19 +144,31 @@
               {{#if_eq type compare='media'}}
 
                 {{#if_eq kind compare='quote'}}
-                <span class="number">- {{display_number}} -</span>
+                <div class="number">- {{display_number}} -
+                  <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                    <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                  </div>
+                </div>
                 <div class="citation"><div class="content">{{{text}}}</div></div>
                 {{/if_eq}}
 
                 {{#if_eq kind compare='link'}}
-                <span class="number">- {{display_number}} -</span>
+                <div class="number">- {{display_number}} -
+                  <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                    <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                  </div>
+                </div>
                 <div class="citation">
                   <div class="content">{{{html}}}</div>
                 </div>
                 {{/if_eq}}
 
                 {{#if_eq kind compare='pdf'}}
-                  <span class="number unselectable">- {{display_number}} -</span>
+                  <div class="number unselectable">- {{display_number}} -
+                    <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                      <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                    </div>
+                  </div>
                   {{#if internal}}
                     <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url path}}"></div>
                   {{else}}
@@ -131,12 +179,20 @@
                 {{/if_eq}}
 
                 {{#if_eq kind compare='video'}}
-                  <span class="number unselectable">- {{display_number}} -</span>
+                  <div class="number unselectable">- {{display_number}} -
+                    <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                      <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                    </div>
+                  </div>
                   <div class="media video unselectable" id="video-{{display_number}}" data-video="{{html}}"></div>
                 {{/if_eq}}
 
                 {{#if_eq kind compare='image'}}
-                <span class="number unselectable">- {{display_number}} -</span>
+                <div class="number unselectable">- {{display_number}} -
+                  <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                    <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                  </div>
+                </div>
                 <div class="media unselectable">
                   <div>
                     {{#if internal}}
@@ -184,12 +240,20 @@
 
             <div class='paragraph' id="dp-{{id}}"><!-- type: {{type}}, kind: {{kind}}  -->
               {{#if_eq type compare='paragraph'}}
-                <span class="number">- {{display_number}} -</span>
+                <div class="number">- {{display_number}} -
+                  <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                    <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                  </div>
+                </div>
                 <div class="text content">{{{decorate markdown}}}</div>
               {{/if_eq}}
 
               {{#if_eq type compare='reference'}}
-                <span class="number unselectable">- {{display_number}} -</span>
+                <div class="number unselectable">- {{display_number}} -
+                  <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                    <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                  </div>
+                </div>
                 <div class="ref unselectable" data-id="{{biblib_id}}"><div class="content unselectable" data-ref="ref-{{biblib_id}}">{{text}}</div></div>
               {{/if_eq}}
 
@@ -197,19 +261,31 @@
               {{#if_eq type compare='media'}}
 
                 {{#if_eq kind compare='quote'}}
-                <span class="number">- {{display_number}} -</span>
+                <div class="number">- {{display_number}} -
+                  <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                    <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                  </div>
+                </div>
                 <div class="citation"><div class="content">{{{text}}}</div></div>
                 {{/if_eq}}
 
                 {{#if_eq kind compare='link'}}
-                <span class="number">- {{display_number}} -</span>
+                <div class="number">- {{display_number}} -
+                  <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                    <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                  </div>
+                </div>
                 <div class="citation">
                   <div class="content">{{{html}}}</div>
                 </div>
                 {{/if_eq}}
 
                 {{#if_eq kind compare='pdf'}}
-                  <span class="number unselectable">- {{display_number}} -</span>
+                  <div class="number unselectable">- {{display_number}} -
+                    <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                      <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                    </div>
+                  </div>
                   {{#if internal}}
                     <div class="media pdf unselectable" id="pdf-{{display_number}}" data-pdf="{{storage_url path}}"></div>
                   {{else}}
@@ -218,12 +294,20 @@
                 {{/if_eq}}
 
                 {{#if_eq kind compare='video'}}
-                  <span class="number unselectable">- {{display_number}} -</span>
+                  <div class="number unselectable">- {{display_number}} -
+                    <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                      <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                    </div>
+                  </div>
                   <div class="media video unselectable" id="video-{{display_number}}" data-video="{{html}}"></div>
                 {{/if_eq}}
 
                 {{#if_eq kind compare='image'}}
-                <span class="number unselectable">- {{display_number}} -</span>
+                <div class="number unselectable">- {{display_number}} -
+                  <div class="star bookmark" type="{{type}}" id="{{id}}" bookmarked="{{isBookmarked id 0}}">
+                    <i class="fa {{isBookmarked id 1}} fa-lg"></i>
+                  </div>
+                </div>
                 <div class="media unselectable">
                   <div>
                     {{#if internal}}

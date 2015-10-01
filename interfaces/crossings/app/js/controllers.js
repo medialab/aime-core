@@ -20,7 +20,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 			function($scope,$rootScope,Api,$document,$location,$route,$routeParams,$timeout,_,settings,$sce) { //$cookies,$cookieStore
 
 		$scope.conf = settings;
-		$scope.showAdmin = true; // by default. may be overriden after that.
+		$scope.showAdmin = false; // by default. may be overriden after that.
 		console.log("==================== Page!Reload - domain is: "+$scope.conf.domain);
 
 		window.showAdmin = $scope.showAdmin;
@@ -889,6 +889,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 			return $sce.trustAsHtml(html);
 		};
 		$scope.getIframeSrc = function(m) {
+
 			//return $sce.trustAsResourceUrl("http://localhost/PDF/Viewer.js/#../../aime-api-MEDIAS/"+m.content_id);
 			// CONTRIBUTION document pdf
 			if(m.html) {
@@ -896,7 +897,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 			}
 			// DOCUMENT media
 			else if(m.type=='pdf') {
-				return $sce.trustAsResourceUrl($scope.conf.pdfUrl + m.content_id);
+				return $sce.trustAsResourceUrl($scope.conf.pdfUrl + m.path);
 			} else if(m.type=='vimeo') {
 				var vimeoid = m.hasOwnProperty('content_id') ? m.content_id : m.content;
 				//console.log("vimeo id: "+vimeoid);

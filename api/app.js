@@ -100,11 +100,9 @@ var loginRouter = loadController(controllers.login),
     crossingsRouter = loadController(controllers.crossings, middlewares.authenticate),
     modelRouter = loadController(controllers.model, middlewares.authenticate),
     bookmarkRouter = loadController(controllers.bookmark, middlewares.authenticate),
-
-    // TODO: add stricter clearance to the write model
     writeModelRouter = loadController(
       controllers.model_write,
-      middlewares.authenticate,
+      middlewares.admin,
       [middlewares.cleanCache]
     );
 
@@ -136,9 +134,29 @@ app.use(loginRouter);
 app.use(modelRouter);
 app.use(writeModelRouter);
 app.use(bookmarkRouter);
-app.use('/aime', shortenerRouter);
+app.use('/shortener', shortenerRouter);
 app.use('/crossings', crossingsRouter);
 app.use('/resources', resourcesRouter);
+
+// Stats for the Blog
+app.get('/stats', function(req, res) {
+  db.rows(queries.stats, function(err, stats) {
+    if (err) return res.serverError(err);
+
+    return res.ok({
+      contributions: stats.map(function(row) {
+        return {
+          author: {
+            name: row.user.name + ' ' + row.user.surname
+          },
+          title: row.document.title,
+          lang: row.document.lang,
+          id: row.document_id
+        };
+      })
+    });
+  });
+});
 
 // 404
 app.use(function(req, res) {

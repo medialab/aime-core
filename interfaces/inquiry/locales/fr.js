@@ -74,6 +74,14 @@ maze.i18n.dict.fr = {
   "explore": "ouvrir",
   "explore_scenarios": "explorer les croisements",
   "open_document": "ouvrir le document",
-  "Must be at least 3 characters": "la requête doit comporter 3 caractères minimum"
+  "Must be at least 3 characters": "la requête doit comporter 3 caractères minimum",
 
+  "conditions": "conditions générales d'utilisation",
+  "mentions": "mentions légales",
+  "support": "soutien",
+  "credits": "credits",
+
+  "crossings_link": "croisements",
+  "home_link": "accueil",
+  "contact_link": "contact"
 }
