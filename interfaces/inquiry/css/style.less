@@ -229,9 +229,13 @@ ul > li{
 
   // bookmarks
 
-  .star { display: none; padding-left: 1px; color: lighten(@gray, 30%);}
-  .opened .star{display: block;}
-  .subtitle:not(.preview) .star { display: block;}
+  .star {
+    opacity: 0;
+    padding-left: 1px;
+    color: lighten(@gray, 30%);
+    .transition(opacity, .35s, ease-out);
+  }
+  .opened .star, .subtitle:not(.preview) .star{opacity: 1;}
   .number { background:none !important; }
 
   .chapter {
