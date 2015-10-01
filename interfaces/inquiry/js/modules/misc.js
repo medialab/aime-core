@@ -107,6 +107,10 @@
     this.triggers.events.user__updated = function(controller) {
       var user = controller.get('user');
       header.find('.username').text(user.name || user.surname)
+      if (user.id)
+        header.find('.notebook').show();
+      else
+        header.find('.notebook').hide();
     }
 
 
