@@ -122,5 +122,14 @@ maze.i18n.dict.en = {
   "collapse": "collapse",
   "explore": "explore",
   "explore_scenarios": "explore through crossings",
-  "open_document": "open_document"
+  "open_document": "open_document",
+
+  "conditions": "terms of use",
+  "mentions": "legal notice",
+  "support": "support",
+  "credits": "credits",
+
+  "crossings_link": "crossings",
+  "home_link": "home",
+  "contact_link": "contact"
 }
