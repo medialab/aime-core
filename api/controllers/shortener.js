@@ -7,7 +7,7 @@
  */
 var db = require('../connection.js'),
     queries = require('../queries.js').misc,
-    inquiryHost = require('../../config.json').interfaces.inquiry,
+    inquiryHost = require('../../config.json').interfaces.inquiry.replace(/\/$/, ''),
     _ = require('lodash');
 
 var TYPES = {
@@ -44,7 +44,30 @@ module.exports = [
         req.session.lang = result[0].lang;
 
         // Redirecting
-        return res.redirect(inquiryHost.replace(/\/$/, '') + '/' + HASHES[model]({id: slugId}));
+        return res.redirect(inquiryHost + '/' + HASHES[model]({id: slugId}));
+      });
+    }
+  },
+  {
+    url: '/:lang/voc/:modecross',
+    validate: {
+      lang: 'lang',
+      modecross: 'modecross'
+    },
+    action: function(req, res) {
+      var lang = req.params.lang,
+          modecross = req.params.modecross;
+
+      // Retrieving the correct vocabulary
+      return db.query(queries.getModecrossVoc, {modecross: modecross, lang: lang}, function(err, result) {
+        if (err) return res.serverError(err);
+        if (!result.length) return res.notFound();
+
+        // Switching lang
+        req.session.lang = lang;
+
+        // Redirecting
+        return res.redirect(inquiryHost + '/' + HASHES.voc({id: result[0].slug_id}));
       });
     }
   }

@@ -27,4 +27,8 @@ RETURN r AS nodes
 // name: exists
 MATCH (d {type: {type}})
 WHERE d.slug_id = {slug_id}
-RETURN d;
+RETURN d LIMIT 1;
+
+// name: getModecrossVoc
+MATCH (v:Vocabulary {title: {modecross}, lang: {lang}})
+RETURN v LIMIT 1;
