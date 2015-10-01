@@ -11,6 +11,13 @@ module.exports = {
   get: function(userId, callback) {
     db.rows(queries.get, {user_id: userId}, callback);
   },
+  getByModels: function(userId, callback) {
+    db.rows(queries.getByModels, {user_id: userId}, function(err, result) {
+      if (err) return callback(err);
+
+      return callback(null, result[0]);
+    });
+  },
   create: function(userId, targetId, callback) {
     db.query(queries.create, {user_id: userId, target_id: targetId}, callback);
   },

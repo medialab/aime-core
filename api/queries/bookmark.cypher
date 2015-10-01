@@ -11,3 +11,15 @@ DELETE r;
 START user=node({user_id})
 MATCH (user)-[:BOOKMARKED]->(target)
 RETURN id(target) AS target;
+
+// name: getByModels
+START user=node({user_id})
+
+OPTIONAL MATCH (user)-[:BOOKMARKED]->(b:BookItem)
+WITH user, collect(id(b)) AS book
+
+OPTIONAL MATCH (user)-[:BOOKMARKED]->(vp:Paragraph)<-[:HAS]-(:Vocabulary)
+WITH user, book, collect(id(vp)) AS voc
+
+OPTIONAL MATCH (user)-[:BOOKMARKED]->(dp:Paragraph)<-[:HAS]-(:Slide)<-[:HAS]-(:Document)
+RETURN book, voc, collect(id(dp)) AS doc;
