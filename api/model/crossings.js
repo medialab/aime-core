@@ -171,6 +171,12 @@ module.exports = {
         scenars: []
       };
 
+      // Handling cases like MET-PRE with no paragraphs
+      results.info = results.info || {
+        paragraphs: [{text: '', question: 'description'}],
+        scenars: []
+      };
+
       var questions = _(results.info.paragraphs.slice(1))
         .map(function(p) {
           return questionTokenizer(p.text);
