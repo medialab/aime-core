@@ -60,10 +60,11 @@ module.exports = function(queries, sortFunction) {
         return callback(null, sortFunction(helpers.nested(result)));
       });
     },
-    getAll: function(lang, params, callback) {
+    getAll: function(user, lang, params, callback) {
       params = _.extend({}, {lang: lang}, {
         offset: +params.offset || 0,
-        limit: +params.limit || 100000
+        limit: +params.limit || 100000,
+        user_id: user.id
       });
 
       // Executing query

@@ -9,4 +9,4 @@ DELETE (user)-[:BOOKMARKED]->(target);
 // name: get
 START user=node({user_id})
 MATCH (user)-[:BOOKMARKED]->(target)
-RETURN id(target);
+RETURN id(target) AS target;
