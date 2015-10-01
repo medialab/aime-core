@@ -140,6 +140,26 @@ app.use('/aime', shortenerRouter);
 app.use('/crossings', crossingsRouter);
 app.use('/resources', resourcesRouter);
 
+// Stats for the Blog
+app.get('/stats', function(req, res) {
+  db.rows(queries.stats, function(err, stats) {
+    if (err) return res.serverError(err);
+
+    return res.ok({
+      contributions: stats.map(function(row) {
+        return {
+          author: {
+            name: row.user.name + ' ' + row.user.surname
+          },
+          title: row.document.title,
+          lang: row.document.lang,
+          id: row.document_id
+        };
+      })
+    });
+  });
+});
+
 // 404
 app.use(function(req, res) {
   return res.notFound();
