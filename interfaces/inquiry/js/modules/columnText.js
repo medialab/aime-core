@@ -1218,9 +1218,15 @@
 
     maze.on("click", ".star.bookmark", function(e){
         $(this).find('i').toggleClass("fa-star-o").toggleClass("fa-star");
-        var isBookmarked = +e.currentTarget.getAttribute("bookmarked")
-        if(isBookmarked) _self.dispatchEvent('delete_bookmark', {id:+e.currentTarget.getAttribute("id")});
-        else _self.dispatchEvent('create_bookmark', {id:+e.currentTarget.getAttribute("id")});
+        var isBookmarked = e.currentTarget.getAttribute("bookmarked");
+
+        if(isBookmarked === "true"){
+            _self.dispatchEvent('delete_bookmark', {id:+e.currentTarget.getAttribute("id")});
+             e.currentTarget.setAttribute("bookmarked", false);
+        }else{
+            _self.dispatchEvent('create_bookmark', {id:+e.currentTarget.getAttribute("id")});
+            e.currentTarget.setAttribute("bookmarked", true);
+        }
     });
 
     this.box.scroll( function( event ){
