@@ -30,5 +30,9 @@ WHERE d.slug_id = {slug_id}
 RETURN d LIMIT 1;
 
 // name: getModecrossVoc
-MATCH (v:Vocabulary {title: {modecross}, lang: {lang}})
+MATCH (modecross)<-[:DEFINES]-(v:Vocabulary)
+WHERE
+  (modecross:Mode OR modecross:Crossing) AND
+  modecross.name = {modecross} AND
+  v.lang = {lang}
 RETURN v LIMIT 1;
