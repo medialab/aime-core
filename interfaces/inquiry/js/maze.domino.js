@@ -174,6 +174,13 @@
           value: {}
         },
         {
+          id: 'bookmarks',
+          description: 'The bookmarks of the current user.',
+          dispatch: 'bookmarks_loaded',
+          type: 'object',
+          value: {}
+        },
+        {
           id: 'lang',
           description: 'The favourite language, set by each requests. Check "More" domino module. when changed, it should refresh the ui',
           dispatch: 'lang__updated',
@@ -1764,6 +1771,13 @@
             maze.i18n.lang = data.result.lang;
 
             if(data.result.user) {
+
+              // for test only
+              data.result.user.bookmarks = [736,740,744];
+
+              this.update('bookmarks', data.result.user.bookmarks.reduce(
+                function(o, v, i) { o[v] = true; return o;}, {}
+              ));
               this.update('user', data.result.user); // this is the user
             }
             this.dispatchEvent('session__initialized');
@@ -3032,7 +3046,6 @@
           }
         },
         {
-          // @dcfvg
           id: 'create_bookmark',
           type: 'POST',
           description: 'add bookmark',

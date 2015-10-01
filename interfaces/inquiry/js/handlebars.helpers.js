@@ -218,3 +218,9 @@
     Handlebars.registerHelper('CONFIG', function(key) {
       return CONFIG[key];
     });
+
+    Handlebars.registerHelper('isBookmarked', function(id, resType) {
+      var b = maze.domino.controller.get('bookmarks');
+      if(resType) return b[id] ? 'fa-star' : 'fa-star-o'
+      else return b[id];
+    });
