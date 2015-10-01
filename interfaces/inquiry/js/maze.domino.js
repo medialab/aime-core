@@ -707,22 +707,26 @@
           }
         },
         {
-          // @dcfvg
           triggers: 'delete_bookmark',
           method: function(e){
-            // console.log(e);
-             this.request('delete_bookmark', {
+
+            var b = this.get('bookmarks');
+            delete b[e.data.id];
+            this.update('bookmarks', b);
+
+            this.request('delete_bookmark', {
               shortcuts: { id: e.data.id}
             });
-
-
           }
         },
         {
           triggers: 'create_bookmark',
           method: function(e){
-            // console.log(e);
 
+            var b = this.get('bookmarks');
+                b[e.data.id] = true;
+
+            this.update('bookmarks', b);
             this.request('create_bookmark', {
               shortcuts: { id: e.data.id}
             });
