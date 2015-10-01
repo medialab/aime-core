@@ -854,7 +854,7 @@ angular.module('myApp.controllers', ['underscore','config'])
 
 			if(modes && links) {
 				var lm = function(m) {
-					return '<a href="'+$scope.conf.domain+'/ime/'+$scope.lang+'/voc/'+m.replace("·","-")+'" target="_blank">'+m+'</a>';
+					return '<a href="'+$scope.conf.domain+'/aime/'+$scope.lang+'/voc/'+m.replace("·","-")+'" target="_blank">'+m+'</a>';
 				};
 				t= t.replace(/\[([A-Za-z]{2,3})[\s·\.-]*([A-Za-z]{2,3})\]/g,"<span class='modecross'>["+lm("\$1·\$2")+"]</span>")
 					.replace(/\[([A-Za-z]{2,3})\]/g,"<span class='modecross'>["+lm("\$1")+"]</span>");
