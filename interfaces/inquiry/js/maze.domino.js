@@ -710,20 +710,16 @@
           // @dcfvg
           triggers: 'delete_bookmark',
           method: function(e){
-
-            console.log(e);
-
-            // this.request('login', {
-            //   data: res.data,
-            //   shortcuts: { id: e.data.id}
-            // });
-
+            // console.log(e);
+             this.request('delete_bookmark', {
+              shortcuts: { id: e.data.id}
+            });
           }
         },
         {
           triggers: 'create_bookmark',
           method: function(e){
-            console.log(e);
+            // console.log(e);
 
             this.request('create_bookmark', {
               shortcuts: { id: e.data.id}
@@ -1770,14 +1766,12 @@
             this.update('lang', data.result.lang);
             maze.i18n.lang = data.result.lang;
 
-            if(data.result.user) {
-
-              // for test only
-              data.result.user.bookmarks = [736,740,744];
-
-              this.update('bookmarks', data.result.user.bookmarks.reduce(
-                function(o, v, i) { o[v] = true; return o;}, {}
+            if(data.result.bookmarks) {
+              this.update('bookmarks', data.result.bookmarks.reduce(
+                  function(o, v, i) { o[v] = true; return o;}, {}
               ));
+            }
+            if(data.result.user) {
               this.update('user', data.result.user); // this is the user
             }
             this.dispatchEvent('session__initialized');

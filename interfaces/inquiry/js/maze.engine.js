@@ -31,7 +31,7 @@
 	maze.engine.parser.vocabulary_item = function(item) {
 		var crossing = item.title.match(/^\[([A-Z]{2,3})(·([A-Z]{2,3}))?\]$/)
     if(crossing) {
-      item.crossing = maze.settings.crossings_home +'#/'+ item.lang +'/'+ crossing[1] + (crossing[3]? '-' + crossing[3]: '');
+      item.crossing = maze.settings.crossings_home +'/#/'+ item.lang +'/'+ crossing[1] + (crossing[3]? '-' + crossing[3]: '');
     	item.crossing = item.crossing.toLowerCase();
     }
     return item;

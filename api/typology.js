@@ -56,6 +56,11 @@ module.exports = new Typology({
     return v === 'en' || v === 'fr';
   },
 
+  // Possible shortened model
+  model: function(v) {
+    return !!~['bsc', 'voc', 'doc'].indexOf(v);
+  },
+
   // Mode
   mode: function(v) {
     return /^[A-Z]{2,3}$/.test(v);
