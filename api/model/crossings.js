@@ -286,9 +286,6 @@ module.exports = {
               };
 
             if (element.kind === 'pdf')
-
-              console.log(element);
-
               return {
                 type: 'pdf',
                 path: element.path,
