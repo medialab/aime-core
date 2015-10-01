@@ -2312,6 +2312,11 @@
           expect: maze.rpc.expect,
           contentType: maze.rpc.contentType,
           async: true,
+          before: function() {
+
+            // NOTE: shunting biblib now that the data is already provided
+            return false;
+          },
           data: function( input ) {
             return maze.rpc.buildData('citation_by_rec_ids', input.params);
           },
