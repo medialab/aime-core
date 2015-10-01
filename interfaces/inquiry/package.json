@@ -4,6 +4,7 @@
   "description": "The main AIME project user interface.",
   "main": "index.js",
   "scripts": {
+    "build": "gulp",
     "start": "http-server -p 8000 & gulp work && fg"
   },
   "repository": {
