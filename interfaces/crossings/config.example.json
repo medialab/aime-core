@@ -5,7 +5,7 @@
       "inquiryUrl":"http://localhost:8000",
       "crossingsUrl":"http://localhost:5000",
       "apiUrl":"http://localhost:7000",
-      "pdfUrl":"http://localhost:7000/resources/pdfs/",
+      "pdfUrl":"http://localhost:5000/Viewer.js/#http://localhost:7000/resources/pdfs/",
       "adminIfFreeForAll": true
     },
     "prod": {
