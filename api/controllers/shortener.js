@@ -70,5 +70,15 @@ module.exports = [
         return res.redirect(inquiryHost + '/' + HASHES.voc({id: result[0].slug_id}));
       });
     }
+  },
+  {
+    url: '/ime/:lang/:model/:legacy_id',
+    validate: {
+      lang: 'lang',
+      model: 'model'
+    },
+    action: function(req, res) {
+      return res.notImplemented();
+    }
   }
 ];
