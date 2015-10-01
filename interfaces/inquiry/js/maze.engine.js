@@ -61,11 +61,13 @@
           	paragraphs_matches.push(d.children[i].children[j]);
           }
 
-          if(d.children[i].children[j].type == 'reference'){
-            d.references.push(''+d.children[i].children[j].biblib_id);
-          } else if(d.children[i].children[j].reference) { // take reference attached to a media object
-            d.references.push(''+d.children[i].children[j].reference.biblib_id);
-          }
+          if (d.children[i].children[j].biblib_id) {
+	          if(d.children[i].children[j].type == 'reference'){
+	            d.references.push(''+d.children[i].children[j].biblib_id);
+	          } else if(d.children[i].children[j].reference) { // take reference attached to a media object
+	            d.references.push(''+d.children[i].children[j].reference.biblib_id);
+	          }
+	        }
         }
 
         if(options.query && paragraphs_matches.length) {
