@@ -24,6 +24,7 @@ $(document).ready(function() {
     search_documents: '/doc/search/::query',
 
     bookmark: '/bookmark/::id',
+    notebook: '/notebook',
 
     list_comments: 'documentItems/items',
     get_comments: 'documentItems/items',
