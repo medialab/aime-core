@@ -40,6 +40,7 @@ const SEQ = [
   'references',
   'slugs',
   'user_bookmarks',
+  'resolve_contributions_links',
   'markdown',
   'cleanup'
 ];
