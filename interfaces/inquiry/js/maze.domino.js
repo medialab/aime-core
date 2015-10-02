@@ -1755,6 +1755,7 @@
         {
           id: 'signup',
           type: 'POST',
+          dataType: 'json',
           before: function(params, xhr) {
             xhr.withCredentials = true;
           },
@@ -1765,8 +1766,14 @@
               stayTime: 10000
             });
           },
-          error: function() {
+          error: function(message, xhr, params) {
             // start over the signup
+
+            if(JSON.parse(message).error.reason === 'duplicateEmail'){
+              maze.toast(maze.i18n.translate('already_registered_with_this_email'), {
+                stayTime: 10000
+              });
+            }
             console.log(arguments)
           }
         },
