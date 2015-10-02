@@ -70,13 +70,6 @@ module.exports = {
       }
     });
   },
-  createResetToken: function(id, callback) {
-    db.query(queries.update, {id: id, properties: {reset_token: uuid.v4()}}, function(err, result) {
-      if (err) return callback(err);
-
-      return callback(null, (result[0] || {}).reset_token);
-    })
-  },
   update: function(id, properties, callback) {
     db.query(queries.update, {id: id, properties: properties}, function(err, result) {
       if (err) return callback(err);

@@ -1800,7 +1800,9 @@
           },
           url: maze.urls.lang,
           success: function(data, params) {
-            location.reload();
+            // Reloading the app
+            location.href = location.pathname;
+            // location.reload();
             //console.log('language', data)
           },
           error: function(message, xhr, params) {
