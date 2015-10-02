@@ -29,6 +29,12 @@ MATCH (d {type: {type}})
 WHERE d.slug_id = {slug_id}
 RETURN d LIMIT 1;
 
+// name: bookExists
+MATCH (n)
+WHERE id(n) = {id} AND (n:Chapter OR n:Subheading)
+OPTIONAL MATCH (c:Chapter)-[:HAS]->(n)
+RETURN n AS element, c AS chapter LIMIT 1;
+
 // name: getModecrossVoc
 MATCH (modecross)<-[:DEFINES]-(v:Vocabulary)
 WHERE

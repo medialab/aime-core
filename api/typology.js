@@ -84,6 +84,10 @@ module.exports = new Typology({
       });
   },
 
+  bookSlug: function(v) {
+    return /[cs]\d+/.test(v);
+  },
+
   // Url,
   url: validator.isURL
 });

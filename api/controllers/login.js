@@ -157,7 +157,7 @@ module.exports = [
     methods: ['POST'],
     action: function(req, res) {
 
-      // set a token reset + mail
+      // set a token reset + mail + don't reset if already!
     }
   },
 

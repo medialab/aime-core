@@ -11,20 +11,53 @@ var db = require('../connection.js'),
     _ = require('lodash');
 
 var TYPES = {
-  bsc: 'subheading',
   voc: 'vocabulary',
   doc: 'document'
 };
 
 var HASHES = {
   voc: '#a=SET+VOC+LEADER&c[leading]=VOC&c[slave]=TEXT&i[id]=#vocab-<%= id %>&i[column]=VOC&s=0',
-  doc: '#a=SET+DOC+LEADER&c[leading]=DOC&c[slave]=TEXT&i[id]=#doc-<%= id %>&i[column]=DOC&s=0'
+  doc: '#a=SET+DOC+LEADER&c[leading]=DOC&c[slave]=TEXT&i[id]=#doc-<%= id %>&i[column]=DOC&s=0',
+  chapter: '#b[chapter]=#<%= id %>&a=SET+TEXT+LEADER&c[leading]=TEXT&c[slave]=VOC&s=0',
+  subheading: '#b[chapter]=#<%= chapterId %>&b[subheading]=#<%= id %>&a=SET+TEXT+LEADER&c[leading]=TEXT&c[slave]=VOC&s=0'
 };
 
 for (var k in HASHES)
   HASHES[k] = _.template(HASHES[k]);
 
 module.exports = [
+  {
+    url: '/book/:slug',
+    validate: {
+      slug: 'bookSlug'
+    },
+    action: function(req, res) {
+      var slug = req.params.slug,
+          match = slug.match(/([cs])(\d+)/),
+          type = match[1] === 'c' ? 'chapter' : 'subheading',
+          id = +match[2];
+
+      return db.query(queries.bookExists, {id: id, type: type}, function(err, result) {
+        if (err) return res.serverError(err);
+        if (!result.length) return res.notFound();
+
+        var element = result[0].element,
+            chapter = result[0].chapter;
+
+        // Switching lang
+        req.session.lang = element.lang;
+
+        var hash = type === 'chapter' ?
+          HASHES.chapter({id: id}) :
+          HASHES.subheading({id: element.id, chapterId: chapter.id});
+
+        // Redirecting
+        return res.redirect(inquiryHost + '/' + hash);
+      });
+
+      return res.notImplemented();
+    }
+  },
   {
     url: '/:model/:slug_id',
     validate: {
