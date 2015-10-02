@@ -299,6 +299,14 @@ module.exports = {
                 content_id: element.title,
                 pindex: -1
               };
+
+            if (element.kind === 'link') {
+              return {
+                type: 'link',
+                html: element.html,
+                pindex: -1
+              };
+            }
           });
 
           refs.forEach(function(r) {
