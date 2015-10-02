@@ -111,7 +111,26 @@ module.exports = [
       model: 'model'
     },
     action: function(req, res) {
-      return res.notImplemented();
+      var lang = req.params.lang,
+          id = +req.params.legacy_id;
+
+      return db.query(queries.legacyExists, {id: id, lang: lang}, function(err, result) {
+        if (err) return res.serverError(err);
+        if (!result.length) return res.notFound();
+
+        var element = result[0].element,
+            chapter = result[0].chapter,
+            type = element.type;
+
+        // Switching lang
+        req.session.lang = lang;
+
+        // Redirecting
+        if (type === 'chapter' || type === 'subheading')
+          return res.redirect(inquiryHost + '/' + HASHES[element.type]({id: element.id, chapterId: chapter.id}));
+        else
+          return res.redirect(inquiryHost + '/' + HASHES[element.type.slice(0, 3)]({id: element.slug_id}));
+      });
     }
   }
 ];

@@ -35,6 +35,11 @@ WHERE id(n) = {id} AND (n:Chapter OR n:Subheading)
 OPTIONAL MATCH (c:Chapter)-[:HAS]->(n)
 RETURN n AS element, c AS chapter LIMIT 1;
 
+// name: legacyExists
+MATCH (n {legacy_id: {id}, lang: {lang}})
+OPTIONAL MATCH (c:Chapter)-[:HAS]->(n)
+RETURN n AS element, c AS chapter LIMIT 1;
+
 // name: getModecrossVoc
 MATCH (modecross)<-[:DEFINES]-(v:Vocabulary)
 WHERE
