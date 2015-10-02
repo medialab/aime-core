@@ -17,6 +17,7 @@ maze.i18n.dict.en = {
   form_not_valid: "There are some errors in the form",
   accept_the_terms: "Please accept the terms of use",
   thank_you_and_check_your_email: "Done! Check you email and follow the activation link to login",
+  already_registered_with_this_email: 'This email is already registered.',
   explore_scenarios: "explore through crossings",
   // terms of use sentences by sentences, et oui
   "terms.head": "terms of use",

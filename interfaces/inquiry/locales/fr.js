@@ -8,6 +8,7 @@ maze.i18n.dict.fr = {
   sign_up:  "s'inscrire",
   login:    "adresse email",
   password: "mot de passe",
+  "This email is already registered.": "Cette adresse email est déjà été enregistrée.",
   "no results found": "votre recherche n'a donné aucun résultat",
   "page not found": "page non trouvée",
   "connection error": "Connection error",
