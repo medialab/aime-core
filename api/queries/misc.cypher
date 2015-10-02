@@ -51,5 +51,5 @@ RETURN v LIMIT 1;
 // name: stats
 MATCH (d:Document {status: 'public', original: false})-[:CREATED_BY]->(u:User)
 WHERE u.email <> 'modesofexistence@gmail.com'
-RETURN d AS document, id(d) AS document_id, u AS user
+RETURN d AS document, d.slug_id AS document_id, u AS user
 ORDER BY u.surname;
