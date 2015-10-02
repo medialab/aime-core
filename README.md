@@ -150,6 +150,8 @@ Don't forget to pass the `harmony` flag to node (required by the [`essence`](htt
 pm2 start --node-args='--harmony' ./scripts/start.js
 ```
 
+Don't forget to set `NODE_ENV` to `production` also.
+
 ## Misc information
 
 ### Folder Structure
