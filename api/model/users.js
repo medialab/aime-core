@@ -76,5 +76,22 @@ module.exports = {
 
       return callback(null, result[0]);
     });
+  },
+  sos: function(email, callback) {
+    var token = uuid.v4();
+
+    db.query(queries.sos, {email: email, token: token}, function(err, result) {
+      if (err) return callback(err);
+      if (!result.length) return callback(null, null);
+
+      return callback(null, token);
+    });
+  },
+  changePassword: function(token, password, callback) {
+    db.query(queries.reset, {token: token, hash: hash(password)}, function(err, result) {
+      if (err) return callback(err);
+
+      return callback(null, result[0] || null);
+    });
   }
 };

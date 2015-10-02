@@ -156,8 +156,16 @@ module.exports = [
     },
     methods: ['POST'],
     action: function(req, res) {
+      return model.sos(req.body.email, function(err, token) {
+        if (err) return res.serverError(err);
+        if (!token) return res.notFound();
 
-      // set a token reset + mail + don't reset if already!
+        return postman.reset(req.lang, req.body.email, token, function(err, info) {
+          if (err) return res.serverError(err);
+
+          return res.ok({token: token});
+        });
+      });
     }
   },
 
