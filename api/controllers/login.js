@@ -176,8 +176,12 @@ module.exports = [
     },
     methods: ['POST'],
     action: function(req, res) {
+      return model.changePassword(req.params.token, req.body.password, function(err, user) {
+        if (err) return res.serverError(err);
+        if (!user) return res.notFound();
 
-      // find the user, if he exists, update the password
+        return res.ok();
+      });
     }
   }
 ];
