@@ -226,10 +226,10 @@ module.exports = {
 
       //  -- Documents & Contributions
       var docRelated = results.doc.map(function(d) {
+        var i = 0;
 
         var slides = d.children.map(function(slide) {
-          var refs = [],
-              i = 0;
+          var refs = [];
 
           var medias = slide.children.map(function(element, j) {
 
