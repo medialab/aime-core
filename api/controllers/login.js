@@ -48,6 +48,7 @@ module.exports = [
     methods: ['POST'],
     action: function(req, res) {
       model.create(req.body, function(err, user) {
+        if (/already exists.*email/.test(err.message)) return res.badRequest('duplicateEmail');
         if (err) return res.serverError(err);
 
         // Sending the mail
@@ -129,39 +130,6 @@ module.exports = [
     }
   },
 
-  // Request for password retrieval
-  {
-    url: '/retrieve/:id',
-    validate: {
-      id: 'string'
-    },
-    methods: ['POST'],
-    action: function(req, res) {
-      var userId = +req.params.id;
-
-      model.createResetToken(userId, function(err, token) {
-        if (err) return res.serverError(err);
-
-        if (!token)
-          return res.notFound();
-        else
-          return res.ok(token);
-      });
-    }
-  },
-
-  // Reset a user password
-  {
-    url: '/reset',
-    validate: {
-      token: 'string'
-    },
-    methods: ['POST'],
-    action: function(req, res) {
-      return res.notImplemented();
-    }
-  },
-
   // Change the session's lang
   {
     url: '/lang/:lang',
@@ -177,6 +145,43 @@ module.exports = [
         req.session.lang = req.params.lang;
         return res.ok({lang: req.params.lang});
       }
+    }
+  },
+
+  // Request a password change
+  {
+    url: '/sos',
+    validate: {
+      email: 'string'
+    },
+    methods: ['POST'],
+    action: function(req, res) {
+      return model.sos(req.body.email, function(err, token) {
+        if (err) return res.serverError(err);
+        if (!token) return res.notFound();
+
+        return postman.reset(req.lang, req.body.email, token, function(err, info) {
+          if (err) return res.serverError(err);
+
+          return res.ok({token: token});
+        });
+      });
+    }
+  },
+
+  {
+    url: '/reactivate/:token',
+    validate: {
+      password: 'string'
+    },
+    methods: ['POST'],
+    action: function(req, res) {
+      return model.changePassword(req.params.token, req.body.password, function(err, user) {
+        if (err) return res.serverError(err);
+        if (!user) return res.notFound();
+
+        return res.ok();
+      });
     }
   }
 ];

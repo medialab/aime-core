@@ -22,3 +22,16 @@ RETURN u AS user, a AS avatar;
 START u=node({id})
 SET u += {properties}
 RETURN u;
+
+// name: sos
+// Setting a reset token for the user if he wants to update its password
+MATCH (u:User {email: {email}})
+WHERE not(has(u.reset_token))
+SET u.reset_token = {token}
+RETURN u;
+
+// name: reset
+MATCH (u:User {reset_token: {token}})
+SET u.password = {hash}
+REMOVE u.reset_token
+RETURN u;

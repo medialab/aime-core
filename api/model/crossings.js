@@ -145,12 +145,7 @@ module.exports = {
   },
   getRelatedToModecross: function(lang, modecross, callback) {
     async.parallel({
-
-
       info: function(next) {
-
-      console.log(queries.modecross, modecross,lang );
-
         db.rows(queries.modecross, {name: modecross, lang: lang}, function(err, result) {
 
           if (err) return next(err);
@@ -231,10 +226,10 @@ module.exports = {
 
       //  -- Documents & Contributions
       var docRelated = results.doc.map(function(d) {
+        var i = 0;
 
         var slides = d.children.map(function(slide) {
-          var refs = [],
-              i = 0;
+          var refs = [];
 
           var medias = slide.children.map(function(element, j) {
 
@@ -304,6 +299,14 @@ module.exports = {
                 content_id: element.title,
                 pindex: -1
               };
+
+            if (element.kind === 'link') {
+              return {
+                type: 'link',
+                html: element.html,
+                pindex: -1
+              };
+            }
           });
 
           refs.forEach(function(r) {
@@ -313,8 +316,9 @@ module.exports = {
             medias = medias.slice(0, i + 1).concat(r[1]).concat(medias.slice(i + 1));
           });
 
+          // DIRTY: dropping null values probably originating from bad cypher
           return {
-            medias: medias
+            medias: _.compact(medias)
           };
         });
 

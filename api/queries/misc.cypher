@@ -29,6 +29,17 @@ MATCH (d {type: {type}})
 WHERE d.slug_id = {slug_id}
 RETURN d LIMIT 1;
 
+// name: bookExists
+MATCH (n)
+WHERE id(n) = {id} AND (n:Chapter OR n:Subheading)
+OPTIONAL MATCH (c:Chapter)-[:HAS]->(n)
+RETURN n AS element, c AS chapter LIMIT 1;
+
+// name: legacyExists
+MATCH (n {legacy_id: {id}, lang: {lang}})
+OPTIONAL MATCH (c:Chapter)-[:HAS]->(n)
+RETURN n AS element, c AS chapter LIMIT 1;
+
 // name: getModecrossVoc
 MATCH (modecross)<-[:DEFINES]-(v:Vocabulary)
 WHERE
@@ -40,5 +51,5 @@ RETURN v LIMIT 1;
 // name: stats
 MATCH (d:Document {status: 'public', original: false})-[:CREATED_BY]->(u:User)
 WHERE u.email <> 'modesofexistence@gmail.com'
-RETURN d AS document, id(d) AS document_id, u AS user
+RETURN d AS document, d.slug_id AS document_id, u AS user
 ORDER BY u.surname;

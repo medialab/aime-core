@@ -459,13 +459,19 @@
 		dict: {}
 	};
 	maze.i18n.translate = function( key, lang ){
-		if( typeof lang != "undefined" )
-			maze.i18n.lang = lang;
 
-		var l = maze.i18n.lang;
-		if ( maze.i18n.dict[l][key] == undefined	)
-			return key;
-		return 	maze.i18n.dict[l][key];
+		// if( typeof lang != "undefined" ) maze.i18n.lang = lang;
+
+		var l = maze.i18n.lang || "en"; // fall back to english
+		maze.i18n.lang = l; // set language
+
+		// key exists in language
+		if (maze.i18n.dict[l][key] != undefined) return maze.i18n.dict[l][key];
+		// fallback to english
+		if (maze.i18n.dict["en"][key] != undefined) return maze.i18n.dict["en"][key];
+		// fallback to key
+		return key;
+
 	}
 
 	// maze.i18n.dict = maze.i18n.dict || {

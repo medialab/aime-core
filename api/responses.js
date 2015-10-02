@@ -4,6 +4,7 @@
  *
  * Defining custom express responses.
  */
+var env = process.env.NODE_ENV || 'dev';
 
 module.exports = function(express) {
 
@@ -66,17 +67,22 @@ module.exports = function(express) {
 
   express.response.serverError = function(err) {
 
-    // TEMP: dev logging
+    // Logging the error so that we can track it
     console.log(err);
 
-    this.status(500).json({
+    var response = {
       status: 'error',
       error: {
         code: 500,
-        title: 'Internal Server Error',
-        source: err
+        title: 'Internal Server Error'
       }
-    });
+    };
+
+    // Sending js error to client only for dev purposes
+    if (env === 'dev')
+      response.error.source = err;
+
+    this.status(500).json(response);
   };
 
   express.response.forbidden = function() {

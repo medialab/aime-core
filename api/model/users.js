@@ -70,18 +70,28 @@ module.exports = {
       }
     });
   },
-  createResetToken: function(id, callback) {
-    db.query(queries.update, {id: id, properties: {reset_token: uuid.v4()}}, function(err, result) {
-      if (err) return callback(err);
-
-      return callback(null, (result[0] || {}).reset_token);
-    })
-  },
   update: function(id, properties, callback) {
     db.query(queries.update, {id: id, properties: properties}, function(err, result) {
       if (err) return callback(err);
 
       return callback(null, result[0]);
+    });
+  },
+  sos: function(email, callback) {
+    var token = uuid.v4();
+
+    db.query(queries.sos, {email: email, token: token}, function(err, result) {
+      if (err) return callback(err);
+      if (!result.length) return callback(null, null);
+
+      return callback(null, token);
+    });
+  },
+  changePassword: function(token, password, callback) {
+    db.query(queries.reset, {token: token, hash: hash(password)}, function(err, result) {
+      if (err) return callback(err);
+
+      return callback(null, result[0] || null);
     });
   }
 };

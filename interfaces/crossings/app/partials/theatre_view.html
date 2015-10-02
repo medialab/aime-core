@@ -109,6 +109,10 @@
 				<div class="text" ng-bind-html="textify(m.content,false,true)"></div>
 			</div>
 
+			<div ng-switch-when="link" class="paragraph link">
+				<div ng-bind-html="updateTrustHtml(m.html)"></div>
+			</div>
+
 			<div ng-switch-when="img" class="row shadow"></div>
 			<div ng-switch-when="img" class="row">
 				<div class="lightboxbutton" ng-click="toggleLightbox(m.lightboxcontent)"><i class="fa fa-search"></i></div>
