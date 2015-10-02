@@ -145,12 +145,7 @@ module.exports = {
   },
   getRelatedToModecross: function(lang, modecross, callback) {
     async.parallel({
-
-
       info: function(next) {
-
-      console.log(queries.modecross, modecross,lang );
-
         db.rows(queries.modecross, {name: modecross, lang: lang}, function(err, result) {
 
           if (err) return next(err);
@@ -313,8 +308,9 @@ module.exports = {
             medias = medias.slice(0, i + 1).concat(r[1]).concat(medias.slice(i + 1));
           });
 
+          // DIRTY: dropping null values probably originating from bad cypher
           return {
-            medias: medias
+            medias: _.compact(medias)
           };
         });
 
