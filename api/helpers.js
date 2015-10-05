@@ -63,7 +63,7 @@ function reorder(target, order, key) {
 }
 
 function searchRegex(query) {
-  return "(?i).*" + regexEscape(query) + ".*";
+  return "(?iu).*" + regexEscape(query) + ".*";
 }
 
 // Exporting
