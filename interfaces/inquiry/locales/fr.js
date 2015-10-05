@@ -131,6 +131,7 @@ maze.i18n.dict.fr = {
   "password_reset": "reinitialisation de mot de passe",
   "reset_invalid": "les deux entrées ne sont pas identiques",
   "reset_error": "Erreur lors de la réinitialisation du mot de passe. Peut-être est-il déjà réinitialisé.",
+  "reset_success": "Succès! La page va maintenant se recharger.",
   "new_password": "nouveau mot de passe",
   "confirm": "confirmer",
   "repeat_password": "Répéter le mot de passe",

@@ -1788,7 +1788,7 @@
             if(data.status != "ok")
               console.log('logout error during logout');
             // logout anyway
-            this.update('authorization', maze.AUTHORIZATION_REQUIRED);
+            // this.update('authorization', maze.AUTHORIZATION_REQUIRED);
             location.href = '/';
           },
           error: maze.domino.errorHandler
@@ -1856,7 +1856,10 @@
           url: maze.urls.reactivate,
           success: function(data, params) {
             // Reloading the app
-            location.href = location.pathname;
+            maze.toast( maze.i18n.translate('reset_success'),{stayTime:3 * 1000} );
+            setTimeout(function() {
+              location.href = location.pathname;
+            }, 3000);
           },
           error: function() {
             maze.toast( maze.i18n.translate('reset_error'),{stayTime:5 * 1000} );

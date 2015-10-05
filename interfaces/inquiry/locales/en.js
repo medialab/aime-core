@@ -131,6 +131,7 @@ maze.i18n.dict.en = {
   "password_reset": "password reset",
   "reset_invalid": "both entries do not match",
   "reset_error": "Could not reset the password. Maybe you already reset it.",
+  "reset_success": "Success! Page will now reload.",
   "new_password": "new password",
   "confirm": "confirm",
   "repeat_password": "repeat the password",
