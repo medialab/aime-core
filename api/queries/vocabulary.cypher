@@ -18,7 +18,7 @@ RETURN {
   },
   children: collect(paragraphs)
 } AS item
-ORDER BY item.vocabulary.properties.title
+ORDER BY REPLACE(item.vocabulary.properties.title,"[","") ASC
 SKIP {offset}
 LIMIT {limit};
 
