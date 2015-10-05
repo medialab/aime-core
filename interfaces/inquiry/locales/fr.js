@@ -48,6 +48,7 @@ maze.i18n.dict.fr = {
   "terms.misc": "dispositions diverses",
   "terms.misc.content": "Si une partie quelconque des <span class=\"smallcaps\">CGU</span> devait s'avérer illégale, invalide ou inapplicable pour quelque raison que ce soit, le terme ou les termes en question seraient déclarés inexistants et les termes restants garderaient toute leur force et leur portée et continueraient à être applicables. Le ou les termes déclarés inexistants seraient remplacés par un (ou des) termes se rapprochant le plus quant à leur contenu de la clause annulée.",
   "terms.laws": "loi applicable et attribution de juridiction",
+  "terms.laws.content": "Les présentes Conditions Générales d'Utilisation sont soumises au droit français. Tout désaccord ou litige n'ayant pu trouver une issue transactionnelle sera porté devant les tribunaux français compétents.",
   "legal": "loi applicable et attribution de juridiction",
   "legal.introduction": "informations légales",
   "legal.introduction.content": "Ce site Internet est la propriété de la Fondation Nationale des Sciences Politiques (ci-après « la <span class=\"smallcaps\">FNSP</span> » ou « la Fondation »), dont le siège est au 27, rue Saint Guillaume 75337 Paris Cedex 07.<br><br>Directeur de la publication du site web :<br>Jean-Claude Casanova, Président de la Fondation Nationale des Sciences Politiques (FNSP)<br><br>Service chargé du suivi du site :<br>le Médialab (contact christophe.leclercq[at]sciences-po.fr)<br>0145498596<br><br>Présent site web édité par :<br>Bruno Latour, Professeur, Sciences Po<br><br>Ce site internet est hébergé par la Fondation Nationale des Sciences Politiques (FNSP),<br>Sciences Po - Direction des Systèmes d'Information<br>Code <span class=\"smallcaps\">APE</span> : 803Z<br>27, rue saint Guillaume<br>75337 Paris cedex 07",
@@ -126,5 +127,7 @@ maze.i18n.dict.fr = {
   "crossings_link": "croisements",
   "home_link": "home",
   "contact_link": "contact",
-  "forgot_password": "mot de passe oublié?"
+  "forgot_password": "mot de passe oublié?",
+  "previous": "précédent",
+  "next": "suivant"
 }
