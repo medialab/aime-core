@@ -25,6 +25,17 @@
         e.preventDefault();
         dismiss();
       });
+
+      box.on('click', '[data-action=send]', function(e) {
+        e.preventDefault();
+
+        var email = $('#email').val();
+
+        if (!email)
+          return;
+
+        _self.dispatchEvent('sos_register', email);
+      });
     };
   };
 })();

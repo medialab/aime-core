@@ -664,7 +664,7 @@
           triggers: 'sos_register',
           description: 'send sos data',
           method: function(res) {
-            this.request('sos', {data: res.data});
+            this.request('sos', {data: {email: res.data}});
           }
         },
         {
@@ -1817,7 +1817,13 @@
           before: function(params, xhr) {
             xhr.withCredentials = true;
           },
-          url: maze.urls.sos
+          url: maze.urls.sos,
+          success: function(data, params) {
+            maze.toast( maze.i18n.translate('sent_reset'),{stayTime:10 * 1000} );
+          },
+          error: function() {
+            maze.toast( maze.i18n.translate('error_reset'),{stayTime:7 * 1000} );
+          }
         },
         {
           id: 'reactivate',

@@ -127,5 +127,9 @@ maze.i18n.dict.en = {
   "crossings_link": "crossings",
   "home_link": "home",
   "contact_link": "contact",
-  "forgot_password": "forgot password?"
+  "forgot_password": "forgot password?",
+  "password_reset": "password reset",
+  "send_reset": "reset",
+  "sent_reset": "The password reset form was successfully sent. Check your email box.",
+  "error_reset": "The password reset form could not be sent to this email address. Either the account does not exist or a reset form has already been sent."
 }

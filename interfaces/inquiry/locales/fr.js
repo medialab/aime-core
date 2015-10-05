@@ -128,6 +128,10 @@ maze.i18n.dict.fr = {
   "home_link": "home",
   "contact_link": "contact",
   "forgot_password": "mot de passe oublié?",
+  "password_reset": "reinitialisation de mot de passe",
+  "send_reset": "réinitialiser",
+  "sent_reset": "Le formulaire de réinitialisation de mot de passe a correctement été envoyé. Veuillez vérifier votre boîte mail.",
+  "error_reset": "Le formulaire de réinitialisation de mot de passe n'a pas pu être envoyé à cette adresse mail. Soit le compte n'existe pas, soit un formulaire a déjà été envoyé.",
   "previous": "précédent",
   "next": "suivant"
 }
