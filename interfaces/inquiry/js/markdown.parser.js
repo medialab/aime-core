@@ -89,8 +89,7 @@
       var docs = d.match(/\{(doc_.*?)\}/)
       if(!docs)
         return d;
-      
-      return '<span class="link doc" data-id="'+ docs.pop().replace(/_/g, '-').replace(',',' ')+'">' + d.replace(/\{doc_.*?\}/g,'') + '</span>';
+      return '<span class="link doc" data-id="'+ docs.pop().replace(/_/g, '-').replace(/,/g,' ')+'">' + d.replace(/\{doc_.*?\}/g,'') + '</span>';
     })
 
 
