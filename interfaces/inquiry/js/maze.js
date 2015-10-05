@@ -39,6 +39,8 @@
   maze.AUTHORIZATION_FAILED = 'AUTHORIZATION_FAILED';
   maze.AUTHORIZATION_SIGNUP = 'AUTHORIZATION_SIGNUP';
 
+  maze.AUTHORIZATION_SOS = 'AUTHORIZATION_SOS';
+
   maze.user = 'anonymous';
   maze.today = Date();
   maze.role = 'guest';

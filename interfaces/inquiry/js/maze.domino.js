@@ -86,6 +86,7 @@
           maze.AUTHORIZATION_AUTHORIZED,
           maze.AUTHORIZATION_FAILED,
           maze.AUTHORIZATION_SIGNUP,
+          maze.AUTHORIZATION_SOS
         ].indexOf(v);
       }
     });
@@ -646,6 +647,27 @@
           }
         },
         {
+          triggers: 'sos_require',
+          description: 'open sos process',
+          method: function() {
+            this.update('authorization', maze.AUTHORIZATION_SOS);
+          }
+        },
+        {
+          triggers: 'sos_dismiss',
+          description: 'close sos process and go back to login',
+          method: function() {
+            this.update('authorization', maze.AUTHORIZATION_REQUIRED);
+          }
+        },
+        {
+          triggers: 'sos_register',
+          description: 'send sos data',
+          method: function(res) {
+            this.request('sos', {data: res.data});
+          }
+        },
+        {
           triggers: 'data_book_updated',
           description: 'Initialize stuff when book is loaded.',
           method: function() {
@@ -935,9 +957,6 @@
           method: function(e) {
 
             var services = [
-              {
-                service: 'get_crossings'
-              },
               {
                 service: 'get_book'
               }
@@ -1791,6 +1810,22 @@
             console.log('activate user failed with ', message, xhr.status);
             location.href = location.pathname;
           }
+        },
+        {
+          id: 'sos',
+          type: 'POST',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.sos
+        },
+        {
+          id: 'reactivate',
+          type: 'POST',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.reactivate
         },
         {
           id: 'lang',
@@ -3148,6 +3183,7 @@
     maze.domino.controller.addModule( maze.domino.modules.More,null, {id:'more'});
     maze.domino.controller.addModule( maze.domino.modules.Login,null, {id:'login'});
     maze.domino.controller.addModule( maze.domino.modules.SignUp,null, {id:'signup'});
+    maze.domino.controller.addModule( maze.domino.modules.Sos,null, {id:'sos'});
     maze.domino.controller.addModule( maze.domino.modules.StickyText,null, {id:'sticky_text'});
     maze.domino.controller.addModule( maze.domino.modules.Location, null, {id:'location'});
     maze.domino.controller.addModule( maze.domino.modules.Resizor, null, {id:'resizor'});
