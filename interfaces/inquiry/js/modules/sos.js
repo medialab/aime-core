@@ -26,7 +26,7 @@
         dismiss();
       });
 
-      box.on('click', '[data-action=send]', function(e) {
+      box.on('click', '[data-action=confirm]', function(e) {
         e.preventDefault();
 
         var email = $('#email').val();
