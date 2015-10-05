@@ -11,6 +11,8 @@ $(document).ready(function() {
     logout: '/logout',
     signup: '/register',
     activate: '/activate/::token',
+    sos: '/sos',
+    reactivate: '/reactivate/::token',
     lang: '/lang/::lang',
 
     get_book: '/book',

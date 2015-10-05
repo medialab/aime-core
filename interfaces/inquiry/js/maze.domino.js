@@ -86,6 +86,8 @@
           maze.AUTHORIZATION_AUTHORIZED,
           maze.AUTHORIZATION_FAILED,
           maze.AUTHORIZATION_SIGNUP,
+          maze.AUTHORIZATION_SOS,
+          maze.AUTHORIZATION_RESET
         ].indexOf(v);
       }
     });
@@ -186,6 +188,13 @@
           dispatch: 'lang__updated',
           type: 'string',
           value: 'en'
+        },
+        {
+          id: 'token',
+          description: 'Password reset token',
+          dispatch: 'token__updated',
+          type: '?string',
+          value: null
         },
         /**
          * DATA RELATED PROPERTIES
@@ -582,10 +591,17 @@
           method: function() { //check location search. IS IT THE LAST HANDLER?
             var activation = maze.domino.parseQueryString(location.search.split('?').pop());
 
-            if(activation.token && activation.activate)
+            if(activation.token && activation.activate) {
               maze.domino.controller.dispatchEvent('user__activate', activation);
-            else
+            }
+            else if (activation.token && activation.resetPassword) {
+              maze.domino.controller.update('token', activation.token);
+              maze.domino.controller.update('authorization', maze.AUTHORIZATION_RESET);
+              maze.domino.controller.dispatchEvent('reset_require');
+            }
+            else {
               maze.domino.controller.dispatchEvent(['resize', 'scene__initialize']);
+            }
 
           }
         },
@@ -643,6 +659,34 @@
           description: 'send signup data',
           method: function(res) {
             this.request('signup', {data: res.data});
+          }
+        },
+        {
+          triggers: 'sos_require',
+          description: 'open sos process',
+          method: function() {
+            this.update('authorization', maze.AUTHORIZATION_SOS);
+          }
+        },
+        {
+          triggers: 'sos_dismiss',
+          description: 'close sos process and go back to login',
+          method: function() {
+            this.update('authorization', maze.AUTHORIZATION_REQUIRED);
+          }
+        },
+        {
+          triggers: 'sos_register',
+          description: 'send sos data',
+          method: function(res) {
+            this.request('sos', {data: {email: res.data}});
+          }
+        },
+        {
+          triggers: 'reset_register',
+          description: 'send reset data',
+          method: function(res) {
+            this.request('reactivate', {shortcuts: {token: this.get('token')}, data: {password: res.data}});
           }
         },
         {
@@ -935,9 +979,6 @@
           method: function(e) {
 
             var services = [
-              {
-                service: 'get_crossings'
-              },
               {
                 service: 'get_book'
               }
@@ -1790,6 +1831,35 @@
           error: function(message, xhr, params) {
             console.log('activate user failed with ', message, xhr.status);
             location.href = location.pathname;
+          }
+        },
+        {
+          id: 'sos',
+          type: 'POST',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.sos,
+          success: function(data, params) {
+            maze.toast( maze.i18n.translate('sent_reset'),{stayTime:10 * 1000} );
+          },
+          error: function() {
+            maze.toast( maze.i18n.translate('error_reset'),{stayTime:7 * 1000} );
+          }
+        },
+        {
+          id: 'reactivate',
+          type: 'POST',
+          before: function(params, xhr) {
+            xhr.withCredentials = true;
+          },
+          url: maze.urls.reactivate,
+          success: function(data, params) {
+            // Reloading the app
+            location.href = location.pathname;
+          },
+          error: function() {
+            maze.toast( maze.i18n.translate('reset_error'),{stayTime:5 * 1000} );
           }
         },
         {
@@ -3148,6 +3218,8 @@
     maze.domino.controller.addModule( maze.domino.modules.More,null, {id:'more'});
     maze.domino.controller.addModule( maze.domino.modules.Login,null, {id:'login'});
     maze.domino.controller.addModule( maze.domino.modules.SignUp,null, {id:'signup'});
+    maze.domino.controller.addModule( maze.domino.modules.Sos,null, {id:'sos'});
+    maze.domino.controller.addModule( maze.domino.modules.Reset, null, {id:'reset'});
     maze.domino.controller.addModule( maze.domino.modules.StickyText,null, {id:'sticky_text'});
     maze.domino.controller.addModule( maze.domino.modules.Location, null, {id:'location'});
     maze.domino.controller.addModule( maze.domino.modules.Resizor, null, {id:'resizor'});

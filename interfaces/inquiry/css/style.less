@@ -1489,7 +1489,9 @@ p {
 //  -o-transition: opacity 3s ease-in-out;
 // }
 
-#signup, #login{
+
+
+#signup, #login, #sos, #reset {
   position: fixed;
   top: 120px;
   left: 50%;
@@ -1528,6 +1530,18 @@ p {
     font-size: 13px;
     text-align: center;
     .font-feature()
+  }
+
+  .forgot-password {
+    text-align: center;
+
+    > a {
+      cursor: pointer;
+      font-size: 11px;
+      font-family: "NovelSansPro-Regular";
+      color: #000;
+      text-decoration: underline;
+    }
   }
 
   input {
@@ -1638,6 +1652,18 @@ p {
   }
 
 
+}
+
+#sos {
+  button.close{
+    position: absolute;
+    right: 16px;
+    top: 26px;
+    font-size: 14px;
+    background: none;
+    border: 0px transparent;
+    color: #1d1d1d;
+  }
 }
 
 
