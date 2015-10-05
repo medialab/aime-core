@@ -270,6 +270,11 @@
         3. extract links from data contents
       */
       for(var i in contents){
+
+        // ALEEEEERT! DIRTY!
+        if (contents[i].cited_by_voc)
+          inlinks.vocab = inlinks.vocab.concat(contents[i].cited_by_voc);
+
         if( !contents[i].inlinks )
           continue;
 
@@ -381,7 +386,7 @@
           _columns.doc.empty({
             delay:200
           });
-          
+
           _self.dispatchEvent('sticky_hide');
 
           _columns.text.hide({
@@ -441,8 +446,8 @@
                     _columns.voc.show({});
 
                     var matching_paragraphs = controller.get('data_vocContents')[+term_id].cited_by;
-                    
-                    
+
+
                     _self.dispatchEvent( 'setup_voc_as_leader extract_inlinks sticky_show' ); // scrolling_voc will be triggered by extract_inlinks trigger
                     _self.dispatchEvent( 'text_match_highlight', {
                       matching_paragraphs: matching_paragraphs,
@@ -492,7 +497,31 @@
                       args:[ doc,{
                         callback:function(){
                           var matching_paragraphs = controller.get('data_docContents')[+doc_id].cited_by;
-                          
+
+                          // ALEEEEERT! DIRTY!
+                          setTimeout(function() {
+                            var matching_vocs = controller.get('data_docContents')[+doc_id].cited_by_voc;
+                            if (!matching_vocs.length)
+                              return;
+
+                            maze.domino.controller.request('get_vocabulary_item', {
+                              shortcuts: {ids: matching_vocs.map(function(v) { return 'voc_' + v; })},
+                              success: function(data) {
+                                var vocs = data.result,
+                                    index = {};
+
+                                vocs.forEach(function(v) {
+                                  index[v.slug_id] = v;
+                                });
+
+                                setTimeout(function() {
+                                  maze.domino.controller.update('data_vocContents', index);
+                                  maze.domino.controller.update('data_vocIdsArray', vocs.map(function(v) { return v.slug_id; }));
+                                }, 0);
+                              }
+                            });
+                          }, 10);
+
                           _self.dispatchEvent( 'fill_references extract_inlinks sticky_show' ); // scrolling_voc will be triggered by extract_inlinks trigger
                           _self.dispatchEvent( 'slider_init',{
                             selector:doc,
@@ -520,7 +549,7 @@
           // remove except, set element to open
           break;
 
-        
+
       }
 
       _columns.text.toggle_shadow();

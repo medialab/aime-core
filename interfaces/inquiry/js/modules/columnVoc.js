@@ -49,7 +49,7 @@
         $(".term.glossary").removeClass("glossary");
 
 
-        
+
         maze.log(glossary.length);
         for(var i=0; i < glossary.length; i++) {
           var options = {};
@@ -93,7 +93,7 @@
       var query = controller.get('scene_query');
       // alert(query);
       _self.box.highlight(query);
-      
+
     }
     /*
 
@@ -201,7 +201,7 @@
 
     };
 
-    
+
     this.set_leader = function(event){
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -226,7 +226,7 @@
     };
 
 
-    
+
 
     /*
 

@@ -48,7 +48,7 @@ module.exports = [
     methods: ['POST'],
     action: function(req, res) {
       model.create(req.body, function(err, user) {
-        if (/already exists.*email/.test(err.message)) return res.badRequest('duplicateEmail');
+        if (err && /already exists.*email/.test(err.message)) return res.badRequest('duplicateEmail');
         if (err) return res.serverError(err);
 
         // Sending the mail
