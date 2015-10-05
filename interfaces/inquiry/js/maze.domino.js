@@ -86,7 +86,8 @@
           maze.AUTHORIZATION_AUTHORIZED,
           maze.AUTHORIZATION_FAILED,
           maze.AUTHORIZATION_SIGNUP,
-          maze.AUTHORIZATION_SOS
+          maze.AUTHORIZATION_SOS,
+          maze.AUTHORIZATION_RESET
         ].indexOf(v);
       }
     });
@@ -187,6 +188,13 @@
           dispatch: 'lang__updated',
           type: 'string',
           value: 'en'
+        },
+        {
+          id: 'token',
+          description: 'Password reset token',
+          dispatch: 'token__updated',
+          type: '?string',
+          value: null
         },
         /**
          * DATA RELATED PROPERTIES
@@ -583,10 +591,17 @@
           method: function() { //check location search. IS IT THE LAST HANDLER?
             var activation = maze.domino.parseQueryString(location.search.split('?').pop());
 
-            if(activation.token && activation.activate)
+            if(activation.token && activation.activate) {
               maze.domino.controller.dispatchEvent('user__activate', activation);
-            else
+            }
+            else if (activation.token && activation.resetPassword) {
+              maze.domino.controller.update('token', activation.token);
+              maze.domino.controller.update('authorization', maze.AUTHORIZATION_RESET);
+              maze.domino.controller.dispatchEvent('reset_require');
+            }
+            else {
               maze.domino.controller.dispatchEvent(['resize', 'scene__initialize']);
+            }
 
           }
         },
@@ -665,6 +680,13 @@
           description: 'send sos data',
           method: function(res) {
             this.request('sos', {data: {email: res.data}});
+          }
+        },
+        {
+          triggers: 'reset_register',
+          description: 'send reset data',
+          method: function(res) {
+            this.request('reactivate', {shortcuts: {token: this.get('token')}, data: {password: res.data}});
           }
         },
         {
@@ -1831,7 +1853,14 @@
           before: function(params, xhr) {
             xhr.withCredentials = true;
           },
-          url: maze.urls.reactivate
+          url: maze.urls.reactivate,
+          success: function(data, params) {
+            // Reloading the app
+            location.href = location.pathname;
+          },
+          error: function() {
+            maze.toast( maze.i18n.translate('reset_error'),{stayTime:5 * 1000} );
+          }
         },
         {
           id: 'lang',
@@ -3190,6 +3219,7 @@
     maze.domino.controller.addModule( maze.domino.modules.Login,null, {id:'login'});
     maze.domino.controller.addModule( maze.domino.modules.SignUp,null, {id:'signup'});
     maze.domino.controller.addModule( maze.domino.modules.Sos,null, {id:'sos'});
+    maze.domino.controller.addModule( maze.domino.modules.Reset, null, {id:'reset'});
     maze.domino.controller.addModule( maze.domino.modules.StickyText,null, {id:'sticky_text'});
     maze.domino.controller.addModule( maze.domino.modules.Location, null, {id:'location'});
     maze.domino.controller.addModule( maze.domino.modules.Resizor, null, {id:'resizor'});

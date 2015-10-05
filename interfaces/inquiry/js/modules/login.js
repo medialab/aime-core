@@ -71,6 +71,9 @@
           _self.dispatchEvent('scene__initialize');
           box.hide();
           break;
+        case maze.AUTHORIZATION_RESET:
+          box.hide();
+          break;
         default:
           box.hide();
           break;

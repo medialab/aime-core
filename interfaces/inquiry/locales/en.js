@@ -129,6 +129,11 @@ maze.i18n.dict.en = {
   "contact_link": "contact",
   "forgot_password": "forgot password?",
   "password_reset": "password reset",
+  "reset_invalid": "both entries do not match",
+  "reset_error": "Could not reset the password. Maybe you already reset it.",
+  "new_password": "new password",
+  "confirm": "confirm",
+  "repeat_password": "repeat the password",
   "send_reset": "reset",
   "sent_reset": "The password reset form was successfully sent. Check your email box.",
   "error_reset": "The password reset form could not be sent to this email address. Either the account does not exist or a reset form has already been sent."
