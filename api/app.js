@@ -147,7 +147,8 @@ app.get('/stats', function(req, res) {
       contributions: stats.map(function(row) {
         return {
           author: {
-            name: row.user.name + ' ' + row.user.surname
+            name: row.user.name,
+            surname: row.user.surname
           },
           title: row.document.title,
           lang: row.document.lang,
