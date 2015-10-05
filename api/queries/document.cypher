@@ -75,6 +75,9 @@ ORDER BY d.date DESC, d.title ASC
 OPTIONAL MATCH (d)<-[:CITES]-(bp:Paragraph)<-[:HAS]-(:Subheading)
 WITH d, a, aggregatedSlides, collect(id(bp)) AS bpids
 
+OPTIONAL MATCH (d)<-[:CITES]-(:Paragraph)<-[:HAS]-(v:Vocabulary)
+WITH d, a, aggregatedSlides, bpids, collect(v.slug_id) AS vpids
+
 RETURN {
   document: {
     id: id(d),
@@ -83,7 +86,8 @@ RETURN {
       name: a.name,
       surname: a.surname
     },
-    cited_by: bpids
+    cited_by: bpids,
+    cited_by_voc: vpids
   },
   children: aggregatedSlides
 } AS item;
@@ -120,6 +124,9 @@ ORDER BY d.date DESC, d.title ASC
 OPTIONAL MATCH (d)<-[:CITES]-(bp:Paragraph)<-[:HAS]-(:Subheading)
 WITH d, a, aggregatedSlides, collect(id(bp)) AS bpids
 
+OPTIONAL MATCH (d)<-[:CITES]-(:Paragraph)<-[:HAS]-(v:Vocabulary)
+WITH d, a, aggregatedSlides, bpids, collect(v.slug_id) AS vpids
+
 RETURN {
   document: {
     id: id(d),
@@ -128,7 +135,8 @@ RETURN {
       name: a.name,
       surname: a.surname
     },
-    cited_by: bpids
+    cited_by: bpids,
+    cited_by_voc: vpids
   },
   children: aggregatedSlides
 } AS item
