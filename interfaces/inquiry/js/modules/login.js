@@ -6,8 +6,8 @@
   maze.domino.modules.Login = function() {
     domino.module.call(this);
 
-    var _self = this, 
-        box;  
+    var _self = this,
+        box;
 
     var validation = {
         'email': {
@@ -37,14 +37,19 @@
         preventDefault: true
       });
 
-      
+
 
       box.on('click', '[data-action=signup]', function(e) {
         box.hide();
         _self.dispatchEvent('signup_require');
 
       });
-      
+
+      box.on('click', '[data-action=sos]', function(e) {
+        box.hide();
+        _self.dispatchEvent('sos_require');
+      });
+
     };
 
     /*
@@ -53,7 +58,7 @@
 
     this.triggers.events.authorization__updated = function(controller, res) {
       var level = controller.get('authorization');
-      
+
       switch(level) {
         case maze.AUTHORIZATION_REQUIRED:
           box.show();
@@ -71,10 +76,10 @@
           break;
       }
       _self.log('@authorization__updated with', level);
-      
+
     };
 
 
-      
+
   };
 })();

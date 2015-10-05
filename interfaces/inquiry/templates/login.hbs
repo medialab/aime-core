@@ -8,17 +8,20 @@
           <span>{{t 'login'}}</span>
           <span id="error-email" class="invalid"></span>
         </label>
-        
+
         <input id="email" type="text" placeholder="email address">
       </p>
       <p>
         <label>{{t 'password'}}</label>
         <input id="password" type="password" placeholder="password">
       </p>
-      
+
       <!-- button>{{t 'forgotten_password'}}</button -->
       <div class="actions">
-        <div class="line"></div>
+        <div class="forgot-password">
+          <a data-action="sos">{{t 'forgot_password'}}</a>
+        </div>
+        <div class="line" style="margin-top: 10px;"></div>
 
           <table cellspacing="0">
             <tr>
