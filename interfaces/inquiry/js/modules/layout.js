@@ -270,6 +270,11 @@
         3. extract links from data contents
       */
       for(var i in contents){
+
+        // ALEEEEERT! DIRTY!
+        if (contents[i].cited_by_voc)
+          inlinks.vocab = inlinks.vocab.concat(contents[i].cited_by_voc);
+
         if( !contents[i].inlinks )
           continue;
 
