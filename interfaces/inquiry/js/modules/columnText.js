@@ -1217,7 +1217,7 @@
     maze.on("click", "#column-text.closed .chapter",  _closed.open );
 
     maze.on("click", ".star.bookmark", function(e){
-        $(this).find('i').toggleClass("fa-star-o").toggleClass("fa-star");
+        $(this).find('i.fa').toggleClass("fa-star-o").toggleClass("fa-star");
         var isBookmarked = e.currentTarget.getAttribute("bookmarked");
 
         if(isBookmarked === "true"){

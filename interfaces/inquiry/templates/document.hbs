@@ -220,18 +220,20 @@
 
     {{#if children.length}}
     <div class='slides-box'>
-      <div class="slides-nav">
-        <div class="left"><i class="fa fa-angle-left"></i></div>
-        <div class="right"><i class="fa fa-angle-right"></i></div>
-        <div class="nav-wrapper">
-          <div class="placeholders">
-            <div class="placeholder" data-index="0" style="position:absolute;display:block;left:0%;width:100%;"></div>
-          </div>
-          <div class="cursors">
-            <div class="cursor" style="width:50%;"></div>
+      {{#if_gt children.length compare=1}}
+        <div class="slides-nav">
+          <div class="left"><i class="fa fa-angle-left"></i></div>
+          <div class="right"><i class="fa fa-angle-right"></i></div>
+          <div class="nav-wrapper">
+            <div class="placeholders">
+              <div class="placeholder" data-index="0" style="position:absolute;display:block;left:0%;width:100%;"></div>
+            </div>
+            <div class="cursors">
+              <div class="cursor" style="width:50%;"></div>
+            </div>
           </div>
         </div>
-      </div>
+      {{/if_gt}}
       <div class='slides-wrapper {{#if_gt children.length compare=1}}with-navigation{{/if_gt}}' data-length="{{children.length}}">
 
         {{#foreach children}}
