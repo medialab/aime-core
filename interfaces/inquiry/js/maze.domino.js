@@ -1598,6 +1598,11 @@
               success: function(data) {
                 var services = [];
 
+                this.update('data_search_bookIdsArray', data.result.book);
+                setTimeout(function() {
+                  maze.domino.controller.dispatchEvent('text_matches_highlight', {ids: data.result.book});
+                }, 500);
+
                 if (data.result.voc.length) {
                   services.push({
                     service: 'get_vocabulary_item',
@@ -1611,18 +1616,16 @@
                     shortcuts: {ids: data.result.doc}
                   });
                 }
-
-                this.request(services, {
-                  success: function() {
-                    maze.domino.controller.dispatchEvent('unlock');
-                    maze.domino.controller.dispatchEvent('scrolling_text sticky_show');
-                  }
-                });
-
-                this.update('data_search_bookIdsArray', data.result.book);
-                setTimeout(function() {
-                  maze.domino.controller.dispatchEvent('text_matches_highlight', {ids: data.result.book});
-                }, 300);
+                if (data.result.doc.length || data.result.voc.length) {
+                  this.request(services, {
+                    success: function() {
+                      maze.domino.controller.dispatchEvent('unlock');
+                      maze.domino.controller.dispatchEvent('scrolling_text sticky_show');
+                    }
+                  });
+                }else{
+                  setTimeout(function() { maze.domino.controller.dispatchEvent('unlock') }, 500);
+                }
               }
             });
 
@@ -3208,7 +3211,7 @@
           description: 'retrieve the notebook',
           before: function(params, xhr) {
             xhr.withCredentials = true;
-          }
+          },
         }
       ]
     });
