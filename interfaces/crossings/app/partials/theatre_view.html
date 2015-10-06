@@ -84,7 +84,6 @@
 			<div class="text" ng-bind-html="textify(p.text,true,true,true,null,true)"></div>
 		</div>
 
-
 		<!-- /////////////////////////////////////// DOC -->
 		<div
 			ng-if="c.cat=='doc' || c.cat=='cont'"
@@ -131,11 +130,13 @@
 						frameborder="0"
 						webkitallowfullscreen mozallowfullscreen allowfullscreen>
 					</iframe>
+
+
 				</div>
 			</div>
 
 			<div ng-switch-when="video" class="row">
-				<div class="paragraph" ng-bind-html="m.iframe">
+				<div class="paragraph video" ng-bind-html="m.iframe">
 				</div>
 			</div>
 
