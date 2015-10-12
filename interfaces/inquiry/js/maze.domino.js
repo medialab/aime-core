@@ -1205,6 +1205,10 @@
           description:'remove all ".match" css classes in <span class="link"> elements'
         },
         {
+          triggers: 'match_clear',
+          description: 'remove highlights from search.'
+        },
+        {
           triggers: 'highlight_matches', // generic match higlight
           description:'activate highlight on searched query.'
         },

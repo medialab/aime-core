@@ -94,7 +94,16 @@
       // alert(query);
       _self.box.highlight(query);
 
+      $('#column-voc .content > p:not(:has(.highlight))').each(function() {
+        $(this).closest('.paragraph').addClass('no-highlight').hide();
+      });
     }
+
+    this.triggers.events.match_clear = function(controller) {
+      setTimeout(function() {
+        $('.no-highlight').removeClass('no-highlight').show();
+      }, 500);
+    };
     /*
 
       Mouse handling functions

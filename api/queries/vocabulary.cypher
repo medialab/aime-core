@@ -89,8 +89,11 @@ RETURN {
 
 // name: search
 // Search for a precise string in a LIKE manner across vocabulary items
-MATCH (v:Vocabulary)-[r:HAS]-(p:Paragraph)
+MATCH (v:Vocabulary)-[:HAS]-(p:Paragraph)
 WHERE (v.title =~ {query} OR p.text =~ {query}) AND v.lang = {lang}
+WITH v
+
+MATCH (v)-[r:HAS]-(p:Paragraph)
 OPTIONAL MATCH (v)-[:CITES]-(bp:Paragraph)<-[:HAS]-(:Subheading)
 
 WITH v, r, {

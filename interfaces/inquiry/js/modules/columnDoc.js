@@ -68,6 +68,8 @@
           contents = controller.get('data_docContents');
       _self.box.highlight(query);
 
+      $('.author').closest('.paragraph').show();
+
       //_self.box.find('.highlight').each(function(d, i) {
       //  $(this).closest('.paragraph').addClass('match');
       //})

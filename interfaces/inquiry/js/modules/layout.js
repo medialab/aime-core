@@ -298,6 +298,7 @@
       _self.dispatchEvent([
         'lock',
         'text_match_clear',
+        'match_clear',
         'unomissify',
         // 'delete_contribution',
         'slider_disable',

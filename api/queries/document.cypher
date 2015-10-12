@@ -212,7 +212,7 @@ RETURN {
 
 // name: search
 // Search for a precise string in a LIKE manner across documents
-MATCH (a:User)<-[:CREATED_BY]-(d:Document)-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
+MATCH (a:User)<-[:CREATED_BY]-(d:Document)-[rs:HAS]->(s:Slide)-[re:HAS]->(e)
 WHERE d.status = "public" OR id(a) = {user_id}
 OPTIONAL MATCH (e)<-[:DESCRIBES]-(r:Reference)
 WITH a, d, rs, s, re, e, r
