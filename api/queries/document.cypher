@@ -212,10 +212,10 @@ RETURN {
 
 // name: search
 // Search for a precise string in a LIKE manner across documents
-MATCH (a:User)<-[:CREATED_BY]-(d:Document)-[rs:HAS]->(s:Slide)-[re:HAS]->(e)
+MATCH (a:User)<-[:CREATED_BY]-(d:Document)-[:HAS]->(:Slide)-[:HAS]->(e)
 WHERE d.status = "public" OR id(a) = {user_id}
 OPTIONAL MATCH (e)<-[:DESCRIBES]-(r:Reference)
-WITH a, d, rs, s, re, e, r
+WITH a, d, e, r
 WHERE (
   d.title =~ {query} OR
   e.text =~ {query} OR
@@ -223,6 +223,11 @@ WHERE (
   (a.surname + " " + a.name) =~ {query} OR
   (r IS NOT NULL AND r.text =~ {query})
 ) AND d.lang = {lang}
+
+WITH d
+MATCH (a:User)<-[:CREATED_BY]-(d)-[rs:HAS]->(s:Slide)-[re:HAS]->(e)
+WHERE d.status = "public" OR id(a) = {user_id}
+OPTIONAL MATCH (e)<-[:DESCRIBES]-(r:Reference)
 
 WITH e, d, a, s, rs, re, head(collect(r)) AS ref
 
