@@ -21,7 +21,7 @@ var jsFiles = [
   './js/lib/domino.min.js',
   './js/lib/marked.min.js',
   './js/lib/jquery.easing.min.js',
-  './js/lib/jquery.highlight.min.js',
+  './js/lib/jquery.highlight.js',
   './js/lib/jquery.ba-bbq.js',
   './js/lib/jquery.toastmessage.js',
   './js/lib/slimScroll.min.js',
