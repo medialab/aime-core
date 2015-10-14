@@ -58,7 +58,7 @@ module.exports = new Typology({
 
   // Possible shortened model
   model: function(v) {
-    return !!~['bsc', 'voc', 'doc'].indexOf(v);
+    return !!~['bsc', 'voc', 'doc', 'cont'].indexOf(v);
   },
 
   // Mode
