@@ -76,6 +76,11 @@ module.exports = new Typology({
     return /^[A-Z]{2,3}(-[A-Z]{2,3})?$/.test(v);
   },
 
+  // Mode or crossing but case insensitive
+  modecrossCI: function(v) {
+    return /^[A-Z]{2,3}(-[A-Z]{2,3})?$/i.test(v);
+  },
+
   // List of slug ids
   slugs: function(v) {
     return (v instanceof Array) &&

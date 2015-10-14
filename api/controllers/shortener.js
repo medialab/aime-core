@@ -85,11 +85,11 @@ module.exports = [
     url: '/:lang/voc/:modecross',
     validate: {
       lang: 'lang',
-      modecross: 'modecross'
+      modecross: 'modecrossCI'
     },
     action: function(req, res) {
       var lang = req.params.lang,
-          modecross = req.params.modecross;
+          modecross = req.params.modecross.toLowerCase();
 
       // Retrieving the correct vocabulary
       return db.query(queries.getModecrossVoc, {modecross: modecross, lang: lang}, function(err, result) {
