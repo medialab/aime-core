@@ -27,7 +27,6 @@ var jsFiles = [
   './js/lib/slimScroll.min.js',
   './js/lib/jquery.nanoscroller.min.js',
   './js/lib/form-validation.js',
-  './js/lib/pdf.js',
   './js/lib/jquery.pidif.js',
   './js/lib/handlebars.runtime.min.js',
   './js/maze.js',
