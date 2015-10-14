@@ -4,10 +4,11 @@
   "description": "An inquiry into modes of existences.",
   "main": "index.js",
   "scripts": {
-    "migrate": "node ./scripts/migrate.js && node ./scripts/biblib.js",
+    "biblib": "node ./scripts/biblib.js",
+    "migrate": "node ./scripts/migrate.js && npm run biblib",
+    "prod": "NODE_ENV=prod && pm2 start --name \"aime-api\" --node-args=\"--harmony\" ./scripts/start.js",
     "test": "mocha -R spec ./test/endpoint.js",
-    "start": "node --harmony ./scripts/start.js",
-    "biblib": "node ./scripts/biblib.js"
+    "start": "node --harmony ./scripts/start.js"
   },
   "repository": {
     "type": "git",
@@ -45,7 +46,8 @@
   },
   "license": "LGPL-3.0",
   "devDependencies": {
-    "mocha": "^2.0.1"
+    "mocha": "^2.0.1",
+    "pm2": "^0.15.7"
   },
   "dependencies": {
     "accept-language": "^2.0.13",
