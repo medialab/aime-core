@@ -152,6 +152,12 @@ pm2 start --node-args='--harmony' ./scripts/start.js
 
 Don't forget to set `NODE_ENV` to `prod` also.
 
+You can also use the following npm script:
+
+```bash
+npm run prod
+```
+
 ## Misc information
 
 ### Folder Structure
