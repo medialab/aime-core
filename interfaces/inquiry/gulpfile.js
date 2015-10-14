@@ -63,7 +63,8 @@ var jsFiles = [
   './js/maze.move.text.js',
   './js/maze.move.voc.js',
   './js/markdown.parser.js',
-  './js/handlebars.helpers.js'
+  './js/handlebars.helpers.js',
+  './js/stat.js'
 ];
 
 var coda = [
