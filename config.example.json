@@ -45,10 +45,6 @@
   "mail": {
     "host": "localhost",
     "port": 25,
-    "secure": false,
-    "tls": {
-      "rejectUnauthorized": false
-    },
     "from": "contact@modesofexistence.org"
   }
 }
