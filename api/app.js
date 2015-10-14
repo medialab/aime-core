@@ -65,13 +65,12 @@ function loadController(routes, auth, additionalMiddlewares) {
 var app = express();
 
 // Cross origin
-// app.use(cors({
-//   credentials: true,
-//   origin: function(origin, next) {
-//     return next(null, !!~config.allowedOrigins.indexOf(origin));
-//   }
-// }));
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: function(origin, next) {
+    return next(null, !!~config.allowedOrigins.indexOf(origin));
+  }
+}));
 
 // Log
 app.use(morgan('dev'));
