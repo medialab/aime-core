@@ -25,7 +25,6 @@ function teardown() {
 }
 
 const SEQ = [
-  // 'indexation',
   'book',
   'contributions',
   'uploads',
