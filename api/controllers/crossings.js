@@ -45,8 +45,18 @@ var MODES_ORDER = {
   ]
 };
 
-// TODO: authenticate (free for now for dev reasons)
-// TODO: check validity of crossing/mode
+// Translation helper
+function translate(m) {
+  if (m === 'NET')
+    return 'RES';
+  else if (m === 'LAW')
+    return 'DRO';
+  return m.replace(/NET-/, 'RES-')
+          .replace(/LAW-/, 'DRO-')
+          .replace(/-NET/, '-RES')
+          .replace(/-LAW/, '-DRO');
+}
+
 module.exports = [
 
   // Retrieve the interface's configuration
@@ -73,7 +83,9 @@ module.exports = [
       modecross: 'modecross'
     },
     action: function(req, res) {
-      model.getRelatedToModecross(req.lang, req.params.modecross, function(err, result) {
+      var modecross = translate(req.params.modecross);
+
+      model.getRelatedToModecross(req.lang, modecross, function(err, result) {
         if (err) return res.serverError(err);
 
         return res.ok(result);
