@@ -36,7 +36,7 @@
       this.init = function(options){
         $.extend(_self.settings, options);
         maze.log('(Slider) SliderItem.init:', _self.settings);
-        
+
         _self.target  = $(_self.settings.selector);
 
 
@@ -48,7 +48,7 @@
         _self.left = _self.nav.find('.left');
         _self.right = _self.nav.find('.right');
 
-        _self.howmany  = _self.wrapper.find(".slide").length; 
+        _self.howmany  = _self.wrapper.find(".slide").length;
         _self.cursor  = _self.wrapper.attr('data-current-index') || _self.settings.slide; // initial slide
 
         if(_self.settings.slides.length)
@@ -68,7 +68,7 @@
 
 
       this.adjust = function() { maze.log('(Slider) SliderItem.adjust, length:',_self.howmany);
-          
+
         var placeholders = [];
 
         for(var i=0; i<_self.howmany; i++) {
@@ -95,11 +95,11 @@
           maze.log('(Slider) SliderItem.moveto, unable to moveto! received:',index,'- is enabled:',_self.is_enabled);
           return;
         }
-          
+
         var cursor = index < 0? 0: index > _self.howmany-1? _self.howmany-1: index, // normalize curor
             distance = Math.abs(cursor - _self.cursor),
             slide = _self.wrapper.find('.slide[data-index=' + cursor +']'),
-            slide_height = slide.length? slide.height() + 30: 0;
+            slide_height = slide.length ? slide.height() + 30 : 0;
 
         maze.log('(Slider) SliderItem.moveto, received:',index,'- cursor:', cursor, '- n.slides:', _self.howmany);
 
@@ -116,7 +116,7 @@
         else
           maze.move.fadein(_self.right);
 
-        
+
 
         slide_height > 0 &&
           _self.wrapper.closest('.slides-box').stop().animate({
@@ -134,7 +134,7 @@
           duration: 550,
           queue: false
         });
-      
+
         _self.navcur.animate({
           left: (_self.cursor/_self.howmany * 100) + '%'
         },{
@@ -166,7 +166,7 @@
       this.onscroll = function(event) {
         var diff = _self.wrapper.offset().top - _self.title[0].scrollHeight - 100,
           offset = diff < 0? -diff: 0;
-      
+
         offset != _self.previous_offset && _self.nav.css({ top: offset });
         _self.previous_offset = offset;
       }; // endof onscroll
@@ -229,7 +229,7 @@
         _self.wrapper
           .append(slide)
           .attr('data-length', _self.howmany);
-        
+
         _self.adjust();
         _self.enable();
         _self.show();
@@ -270,22 +270,25 @@
       maze.log('(Slider) @slider_init, selector:', name);
       if(sliders[name])
         delete sliders[name];
-      
+
       sliders[name] = new SliderItem(event.data);
     };
 
 
     this.triggers.events.execute_slider_to = function(controller, event) {
       maze.log('(Slider) @execute_slider_to, selector:', event.data.selector);
-      
-      sliders[event.data.selector] &&
+
+      setTimeout(function(){
+          sliders[event.data.selector] &&
         sliders[event.data.selector].moveto(event.data.index);
+      },100);
+
     };
 
 
     this.triggers.events.slider_add_slide =function(controller, event) {
       maze.log('(Slider) @slider_add_slide, selector:', event.data.selector);
-      
+
       sliders[event.data.selector] &&
         sliders[event.data.selector].add_slide(event.data);
     };
@@ -297,7 +300,7 @@
     */
     this.triggers.events.slider_remove_slide = function(controller, event) {
       maze.log('(Slider) @slider_remove_slide, selector:', event.data.selector);
-      
+
       sliders[event.data.selector] &&
         sliders[event.data.selector].remove_slide(event.data);
     };
