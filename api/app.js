@@ -81,7 +81,10 @@ var sessionOptions = {
   secret: config.secret,
   trustProxy: false,
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 365 * 24 * 60 * 60 * 1000
+  }
 };
 
 // Utilities
