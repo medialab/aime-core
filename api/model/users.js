@@ -7,6 +7,7 @@ var db = require('../connection.js'),
     uuid = require('uuid'),
     queries = require('../queries.js').user,
     hash = require('../../lib/encryption.js').hash,
+    helpers = require('../helpers.js'),
     _ = require('lodash');
 
 var keep = [
@@ -43,7 +44,8 @@ module.exports = {
       role: 'user',
       type: 'user',
       token: uuid.v4(),
-      password: hash(properties.password)
+      password: hash(properties.password),
+      date: helpers.now()
     });
 
     db.query(queries.create, {properties: properties}, function(err, results) {
