@@ -48,6 +48,11 @@ module.exports = {
       date: helpers.now()
     });
 
+    for (var k in properties) {
+      if (properties[k] === '')
+        delete properties[k];
+    }
+
     db.query(queries.create, {properties: properties}, function(err, results) {
       if (err) return callback(err);
 
