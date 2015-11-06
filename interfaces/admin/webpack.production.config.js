@@ -12,7 +12,6 @@ module.exports = {
     library: 'app'
   },
   module: {
-    noParse: /djax-client/,
     loaders: [
 
       // ES6 and jsx

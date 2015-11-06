@@ -19,7 +19,6 @@ module.exports = {
     new webpack.NoErrorsPlugin()
   ],
   module: {
-    noParse: /djax-client/,
     loaders: [
 
       // ES6 and jsx
