@@ -152,11 +152,15 @@ class ListPanel extends PureComponent {
  */
 @branch({
   facets(props) {
-    if(props.model === "doc") return { parsed: props.model + 'Parsed'};
-    else return {};
+    if (props.model === "doc") {
+      return { parsed: props.model + 'Parsed'};
+    } else {
+      return {};
+    }
   },
   cursors(props) {
     return {
+      users: ['data', 'users'],
       buffer: ['states', props.model, 'editor'],
       title: [ 'states', props.model, 'title'],
       saving: ['states', props.model, 'saving']
@@ -184,6 +188,7 @@ class EditorPanel extends PureComponent {
 
           {this.props.model === "doc" ?
           <Editor model={model}
+                  users={this.props.users}
                   buffer={this.props.buffer}
                   title={this.props.title}
                   parsed={this.props.parsed}

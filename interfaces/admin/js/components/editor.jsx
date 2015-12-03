@@ -69,7 +69,6 @@ export default class Editor extends PureComponent {
 
   render() {
     const {vocs, docs, vocItems=[], docItems=[]} = this.props.parsed.data;
-
     return (
       <div className="full-height">
         <div className="editor-container">
