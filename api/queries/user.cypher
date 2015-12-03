@@ -35,3 +35,9 @@ MATCH (u:User {reset_token: {token}})
 SET u.password = {hash}
 REMOVE u.reset_token
 RETURN u;
+
+// name: all
+// Return list of all users
+MATCH (u:User)
+WHERE u.active = true
+RETURN u;
