@@ -8,6 +8,7 @@
 var docModel = require('../model/document.js'),
     resModel = require('../model/resource.js'),
     types = require('../typology.js'),
+    usersModel = require('../model/users.js'),
     _ = require('lodash');
 
 // Forge
@@ -21,6 +22,19 @@ function createResource(kind) {
 }
 
 module.exports = [
+
+// Users
+  {
+    url: '/users',
+    methods: ['GET'],
+    action: function(req, res) {
+      return usersModel.all(function(err, results) {
+        if (err) res.serverError(err);
+
+        return res.ok(results);
+      });
+    }
+  },
 
   // Documents
   {
