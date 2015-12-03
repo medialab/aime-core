@@ -79,6 +79,9 @@ export default class Editor extends PureComponent {
                         onChange={(e) => this.context.tree.emit('title:change', {model: this.props.model, title: e.target.value})}
                         placeholder="title" className="form-control" />
               </div>
+              <div className="form-group">
+                <input placeholder="author" className="form-control" />
+              </div>
             }
             { this.props.model === "book" &&
               <div className="form-group">
