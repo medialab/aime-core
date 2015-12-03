@@ -38,6 +38,5 @@ RETURN u;
 
 // name: all
 // Return list of all users
-MATCH (u:User)
-WHERE u.active = true
+MATCH (u:User {active: true})
 RETURN u;
