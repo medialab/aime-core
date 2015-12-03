@@ -93,6 +93,14 @@ export default function(scope) {
         }
       },
 
+      // All users
+      users: {
+        url: '/users',
+        success: function({result}) {
+          this.set(['data', 'users'], result);
+        }
+      },
+
       // Creating a document
       createDoc: {
         url: '/doc',
