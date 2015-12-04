@@ -79,9 +79,9 @@ export default class Editor extends PureComponent {
                         onChange={(e) => this.context.tree.emit('title:change', {model: this.props.model, title: e.target.value})}
                         placeholder="title" className="form-control" />
               </div>
-              <div className="form-group">
-                <input placeholder="author" className="form-control" />
-              </div>
+            }
+            { this.props.model === "doc" &&
+              <EditorAuthor users={this.props.users} />
             }
             { this.props.model === "book" &&
               <div className="form-group">
@@ -127,6 +127,37 @@ class EditorEntity extends PureComponent {
     return (
       <div className="entity">
         {`(${this.props.slug}) ${data.title}`}
+      </div>
+    );
+  }
+}
+
+/**
+ * Author search input
+ */
+class EditorAuthor extends PureComponent {
+  changeHandler(e) {
+    const users = this.props.users;
+    const i = e.target.value;
+
+    if (i.length < 2) return [];
+
+    const matches = _.filter(users, (user) => {
+      return (
+        user.surname.toLowerCase().includes(i) ||
+        user.name.toLowerCase().includes(i)
+      );
+    });
+    console.log(matches);
+  }
+
+  render() {
+    return (
+      <div className="form-group author">
+        <input type="text"
+               placeholder="author …"
+               className="form-control"
+               onChange={this.changeHandler.bind(this)} />
       </div>
     );
   }
