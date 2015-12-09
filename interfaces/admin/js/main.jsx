@@ -14,6 +14,7 @@ import router from './router.js';
 import lodash from 'lodash';
 
 // Style
+require('!style!css!less!react-select/less/default.less');
 require('!style!css!less!../style/app.less');
 
 // Composing tree

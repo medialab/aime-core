@@ -69,6 +69,10 @@
   font-size: 2em;
   margin-top: 4em;
 }
+.box-shadow (@args) {
+  -webkit-box-shadow: @args;
+  box-shadow: @args;
+}
 
 /*
  * Globals
@@ -268,7 +272,10 @@ textarea {
  * Editor
  */
 
- .CodeMirror-scroll {
+.CodeMirror {
+  z-index: 0;
+}
+.CodeMirror-scroll {
     .ligned;
     line-height: @m*2;
 }
@@ -347,6 +354,50 @@ textarea {
   .video {
     .embed-responsive();
     .embed-responsive-16by9()
+  }
+}
+
+.editor-container {
+  .form-group {
+    margin-bottom: 12px;
+  }
+}
+
+.author {
+  z-index: 1;
+
+  .Select {
+    border: none;
+    border-radius: @border-radius-base;
+    width: 100%;
+    height: 48px;
+    padding: 0;
+    line-height: 1.42857143;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 0px;
+    .box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075));
+    .transition(border-color .15s);
+
+    &:focus {
+      color: #333;
+      border-color: #949494;
+      outline: 0;
+    }
+
+    .Select-control {
+      border-radius: 0;
+      height: 48px;
+    }
+
+    .Select-placeholder, .Select-input {
+      min-height: @m*4;
+      line-height: @m*4;
+    }
+
+    .Select-menu-outer {
+      border-radius: 0;
+    }
   }
 }
 
