@@ -5,9 +5,11 @@
  * Collection of components related to the markdown editor.
  */
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PureComponent from '../lib/pure.js';
 import CodeMirror from 'codemirror';
 import PropTypes from 'baobab-react/prop-types';
+import Select from 'react-select';
 
 // Importing needed codemirror assets
 require('../lib/custom_mode.js');
@@ -30,7 +32,7 @@ export default class Editor extends PureComponent {
 
   componentDidMount() {
     this.editor = CodeMirror.fromTextArea(
-      React.findDOMNode(this.refs.editor),
+      ReactDOM.findDOMNode(this.refs.editor),
       {
         mode: {
           name: 'aime-markdown',
@@ -136,28 +138,32 @@ class EditorEntity extends PureComponent {
  * Author search input
  */
 class EditorAuthor extends PureComponent {
-  changeHandler(e) {
-    const users = this.props.users;
-    const i = e.target.value;
+  prepareOptions(users) {
+    const fillLabel = (surname, name, username) => {
+      const fullname = `${surname} ${name}`;
+      return fullname.trim() === '' ? username : fullname;
+    };
 
-    if (i.length < 2) return [];
-
-    const matches = _.filter(users, (user) => {
-      return (
-        user.surname.toLowerCase().includes(i) ||
-        user.name.toLowerCase().includes(i)
-      );
-    });
-    console.log(matches);
+    return _.map(users, u => (
+      {value: u.id, label: fillLabel(u.surname, u.name, u.username)}
+    ));
   }
 
   render() {
+    let options = this.prepareOptions(this.props.users);
+    console.log(options);
     return (
       <div className="form-group author">
-        <input type="text"
-               placeholder="author …"
-               className="form-control"
-               onChange={this.changeHandler.bind(this)} />
+        <Select
+          name="select-author"
+          className=""
+          placeholder="Author..."
+          noResultsText="No author found..."
+          options={[
+            {value: 'toto', label: 'Toto'},
+            {value: 'tato', label: 'Tato'}
+          ]}
+        />
       </div>
     );
   }
