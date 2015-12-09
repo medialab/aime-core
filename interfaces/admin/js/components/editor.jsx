@@ -138,6 +138,18 @@ class EditorEntity extends PureComponent {
  * Author search input
  */
 class EditorAuthor extends PureComponent {
+  constructor() {
+    super();
+    this.isLoading = false;
+
+    this.getOptions = this.getOptions.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
+
+    this.state = {
+      value: null
+    };
+  }
+
   prepareOptions(users) {
     const fillLabel = (surname, name, username) => {
       const fullname = `${surname} ${name}`;
@@ -149,20 +161,43 @@ class EditorAuthor extends PureComponent {
     ));
   }
 
+  getOptions(input, callback) {
+    input = input || '';
+
+    const options = this.prepareOptions(this.props.users);
+
+    if (!input || (input && input.length < 2)) {
+      return callback(null, { options: [] });
+    }
+
+    const results = _.filter(options, (option) => {
+      if (option.label.toLowerCase().includes(input)) {
+        return option;
+      }
+    });
+
+    return callback(null, {
+      options: results
+    });
+  }
+
+  changeHandler(newValue) {
+    this.setState({value: newValue});
+  }
+
   render() {
-    let options = this.prepareOptions(this.props.users);
-    console.log(options);
     return (
       <div className="form-group author">
-        <Select
+        <Select.Async
+          isLoading={this.isLoading}
+          value={this.state.value}
+          selected={this.state.value}
+          ignoreAccents={false}
           name="select-author"
-          className=""
           placeholder="Author..."
-          noResultsText="No author found..."
-          options={[
-            {value: 'toto', label: 'Toto'},
-            {value: 'tato', label: 'Tato'}
-          ]}
+          noResultsText="None found"
+          loadOptions={this.getOptions}
+          onChange={this.changeHandler}
         />
       </div>
     );
