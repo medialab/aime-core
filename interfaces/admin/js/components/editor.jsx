@@ -191,7 +191,6 @@ class EditorAuthor extends PureComponent {
         <Select.Async
           isLoading={this.isLoading}
           value={this.state.value}
-          selected={this.state.value}
           ignoreAccents={false}
           name="select-author"
           placeholder="Author..."
