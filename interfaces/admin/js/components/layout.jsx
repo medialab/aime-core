@@ -163,7 +163,8 @@ class ListPanel extends PureComponent {
       users: ['data', 'users'],
       buffer: ['states', props.model, 'editor'],
       title: [ 'states', props.model, 'title'],
-      saving: ['states', props.model, 'saving']
+      saving: ['states', props.model, 'saving'],
+      author: ['states', props.model, 'author']
     };
   }
 })
@@ -188,6 +189,7 @@ class EditorPanel extends PureComponent {
 
           {this.props.model === "doc" ?
           <Editor model={model}
+                  author={this.props.author}
                   users={this.props.users}
                   buffer={this.props.buffer}
                   title={this.props.title}

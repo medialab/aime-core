@@ -44,7 +44,10 @@ export default class Editor extends PureComponent {
       }
     );
 
-    // Setting initial value
+    this.authorField = ReactDOM.findDOMNode(this.refs.author);
+    console.log(this.authorField);
+
+    // Setting initial values
     this.editor.doc.setValue(this.props.buffer);
 
     // Listening to changes
@@ -83,7 +86,7 @@ export default class Editor extends PureComponent {
               </div>
             }
             { this.props.model === "doc" &&
-              <EditorAuthor users={this.props.users} />
+              <EditorAuthor author={this.props.author} users={this.props.users} />
             }
             { this.props.model === "book" &&
               <div className="form-group">
@@ -138,27 +141,36 @@ class EditorEntity extends PureComponent {
  * Author search input
  */
 class EditorAuthor extends PureComponent {
-  constructor() {
-    super();
+  static contextTypes = {
+    tree: PropTypes.baobab
+  };
+
+  constructor(props) {
+    super(props);
     this.isLoading = false;
 
     this.getOptions = this.getOptions.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
+    this.prepareOptions = this.prepareOptions.bind(this);
 
     this.state = {
       value: null
     };
   }
 
-  prepareOptions(users) {
+  prepareOption(user) {
     const fillLabel = (surname, name, username) => {
       const fullname = `${surname} ${name}`;
       return fullname.trim() === '' ? username : fullname;
     };
 
-    return _.map(users, u => (
-      {value: u.id, label: fillLabel(u.surname, u.name, u.username)}
-    ));
+    return {
+      value: user.id, label: fillLabel(user.surname, user.name, user.username)
+    };
+  }
+
+  prepareOptions(users) {
+    return _.map(users, u => this.prepareOption(u));
   }
 
   getOptions(input, callback) {
@@ -186,11 +198,15 @@ class EditorAuthor extends PureComponent {
   }
 
   render() {
+    const authorId = this.props.author,
+          authorsIndex = this.context.tree.facets.authorsIndex.get('authorsIndex'),
+          author = _.findWhere(authorsIndex, {author: {id: authorId}}).author;
+
     return (
       <div className="form-group author">
         <Select.Async
           isLoading={this.isLoading}
-          value={this.state.value}
+          value={this.state.value || this.prepareOption(author)}
           ignoreAccents={false}
           name="select-author"
           placeholder="Author..."
