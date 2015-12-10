@@ -84,7 +84,7 @@ const actions = {
     if (model === 'doc') {
       const item = _.find(this.get('data', model), {id: target});
       cursor.up().set('title', item.title);
-
+      cursor.up().set('author', item.author.id);
       return cursor.up().set('editor', item.markdown);
     }
 
@@ -154,7 +154,6 @@ const actions = {
    * update element
    */
   'element:save': function({data: {model}}) {
-
     // Starting to save
     this.set(['states','doc','saving'], true);
 
@@ -163,6 +162,7 @@ const actions = {
         data: {
           slides:this.data.states[model].editor,
           title:this.data.states[model].title,
+          author:this.data.states[model].author
         },
         params: {
           id:this.data.states[model].selection[0]
