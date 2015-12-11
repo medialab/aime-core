@@ -44,9 +44,6 @@ export default class Editor extends PureComponent {
       }
     );
 
-    this.authorField = ReactDOM.findDOMNode(this.refs.author);
-    console.log(this.authorField);
-
     // Setting initial values
     this.editor.doc.setValue(this.props.buffer);
 
@@ -156,6 +153,16 @@ class EditorAuthor extends PureComponent {
     this.state = {
       value: null
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Reset default value in author field when document changes.
+    let oldValue = this.state.value ? this.state.value.value : null,
+        newValue = nextProps.author;
+
+    if (oldValue !== newValue) {
+      this.setState({value: null});
+    }
   }
 
   prepareOption(user) {
