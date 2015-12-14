@@ -149,6 +149,7 @@ class EditorAuthor extends PureComponent {
     this.getOptions = this.getOptions.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
     this.prepareOptions = this.prepareOptions.bind(this);
+    this.fromIdToAuthor = this.fromIdToAuthor.bind(this);
 
     this.state = {
       value: null
@@ -156,13 +157,12 @@ class EditorAuthor extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    // Reset default value in author field when document changes.
-    let oldValue = this.state.value ? this.state.value.value : null,
-        newValue = nextProps.author;
+    this.setState({value: this.prepareOption(this.fromIdToAuthor(this.props.author))});
+  }
 
-    if (oldValue !== newValue) {
-      this.setState({value: null});
-    }
+  fromIdToAuthor(id) {
+    const authorsIndex = this.context.tree.facets.authorsIndex.get('authorsIndex')
+    return _.findWhere(authorsIndex, {author: {id: id}}).author;
   }
 
   prepareOption(user) {
@@ -205,15 +205,11 @@ class EditorAuthor extends PureComponent {
   }
 
   render() {
-    const authorId = this.props.author,
-          authorsIndex = this.context.tree.facets.authorsIndex.get('authorsIndex'),
-          author = _.findWhere(authorsIndex, {author: {id: authorId}}).author;
-
     return (
       <div className="form-group author">
         <Select.Async
           isLoading={this.isLoading}
-          value={this.state.value || this.prepareOption(author)}
+          value={this.state.value}
           ignoreAccents={false}
           name="select-author"
           placeholder="Author..."
