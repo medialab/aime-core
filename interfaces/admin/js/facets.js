@@ -39,16 +39,6 @@ export default {
     }
   },
 
-  // Authors index
-  authorsIndex: {
-    cursors: {
-      data: ['data', 'doc']
-    },
-    get: function ({data}) {
-      return _.indexBy(data, item => item.id);
-    }
-  },
-
   // Resources index
   resIndex: {
     cursors: {

@@ -185,8 +185,7 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
   },
 
   // Updating an existing document
-  update: function(id, title, slidesText, callback) {
-
+  update: function(id, author, title, slidesText, callback) {
     var slides = parseSlides(slidesText),
         links = _(slides)
           .flatten()
@@ -235,9 +234,17 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
             docNode = {id: doc.id},
             lang = doc.properties.lang;
 
+
         // Handling title
-        if (title && title !== doc.title)
+        if (title && title !== doc.title) {
           batch.save(docNode, 'title', title);
+        }
+
+        // Handling author change
+        if (author !== doc.authorId) {
+          batch.rel.delete(doc.authorRelId);
+          batch.relate(doc.id, 'CREATED_BY', author);
+        }
 
         // TODO: beware of user bookmarks
         // TODO: modes and crossings

@@ -68,6 +68,7 @@ module.exports = [
     action: function(req, res) {
       return docModel.update(
         +req.params.id,
+        req.body.author || null,
         req.body.title || null,
         req.body.slides || '',
         function(err, doc) {

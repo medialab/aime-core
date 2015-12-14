@@ -10,6 +10,7 @@ import PureComponent from '../lib/pure.js';
 import CodeMirror from 'codemirror';
 import PropTypes from 'baobab-react/prop-types';
 import Select from 'react-select';
+import autobind from 'autobind-decorator';
 
 // Importing needed codemirror assets
 require('../lib/custom_mode.js');
@@ -83,7 +84,7 @@ export default class Editor extends PureComponent {
               </div>
             }
             { this.props.model === "doc" &&
-              <EditorAuthor author={this.props.author} users={this.props.users} />
+              <EditorAuthor author={this.props.author} users={this.props.users} updateAuthor={this.props.updateAuthor} />
             }
             { this.props.model === "book" &&
               <div className="form-group">
@@ -146,23 +147,18 @@ class EditorAuthor extends PureComponent {
     super(props);
     this.isLoading = false;
 
-    this.getOptions = this.getOptions.bind(this);
-    this.changeHandler = this.changeHandler.bind(this);
-    this.prepareOptions = this.prepareOptions.bind(this);
-    this.fromIdToAuthor = this.fromIdToAuthor.bind(this);
-
     this.state = {
-      value: null
+      value: this.prepareOption(this.fromIdToAuthor(this.props.author))
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({value: this.prepareOption(this.fromIdToAuthor(this.props.author))});
+    this.setState({value: this.prepareOption(this.fromIdToAuthor(nextProps.author))});
   }
 
+  @autobind
   fromIdToAuthor(id) {
-    const authorsIndex = this.context.tree.facets.authorsIndex.get('authorsIndex')
-    return _.findWhere(authorsIndex, {author: {id: id}}).author;
+    return _.filter(this.props.users, (a) => a.id === id)[0];
   }
 
   prepareOption(user) {
@@ -170,16 +166,18 @@ class EditorAuthor extends PureComponent {
       const fullname = `${surname} ${name}`;
       return fullname.trim() === '' ? username : fullname;
     };
-
+    //console.log('user', user);
     return {
       value: user.id, label: fillLabel(user.surname, user.name, user.username)
     };
   }
 
-  prepareOptions(users) {
+  @autobind
+  prepareOptions(users) {
     return _.map(users, u => this.prepareOption(u));
   }
 
+  @autobind
   getOptions(input, callback) {
     input = input || '';
 
@@ -200,8 +198,12 @@ class EditorAuthor extends PureComponent {
     });
   }
 
+  @autobind
   changeHandler(newValue) {
-    this.setState({value: newValue});
+    const authorId = newValue.value;
+    this.setState({value: this.prepareOption(this.fromIdToAuthor(authorId))});
+    this.context.tree.set(['states', 'doc', 'author'], authorId);
+    this.props.updateAuthor(authorId);
   }
 
   render() {

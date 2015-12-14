@@ -156,7 +156,6 @@ const actions = {
   'element:save': function({data: {model}}) {
     // Starting to save
     this.set(['states','doc','saving'], true);
-
     this.client.updateDoc(
       {
         data: {
