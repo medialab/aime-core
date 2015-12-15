@@ -11,6 +11,7 @@ import PropTypes from 'baobab-react/prop-types';
 import bibtex from 'bibtex-parser';
 import {isURL} from 'validator';
 import {readInputFile} from '../lib/helpers.js';
+import {AuthorSelect} from './selectors.jsx';
 
 /**
  * Generic modal component
@@ -45,7 +46,9 @@ export class Modal extends Component {
                     onChange={(e) => this.setState({title: e.target.value})}
                     placeholder="title" className="form-control" />
 
-
+              {this.props.model === 'doc' &&
+                <AuthorSelect author={this.context.tree.get(['user']).id} users={this.props.users} />
+              }
               <ActionButton size={6} action={dismiss} label="dismiss"/>
               {this.state.title !== "" &&
                 <ActionButton size={6} action={save} label="save"/>

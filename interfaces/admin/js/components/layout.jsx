@@ -35,6 +35,7 @@ const MODAL_TITLES = {
     const model = props.model;
 
     return {
+      users: ['data', 'users'],
       data: ['data', model],
       modal: ['states', model, 'modal'],
       selection: ['states', model, 'selection'],
@@ -82,7 +83,7 @@ export class Layout extends PureComponent {
     // TODO: refactor ListPanel
 
     const modal = model === "doc" ?
-      <Modal title={MODAL_TITLES[model]} /> :
+      <Modal title={MODAL_TITLES[model]} model={model} users={this.props.users} /> :
       <ModalRessouces title={MODAL_TITLES[model]} />;
 
     return (

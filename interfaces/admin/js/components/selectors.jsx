@@ -1,9 +1,14 @@
+/**
+ * AIME-admin Selector Components
+ * ==============================
+ */
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PureComponent from '../lib/pure.js';
+import PropTypes from 'baobab-react/prop-types';
 import Select from 'react-select';
 
-/**
- * Author search input
- */
-export class AuthorSelect extends PureComponent {
+export default class AuthorSelect extends PureComponent {
   static contextTypes = {
     tree: PropTypes.baobab
   };
@@ -11,6 +16,10 @@ export class AuthorSelect extends PureComponent {
   constructor(props) {
     super(props);
     this.isLoading = false;
+
+    this.getOptions = this.getOptions.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
+    this.prepareOptions = this.prepareOptions.bind(this);
 
     this.state = {
       value: this.prepareOption(this.fromIdToAuthor(this.props.author))
@@ -21,7 +30,6 @@ export class AuthorSelect extends PureComponent {
     this.setState({value: this.prepareOption(this.fromIdToAuthor(nextProps.author))});
   }
 
-  @autobind
   fromIdToAuthor(id) {
     return _.filter(this.props.users, (a) => a.id === id)[0];
   }
@@ -36,15 +44,12 @@ export class AuthorSelect extends PureComponent {
     };
   }
 
-  @autobind
   prepareOptions(users) {
     return _.map(users, u => this.prepareOption(u));
   }
 
-  @autobind
   getOptions(input, callback) {
     input = input || '';
-
     const options = this.prepareOptions(this.props.users);
 
     if (!input || (input && input.length < 2)) {
@@ -62,7 +67,6 @@ export class AuthorSelect extends PureComponent {
     });
   }
 
-  @autobind
   changeHandler(newValue) {
     if (newValue) {
       const authorId = newValue.value;
