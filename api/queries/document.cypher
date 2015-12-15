@@ -133,6 +133,7 @@ RETURN {
     id: id(d),
     properties: d,
     author: {
+      id: id(a),
       name: a.name,
       surname: a.surname
     },

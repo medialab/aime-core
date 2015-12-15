@@ -51,19 +51,10 @@ export class Layout extends PureComponent {
     model: React.PropTypes.string
   };
 
-  constructor(props) {
-    super(props);
-    this.updateAuthor = this.updateAuthor.bind(this);
-  }
-
   getChildContext() {
     return {
       model: this.props.model
     };
-  }
-
-  updateAuthor(newAuthor) {
-    console.log('newAuthor', newAuthor)
   }
 
   render() {
@@ -115,7 +106,7 @@ export class Layout extends PureComponent {
 
           {isAModalDisplayed ?
             modal  :
-            editionMode && <EditorPanel model={model} updateAuthor={this.updateAuthor} />}
+            editionMode && <EditorPanel model={model} />}
 
 
         </Col>
@@ -183,7 +174,6 @@ class EditorPanel extends PureComponent {
   };
 
   render() {
-    console.log('EditorPanel props', this.props);
     const {model, saving} = this.props,
           save = () => {
             this.context.tree.emit('element:save', {model: model});
@@ -203,8 +193,7 @@ class EditorPanel extends PureComponent {
                   users={this.props.users}
                   buffer={this.props.buffer}
                   title={this.props.title}
-                  parsed={this.props.parsed}
-                  updateAuthor={this.props.updateAuthor} />
+                  parsed={this.props.parsed} />
           :
           <ResourceEditor
                   model={model}

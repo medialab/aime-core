@@ -84,7 +84,7 @@ export default class Editor extends PureComponent {
               </div>
             }
             { this.props.model === "doc" &&
-              <EditorAuthor author={this.props.author} users={this.props.users} updateAuthor={this.props.updateAuthor} />
+              <EditorAuthor author={this.props.author} users={this.props.users} />
             }
             { this.props.model === "book" &&
               <div className="form-group">
@@ -166,7 +166,6 @@ class EditorAuthor extends PureComponent {
       const fullname = `${surname} ${name}`;
       return fullname.trim() === '' ? username : fullname;
     };
-    //console.log('user', user);
     return {
       value: user.id, label: fillLabel(user.surname, user.name, user.username)
     };
@@ -200,10 +199,11 @@ class EditorAuthor extends PureComponent {
 
   @autobind
   changeHandler(newValue) {
-    const authorId = newValue.value;
-    this.setState({value: this.prepareOption(this.fromIdToAuthor(authorId))});
-    this.context.tree.set(['states', 'doc', 'author'], authorId);
-    this.props.updateAuthor(authorId);
+    if (newValue) {
+      const authorId = newValue.value;
+      this.setState({value: this.prepareOption(this.fromIdToAuthor(authorId))});
+      this.context.tree.set(['states', 'doc', 'author'], authorId);
+    }
   }
 
   render() {
