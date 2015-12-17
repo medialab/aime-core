@@ -11,7 +11,7 @@ import PropTypes from 'baobab-react/prop-types';
 import bibtex from 'bibtex-parser';
 import {isURL} from 'validator';
 import {readInputFile} from '../lib/helpers.js';
-import {AuthorSelect} from './selectors.jsx';
+import {AuthorSelector} from './authorSelector.jsx';
 
 /**
  * Generic modal component
@@ -24,7 +24,7 @@ export class Modal extends Component {
 
   constructor (props,context) {
     super(props,context);
-    this.state = {title:""}
+    this.state = {title:'', author: null};
   }
 
   render() {
@@ -33,7 +33,11 @@ export class Modal extends Component {
             this.context.tree.emit('modal:dismiss', {model: this.context.model})
           },
           save = () => {
-            this.context.tree.emit('modal:create', {model: this.context.model, data: this.state.title});
+            this.context.tree.emit('modal:create', {
+              model: this.context.model,
+              title: this.state.title,
+              author: this.state.author
+            });
             dismiss();
           };
 
@@ -47,7 +51,13 @@ export class Modal extends Component {
                     placeholder="title" className="form-control" />
 
               {this.props.model === 'doc' &&
-                <AuthorSelect author={this.context.tree.get(['user']).id} users={this.props.users} />
+                <AuthorSelector
+                  author={this.state.author || this.context.tree.get(['user']).id}
+                  users={this.props.users}
+                  onChange={(author) => {
+                    this.setState({author: author});
+                  }}
+                />
               }
               <ActionButton size={6} action={dismiss} label="dismiss"/>
               {this.state.title !== "" &&

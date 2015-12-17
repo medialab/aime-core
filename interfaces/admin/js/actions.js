@@ -122,11 +122,11 @@ const actions = {
   /**
    * Adding from modal
    */
-  'modal:create': function({data: {model, data}}) {
+  'modal:create': function({data: {model, title, author}}) {
 
     if (model === 'doc') {
       this.client.createDoc(
-        {data: {title: data}},
+        {data: {title: title, author: author}},
         (err, data) => {
           data.result.markdown = generateDocMarkdown(data.result);
           this.unshift(['data', model], data.result);

@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 import PureComponent from '../lib/pure.js';
 import CodeMirror from 'codemirror';
 import PropTypes from 'baobab-react/prop-types';
-import AuthorSelect from './selectors.jsx';
+import {AuthorSelector} from './authorSelector.jsx';
 import autobind from 'autobind-decorator';
 
 // Importing needed codemirror assets
@@ -84,7 +84,7 @@ export default class Editor extends PureComponent {
               </div>
             }
             { this.props.model === "doc" &&
-              <AuthorSelect author={this.props.author} users={this.props.users} />
+              <AuthorSelector author={this.props.author} users={this.props.users} />
             }
             { this.props.model === "book" &&
               <div className="form-group">

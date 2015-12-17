@@ -76,7 +76,7 @@ function sortingFunction(docs) {
 var model = _.merge(abstract(queries.document, sortingFunction), {
 
   // Creating a document
-  create: function(user, lang, title, slidesText, callback) {
+  create: function(author, lang, title, slidesText, callback) {
     var batch = db.batch();
 
     // Creating the document node
@@ -92,8 +92,8 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
     });
     batch.label(docNode, 'Document');
 
-    // Linking the user
-    batch.relate(docNode, 'CREATED_BY', user.id);
+    // Linking the author
+    batch.relate(docNode, 'CREATED_BY', author.id);
 
     // Parsing the slides' structure from markdown content
     var slides = parseSlides(slidesText),

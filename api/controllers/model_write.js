@@ -46,7 +46,7 @@ module.exports = [
     },
     action: function(req, res) {
       return docModel.create(
-        req.session.user,
+        req.body.author || req.session.user,
         req.lang,
         req.body.title,
         req.body.slides || '',

@@ -8,7 +8,7 @@ import PureComponent from '../lib/pure.js';
 import PropTypes from 'baobab-react/prop-types';
 import Select from 'react-select';
 
-export default class AuthorSelect extends PureComponent {
+export class AuthorSelector extends PureComponent {
   static contextTypes = {
     tree: PropTypes.baobab
   };
@@ -27,7 +27,10 @@ export default class AuthorSelect extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({value: this.prepareOption(this.fromIdToAuthor(nextProps.author))});
+    if (nextProps.author) {
+      const authorId = nextProps.author.id ? nextProps.author.id : nextProps.author;
+      this.setState({value: this.prepareOption(this.fromIdToAuthor(authorId))});
+    }
   }
 
   fromIdToAuthor(id) {
@@ -72,6 +75,9 @@ export default class AuthorSelect extends PureComponent {
       const authorId = newValue.value;
       this.setState({value: this.prepareOption(this.fromIdToAuthor(authorId))});
       this.context.tree.set(['states', 'doc', 'author'], authorId);
+      if (this.props.onChange) {
+        this.props.onChange(this.fromIdToAuthor(authorId));
+      }
     }
   }
 
@@ -82,6 +88,7 @@ export default class AuthorSelect extends PureComponent {
           isLoading={this.isLoading}
           value={this.state.value}
           ignoreAccents={false}
+          clearable={false}
           name="select-author"
           placeholder="Author..."
           noResultsText="None found"

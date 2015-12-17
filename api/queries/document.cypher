@@ -38,7 +38,8 @@ RETURN {
     author: {
       id: id(a),
       name: a.name,
-      surname: a.surname
+      surname: a.surname,
+      role: a.role
     },
     cited_by: bpids
   },
