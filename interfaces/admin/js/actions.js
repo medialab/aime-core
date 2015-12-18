@@ -159,12 +159,12 @@ const actions = {
     this.client.updateDoc(
       {
         data: {
-          slides:this.data.states[model].editor,
-          title:this.data.states[model].title,
-          author:this.data.states[model].author
+          slides: this.data.states[model].editor,
+          title: this.data.states[model].title,
+          author: this.data.states[model].author
         },
         params: {
-          id:this.data.states[model].selection[0]
+          id: this.data.states[model].selection[0]
         }
       },
       (err, data) => {
