@@ -52,7 +52,7 @@ export class Modal extends Component {
 
               {this.props.model === 'doc' &&
                 <AuthorSelector
-                  author={this.state.author || this.context.tree.get(['user']).id}
+                  author={(this.state.author && this.state.author.id) ? this.state.author.id : this.context.tree.get(['user']).id}
                   users={this.props.users}
                   onChange={(author) => {
                     this.setState({author: author});
