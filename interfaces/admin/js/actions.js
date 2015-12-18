@@ -126,7 +126,7 @@ const actions = {
 
     if (model === 'doc') {
       this.client.createDoc(
-        {data: {title: title, author: author}},
+        {data: {title, author}},
         (err, data) => {
           data.result.markdown = generateDocMarkdown(data.result);
           this.unshift(['data', model], data.result);
