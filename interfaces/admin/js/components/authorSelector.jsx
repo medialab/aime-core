@@ -59,7 +59,7 @@ export class AuthorSelector extends PureComponent {
       return callback(null, { options: [] });
     }
 
-    const results = _.filter(options, (option) => {
+    const results = _.filter(options, option => {
       if (option.label.toLowerCase().includes(input)) {
         return option;
       }
