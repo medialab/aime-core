@@ -148,7 +148,7 @@ const actions = {
   /**
    * update element
    */
-  'element:save': function({data: {model, author}}) {
+  'element:save': function({data: {model}}) {
     // Starting to save
     this.set(['states','doc','saving'], true);
     this.client.updateDoc(
@@ -156,7 +156,7 @@ const actions = {
         data: {
           slides: this.data.states[model].editor,
           title: this.data.states[model].title,
-          author: author
+          author: this.data.states[model].author
         },
         params: {
           id: this.data.states[model].selection[0]
@@ -213,6 +213,14 @@ const actions = {
    */
   'title:change': function({data: {model, title}}) {
     this.set(['states', model, 'title'], title);
+    this.commit();
+  },
+
+  /**
+   * Updating the author's ID
+   */
+  'author:change': function({data: {model, author}}) {
+    this.set(['states', model, 'author'], author);
     this.commit();
   }
 };
