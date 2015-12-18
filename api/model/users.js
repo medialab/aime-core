@@ -100,5 +100,18 @@ module.exports = {
 
       return callback(null, result[0] || null);
     });
+  },
+  all: function(callback) {
+    db.query(queries.all, function(err, results) {
+      if (err) return callback(err);
+      if (!results.length) return callback(null, null);
+
+      return callback(
+        null,
+        results.length ? _.map(results, function(result) {
+          return _.pick(result, ['id', 'username', 'surname', 'name']);
+        }) : null
+      );
+    });
   }
 };

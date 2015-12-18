@@ -11,6 +11,7 @@ import PropTypes from 'baobab-react/prop-types';
 import bibtex from 'bibtex-parser';
 import {isURL} from 'validator';
 import {readInputFile} from '../lib/helpers.js';
+import {AuthorSelector} from './authorSelector.jsx';
 
 /**
  * Generic modal component
@@ -21,9 +22,20 @@ export class Modal extends Component {
     model: React.PropTypes.string
   };
 
-  constructor (props,context) {
-    super(props,context);
-    this.state = {title:""}
+  constructor (props, context) {
+    super(props, context);
+    this.state = {title: '', author: null};
+    this.authorChangeHandler = this.authorChangeHandler.bind(this);
+  }
+
+  authorChangeHandler(author) {
+    this.setState({author: author});
+  }
+
+  componentDidMount() {
+    if (!this.state.author) {
+      this.setState({author: this.context.tree.get(['user'])});
+    }
   }
 
   render() {
@@ -32,7 +44,11 @@ export class Modal extends Component {
             this.context.tree.emit('modal:dismiss', {model: this.context.model})
           },
           save = () => {
-            this.context.tree.emit('modal:create', {model: this.context.model, data: this.state.title});
+            this.context.tree.emit('modal:create', {
+              model: this.context.model,
+              title: this.state.title,
+              author: this.state.author
+            });
             dismiss();
           };
 
@@ -45,7 +61,13 @@ export class Modal extends Component {
                     onChange={(e) => this.setState({title: e.target.value})}
                     placeholder="title" className="form-control" />
 
-
+              {this.props.model === 'doc' &&
+                <AuthorSelector
+                  author={(this.state.author && this.state.author.id) ? this.state.author.id : this.context.tree.get(['user']).id}
+                  users={this.props.users}
+                  onChange={this.authorChangeHandler}
+                />
+              }
               <ActionButton size={6} action={dismiss} label="dismiss"/>
               {this.state.title !== "" &&
                 <ActionButton size={6} action={save} label="save"/>

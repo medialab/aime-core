@@ -5,9 +5,12 @@
  * Collection of components related to the markdown editor.
  */
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PureComponent from '../lib/pure.js';
 import CodeMirror from 'codemirror';
 import PropTypes from 'baobab-react/prop-types';
+import {AuthorSelector} from './authorSelector.jsx';
+import autobind from 'autobind-decorator';
 
 // Importing needed codemirror assets
 require('../lib/custom_mode.js');
@@ -30,7 +33,7 @@ export default class Editor extends PureComponent {
 
   componentDidMount() {
     this.editor = CodeMirror.fromTextArea(
-      React.findDOMNode(this.refs.editor),
+      this.refs.editor,
       {
         mode: {
           name: 'aime-markdown',
@@ -42,7 +45,7 @@ export default class Editor extends PureComponent {
       }
     );
 
-    // Setting initial value
+    // Setting initial values
     this.editor.doc.setValue(this.props.buffer);
 
     // Listening to changes
@@ -69,7 +72,6 @@ export default class Editor extends PureComponent {
 
   render() {
     const {vocs, docs, vocItems=[], docItems=[]} = this.props.parsed.data;
-
     return (
       <div className="full-height">
         <div className="editor-container">
@@ -80,6 +82,9 @@ export default class Editor extends PureComponent {
                         onChange={(e) => this.context.tree.emit('title:change', {model: this.props.model, title: e.target.value})}
                         placeholder="title" className="form-control" />
               </div>
+            }
+            { this.props.model === "doc" &&
+              <AuthorSelector author={this.props.author} users={this.props.users} onChange={this.props.onAuthorChange} />
             }
             { this.props.model === "book" &&
               <div className="form-group">

@@ -34,12 +34,13 @@ export default {
     res: {
       editor: null,
       selection: null,
-      modal:null
+      modal: null
     }
   },
 
   // Misc data
   data: {
+    users: null,
     book: null,
     voc: null,
     doc: null,

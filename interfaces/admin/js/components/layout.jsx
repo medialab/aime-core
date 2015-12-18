@@ -35,6 +35,7 @@ const MODAL_TITLES = {
     const model = props.model;
 
     return {
+      users: ['data', 'users'],
       data: ['data', model],
       modal: ['states', model, 'modal'],
       selection: ['states', model, 'selection'],
@@ -82,7 +83,7 @@ export class Layout extends PureComponent {
     // TODO: refactor ListPanel
 
     const modal = model === "doc" ?
-      <Modal title={MODAL_TITLES[model]} /> :
+      <Modal title={MODAL_TITLES[model]} model={model} users={this.props.users} /> :
       <ModalRessouces title={MODAL_TITLES[model]} />;
 
     return (
@@ -152,14 +153,19 @@ class ListPanel extends PureComponent {
  */
 @branch({
   facets(props) {
-    if(props.model === "doc") return { parsed: props.model + 'Parsed'};
-    else return {};
+    if (props.model === "doc") {
+      return { parsed: props.model + 'Parsed'};
+    } else {
+      return {};
+    }
   },
   cursors(props) {
     return {
+      users: ['data', 'users'],
       buffer: ['states', props.model, 'editor'],
       title: [ 'states', props.model, 'title'],
-      saving: ['states', props.model, 'saving']
+      saving: ['states', props.model, 'saving'],
+      author: ['states', props.model, 'author']
     };
   }
 })
@@ -168,10 +174,20 @@ class EditorPanel extends PureComponent {
     tree: PropTypes.baobab
   };
 
+  constructor(props, context) {
+    super(props, context);
+    this.state = {author: props.author};
+    this.changeAuthorHandler = this.changeAuthorHandler.bind(this);
+  }
+
+  changeAuthorHandler(author) {
+    this.setState({author: author.id});
+  }
+
   render() {
     const {model, saving} = this.props,
           save = () => {
-            this.context.tree.emit('element:save', {model: model});
+            this.context.tree.emit('element:save', {model: model, author: this.state.author});
           },
           openSelector = () => {
             this.context.tree.emit('resSelector:open', {model: model});
@@ -184,10 +200,12 @@ class EditorPanel extends PureComponent {
 
           {this.props.model === "doc" ?
           <Editor model={model}
+                  author={this.props.author}
+                  users={this.props.users}
                   buffer={this.props.buffer}
                   title={this.props.title}
                   parsed={this.props.parsed}
-                   />
+                  onAuthorChange={this.changeAuthorHandler} />
           :
           <ResourceEditor
                   model={model}
