@@ -110,7 +110,7 @@ module.exports = {
         null,
         results.length ? _.map(results, function(result) {
           return _.pick(result, ['id', 'username', 'surname', 'name']);
-        }) : null
+        }) : null;
       );
     });
   }
