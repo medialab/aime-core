@@ -8,6 +8,7 @@
 var docModel = require('../model/document.js'),
     resModel = require('../model/resource.js'),
     types = require('../typology.js'),
+    usersModel = require('../model/users.js'),
     _ = require('lodash');
 
 // Forge
@@ -22,6 +23,19 @@ function createResource(kind) {
 
 module.exports = [
 
+// Users
+  {
+    url: '/users',
+    methods: ['GET'],
+    action: function(req, res) {
+      return usersModel.all(function(err, results) {
+        if (err) res.serverError(err);
+
+        return res.ok(results);
+      });
+    }
+  },
+
   // Documents
   {
     url: '/doc',
@@ -31,8 +45,9 @@ module.exports = [
       slides: '?string'
     },
     action: function(req, res) {
+      console.log(req.body.author);
       return docModel.create(
-        req.session.user,
+        req.body.author,
         req.lang,
         req.body.title,
         req.body.slides || '',
@@ -54,6 +69,7 @@ module.exports = [
     action: function(req, res) {
       return docModel.update(
         +req.params.id,
+        req.body.author,
         req.body.title || null,
         req.body.slides || '',
         function(err, doc) {

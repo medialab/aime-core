@@ -76,7 +76,7 @@ function sortingFunction(docs) {
 var model = _.merge(abstract(queries.document, sortingFunction), {
 
   // Creating a document
-  create: function(user, lang, title, slidesText, callback) {
+  create: function(author, lang, title, slidesText, callback) {
     var batch = db.batch();
 
     // Creating the document node
@@ -92,8 +92,8 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
     });
     batch.label(docNode, 'Document');
 
-    // Linking the user
-    batch.relate(docNode, 'CREATED_BY', user.id);
+    // Linking the author
+    batch.relate(docNode, 'CREATED_BY', author.id);
 
     // Parsing the slides' structure from markdown content
     var slides = parseSlides(slidesText),
@@ -185,8 +185,7 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
   },
 
   // Updating an existing document
-  update: function(id, title, slidesText, callback) {
-
+  update: function(id, author, title, slidesText, callback) {
     var slides = parseSlides(slidesText),
         links = _(slides)
           .flatten()
@@ -235,9 +234,17 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
             docNode = {id: doc.id},
             lang = doc.properties.lang;
 
+
         // Handling title
-        if (title && title !== doc.title)
+        if (title && title !== doc.title) {
           batch.save(docNode, 'title', title);
+        }
+
+        // Handling author change
+        if (author !== doc.authorId) {
+          batch.rel.delete(doc.authorRelId);
+          batch.relate(doc.id, 'CREATED_BY', author);
+        }
 
         // TODO: beware of user bookmarks
         // TODO: modes and crossings
