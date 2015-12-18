@@ -33,7 +33,7 @@ export default class Editor extends PureComponent {
 
   componentDidMount() {
     this.editor = CodeMirror.fromTextArea(
-      ReactDOM.findDOMNode(this.refs.editor),
+      this.refs.editor,
       {
         mode: {
           name: 'aime-markdown',
