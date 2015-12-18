@@ -69,6 +69,16 @@ export default {
     }
   },
 
+  // Users index
+  usersIndex: {
+    cursors: {
+      users: ['data', 'users']
+    },
+    get: function({users}) {
+      return _.indexBy(users, user => user.id);
+    }
+  },
+
   // Book parsed buffer
   bookParsed: {
     facets: {

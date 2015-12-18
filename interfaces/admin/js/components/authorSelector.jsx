@@ -13,13 +13,14 @@ export class AuthorSelector extends PureComponent {
     tree: PropTypes.baobab
   };
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.isLoading = false;
 
     this.getOptions = this.getOptions.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
     this.prepareOptions = this.prepareOptions.bind(this);
+    this.fromIdToAuthor = this.fromIdToAuthor.bind(this);
 
     this.state = {
       value: this.prepareOption(this.fromIdToAuthor(this.props.author))
@@ -34,7 +35,8 @@ export class AuthorSelector extends PureComponent {
   }
 
   fromIdToAuthor(id) {
-    return _.filter(this.props.users, (a) => a.id === id)[0];
+    const usersIndex = this.context.tree.facets.usersIndex.get();
+    return usersIndex[id];
   }
 
   prepareOption(user) {
