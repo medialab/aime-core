@@ -174,10 +174,20 @@ class EditorPanel extends PureComponent {
     tree: PropTypes.baobab
   };
 
+  constructor(props, context) {
+    super(props, context);
+    this.state = {author: props.author};
+    this.changeAuthorHandler = this.changeAuthorHandler.bind(this);
+  }
+
+  changeAuthorHandler(author) {
+    this.setState({author: author.id});
+  }
+
   render() {
     const {model, saving} = this.props,
           save = () => {
-            this.context.tree.emit('element:save', {model: model});
+            this.context.tree.emit('element:save', {model: model, author: this.state.author});
           },
           openSelector = () => {
             this.context.tree.emit('resSelector:open', {model: model});
@@ -194,7 +204,8 @@ class EditorPanel extends PureComponent {
                   users={this.props.users}
                   buffer={this.props.buffer}
                   title={this.props.title}
-                  parsed={this.props.parsed} />
+                  parsed={this.props.parsed}
+                  onAuthorChange={this.changeAuthorHandler} />
           :
           <ResourceEditor
                   model={model}

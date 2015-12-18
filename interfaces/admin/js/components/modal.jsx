@@ -22,9 +22,20 @@ export class Modal extends Component {
     model: React.PropTypes.string
   };
 
-  constructor (props,context) {
-    super(props,context);
-    this.state = {title:'', author: null};
+  constructor (props, context) {
+    super(props, context);
+    this.state = {title: '', author: null};
+    this.authorChangeHandler = this.authorChangeHandler.bind(this);
+  }
+
+  authorChangeHandler(author) {
+    this.setState({author: author});
+  }
+
+  componentDidMount() {
+    if (!this.state.author) {
+      this.setState({author: this.context.tree.get(['user'])});
+    }
   }
 
   render() {
@@ -54,9 +65,7 @@ export class Modal extends Component {
                 <AuthorSelector
                   author={(this.state.author && this.state.author.id) ? this.state.author.id : this.context.tree.get(['user']).id}
                   users={this.props.users}
-                  onChange={(author) => {
-                    this.setState({author: author});
-                  }}
+                  onChange={this.authorChangeHandler}
                 />
               }
               <ActionButton size={6} action={dismiss} label="dismiss"/>

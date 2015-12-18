@@ -45,6 +45,7 @@ module.exports = [
       slides: '?string'
     },
     action: function(req, res) {
+      console.log(req.body.author);
       return docModel.create(
         req.body.author,
         req.lang,

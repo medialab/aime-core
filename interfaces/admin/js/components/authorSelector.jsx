@@ -75,10 +75,10 @@ export class AuthorSelector extends PureComponent {
   changeHandler(newValue) {
     if (newValue) {
       const authorId = newValue.value;
-      this.setState({value: this.prepareOption(this.fromIdToAuthor(authorId))});
-      this.context.tree.set(['states', 'doc', 'author'], authorId);
+      const author = this.fromIdToAuthor(authorId);
+      this.setState({value: this.prepareOption(author)});
       if (this.props.onChange) {
-        this.props.onChange(this.fromIdToAuthor(authorId));
+        this.props.onChange(author);
       }
     }
   }

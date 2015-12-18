@@ -70,10 +70,6 @@ const actions = {
 
     this.set(['states', model, 'modal'], null);
 
-    console.log(selection);
-
-
-
     // Ensuring we are acting on an array
     if (!selection)
       cursor.set([]);
@@ -123,14 +119,13 @@ const actions = {
    * Adding from modal
    */
   'modal:create': function({data: {model, title, author}}) {
-
     if (model === 'doc') {
       this.client.createDoc(
         {data: {title, author}},
         (err, data) => {
           data.result.markdown = generateDocMarkdown(data.result);
           this.unshift(['data', model], data.result);
-          this.emit('selection:change',{model:model, level:0, target:data.result.id});
+          this.emit('selection:change',{model: model, level: 0, target: data.result.id});
         }
       );
     }
@@ -153,7 +148,7 @@ const actions = {
   /**
    * update element
    */
-  'element:save': function({data: {model}}) {
+  'element:save': function({data: {model, author}}) {
     // Starting to save
     this.set(['states','doc','saving'], true);
     this.client.updateDoc(
@@ -161,7 +156,7 @@ const actions = {
         data: {
           slides: this.data.states[model].editor,
           title: this.data.states[model].title,
-          author: this.data.states[model].author
+          author: author
         },
         params: {
           id: this.data.states[model].selection[0]

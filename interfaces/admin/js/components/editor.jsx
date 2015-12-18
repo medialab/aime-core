@@ -84,7 +84,7 @@ export default class Editor extends PureComponent {
               </div>
             }
             { this.props.model === "doc" &&
-              <AuthorSelector author={this.props.author} users={this.props.users} />
+              <AuthorSelector author={this.props.author} users={this.props.users} onChange={this.props.onAuthorChange} />
             }
             { this.props.model === "book" &&
               <div className="form-group">
