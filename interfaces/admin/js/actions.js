@@ -70,10 +70,6 @@ const actions = {
 
     this.set(['states', model, 'modal'], null);
 
-    console.log(selection);
-
-
-
     // Ensuring we are acting on an array
     if (!selection)
       cursor.set([]);
@@ -84,7 +80,7 @@ const actions = {
     if (model === 'doc') {
       const item = _.find(this.get('data', model), {id: target});
       cursor.up().set('title', item.title);
-
+      cursor.up().set('author', item.author.id);
       return cursor.up().set('editor', item.markdown);
     }
 
@@ -122,15 +118,14 @@ const actions = {
   /**
    * Adding from modal
    */
-  'modal:create': function({data: {model, data}}) {
-
+  'modal:create': function({data: {model, title, author}}) {
     if (model === 'doc') {
       this.client.createDoc(
-        {data: {title: data}},
+        {data: {title, author}},
         (err, data) => {
           data.result.markdown = generateDocMarkdown(data.result);
           this.unshift(['data', model], data.result);
-          this.emit('selection:change',{model:model, level:0, target:data.result.id});
+          this.emit('selection:change',{model: model, level: 0, target: data.result.id});
         }
       );
     }
@@ -154,18 +149,17 @@ const actions = {
    * update element
    */
   'element:save': function({data: {model}}) {
-
     // Starting to save
     this.set(['states','doc','saving'], true);
-
     this.client.updateDoc(
       {
         data: {
-          slides:this.data.states[model].editor,
-          title:this.data.states[model].title,
+          slides: this.data.states[model].editor,
+          title: this.data.states[model].title,
+          author: this.data.states[model].author
         },
         params: {
-          id:this.data.states[model].selection[0]
+          id: this.data.states[model].selection[0]
         }
       },
       (err, data) => {
@@ -219,6 +213,14 @@ const actions = {
    */
   'title:change': function({data: {model, title}}) {
     this.set(['states', model, 'title'], title);
+    this.commit();
+  },
+
+  /**
+   * Updating the author's ID
+   */
+  'author:change': function({data: {model, author}}) {
+    this.set(['states', model, 'author'], author);
     this.commit();
   }
 };
