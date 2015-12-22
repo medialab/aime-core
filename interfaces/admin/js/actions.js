@@ -118,8 +118,11 @@ const actions = {
   /**
    * Adding from modal
    */
-  'modal:create': function({data: {model, title, author}}) {
+  'modal:create': function(payload) {
+    const model = payload.data.model;
+
     if (model === 'doc') {
+      const {title, author} = payload.data;
       this.client.createDoc(
         {data: {title, author}},
         (err, data) => {
@@ -131,6 +134,7 @@ const actions = {
     }
 
     else if (model === 'res') {
+      const {data} = payload.data;
       this.client.createRes(
         {
           data: data,
