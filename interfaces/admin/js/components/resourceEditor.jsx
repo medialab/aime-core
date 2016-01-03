@@ -40,9 +40,9 @@ export default class ResourceEditor extends Component {
     this.setState({item: props.states.editor})
   }
 
-  setStateDeep (newState){
-    console.log(this.state, newState, _.merge({}, this.state, newState));
-    return _.merge({}, this.state, newState);
+  setStateDeep(newState){
+    newState = _.merge({}, this.state, newState);
+    this.setState(newState);
   }
 
   render() {
@@ -69,7 +69,7 @@ export default class ResourceEditor extends Component {
                       className="editor pre" />
           </div>}
 
-        {this.state.item.text &&
+        {this.state.item.text !== null  &&
           <div className="form-group">
               <label>text</label>
               <textarea value={this.state.item.text}
