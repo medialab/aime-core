@@ -31,12 +31,12 @@ export default class ResourceEditor extends Component {
     model: React.PropTypes.string
   };
 
-  constructor (props,context) {
-    super(props,context);
+  constructor(props, context) {
+    super(props, context);
     this.state = {item: this.props.states.editor}
   }
 
-  componentWillReceiveProps (props) {
+  componentWillReceiveProps(props) {
     this.setState({item: props.states.editor})
   }
 
