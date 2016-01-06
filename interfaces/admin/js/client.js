@@ -117,6 +117,12 @@ export default function(scope) {
       createRes: {
         url: '/res/:kind',
         type: 'POST'
+      },
+
+      // Update a resource
+      updateRes: {
+        url: '/res/:id',
+        type: 'PUT'
       }
     }
   });
