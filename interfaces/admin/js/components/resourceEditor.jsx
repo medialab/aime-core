@@ -7,7 +7,6 @@ import React, {Component} from 'react';
 import classes from 'classnames';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import {ActionButton} from './misc.jsx';
 import PropTypes from 'baobab-react/prop-types';
 import {branch} from 'baobab-react/decorators';
 import PureComponent from '../lib/pure.js';
@@ -40,6 +39,18 @@ export default class ResourceEditor extends Component {
     this.setState({item: props.states.editor})
   }
 
+  changeHandler(newState, fieldChanged) {
+    this.setStateDeep(newState);
+    if (fieldChanged) {
+      var model = this.context.model;
+      var payload = {
+        fieldName: fieldChanged,
+        fieldValue: newState.item[fieldChanged]
+      };
+      this.context.tree.emit('resource:change', {model, payload});
+    }
+  }
+
   setStateDeep(newState){
     newState = _.merge({}, this.state, newState);
     this.setState(newState);
@@ -54,7 +65,7 @@ export default class ResourceEditor extends Component {
           <div className="form-group">
             <label>title</label>
             <input value={this.state.item.title}
-                   onChange={(e) => this.setStateDeep({item: {title:e.target.value}})}
+                   onChange={(e) => this.changeHandler({item: {title:e.target.value}})}
                    placeholder="title"
                    className="form-control" />
           </div>
@@ -64,7 +75,7 @@ export default class ResourceEditor extends Component {
          <div className="form-group">
             <label>html</label>
             <textarea value={this.state.item.html}
-                      onChange={(e) => this.setStateDeep({item: {html: e.target.value}})}
+                      onChange={(e) => this.changeHandler({item: {html: e.target.value}}, 'html')}
                       placeholder="<html>"
                       className="editor pre" />
           </div>}
@@ -73,7 +84,7 @@ export default class ResourceEditor extends Component {
           <div className="form-group">
               <label>text</label>
               <textarea value={this.state.item.text}
-                        onChange={(e) => this.setStateDeep({item: {text: e.target.value}})}
+                        onChange={(e) => this.changeHandler({item: {text: e.target.value}}, 'text')}
                         placeholder="text …"
                         className="editor" />
           </div>
@@ -83,7 +94,7 @@ export default class ResourceEditor extends Component {
           <div className="form-group">
             <label>url</label>
             <input value={this.state.item.url}
-                   onChange={(e) => this.setStateDeep({item: {url: e.target.value}})}
+                   onChange={(e) => this.changeHandler({item: {url: e.target.value}}, 'url')}
                    placeholder="http://website.com/folder/file.ext"
                    className={classes('form-control')} />
           </div>
