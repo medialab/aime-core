@@ -174,7 +174,26 @@ var model = _.merge(abstract(queries), {
 
   // Updating a resource
   update: function(id, data, callback) {
+    var mediaData = {
+      id: id,
+      type: data.editor.type,
+      kind: data.editor.kind,
+      slug_id: data.editor.slug_id,
+      lang: data.editor.lang,
+      internal: data.editor.internal
+    };
 
+    if (mediaData.kind === 'quote') {
+      mediaData.text = data.editor.text;
+
+      db.save(mediaData, function(err, node) {
+        if (err) return callback(err);
+
+        return callback(null, node);
+      });
+    } else {
+      return callback(new Error('Unknown media kind'));
+    }
   }
 });
 

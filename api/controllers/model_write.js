@@ -45,7 +45,6 @@ module.exports = [
       slides: '?string'
     },
     action: function(req, res) {
-      console.log(req.body.author);
       return docModel.create(
         req.body.author,
         req.lang,
@@ -146,7 +145,10 @@ module.exports = [
     url: '/res/:id',
     methods: ['PUT'],
     action: function(req, res) {
-      return res.notImplemented();
+      resModel.update(+req.params.id, req.body, function(err, resource) {
+        if (err) return res.serverError(err);
+        return res.ok(resource);
+      });
     }
   },
   {
