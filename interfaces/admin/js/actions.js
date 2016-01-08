@@ -250,7 +250,8 @@ const actions = {
    * Updating the resource selector fields
    */
   'resource:change': function({data: {model, payload}}) {
-    this.set(['states', model, 'editor', payload.fieldName], payload.fieldValue);
+    const cursor = 'states.' + model + '.editor.' + payload.fieldName;
+    this.set(cursor.split('.'), payload.fieldValue);
     this.commit();
   }
 };

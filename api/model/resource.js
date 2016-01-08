@@ -139,7 +139,8 @@ var model = _.merge(abstract(queries), {
         var refData = {
           lang: lang,
           type: 'reference',
-          slug_id: ++cache.slug_ids.ref
+          slug_id: ++cache.slug_ids.ref,
+          id: record.id
         };
 
         // Adding the reference
@@ -183,17 +184,40 @@ var model = _.merge(abstract(queries), {
       internal: data.editor.internal
     };
 
-    if (mediaData.kind === 'quote') {
-      mediaData.text = data.editor.text;
+    async.waterfall([
+      function updateMedia(next) {
+        if (mediaData.kind === 'quote') {
+          mediaData.text = data.editor.text;
+        } else {
+          return callback(new Error('Unknown media kind'));
+        }
 
-      db.save(mediaData, function(err, node) {
-        if (err) return callback(err);
+        db.save(mediaData, function(err, result) {
+          if (err) return callback(err);
+          next();
+        });
+      },
+      function updateReference() {
+        if (data.editor.reference) {
+          var refData = {
+            id: data.editor.reference.id,
+            lang: data.editor.reference.lang,
+            type: data.editor.reference.type,
+            slug_id: data.editor.reference.slug_id
+          };
 
-        return callback(null, node);
-      });
-    } else {
-      return callback(new Error('Unknown media kind'));
-    }
+          if (refData.record) {
+            // TODO: find out how to update biblib's refs...
+          } else {
+            refData.text = data.editor.reference.text;
+            db.save(refData, function(err, result) {
+              if (err) return callback(err);
+              return callback(null, result);
+            });
+          }
+        }
+      }
+    ], callback);
   }
 });
 
