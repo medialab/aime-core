@@ -42,10 +42,13 @@ export default class ResourceEditor extends Component {
   changeHandler(newState, fieldChanged) {
     this.setStateDeep(newState);
     if (fieldChanged) {
-      var model = this.context.model;
-      var payload = {
+      const model = this.context.model;
+      const value = fieldChanged.includes('reference') ?
+        newState.item.reference[fieldChanged.substr(fieldChanged.indexOf('.') + 1)] :
+        newState.item[fieldChanged];
+      const payload = {
         fieldName: fieldChanged,
-        fieldValue: newState.item[fieldChanged]
+        fieldValue: value
       };
       this.context.tree.emit('resource:change', {model, payload});
     }
@@ -114,9 +117,10 @@ export default class ResourceEditor extends Component {
           <div className="form-group">
               <label>reference</label>
               <textarea value={this.state.item.reference.text}
-                        disabled="disabled"
                         placeholder="text …"
-                        className="editor pre" />
+                        className="editor pre"
+                        onChange={(e) => this.changeHandler({item: {reference: {text: e.target.value}}}, 'reference.text')}
+                        disabled={!!this.state.item.reference.biblib_id} />
           </div>
         }
 
