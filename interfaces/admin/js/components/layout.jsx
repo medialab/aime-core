@@ -177,14 +177,15 @@ class EditorPanel extends PureComponent {
 
   render() {
     const {model, saving} = this.props,
-          save = () => {
-            this.context.tree.emit('element:save', {model: model});
+          save = (e, status = this.props.status) => {
+            this.context.tree.emit('element:save', {model, status});
           },
           openSelector = () => {
             this.context.tree.emit('resSelector:open', {model: model});
           },
           togglePublish = () => {
-            this.context.tree.emit('document:togglePublish');
+            const status = this.props.status === 'public' ? 'private' : 'public';
+            save(null, status);
           };
 
     return (

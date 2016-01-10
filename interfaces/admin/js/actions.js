@@ -153,13 +153,14 @@ const actions = {
   /**
    * update element
    */
-  'element:save': function({data: {model}}) {
+  'element:save': function({data: {model, status}}) {
     // Document
     if (model === 'doc') {
       this.set(['states','doc','saving'], true);
       this.client.updateDoc(
         {
           data: {
+            status: status,
             slides: this.data.states[model].editor,
             title: this.data.states[model].title,
             author: this.data.states[model].author
@@ -179,6 +180,7 @@ const actions = {
 
           // We update the data
           this.set(['data', model, {id: doc.id}], doc);
+          this.set(['states', model, 'status'], doc.status);
         }
       );
     }
@@ -254,13 +256,6 @@ const actions = {
     const cursor = 'states.' + model + '.editor.' + payload.fieldName;
     this.set(cursor.split('.'), payload.fieldValue);
     this.commit();
-  },
-
-  /**
-   * Toggle publication status for a document
-   */
-  'document:togglePublish': function() {
-    console.log(this.get(['states', 'doc']));
   }
 };
 

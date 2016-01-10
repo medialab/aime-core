@@ -85,7 +85,7 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
       type: 'document',
       title: title,
       date: helpers.now(),
-      status: 'public',
+      status: 'private',
       source_platform: 'admin',
       original: false,
       slug_id: ++cache.slug_ids.doc
@@ -185,7 +185,7 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
   },
 
   // Updating an existing document
-  update: function(id, author, title, slidesText, callback) {
+  update: function(id, author, title, status, slidesText, callback) {
     var slides = parseSlides(slidesText),
         links = _(slides)
           .flatten()
@@ -238,6 +238,11 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
         // Handling title
         if (title && title !== doc.title) {
           batch.save(docNode, 'title', title);
+        }
+
+        // Handling status
+        if (status && status !== doc.status) {
+          batch.save(docNode, 'status', status);
         }
 
         // Handling author change

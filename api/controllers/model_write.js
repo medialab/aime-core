@@ -70,6 +70,7 @@ module.exports = [
         +req.params.id,
         req.body.author,
         req.body.title || null,
+        req.body.status,
         req.body.slides || '',
         function(err, doc) {
           if (err && err.message === 'not-found') return res.notFound();
