@@ -165,7 +165,8 @@ class ListPanel extends PureComponent {
       buffer: ['states', props.model, 'editor'],
       title: [ 'states', props.model, 'title'],
       saving: ['states', props.model, 'saving'],
-      author: ['states', props.model, 'author']
+      author: ['states', props.model, 'author'],
+      status: ['states', props.model, 'status']
     };
   }
 })
@@ -181,6 +182,9 @@ class EditorPanel extends PureComponent {
           },
           openSelector = () => {
             this.context.tree.emit('resSelector:open', {model: model});
+          },
+          togglePublish = () => {
+            this.context.tree.emit('document:togglePublish');
           };
 
     return (
@@ -207,6 +211,11 @@ class EditorPanel extends PureComponent {
                         label="save"
                         state={saving ? 'saving' : 'normal'}
                         loadingLabel="saving document…" />
+          {this.props.model === "doc" &&
+            <ActionButton
+              size={12}
+              action={togglePublish}
+              label={this.props.status === 'public' ? 'unpublish' : 'publish'} />}
         </div>
       </div>
     );
