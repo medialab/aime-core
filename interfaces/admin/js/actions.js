@@ -81,6 +81,7 @@ const actions = {
       const item = _.find(this.get('data', model), {id: target});
       cursor.up().set('title', item.title);
       cursor.up().set('author', item.author.id);
+      cursor.up().set('status', item.status);
       return cursor.up().set('editor', item.markdown);
     }
 
@@ -253,6 +254,13 @@ const actions = {
     const cursor = 'states.' + model + '.editor.' + payload.fieldName;
     this.set(cursor.split('.'), payload.fieldValue);
     this.commit();
+  },
+
+  /**
+   * Toggle publication status for a document
+   */
+  'document:togglePublish': function() {
+    console.log(this.get(['states', 'doc']));
   }
 };
 
