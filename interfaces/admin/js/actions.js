@@ -118,8 +118,11 @@ const actions = {
   /**
    * Adding from modal
    */
-  'modal:create': function({data: {model, title, author}}) {
+  'modal:create': function(payload) {
+    const model = payload.data.model;
+
     if (model === 'doc') {
+      const {title, author} = payload.data;
       this.client.createDoc(
         {data: {title, author}},
         (err, data) => {
@@ -131,6 +134,7 @@ const actions = {
     }
 
     else if (model === 'res') {
+      const {data} = payload.data;
       this.client.createRes(
         {
           data: data,
@@ -149,32 +153,50 @@ const actions = {
    * update element
    */
   'element:save': function({data: {model}}) {
-    // Starting to save
-    this.set(['states','doc','saving'], true);
-    this.client.updateDoc(
-      {
-        data: {
-          slides: this.data.states[model].editor,
-          title: this.data.states[model].title,
-          author: this.data.states[model].author
+    // Document
+    if (model === 'doc') {
+      this.set(['states','doc','saving'], true);
+      this.client.updateDoc(
+        {
+          data: {
+            slides: this.data.states[model].editor,
+            title: this.data.states[model].title,
+            author: this.data.states[model].author
+          },
+          params: {
+            id: this.data.states[model].selection[0]
+          }
         },
-        params: {
-          id: this.data.states[model].selection[0]
+        (err, data) => {
+          const doc = data.result;
+
+          // Generating markdown slide
+          doc.markdown = generateDocMarkdown(doc);
+
+          // We are done saving
+          this.set(['states','doc','saving'], false);
+
+          // We update the data
+          this.set(['data', model, {id: doc.id}], doc);
         }
-      },
-      (err, data) => {
-        const doc = data.result;
+      );
+    }
 
-        // Generating markdown slide
-        doc.markdown = generateDocMarkdown(doc);
-
-        // We are done saving
-        this.set(['states','doc','saving'], false);
-
-        // We update the data
-        this.set(['data', model, {id: doc.id}], doc);
-      }
-    )
+    // Resource
+    if (model === 'res') {
+      this.client.updateRes(
+        {
+          data: this.data.states[model],
+          params: {
+            id: this.data.states[model].editor.id
+          }
+        },
+        (err, data) => {
+          const res = data.result;
+          this.set(['data', model, {id: res.id}], res);
+        }
+      );
+    }
   },
 
   /**
@@ -221,6 +243,15 @@ const actions = {
    */
   'author:change': function({data: {model, author}}) {
     this.set(['states', model, 'author'], author);
+    this.commit();
+  },
+
+  /**
+   * Updating the resource selector fields
+   */
+  'resource:change': function({data: {model, payload}}) {
+    const cursor = 'states.' + model + '.editor.' + payload.fieldName;
+    this.set(cursor.split('.'), payload.fieldValue);
     this.commit();
   }
 };

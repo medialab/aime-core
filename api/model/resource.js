@@ -139,7 +139,8 @@ var model = _.merge(abstract(queries), {
         var refData = {
           lang: lang,
           type: 'reference',
-          slug_id: ++cache.slug_ids.ref
+          slug_id: ++cache.slug_ids.ref,
+          id: record.id
         };
 
         // Adding the reference
@@ -174,7 +175,49 @@ var model = _.merge(abstract(queries), {
 
   // Updating a resource
   update: function(id, data, callback) {
+    var mediaData = {
+      id: id,
+      type: data.editor.type,
+      kind: data.editor.kind,
+      slug_id: data.editor.slug_id,
+      lang: data.editor.lang,
+      internal: data.editor.internal
+    };
 
+    async.waterfall([
+      function updateMedia(next) {
+        if (mediaData.kind === 'quote') {
+          mediaData.text = data.editor.text;
+        } else {
+          return callback(new Error('Unknown media kind'));
+        }
+
+        db.save(mediaData, function(err, result) {
+          if (err) return callback(err);
+          next();
+        });
+      },
+      function updateReference() {
+        if (data.editor.reference) {
+          var refData = {
+            id: data.editor.reference.id,
+            lang: data.editor.reference.lang,
+            type: data.editor.reference.type,
+            slug_id: data.editor.reference.slug_id
+          };
+
+          if (refData.record) {
+            // TODO: find out how to update biblib's refs...
+          } else {
+            refData.text = data.editor.reference.text;
+            db.save(refData, function(err, result) {
+              if (err) return callback(err);
+              return callback(null, result);
+            });
+          }
+        }
+      }
+    ], callback);
   }
 });
 

@@ -7,7 +7,6 @@ import React, {Component} from 'react';
 import classes from 'classnames';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import {ActionButton} from './misc.jsx';
 import PropTypes from 'baobab-react/prop-types';
 import {branch} from 'baobab-react/decorators';
 import PureComponent from '../lib/pure.js';
@@ -31,18 +30,33 @@ export default class ResourceEditor extends Component {
     model: React.PropTypes.string
   };
 
-  constructor (props,context) {
-    super(props,context);
+  constructor(props, context) {
+    super(props, context);
     this.state = {item: this.props.states.editor}
   }
 
-  componentWillReceiveProps (props) {
+  componentWillReceiveProps(props) {
     this.setState({item: props.states.editor})
   }
 
-  setStateDeep (newState){
-    console.log(this.state, newState, _.merge({}, this.state, newState));
-    return _.merge({}, this.state, newState);
+  changeHandler(newState, fieldChanged) {
+    this.setStateDeep(newState);
+    if (fieldChanged) {
+      const model = this.context.model;
+      const value = fieldChanged.includes('reference') ?
+        newState.item.reference[fieldChanged.substr(fieldChanged.indexOf('.') + 1)] :
+        newState.item[fieldChanged];
+      const payload = {
+        fieldName: fieldChanged,
+        fieldValue: value
+      };
+      this.context.tree.emit('resource:change', {model, payload});
+    }
+  }
+
+  setStateDeep(newState){
+    newState = _.merge({}, this.state, newState);
+    this.setState(newState);
   }
 
   render() {
@@ -54,7 +68,7 @@ export default class ResourceEditor extends Component {
           <div className="form-group">
             <label>title</label>
             <input value={this.state.item.title}
-                   onChange={(e) => this.setStateDeep({item: {title:e.target.value}})}
+                   onChange={(e) => this.changeHandler({item: {title:e.target.value}})}
                    placeholder="title"
                    className="form-control" />
           </div>
@@ -64,16 +78,16 @@ export default class ResourceEditor extends Component {
          <div className="form-group">
             <label>html</label>
             <textarea value={this.state.item.html}
-                      onChange={(e) => this.setStateDeep({item: {html: e.target.value}})}
+                      onChange={(e) => this.changeHandler({item: {html: e.target.value}}, 'html')}
                       placeholder="<html>"
                       className="editor pre" />
           </div>}
 
-        {this.state.item.text &&
+        {this.state.item.text !== null  &&
           <div className="form-group">
               <label>text</label>
               <textarea value={this.state.item.text}
-                        onChange={(e) => this.setStateDeep({item: {text: e.target.value}})}
+                        onChange={(e) => this.changeHandler({item: {text: e.target.value}}, 'text')}
                         placeholder="text …"
                         className="editor" />
           </div>
@@ -83,7 +97,7 @@ export default class ResourceEditor extends Component {
           <div className="form-group">
             <label>url</label>
             <input value={this.state.item.url}
-                   onChange={(e) => this.setStateDeep({item: {url: e.target.value}})}
+                   onChange={(e) => this.changeHandler({item: {url: e.target.value}}, 'url')}
                    placeholder="http://website.com/folder/file.ext"
                    className={classes('form-control')} />
           </div>
@@ -103,9 +117,10 @@ export default class ResourceEditor extends Component {
           <div className="form-group">
               <label>reference</label>
               <textarea value={this.state.item.reference.text}
-                        disabled="disabled"
                         placeholder="text …"
-                        className="editor pre" />
+                        className="editor pre"
+                        onChange={(e) => this.changeHandler({item: {reference: {text: e.target.value}}}, 'reference.text')}
+                        disabled={!!this.state.item.reference.biblib_id} />
           </div>
         }
 

@@ -26,7 +26,7 @@ export function generateDocMarkdown(doc){
 export function resourceName(res) {
   let text = false;
 
-  if (res.reference !== null)
+  if (res.reference !== null && typeof res.reference !== 'undefined')
     text = res.reference.text;
 
   return res.title ||
