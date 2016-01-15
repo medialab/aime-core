@@ -69,6 +69,10 @@
   font-size: 2em;
   margin-top: 4em;
 }
+.box-shadow (@args) {
+  -webkit-box-shadow: @args;
+  box-shadow: @args;
+}
 
 /*
  * Globals
@@ -268,7 +272,10 @@ textarea {
  * Editor
  */
 
- .CodeMirror-scroll {
+.CodeMirror {
+  z-index: 0;
+}
+.CodeMirror-scroll {
     .ligned;
     line-height: @m*2;
 }
@@ -347,6 +354,76 @@ textarea {
   .video {
     .embed-responsive();
     .embed-responsive-16by9()
+  }
+}
+
+.editor-container {
+  .form-group {
+    margin-bottom: 12px;
+  }
+}
+
+.author {
+  z-index: 1;
+
+  .Select {
+    border: none;
+    border-radius: @border-radius-base;
+    width: 100%;
+    height: 46px;
+    padding: 0;
+    line-height: 1.42857143;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 0px;
+    .box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075));
+    .transition(box-shadow .15s);
+
+    &.is-focused {
+      -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(148, 148, 148, 0.6);
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(148, 148, 148, 0.6);
+      color: #333;
+
+      .Select-control {
+        border-color: #949494;
+        outline: 0;
+      }
+    }
+
+    .Select-control {
+      border-radius: 0;
+      height: 46px;
+      .transition(border-color .15s);
+    }
+
+    .Select-placeholder, .Select-input, .Select-value-label {
+      min-height: 46px;
+      line-height: @m*4;
+    }
+
+    .Select-input {
+      .transition(border-color .15s);
+    }
+
+    .Select-menu-outer {
+      border-radius: 0;
+      border-top: none;
+      border-color: #949494;
+
+      .Select-option {
+        background: #d9d9d9;
+        color: black;
+        border-radius: 0;
+        border-top: none;
+        .transition(color .25s);
+        .transition(background-color .25s);
+
+        &.is-focused {
+          background-color: #3b3b3b;
+          color: white;
+        }
+      }
+    }
   }
 }
 

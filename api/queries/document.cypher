@@ -36,8 +36,10 @@ RETURN {
     id: id(d),
     properties: d,
     author: {
+      id: id(a),
       name: a.name,
-      surname: a.surname
+      surname: a.surname,
+      role: a.role
     },
     cited_by: bpids
   },
@@ -132,6 +134,7 @@ RETURN {
     id: id(d),
     properties: d,
     author: {
+      id: id(a),
       name: a.name,
       surname: a.surname
     },
@@ -190,14 +193,15 @@ ORDER BY item.document.properties.date DESC, item.document.properties.title ASC
 // Retrieve the necessary information to update a specific document.
 START d=node({id})
 MATCH (d)-[rs:HAS]->(s:Slide)-[re:HAS]->(e)
+OPTIONAL MATCH (d)-[ra:CREATED_BY]->(a:User)
 
-WITH d, rs, s, {
+WITH d, rs, s, ra, a, {
   id: id(e),
   relId: id(re),
   properties: e
 } AS elements
 
-WITH d, {
+WITH d, ra, a, {
   id: id(s),
   relId: id(rs),
   properties: s,
@@ -206,6 +210,8 @@ WITH d, {
 
 RETURN {
   id: id(d),
+  authorId: id(a),
+  authorRelId: id(ra),
   properties: d,
   children: collect(slides)
 };
