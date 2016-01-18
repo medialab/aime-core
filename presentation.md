@@ -42,6 +42,14 @@ Matrix pun FTW (old & new admin) (two examples)
 ===
 
 ## Migrating
+intéret de la viz dans le travail de migration
+
+===
+
+## refacto du cliebt 4 vers 3 colonnes
+la stack cliente, la décroissance, la performance
+
+comparaison du temps de chargement des deux versions (ancienne version dipo en interne)
 
 ===
 
@@ -54,3 +62,7 @@ Matrix pun FTW (old & new admin) (two examples)
 ## Back to the future
 
 Quinoa / Dolman / Decypher etc.
+
+===
+
+## usage de Dani de Agent Smith
