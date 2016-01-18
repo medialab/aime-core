@@ -196,8 +196,10 @@ const actions = {
           }
         },
         (err, data) => {
-          const res = data.result;
-          this.set(['data', model, {id: res.id}], res);
+          const payload = data.result;
+          const resArray = this.data.data[model];
+          const id = _.findIndex(resArray, o => o.id === payload.id);
+          this.set(['data', model, id], payload);
         }
       );
     }
