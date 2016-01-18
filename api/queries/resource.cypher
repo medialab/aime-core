@@ -10,7 +10,10 @@ WITH m, head(collect(r)) AS ref
 RETURN {
   id: id(m),
   properties: m,
-  reference: ref
+  reference: {
+    id: id(ref),
+    properties: ref
+  }
 } AS resource
 
 ORDER BY resource.properties.kind;

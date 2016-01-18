@@ -79,10 +79,11 @@ const actions = {
     // If we are handling a document, there is only one level
     if (model === 'doc') {
       const item = _.find(this.get('data', model), {id: target});
-      cursor.up().set('title', item.title);
-      cursor.up().set('author', item.author.id);
-      cursor.up().set('status', item.status);
-      return cursor.up().set('editor', item.markdown);
+      const parent = cursor.up();
+      parent.set('title', item.title);
+      parent.set('author', item.author.id);
+      parent.set('status', item.status);
+      return parent.set('editor', item.markdown);
     }
 
     if(model === 'res'){
@@ -195,8 +196,10 @@ const actions = {
           }
         },
         (err, data) => {
-          const res = data.result;
-          this.set(['data', model, {id: res.id}], res);
+          const payload = data.result;
+          const resArray = this.data.data[model];
+          const id = _.findIndex(resArray, o => o.id === payload.id);
+          this.set(['data', model, id], payload);
         }
       );
     }

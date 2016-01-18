@@ -194,10 +194,10 @@ var model = _.merge(abstract(queries), {
 
         db.save(mediaData, function(err, result) {
           if (err) return callback(err);
-          next();
+          return next(null, result);
         });
       },
-      function updateReference() {
+      function updateReference(resource, next) {
         if (data.editor.reference) {
           var refData = {
             id: data.editor.reference.id,
@@ -211,8 +211,9 @@ var model = _.merge(abstract(queries), {
           } else {
             refData.text = data.editor.reference.text;
             db.save(refData, function(err, result) {
+              mediaData.reference = result;
               if (err) return callback(err);
-              return callback(null, result);
+              return callback(null, mediaData);
             });
           }
         }

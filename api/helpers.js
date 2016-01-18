@@ -26,7 +26,9 @@ function treat(sub) {
 
   // Leaf level
   if (sub.id || sub.id === 0)
-    return _.extend({id: sub.id}, sub.properties, _.omit(sub, ['id', 'properties']));
+    return _.extend({id: sub.id}, sub.properties, _.mapValues(_.omit(sub, ['id', 'properties']), function(o) {
+      return (o || {}).id ? treat(o) : o;
+    }));
 
   for (k in sub) {
     if (types.check(sub[k], 'object') && 'id' in sub[k]) {
