@@ -79,11 +79,11 @@ const actions = {
     // If we are handling a document, there is only one level
     if (model === 'doc') {
       const item = _.find(this.get('data', model), {id: target});
-      const curs = cursor.up();
-      curs.set('title', item.title);
-      curs.set('author', item.author.id);
-      curs.set('status', item.status);
-      return curs.set('editor', item.markdown);
+      const parent = cursor.up();
+      parent.set('title', item.title);
+      parent.set('author', item.author.id);
+      parent.set('status', item.status);
+      return parent.set('editor', item.markdown);
     }
 
     if(model === 'res'){
