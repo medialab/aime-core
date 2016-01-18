@@ -22,9 +22,10 @@ export class Modal extends Component {
     model: React.PropTypes.string
   };
 
-  constructor (props,context) {
-    super(props,context);
-    this.state = {title:'', author: null};
+  constructor (props, context) {
+    super(props, context);
+    console.log('user....', this.context.tree.get('user'));
+    this.state = {title:'', author: this.context.tree.get('user')};
   }
 
   render() {
@@ -45,14 +46,13 @@ export class Modal extends Component {
       <div className='Modal'>
         <h1>{title}</h1>
           <form>
-            <label >title</label>
+            <label>title</label>
             <input value={this.state.title}
                     onChange={(e) => this.setState({title: e.target.value})}
                     placeholder="title" className="form-control" />
-
               {this.props.model === 'doc' &&
                 <AuthorSelector
-                  author={this.state.author || this.context.tree.get(['user']).id}
+                  author={this.state.author.id}
                   users={this.props.users}
                   onChange={(author) => {
                     this.setState({author: author});

@@ -140,7 +140,6 @@ var model = _.merge(abstract(queries), {
           lang: lang,
           type: 'reference',
           slug_id: ++cache.slug_ids.ref,
-          id: record.id
         };
 
         // Adding the reference
@@ -152,6 +151,7 @@ var model = _.merge(abstract(queries), {
             refData.biblib_id = record.rec_id;
             refData.html = record.html;
             refData.text = cheerio(record.html).text();
+            refData.id = record.id;
           }
 
           var refNode = batch.save(refData);

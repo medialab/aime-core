@@ -81,6 +81,7 @@ const actions = {
       const item = _.find(this.get('data', model), {id: target});
       cursor.up().set('title', item.title);
       cursor.up().set('author', item.author.id);
+      cursor.up().set('status', item.status);
       return cursor.up().set('editor', item.markdown);
     }
 
@@ -152,13 +153,14 @@ const actions = {
   /**
    * update element
    */
-  'element:save': function({data: {model}}) {
+  'element:save': function({data: {model, status}}) {
     // Document
     if (model === 'doc') {
       this.set(['states','doc','saving'], true);
       this.client.updateDoc(
         {
           data: {
+            status: status,
             slides: this.data.states[model].editor,
             title: this.data.states[model].title,
             author: this.data.states[model].author
@@ -178,6 +180,7 @@ const actions = {
 
           // We update the data
           this.set(['data', model, {id: doc.id}], doc);
+          this.set(['states', model, 'status'], doc.status);
         }
       );
     }
