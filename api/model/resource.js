@@ -203,7 +203,7 @@ var model = _.merge(abstract(queries), {
             id: data.editor.reference.id,
             lang: data.editor.reference.lang,
             type: data.editor.reference.type,
-            slug_id: data.editor.reference.slug_id,
+            slug_id: data.editor.reference.slug_id
           };
 
           if (refData.record) {
