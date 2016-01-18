@@ -113,7 +113,7 @@ export default class ResourceEditor extends Component {
           </div>
         }
 
-        {(this.state.item.reference || {}).text &&
+        {(this.state.item.reference || {}).text !== null &&
           <div className="form-group">
               <label>reference</label>
               <textarea value={this.state.item.reference.text}
