@@ -27,6 +27,17 @@ The heavy stack
 
 ===
 
+## The long trip towards Neo4j
+
+* Heiko
+* Heikki
+* Dor
+* Yomgui
+
+Note: pom, where?
+
+===
+
 ## Introducing Neo4j
 
 ===
@@ -39,10 +50,21 @@ The heavy stack
 
 Matrix pun FTW (old & new admin) (two examples)
 
+Note: The tool is a POC and does not aim at replacing Neo4j's already good admin.
+
 ===
 
 ## Migrating
 intéret de la viz dans le travail de migration
+
+===
+
+## On the subject of ordered links
+
+* `[:FOLLOWS]` relationships
+* Relationships attributes
+
+Note: develop
 
 ===
 
@@ -56,6 +78,9 @@ comparaison du temps de chargement des deux versions (ancienne version dipo en i
 ## Neo4j Feedback
 
 (probably more slides)
+
+* Cypher as the main selling point
+* Maintenance difficulties concerning the community edition
 
 ===
 
