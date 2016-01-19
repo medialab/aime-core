@@ -19,11 +19,23 @@ How do we store a complex tree within MySQL tables?
 
 ## Multiplication of databases
 
-The heavy stack
+So, before refactoring, we had:
+
+* MySQL
+* MongoDB
+* Solr (Lucene)
+
+And now one database to rule them all...
+
+* Neo4j
 
 ===
 
-## IMG: refacto schema
+<!-- .slide: data-background="img/project.png" data-background-size="1000px" -->
+
+===
+
+<!-- .slide: data-background="img/kill.png" data-background-size="1000px" -->
 
 ===
 
