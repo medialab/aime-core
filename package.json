@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "biblib": "node ./scripts/biblib.js",
-    "dev": "concurrent --kill-others \"npm start\" \"npm run ui:inquiry\" \"npm run ui:crossings\" \"npm run ui:admin\"",
+    "dev": "concurrent --kill-others \"npm run ui:inquiry\" \"npm run ui:crossings\" \"npm run ui:admin\"",
     "migrate": "node ./scripts/migrate.js && npm run biblib",
     "prod": "NODE_ENV=prod && pm2 start --name \"aime-api\" --node-args=\"--harmony\" ./scripts/start.js",
     "test": "mocha -R spec ./test/endpoint.js",

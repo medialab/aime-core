@@ -161,9 +161,18 @@ module.exports = [
   },
 
   // Scenarios
+
+  // NOTE: figure out lang to be used
+  // NOTE: handle author
+  // NOTE: handle status
   {
     url: '/scenario',
     methods: ['POST'],
+    validate: {
+      name: 'string',
+      items: 'array',
+      modecross: 'number'
+    },
     action: function(req, res) {
       return res.notImplemented();
     }
@@ -172,6 +181,18 @@ module.exports = [
   {
     url: '/scenario/:id',
     methods: ['PUT'],
+    validate: {
+      name: '?string',
+      items: '?array'
+    },
+    action: function(req, res) {
+      return res.notImplemented();
+    }
+  },
+
+  {
+    url: '/scenario/:id',
+    methods: ['DELETE'],
     action: function(req, res) {
       return res.notImplemented();
     }
