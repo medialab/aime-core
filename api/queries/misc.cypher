@@ -40,6 +40,13 @@ MATCH (n {legacy_id: {id}, lang: {lang}})
 OPTIONAL MATCH (c:Chapter)-[:HAS]->(n)
 RETURN n AS element, c AS chapter LIMIT 1;
 
+// name: getModecross
+MATCH (modecross)
+WHERE
+  (modecross:Mode OR modecross:Crossing) AND
+  modecross.name = {modecross}
+RETURN modecross LIMIT 1;
+
 // name: getModecrossVoc
 MATCH (modecross)<-[:DEFINES]-(v:Vocabulary)
 WHERE
