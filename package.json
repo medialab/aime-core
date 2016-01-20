@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "biblib": "node ./scripts/biblib.js",
+    "dev": "concurrent --kill-others \"npm start\" \"npm run ui:inquiry\" \"npm run ui:crossings\" \"npm run ui:admin\"",
     "migrate": "node ./scripts/migrate.js && npm run biblib",
     "prod": "NODE_ENV=prod && pm2 start --name \"aime-api\" --node-args=\"--harmony\" ./scripts/start.js",
     "test": "mocha -R spec ./test/endpoint.js",
-    "start": "node --harmony ./scripts/start.js"
+    "start": "node --harmony ./scripts/start.js",
+    "ui:inquiry": "cd interfaces/inquiry && npm start",
+    "ui:crossings": "cd interfaces/crossings && npm start",
+    "ui:admin": "cd interfaces/admin && npm start"
   },
   "repository": {
     "type": "git",
@@ -50,6 +54,7 @@
   },
   "license": "LGPL-3.0",
   "devDependencies": {
+    "concurrently": "^1.0.0",
     "mocha": "^2.0.1",
     "pm2": "^0.15.7"
   },
