@@ -93,7 +93,7 @@ var sessionOptions = {
 // If dev, we would like to store sessions for convenience
 if (ENV === 'dev')
   sessionOptions.store = new FileStore({
-    path: path.join(__dirname, '.sessions'),
+    path: path.join(__dirname, '..', '.sessions'),
     ttl: 24 * 60 * 60 * 60,
     reapInterval: -1
   });
