@@ -2,6 +2,7 @@
   "name": "aime-core",
   "version": "0.1.0",
   "description": "An inquiry into modes of existences.",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "biblib": "node ./scripts/biblib.js",
