@@ -23,7 +23,7 @@ function createResource(kind) {
 
 module.exports = [
 
-// Users
+  // Users
   {
     url: '/users',
     methods: ['GET'],
@@ -155,6 +155,23 @@ module.exports = [
   {
     url: '/res/:id',
     methods: ['DELETE'],
+    action: function(req, res) {
+      return res.notImplemented();
+    }
+  },
+
+  // Scenarios
+  {
+    url: '/scenario',
+    methods: ['POST'],
+    action: function(req, res) {
+      return res.notImplemented();
+    }
+  },
+
+  {
+    url: '/scenario/:id',
+    methods: ['PUT'],
     action: function(req, res) {
       return res.notImplemented();
     }
