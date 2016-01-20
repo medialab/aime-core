@@ -5,12 +5,13 @@
  * Defining the express application aimed at serving the graph database.
  */
 var express = require('express'),
-    env = process.env.NODE_ENV || 'dev',
+    ENV = process.env.NODE_ENV || 'dev',
     path = require('path'),
     url = require('url'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
+    createFileStore = require('session-file-store'),
     compress = require('compression'),
     morgan = require('morgan'),
     cors = require('cors'),
@@ -21,6 +22,8 @@ var express = require('express'),
     queries = require('./queries.js').misc,
     db = require('./connection.js'),
     _ = require('lodash');
+
+var FileStore = createFileStore(session);
 
 var controllers = require('require-all')(__dirname + '/controllers');
 
@@ -86,6 +89,15 @@ var sessionOptions = {
     maxAge: 365 * 24 * 60 * 60 * 1000
   }
 };
+
+// If dev, we would like to store sessions for convenience
+if (ENV === 'dev')
+  sessionOptions.store = new FileStore({
+    path: path.join(__dirname, '.sessions'),
+    ttl: 24 * 60 * 60 * 60,
+    reapInterval: -1
+  });
+
 
 // Utilities
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
