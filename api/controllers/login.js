@@ -7,6 +7,7 @@
 var model = require('../model/users.js'),
     bookmarks = require('../model/bookmark.js'),
     postman = require('../postman.js'),
+    xss = require('xss'),
     _ = require('lodash');
 
 module.exports = [
@@ -42,11 +43,17 @@ module.exports = [
       institution: '?string',
       department: '?string',
       discipline: '?string',
-      interest: '?string',
-      avatar: '?string'
+      interest: '?string'
     },
     methods: ['POST'],
     action: function(req, res) {
+
+      // Filtering XSS
+      for (var k in req.body) {
+        if (req.body[k])
+          req.body[k] = xss(req.body[k]);
+      }
+
       model.create(req.body, function(err, user) {
         if (err && /already exists.*email/.test(err.message)) return res.badRequest('duplicateEmail');
         if (err) return res.serverError(err);
