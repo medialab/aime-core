@@ -1,4 +1,4 @@
-### Modeling a Philosophical Inquiry: from MySQL to a graph database
+## Modeling a Philosophical Inquiry: from MySQL to a graph database
 *The short story of a long refactoring process*
 
 ===
@@ -104,65 +104,88 @@ comparaison du temps de chargement des deux versions (ancienne version dipo en i
 
 ===
 
-##Leaning from philosophy to history
-
-Different task, same needs.
-
-Task: find the connections between people, pictures, letters and official documents dealing with the European Integration process
-Integrate the existing workflow and research practices.
+## From philosophy to history: a slightly different use-case
 
 
+1. *find the connections* between people, pictures, letters and official documents dealing with the *European Integration process*
 
-
-===
-
-##First chance to see: collect the cooccurrences
-
-Display in real time the result of automatic disambiguation with YAGO/AIDA
-Recognize other kind of relationships, visually, and add them easily
+1. Integrate graph databases and graph visualizations in the existing workflow and research practices.
 
 
 
 
 ===
 
-##... trying to make use of graphs as bridge between a designer and the researchers
+## First chance to see: collecting the cooccurrences
 
-Can Graphs visualization serve as entry points for humanitites researchers to better structure data?
+---
+
+
+Display with **agent-smith** the result of automatic disambiguation on text documents with **[yago-aida](link)**
+
+---
+
+  (image)
+
+---
+
+Recognize with the researchers *other kind of relationships*, visually, and add them easily:
+
+---
+
+  (image)
+
+---
+
+Towards a *better understanding* of what a **relationships** means
 
 
 
 
 ===
 
-... and to look for asymmetries and errors during the analysis
----
+## Can graph visualizations become entry points for (fast) data curation?
 
-Can Graphs visualization serve as entry points for data curation?
+1. asymmetries and errors during the analysis process
+
+1. easily spot *well placed* false positives
+
+1. fulltext lucene search
 
 
 
 
 ===
 
-##... to reveal the (ductile) structure of the data
+## Can Graphs visualization serve as entry points for humanitites researchers to better structure data?
+
+Graphs as bridges / obstacles between a designer and the researchers needs
 
 
-1. Towards a *better understanding* of what a **relationships** means, from both sides
 
----
+===
 
-2. There is no difference between the **represented** and the **hidden** structure
+## Graphs vis reveal the (ductile) structure of the data
 
----
+There is no difference/distance between the **represented** structure and the **db** structure
 
-1.  We opened up the database creation process
-
----
-
-4. Shifting towards idea of *networks as constructs*, merely built-up representation not as the **final chance to see** or **big-picture**
+Finally, we can opened up the database *creation* process
 
 
+===
+
+## Graphs are tools
+
+shift towards idea of *networks as constructs*, merely built-up representation; 
+
+Graphs should not be the **final-chance-to-see**
+
+
+===
+
+## Neo4j Feedback
+
+simplify plugins installation (for designers ...?): something like a package manager
 
 
 
@@ -187,7 +210,3 @@ Quinoa / Dolman / Decypher etc.
 
 
 
-
-===
-
-## usage de Dani de Agent Smith

@@ -25,27 +25,60 @@
   font-style: normal;
 }
 
+@font-face{
+  font-family: 'NovelSansPro-SemiBold';
+  src:url(../../fonts/237E72_11_0.eot);
+  src:url(../../fonts/237E72_11_0.eot?#iefix) format('embedded-opentype'),url(../../fonts/237E72_11_0.woff) format('woff'),url(../../fonts/237E72_11_0.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+body{
+  background-color: #2C2121
+}
+
 .reveal {
   font-family: 'NovelPro';
   color: #d0d0d0;
   font-size: 28px;
 
 }
+
 .reveal p{
   text-align: left;
   margin: 20px 180px 20px 80px;
+  line-height: 1.8em;
 }
+
+.reveal a{
+      border-bottom: 3px solid #FFE;
+    color: black;
+    padding: 10px 12px 5px 12px;
+    color: #fff;
+}
+
+.reveal a:hover{
+  color: white;
+  text-shadow: none;
+  border-bottom: 3px solid transparent;
+}
+
 .reveal em{
   color: #fff;
 }
-.reveal strong, .reveal h2{
+.reveal strong{
   font-family: 'NovelMono';
   color: #fff;
     font-variant: small-caps;
+    font-size: 1.2em;
 }
 .reveal h2{
-
-  font-size: 1.2em;
+  font-family: 'NovelSansPro-SemiBold';
+  color: #fff;
+  font-variant: small-caps;
+  font-size: 1em;
+  line-height :2em;
   text-align: left;
   margin: 0px 80px 80px 80px;
 }
@@ -57,19 +90,27 @@
     background-color: #c0171d;
 }
 
-
+/*
+  Arrows hack
+*/
+.reveal .controls .navigate-left, .reveal .controls .navigate-left.enabled {
+    border-right-color: #fff;
+}
+.reveal .controls .navigate-right, .reveal .controls .navigate-right.enabled{
+  border-left-color: #fff;
+}
 /*
   LIST hack
 */
 
 .reveal ol {
-    /*counter-reset:li; /* Initiate a counter */
+    counter-reset:li; /* Initiate a counter */
     margin-left:0; /* Remove the default left margin */
     padding-left:0; /* Remove the default left padding */
 }
 .reveal ol > li {
     position:relative; /* Create a positioning context */
-    margin:0 0 6px 80px; /* Give each list item a left margin to make room for the numbers */
+    margin: 0 0 6px 50px; /* Give each list item a left margin to make room for the numbers */
     padding:4px 8px; /* Add some spacing around the content */
     list-style:none; /* Disable the normal item numbering */
     
@@ -79,8 +120,8 @@
     counter-increment:li; /* Increment the counter by 1 */
     /* Position and style the number */
     position:absolute;
-    top:5px;
-    left:-50px;
+    top: 1.6em;
+    left: 30px;
     text-align: right;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
