@@ -52,9 +52,15 @@ Note: pom, where?
 
 ## Introducing Neo4j
 
+
+
+
 ===
 
 ## Graph visual analysis
+
+
+
 
 ===
 
@@ -64,10 +70,15 @@ Matrix pun FTW (old & new admin) (two examples)
 
 Note: The tool is a POC and does not aim at replacing Neo4j's already good admin.
 
+
+
+
 ===
 
 ## Migrating
 intéret de la viz dans le travail de migration
+
+
 
 ===
 
@@ -78,12 +89,82 @@ intéret de la viz dans le travail de migration
 
 Note: develop
 
+
+
+
 ===
 
 ## refacto du cliebt 4 vers 3 colonnes
 la stack cliente, la décroissance, la performance
 
 comparaison du temps de chargement des deux versions (ancienne version dipo en interne)
+
+
+
+
+===
+
+##Leaning from philosophy to history
+
+Different task, same needs.
+
+Task: find the connections between people, pictures, letters and official documents dealing with the European Integration process
+Integrate the existing workflow and research practices.
+
+
+
+
+===
+
+##First chance to see: collect the cooccurrences
+
+Display in real time the result of automatic disambiguation with YAGO/AIDA
+Recognize other kind of relationships, visually, and add them easily
+
+
+
+
+===
+
+##... trying to make use of graphs as bridge between a designer and the researchers
+
+Can Graphs visualization serve as entry points for humanitites researchers to better structure data?
+
+
+
+
+===
+
+... and to look for asymmetries and errors during the analysis
+---
+
+Can Graphs visualization serve as entry points for data curation?
+
+
+
+
+===
+
+##... to reveal the (ductile) structure of the data
+
+
+1. Towards a *better understanding* of what a **relationships** means, from both sides
+
+---
+
+2. There is no difference between the **represented** and the **hidden** structure
+
+---
+
+1.  We opened up the database creation process
+
+---
+
+4. Shifting towards idea of *networks as constructs*, merely built-up representation not as the **final chance to see** or **big-picture**
+
+
+
+
 
 ===
 
@@ -94,11 +175,18 @@ comparaison du temps de chargement des deux versions (ancienne version dipo en i
 * Cypher as the main selling point
 * Maintenance difficulties concerning the community edition
 
+
+
+
 ===
 
 ## Back to the future
 
 Quinoa / Dolman / Decypher etc.
+
+
+
+
 
 ===
 

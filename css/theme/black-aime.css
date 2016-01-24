@@ -1,0 +1,102 @@
+/*
+  Novel pro directly from the modeofexistence website
+*/
+@font-face{
+  font-family: 'NovelPro';
+  src:url(/fonts/237E72_2_0.eot);
+  src:url(/fonts/237E72_2_0.eot?#iefix) format("embedded-opentype"),url(/fonts/237E72_2_0.woff) format("woff"),url(/fonts/237E72_2_0.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face{
+  font-family: 'NovelPro';
+  src:url(/fonts/237E72_B_0.eot);
+  src:url(/fonts/237E72_B_0.eot?#iefix) format('embedded-opentype'),url(/fonts/237E72_B_0.woff) format('woff'), url(/fonts/237E72_B_0.ttf) format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face{
+  font-family: 'NovelMono';
+  src:url(/fonts/237E72_1B_0.eot);
+  src:url(/fonts/237E72_1B_0.eot?#iefix) format('embedded-opentype'),url(/fonts/237E72_1B_0.woff) format('woff'),url(/fonts/237E72_1B_0.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+.reveal {
+  font-family: 'NovelPro';
+  color: #d0d0d0;
+  font-size: 28px;
+
+}
+.reveal p{
+  text-align: left;
+  margin: 20px 180px 20px 80px;
+}
+.reveal em{
+  color: #fff;
+}
+.reveal strong, .reveal h2{
+  font-family: 'NovelMono';
+  color: #fff;
+    font-variant: small-caps;
+}
+.reveal h2{
+
+  font-size: 1.2em;
+  text-align: left;
+  margin: 0px 80px 80px 80px;
+}
+/*
+  Modification for the black.css theme
+*/
+.reveal .progress span{
+  height: 6px;
+    background-color: #c0171d;
+}
+
+
+/*
+  LIST hack
+*/
+
+.reveal ol {
+    /*counter-reset:li; /* Initiate a counter */
+    margin-left:0; /* Remove the default left margin */
+    padding-left:0; /* Remove the default left padding */
+}
+.reveal ol > li {
+    position:relative; /* Create a positioning context */
+    margin:0 0 6px 80px; /* Give each list item a left margin to make room for the numbers */
+    padding:4px 8px; /* Add some spacing around the content */
+    list-style:none; /* Disable the normal item numbering */
+    
+}
+.reveal ol > li:before {
+    content:"-" counter(li) "-"; /* Use the counter as content */
+    counter-increment:li; /* Increment the counter by 1 */
+    /* Position and style the number */
+    position:absolute;
+    top:5px;
+    left:-50px;
+    text-align: right;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    width:50px;
+    font-size: 75%;
+    /* Some space between the number and the content in browsers that support
+       generated content but not positioning it (Camino 2 is one example) */
+    margin-right:8px;
+    padding:4px;
+    
+    color:#ccc;
+
+    font-family: 'NovelMono';
+    text-align:center;
+}
+li ol,
+li ul {margin-top:6px;}
+ol ol li:last-child {margin-bottom:0;}
