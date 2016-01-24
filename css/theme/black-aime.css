@@ -3,24 +3,24 @@
 */
 @font-face{
   font-family: 'NovelPro';
-  src:url(/fonts/237E72_2_0.eot);
-  src:url(/fonts/237E72_2_0.eot?#iefix) format("embedded-opentype"),url(/fonts/237E72_2_0.woff) format("woff"),url(/fonts/237E72_2_0.ttf) format("truetype");
+  src:url(../../fonts/237E72_2_0.eot);
+  src:url(../../fonts/237E72_2_0.eot?#iefix) format("embedded-opentype"),url(../../fonts/237E72_2_0.woff) format("woff"),url(../../fonts/237E72_2_0.ttf) format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face{
   font-family: 'NovelPro';
-  src:url(/fonts/237E72_B_0.eot);
-  src:url(/fonts/237E72_B_0.eot?#iefix) format('embedded-opentype'),url(/fonts/237E72_B_0.woff) format('woff'), url(/fonts/237E72_B_0.ttf) format('truetype');
+  src:url(../../fonts/237E72_B_0.eot);
+  src:url(../../fonts/237E72_B_0.eot?#iefix) format('embedded-opentype'),url(../../fonts/237E72_B_0.woff) format('woff'), url(../../fonts/237E72_B_0.ttf) format('truetype');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face{
   font-family: 'NovelMono';
-  src:url(/fonts/237E72_1B_0.eot);
-  src:url(/fonts/237E72_1B_0.eot?#iefix) format('embedded-opentype'),url(/fonts/237E72_1B_0.woff) format('woff'),url(/fonts/237E72_1B_0.ttf) format('truetype');
+  src:url(../../fonts/237E72_1B_0.eot);
+  src:url(../../fonts/237E72_1B_0.eot?#iefix) format('embedded-opentype'),url(../../fonts/237E72_1B_0.woff) format('woff'),url(../../fonts/237E72_1B_0.ttf) format('truetype');
   font-weight: bold;
   font-style: normal;
 }
