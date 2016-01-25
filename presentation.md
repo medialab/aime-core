@@ -21,13 +21,49 @@ How do we store a complex tree within MySQL tables?
 
 So, before refactoring, we had:
 
-* MySQL
-* MongoDB
-* Solr (Lucene)
+===
 
-And now one database to rule them all...
+### A MySQL Database
 
-* Neo4j
+For storing a graph, remember...
+
+===
+
+### A Solr index (based on Lucene)
+
+For full-text searching.
+
+===
+
+### A MongoDB
+
+For a second view on already existing data.
+
+===
+
+### Another MongoDB
+
+For textual references etc.
+
+===
+
+### A SQLite Databse
+
+For the blog's data.
+
+===
+
+### A Microsoft Access Database
+
+Just kidding...
+
+===
+
+## One database to rule them all...
+
+Now we only have one **Neo4j** (mostly...)
+
+... and in darkness bind them.
 
 ===
 
@@ -176,7 +212,7 @@ Finally, we can opened up the database *creation* process
 
 ## Graphs are tools
 
-shift towards idea of *networks as constructs*, merely built-up representation; 
+shift towards idea of *networks as constructs*, merely built-up representation;
 
 Graphs should not be the **final-chance-to-see**
 

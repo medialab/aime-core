@@ -73,7 +73,7 @@ body{
     font-variant: small-caps;
     font-size: 1.2em;
 }
-.reveal h2{
+.reveal h2, .reveal h3{
   font-family: 'NovelSansPro-SemiBold';
   color: #fff;
   font-variant: small-caps;
@@ -113,7 +113,7 @@ body{
     margin: 0 0 6px 50px; /* Give each list item a left margin to make room for the numbers */
     padding:4px 8px; /* Add some spacing around the content */
     list-style:none; /* Disable the normal item numbering */
-    
+
 }
 .reveal ol > li:before {
     content:"-" counter(li) "-"; /* Use the counter as content */
@@ -132,7 +132,7 @@ body{
        generated content but not positioning it (Camino 2 is one example) */
     margin-right:8px;
     padding:4px;
-    
+
     color:#ccc;
 
     font-family: 'NovelMono';
