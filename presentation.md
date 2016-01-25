@@ -55,15 +55,13 @@ For the blog's data.
 
 ### A Microsoft Access Database
 
-Just kidding...
+Just kidding... (At least not on this project)
 
 ===
 
-## One database to rule them all...
+## Towards a single database
 
-Now we only have one **Neo4j** (mostly...)
-
-... and in darkness bind them.
+Now we only have one **Neo4j** instance (mostly...) holding the whole inquiry's data.
 
 ===
 
