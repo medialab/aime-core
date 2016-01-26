@@ -163,11 +163,27 @@ RETURN d, rs, s, ri, i;
 
 ===
 
+<!-- .slide: data-background="img/balloons.png" -->
+
+```cypher
+MATCH (n:`Mode`) WITH n LIMIT 100 MATCH (n)-[r]-(t) RETURN n,r,t;
+```
+
+===
+
+<!-- .slide: data-background="img/issue.png" -->
+
+===
+
+<!-- .slide: data-background="img/fixed.png" -->
+
+===
+
 ## Remarks
 
 When designing this tool, the Neo4j admin tool did not have the good UX it has now.
 
-It should be considered as a complementary tool to the current Neo4j admin, not as a concurrent.
+This is a complementary tool to Neo4j admin.
 
 It remains merely a POC so try it at your own risk.
 
@@ -185,7 +201,7 @@ It remains merely a POC so try it at your own risk.
 
 ===
 
-## First chance to see: collecting the cooccurrences
+## First chance to see: collecting the co-occurrences
 
 ---
 
