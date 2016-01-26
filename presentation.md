@@ -4,6 +4,15 @@
 ===
 
 ## An Inquiry into Modes of Existence
+An phylosophical inquiry to...
+
+===
+
+## A paper book
+![a book](img/aime_book.png)
+===
+
+<!-- .slide: data-background="img/aime_screencast.gif" data-background-size="1024px" -->
 
 ===
 
