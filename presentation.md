@@ -82,6 +82,12 @@ Now we only have one **Neo4j** instance (mostly...) holding the whole inquiry's 
 
 ===
 
+<!-- .slide: data-background="img/migration.png" -->
+
+<h2 class="shadowed-title">Several thousands lines of code later...</h2>
+
+===
+
 ## The long trip towards Neo4j
 
 * Heiko
@@ -95,33 +101,13 @@ Note: pom, where?
 
 ## Introducing Neo4j
 
-
-
-
-===
-
-## Graph visual analysis
-
-
-
-
-===
-
-## Agent Smith
-
-Matrix pun FTW (old & new admin) (two examples)
-
-Note: The tool is a POC and does not aim at replacing Neo4j's already good admin.
-
-
-
-
 ===
 
 ## Migrating
+
+REFACTO la suite: 1 ordered links 2 how to map followed
+
 intéret de la viz dans le travail de migration
-
-
 
 ===
 
@@ -132,18 +118,58 @@ intéret de la viz dans le travail de migration
 
 Note: develop
 
-
-
-
 ===
 
 ## refacto du cliebt 4 vers 3 colonnes
+
 la stack cliente, la décroissance, la performance
 
 comparaison du temps de chargement des deux versions (ancienne version dipo en interne)
 
+===
 
+## Visual network analysis
 
+1. Graph is the very epitome of complexity.
+
+2. Humans handle complexity very badly.
+
+3. Dataviz to the rescue.
+
+===
+
+## [Agent Smith](https://github.com/Yomguithereal/agent-smith)
+
+POC tool designed to visualize *large* graphs resulting from Cypher queries.
+
+Objective: be able to apply graph visual network analysis to Neo4j databases.
+
+Obviously a Matrix pun.
+
+===
+
+<!-- .slide: data-background="img/duplicates.png" -->
+
+```cypher
+MATCH (d:Document {original: true})-[rs:HAS]->(:Slide)-[ri:HAS]->(i:Reference)
+WHERE not(d:Contribution) AND d.title =~ "(?i).*\\d{4}.*"
+WITH d, ri, count(rs) AS nbs
+WHERE nbs = 1
+WITH d, count(ri) AS nbi
+WHERE nbi = 1
+MATCH (d)-[rs:HAS]->(s:Slide)-[ri:HAS]->(i:Reference)
+RETURN d, rs, s, ri, i;
+```
+
+===
+
+## Remarks
+
+When designing this tool, the Neo4j admin tool did not have the good UX it has now.
+
+It should be considered as a complementary tool to the current Neo4j admin, not as a concurrent.
+
+It remains merely a POC so try it at your own risk.
 
 ===
 

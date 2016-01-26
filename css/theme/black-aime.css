@@ -38,6 +38,10 @@ body{
   background-color: #2C2121
 }
 
+.reveal .lang-cypher {
+  background-color: #2C2121
+}
+
 .reveal {
   font-family: 'NovelPro';
   color: #d0d0d0;
@@ -81,6 +85,9 @@ body{
   line-height :2em;
   text-align: left;
   margin: 0px 80px 80px 80px;
+}
+.shadowed-title {
+  text-shadow: 2px 2px 2px black !important;
 }
 /*
   Modification for the black.css theme
