@@ -203,31 +203,40 @@ It remains merely a POC so try it at your own risk.
 
 ## First chance to see: collecting the co-occurrences
 
----
-
-
 Display with **agent-smith** the result of automatic disambiguation on text documents with **[yago-aida](link)**
 
----
-
-  (image)
-
----
-
-Recognize with the researchers *other kind of relationships*, visually, and add them easily:
-
----
-
-  (image)
-
----
-
-Towards a *better understanding* of what a **relationships** means
-
-
-
+[schema]
 
 ===
+
+
+```cypher
+// letters vs people mentioned
+MATCH p=(res:resource {type:'letter'})<--(per:person)
+RETURN p
+```
+<!-- .slide: data-background="img/person-vs-letters.png" data-background-size="1024px" -->
+
+===
+
+```cypher
+MATCH p=(n:person)-->(res:resource {type:'picture'})
+WHERE n.score > -1
+RETURN p LIMIT 10000;
+```
+
+<!-- .slide: data-background="img/people-in-picture-zoomout.png" data-background-size="1024px" -->
+
+---
+
+<!-- .slide: data-background="img/people-in-picture-zoomout.png" data-background-size="1024px" -->
+
+---
+
+<!-- .slide: data-background="img/people-in-picture-zoomin.png" data-background-size="1024px" -->
+
+===
+
 
 ## Can graph visualizations become entry points for (fast) data curation?
 
@@ -237,18 +246,80 @@ Towards a *better understanding* of what a **relationships** means
 
 1. fulltext lucene search
 
+===
 
+<!-- .slide: data-background="img/spot-annotation-errors-in-central-position.png" data-background-size="1024px" -->
+
+annotation errors
 
 
 ===
 
-## Can Graphs visualization serve as entry points for humanitites researchers to better structure data?
-
-Graphs as bridges / obstacles between a designer and the researchers needs
-
-
+<!-- .slide: data-background="img/spot-annotation-error-false-positive.png" data-background-size="1024px" -->
+spot well placed false positives
 
 ===
+
+## monopartite projections
+
+===
+
+```cypher
+// people co-mentions, jaccard similarity
+MATCH p=(n)-[r:`appear_in_same_document`]-(t)
+WHERE n.score > -1 AND t.score > -1
+WITH p ORDER BY r.intersections DESC, r.jaccard DESC RETURN p LIMIT 1000;
+  (image)
+```
+<!-- .slide: data-background="img/generic-cooccurrence.png" data-background-size="1024px" -->
+
+---
+
+<!-- .slide: data-background="img/generic-cooccurrence.png" data-background-size="1024px" -->
+
+===
+
+## what about the meaning of a **relationship** ?
+
+Recognize with the researchers *other kind of relationships*, visually.
+
+===
+
+```cypher
+// people co-mentions in "pictures", jaccard similarity
+MATCH (n:person)-->(res:resource {type:'picture'})<--(t:person) 
+WHERE n.score > -1 AND t.score > -1
+WITH n, t
+MATCH p=(n)-[r:`appear_in_same_document`]-(t)
+WITH p ORDER BY r.intersections DESC, r.jaccard DESC RETURN p LIMIT 1000;
+```
+
+<!-- .slide: data-background="img/picture-cooccurrence.png" data-background-size="1024px" -->
+
+---
+
+<!-- .slide: data-background="img/picture-cooccurrence.png" data-background-size="1024px" -->
+
+---
+
+
+```cypher
+// people co-mentions in "letters", jaccard similarity
+MATCH (n:person)-->(res:resource {type:'letter'})<--(t:person) 
+WHERE n.score > -1 AND t.score > -1
+WITH n, t
+MATCH p=(n)-[r:`appear_in_same_document`]-(t)
+WITH p ORDER BY r.intersections DESC, r.jaccard DESC RETURN p LIMIT 1000;
+```
+
+<!-- .slide: data-background="img/letter-cooccurrence.png" data-background-size="1024px" -->
+
+---
+
+<!-- .slide: data-background="img/letter-cooccurrence.png" data-background-size="1024px" -->
+
+===
+
 
 ## Graphs vis reveal the (ductile) structure of the data
 
@@ -263,7 +334,7 @@ Finally, we can opened up the database *creation* process
 
 shift towards idea of *networks as constructs*, merely built-up representation;
 
-Graphs should not be the **final-chance-to-see**
+Graphs not being the **final-chance-to-see**
 
 
 ===

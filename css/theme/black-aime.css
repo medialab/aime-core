@@ -39,7 +39,11 @@ body{
 }
 
 .reveal .lang-cypher {
-  background-color: #2C2121
+  /*background-color: #2C2121;*/
+  background-color: rgba(44,33,33,0.83);
+  font-family: 'NovelMono';
+  font-size: 19px;
+  line-height: 2em;
 }
 
 .reveal {
