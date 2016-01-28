@@ -72,6 +72,7 @@ Just kidding... (At least not on this project)
 ===
 
 <!-- .slide: data-background="img/kill.png" data-background-size="1000px" -->
+
 ===
 
 ## The long trip towards Neo4j
