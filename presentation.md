@@ -390,6 +390,7 @@ RETURN p
 ===
 
 ```cypher
+// pictures vs people appearing in the picture
 MATCH p=(n:person)-->(res:resource {type:'picture'})
 WHERE n.score > -1
 RETURN p LIMIT 10000;
@@ -407,8 +408,27 @@ RETURN p LIMIT 10000;
 
 ===
 
+```cypher
+// Making use of multilinguistic analysis: preliminary data curation
+MATCH p=(n:person)-[r]->(res:resource {type:'picture'})
+WHERE length(r.languages) <> length(res.languages)
+AND n.score > -1
+RETURN p LIMIT 10000;
+```
+<!-- .slide: data-background="img/spot-error-multil.png" data-background-size="1024px" -->
 
-## Can graph visualizations become entry points for (fast) data curation?
+---
+
+<!-- .slide: data-background="img/spot-error-multil.png" data-background-size="1024px" -->
+
+---
+
+<!-- .slide: data-background="img/spot-error-multil-bis.png" data-background-size="1024px" -->
+
+
+===
+
+## Graph visualizations can easily become entry points for (fast) data curation
 
 1. asymmetries and errors during the analysis process
 
