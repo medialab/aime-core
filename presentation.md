@@ -108,6 +108,7 @@ Just kidding... (At least not on this project)
 ===
 
 <!-- .slide: data-background="img/kill.png" data-background-size="1000px" -->
+
 ===
 
 ## The long trip towards Neo4j
@@ -316,6 +317,9 @@ simplify plugins installation (for designers ...?): something like a package man
 
 (probably more slides)
 
+drawbacks: output constraints sometimes
+
+
 * Cypher as the main selling point
 * Maintenance difficulties concerning the community edition
 
@@ -326,4 +330,7 @@ simplify plugins installation (for designers ...?): something like a package man
 
 ## Back to the future
 
-Quinoa / Dolman / Decypher etc.
+Quinoa / Decypher etc. / Toflit18
+
+[1]: http://www.medialab.sciences-po.fr/fr/publications/visual-network-analysis/
+[2]: http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679
