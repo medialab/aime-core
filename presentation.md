@@ -4,9 +4,9 @@
 ===
 
 ## An Inquiry into Modes of Existence
-An antropological inquiry of  
+*An antropological inquiry of  
 those who call themselves  
-the moderns.
+the moderns.*
 
 ===
 
@@ -14,8 +14,8 @@ the moderns.
 
 ![a book](img/bruno_latour.png)
 
-a French philosopher, anthropologist and sociologist of science.  
-He developed with others the “Actor **Network** Theory”.
+*a French philosopher, anthropologist and sociologist of science.  
+He developed with others the “Actor **Network** Theory”.*
 
 
 ===
@@ -23,12 +23,12 @@ He developed with others the “Actor **Network** Theory”.
 ## An inquiry as a paper book
 ![a book](img/aime_book.png)
 
-With no footnotes nor glossary.
+*With no footnotes nor glossary.*
 
 ===
 ## a series of workshop
 ![workshops](img/workshop.jpg)
-[POL] workshop at Goldsmith University, London
+*[POL] workshop at Goldsmith University, London (09/2014)*
 ===
 
 <!-- .slide: data-background="img/aime_screencast.gif" data-background-size="1024px" -->
@@ -43,15 +43,26 @@ With no footnotes nor glossary.
 
 ===
 
-## and what about MySQL ?
+## What about implementing trees using mysql ? 
 
+<!-- .slide: data-background="img/schéma_mysql.svg" data-background-size="1024px" -->
+
+===
+
+## with links ? 
+
+<!-- .slide: data-background="img/schéma_mysql_links.svg" data-background-size="1024px" -->
+
+===
+
+## neat queries !
 
 
 ===
 
-<h2 class="shadowed-title"> feeling at home ?</h2>
-
 <!-- .slide: data-background="img/phpmyadmin.png" data-background-size="1024px" -->
+
+## feeling at home ?
 
 ===
 
@@ -113,12 +124,11 @@ Just kidding... (At least not on this project)
 
 ## The long trip towards Neo4j
 
-* Heiko
-* Heikki
-* Dor
-* Yomgui
-
-Note: pom, where?
+* winter 2011: first try against pure Lucene for our web crawler
+* spring 2012: second try against MySQL for modes of existence (...) 
+* summer 2012: small experiments by an intern
+* summer 2013: new experiments by an other intern called yomgui
+* fall   2014: starting implementing Aime in Neo4j !
 
 ===
 
