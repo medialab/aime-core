@@ -147,35 +147,134 @@ Now we only have one **Neo4j** instance (mostly...) holding the whole inquiry's 
 
 ## Introducing Neo4j
 
+[Neo4j](http://neo4j.com/) is a graph database.
+
+Which means that instead of storing tables or documents etc. you store an actual graph.
+
+So, knowing the ultra-relational nature of our data, this seems like a good fit.
+
 ===
 
 ## Migrating
 
-REFACTO la suite: 1 ordered links 2 how to map followed
+So how do we go from the data model we saw precedently to one that could better fit a Neo4j database?
 
-intéret de la viz dans le travail de migration
+===
+
+<!-- .slide: data-background="img/neo4j-schema.png" data-background-size="1000px" -->
+
+===
+
+## Problems & choices to be made
+
+1. How do we handle ordered series of links?
+
+2. Are some of our legacy data model's idiosyncrasies now obsolete and harmful to the new one?
 
 ===
 
 ## On the subject of ordered links
 
-* `[:FOLLOWS]` relationships
-* Relationships attributes
+1. Chapters have sub-chapters and sub-chapters have paragraphs.
 
-Note: develop
+2. You will probably agree that in this case, order is quite important...
 
-===
-
-## refacto du cliebt 4 vers 3 colonnes
-
-la stack cliente, la décroissance, la performance
-
-comparaison du temps de chargement des deux versions (ancienne version dipo en interne)
-arf c'est pas beaucoup plus rapide à part le chargement.
+3. How do we do so within a graph structure?
 
 ===
 
-## Visual network analysis
+## Solution n°1 - continuation relationships
+
+```cypher
+MATCH (:Chapter)-[:STARTS_WITH]->(:SubChapter)-[:NEXT*1..]->(:SubChapter)
+```
+
+**Advantages**: feels natural, write is often more performant than with solution n°2 (spoiler!)
+
+**Drawbacks**: quite slow to read and to recompose, need to use unbound `[:NEXT*1..]`.
+
+===
+
+## Solution n°2 - relationship properties
+
+```cypher
+MATCH (c:Chapter)-[r:HAS]->(s:SubChapter)
+WITH r, {
+  chapter: c,
+  subchapters: collect(s)
+} AS chapter
+ORDER BY r.order
+RETURN chapter
+```
+
+**Advantages**: easy to read and to compute.
+
+**Drawbacks**: might get costly to write depending on where you add a new element.
+
+===
+
+## Other solutions?
+
+Some people maintain that storing ordered list in a graph is sort of a heresy.
+
+===
+
+## Are the documents' slides obsolete?
+
+```cypher
+MATCH (:Document)-[:HAS]->(:Slide)-[:HAS]->(:Element)
+```
+
+1. Should the slide node become an element?
+
+2. Is this an artifact from both the initial design & data model?
+
+3. Should the document contains its display as whole markdown and keep links to meaningful elements for query purposes?
+
+===
+
+## Monitoring the migration
+
+What one wants to avoid when migrating data from one model to another is obviously to:
+
+* do it comfortably
+* ensure that no data is lost or corrupted during the process
+
+We therefore need the proper tools.
+
+===
+
+## On the legacy side
+
+1. Monitoring MySQL & MongoDB is quite easy and the tools are good and numerous.
+
+2. Trusty PHPMyAdmin & Robomongo.
+
+3. Monitoring a graph databse is another problem altogether.
+
+===
+
+## Neo4j admin
+
+1. Neo4j is a good tool with good UX.
+
+2. Very handy to profile & explain queries as well as understanding how they work and what they return.
+
+3. Can give a fine sense of the local geography of a node or of a small group of nodes.
+
+===
+
+## But...
+
+1. Cannot display large graphs.
+
+2. Only has a basic spring layout.
+
+3. We cannot use *visual network analysis* on our data.
+
+===
+
+## [Visual network analysis](http://www.medialab.sciences-po.fr/fr/publications/visual-network-analysis/)
 
 1. Graph is the very epitome of complexity.
 
@@ -187,17 +286,47 @@ arf c'est pas beaucoup plus rapide à part le chargement.
 
 ## [Agent Smith](https://github.com/Yomguithereal/agent-smith)
 
-POC tool designed to visualize *large* graphs resulting from Cypher queries.
+POC tool designed to visualize *large* graphs resulting from Cypher queries so we can ensure the data migration was going according to plan.
 
-Objective: be able to apply graph visual network analysis to Neo4j databases.
+Aims at being a complementary tool to the Neo4j admin.
 
 Obviously a Matrix pun.
+
+===
+
+## Rendering
+
+1. SVG is very useful if you need to easily customize your visualization.
+
+2. It is very less so when you need performance.
+
+3. Let's try using canvas & WebGL to display our graph (using [sigma.js](http://sigmajs.org/)).
+
+===
+
+## Layout
+
+1. D3's spring layout is more cosmetic than "accurate".
+
+2. Its goal is to ensure a naive anti-collision and an even visual repartition, not layout quality.
+
+3. Let's use [ForceAtlas 2](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679) to give more meaning to our graph' geography.
+
+===
+
+## Use cases
+
+But this remains a bit blurry.
+
+Let's check two different use cases to see how visual network analysis can help us spot inconsistencies in our data.
 
 ===
 
 <!-- .slide: data-background="img/duplicates.png" -->
 
 ```cypher
+// Finding duplicates
+
 MATCH (d:Document {original: true})-[rs:HAS]->(:Slide)-[ri:HAS]->(i:Reference)
 WHERE not(d:Contribution) AND d.title =~ "(?i).*\\d{4}.*"
 WITH d, ri, count(rs) AS nbs
@@ -208,11 +337,15 @@ MATCH (d)-[rs:HAS]->(s:Slide)-[ri:HAS]->(i:Reference)
 RETURN d, rs, s, ri, i;
 ```
 
+Note: convoluted query
+
 ===
 
 <!-- .slide: data-background="img/balloons.png" -->
 
 ```cypher
+// Finding errors in link generation
+
 MATCH (n:`Mode`) WITH n LIMIT 100 MATCH (n)-[r]-(t) RETURN n,r,t;
 ```
 
@@ -223,16 +356,6 @@ MATCH (n:`Mode`) WITH n LIMIT 100 MATCH (n)-[r]-(t) RETURN n,r,t;
 ===
 
 <!-- .slide: data-background="img/fixed.png" -->
-
-===
-
-## Remarks
-
-When designing this tool, the Neo4j admin tool did not have the good UX it has now.
-
-This is a complementary tool to Neo4j admin.
-
-It remains merely a POC so try it at your own risk.
 
 ===
 
@@ -312,35 +435,33 @@ shift towards idea of *networks as constructs*, merely built-up representation;
 
 Graphs should not be the **final-chance-to-see**
 
+===
+
+## Neo4j Feedback
+
+1. Cypher is clearly the main selling point.
+
+2. Output constraints sometimes.
+
+3. Lack of maintenance tools with the community edition.
+
+Note: huge work done on the output, contrary to SQL. Shame it's not complete :)
 
 ===
 
 ## Neo4j Feedback
 
-simplify plugins installation (for designers ...?): something like a package manager
+* simplify plugins installation (for designers ...?): something like a package manager
 
-
-
-===
-
-## Neo4j Feedback
-
-(probably more slides)
-
-drawbacks: output constraints sometimes
-
-
-* Cypher as the main selling point
-* Maintenance difficulties concerning the community edition
-
-
+Note: dani refine
 
 
 ===
 
 ## Back to the future
 
-Quinoa / Decypher etc. / Toflit18
+1. [decypher](https://github.com/Yomguithereal/decypher#readme), a handful of node.js utilities to handle cypher queries.
 
-[1]: http://www.medialab.sciences-po.fr/fr/publications/visual-network-analysis/
-[2]: http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679
+2. Quinoa editor.
+
+3. TOFLIT18 & its scalability issues.
