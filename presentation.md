@@ -67,25 +67,11 @@ For the blog's data.
 Just kidding... (At least not on this project)
 
 ===
-
-## Towards a single database
-
-Now we only have one **Neo4j** instance (mostly...) holding the whole inquiry's data.
-
-===
-
 <!-- .slide: data-background="img/project.png" data-background-size="1000px" -->
 
 ===
 
 <!-- .slide: data-background="img/kill.png" data-background-size="1000px" -->
-
-===
-
-<!-- .slide: data-background="img/migration.png" -->
-
-<h2 class="shadowed-title">Several thousands lines of code later...</h2>
-
 ===
 
 ## The long trip towards Neo4j
@@ -96,6 +82,19 @@ Now we only have one **Neo4j** instance (mostly...) holding the whole inquiry's 
 * Yomgui
 
 Note: pom, where?
+
+===
+
+## Towards a single database
+
+Now we only have one **Neo4j** instance (mostly...) holding the whole inquiry's data.
+
+===
+
+<!-- .slide: data-background="img/migration.png" -->
+
+<h2 class="shadowed-title">Several thousands lines of code later...</h2>
+
 
 ===
 
@@ -125,6 +124,7 @@ Note: develop
 la stack cliente, la décroissance, la performance
 
 comparaison du temps de chargement des deux versions (ancienne version dipo en interne)
+arf c'est pas beaucoup plus rapide à part le chargement.
 
 ===
 
@@ -291,7 +291,3 @@ simplify plugins installation (for designers ...?): something like a package man
 ## Back to the future
 
 Quinoa / Dolman / Decypher etc.
-
-
-
-
