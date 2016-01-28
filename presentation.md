@@ -4,23 +4,59 @@
 ===
 
 ## An Inquiry into Modes of Existence
-An phylosophical inquiry to...
+An antropological inquiry of  
+those who call themselves  
+the moderns.
 
 ===
 
-## A paper book
+## By Bruno Latour
+
+![a book](img/bruno_latour.png)
+
+a French philosopher, anthropologist and sociologist of science.  
+He developed with others the “Actor **Network** Theory”.
+
+
+===
+
+## An inquiry as a paper book
 ![a book](img/aime_book.png)
+
+With no footnotes nor glossary.
+
+===
+## a series of workshop
+![workshops](img/workshop.jpg)
+[POL] workshop at Goldsmith University, London
 ===
 
 <!-- .slide: data-background="img/aime_screencast.gif" data-background-size="1024px" -->
 
 ===
 
-## Data model of the inquiry
+<!-- .slide: data-background="img/columns_data_model.svg" data-background-size="1024px" -->
 
 ===
 
-## MySQL & graphs
+<!-- .slide: data-background="img/columns_data_model_link.svg" data-background-size="1024px" -->
+
+===
+
+## and what about MySQL ?
+
+
+
+===
+
+<h2 class="shadowed-title"> feeling at home ?</h2>
+
+<!-- .slide: data-background="img/phpmyadmin.png" data-background-size="1024px" -->
+
+===
+
+
+## SQL queries
 
 How do we store a complex tree within MySQL tables?
 
