@@ -12,7 +12,7 @@ the moderns.*
 
 ## By Bruno Latour
 
-![a book](img/bruno_latour.png)
+![Bruno Latour](img/bruno_latour.png)
 
 *a French philosopher, anthropologist and sociologist of science.
 He developed with others the “Actor **Network** Theory”.*
@@ -29,6 +29,10 @@ He developed with others the “Actor **Network** Theory”.*
 ## a series of workshop
 ![workshops](img/workshop.jpg)
 *[POL] workshop at Goldsmith University, London (09/2014)*
+===
+## a web platform
+TODO: image de la home
+*http://modesofexistence.org*
 ===
 
 <!-- .slide: data-background="img/aime_screencast.gif" data-background-size="1024px" -->
@@ -56,26 +60,28 @@ He developed with others the “Actor **Network** Theory”.*
 ===
 
 ## neat queries !
+```SQL
 
+		
+
+```
+
+*And Results come only 6 seconds later on this laptop (without indices)*
 
 ===
 
 <!-- .slide: data-background="img/phpmyadmin.png" data-background-size="1024px" -->
 
-## feeling at home ?
-
 ===
 
-
-## SQL queries
-
-How do we store a complex tree within MySQL tables?
+## and this MySQL
+*was wrapped into a PHP/Yii server...*
 
 ===
 
 ## Multiplication of databases
 
-So, before refactoring, we had:
+*So, before refactoring, we had:*
 
 ===
 
@@ -93,25 +99,32 @@ For full-text searching.
 
 ### A MongoDB
 
-For a second view on already existing data.
+Because we had to create a new frontend...  
+...and the dev couldn't bare using PHP/MYSQL
+
+*So we added a node.js and a mongo to the stack*
 
 ===
 
 ### Another MongoDB
 
-For textual references etc.
+*wrapped in a python Twisted server to bibliographic references*
 
 ===
 
-### A SQLite Databse
+### A SQLite Database
 
-For the blog's data.
+For the Ghost blog's data.
 
 ===
 
 ### A Microsoft Access Database
 
 Just kidding... (At least not on this project)
+
+===
+
+### Let's sum up !
 
 ===
 <!-- .slide: data-background="img/project.png" data-background-size="1000px" -->
@@ -122,6 +135,14 @@ Just kidding... (At least not on this project)
 
 ===
 
+### Let's explain our plan to our anthropologist
+
+===
+
+<video controls>
+  <source src="img/explaining_refacto_plan.mov" type="video/mp4"></video>
+
+===
 ## The long trip towards Neo4j
 
 * winter 2011: first try against pure Lucene for our web crawler
