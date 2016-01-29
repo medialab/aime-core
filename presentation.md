@@ -60,10 +60,17 @@ TODO: image de la home
 ===
 
 ## neat queries !
-```SQL
 
-
-
+```sql
+SELECT chapter.content_fr AS chapter, subchapter.content_fr AS subchapter, paragraph.content_fr AS paragraph, group_concat(link.id), group_concat(link.to_model)
+FROM  `tbl_items` AS paragraph
+LEFT JOIN tbl_links as link ON link.from_id = paragraph.id AND link.from_model=1  AND link.type in (0,5,6)
+LEFT JOIN  `tbl_items` AS subchapter ON subchapter.id = paragraph.parent_id
+LEFT JOIN  `tbl_items` AS chapter ON chapter.id = subchapter.parent_id
+WHERE paragraph.root =36936
+AND paragraph.level =4
+GROUP BY paragraph.id
+ORDER BY paragraph.lft
 ```
 
 *And Results come only 6 seconds later on this laptop (without indices)*
@@ -75,6 +82,7 @@ TODO: image de la home
 ===
 
 ## and this MySQL
+
 *was wrapped into a PHP/Yii server...*
 
 ===
@@ -100,6 +108,7 @@ For full-text searching.
 ### A MongoDB
 
 Because we had to create a new frontend...
+
 ...and the dev couldn't bare using PHP/MYSQL
 
 *So we added a node.js and a mongo to the stack*
@@ -116,17 +125,22 @@ Because we had to create a new frontend...
 
 For the Ghost blog's data.
 
+Plus, we needed custom features, so we forked.
+
+The developers left, and now it restarted on its own ~127 times within 3 months...
+
 ===
 
 ### A Microsoft Access Database
 
-Just kidding... (At least not on this project)
+Just kidding...
 
 ===
 
-### Let's sum up !
+### Let's sum it up!
 
 ===
+
 <!-- .slide: data-background="img/project.png" data-background-size="1000px" -->
 
 ===
