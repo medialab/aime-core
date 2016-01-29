@@ -4,8 +4,8 @@
 ===
 
 ## An Inquiry into Modes of Existence
-*An antropological inquiry of  
-those who call themselves  
+*An antropological inquiry of
+those who call themselves
 the moderns.*
 
 ===
@@ -14,7 +14,7 @@ the moderns.*
 
 ![a book](img/bruno_latour.png)
 
-*a French philosopher, anthropologist and sociologist of science.  
+*a French philosopher, anthropologist and sociologist of science.
 He developed with others the “Actor **Network** Theory”.*
 
 
@@ -43,13 +43,13 @@ He developed with others the “Actor **Network** Theory”.*
 
 ===
 
-## What about implementing trees using mysql ? 
+## What about implementing trees using mysql ?
 
 <!-- .slide: data-background="img/schéma_mysql.svg" data-background-size="1024px" -->
 
 ===
 
-## with links ? 
+## with links ?
 
 <!-- .slide: data-background="img/schéma_mysql_links.svg" data-background-size="1024px" -->
 
@@ -125,7 +125,7 @@ Just kidding... (At least not on this project)
 ## The long trip towards Neo4j
 
 * winter 2011: first try against pure Lucene for our web crawler
-* spring 2012: second try against MySQL for modes of existence (...) 
+* spring 2012: second try against MySQL for modes of existence (...)
 * summer 2012: small experiments by an intern
 * summer 2013: new experiments by an other intern called yomgui
 * fall   2014: starting implementing Aime in Neo4j !
@@ -477,7 +477,7 @@ Recognize with the researchers *other kind of relationships*, visually.
 
 ```cypher
 // people co-mentions in "pictures", jaccard similarity
-MATCH (n:person)-->(res:resource {type:'picture'})<--(t:person) 
+MATCH (n:person)-->(res:resource {type:'picture'})<--(t:person)
 WHERE n.score > -1 AND t.score > -1
 WITH n, t
 MATCH p=(n)-[r:`appear_in_same_document`]-(t)
@@ -495,7 +495,7 @@ WITH p ORDER BY r.intersections DESC, r.jaccard DESC RETURN p LIMIT 1000;
 
 ```cypher
 // people co-mentions in "letters", jaccard similarity
-MATCH (n:person)-->(res:resource {type:'letter'})<--(t:person) 
+MATCH (n:person)-->(res:resource {type:'letter'})<--(t:person)
 WHERE n.score > -1 AND t.score > -1
 WITH n, t
 MATCH p=(n)-[r:`appear_in_same_document`]-(t)
@@ -537,6 +537,8 @@ Graphs not being the **final-chance-to-see**
 3. Lack of maintenance tools with the community edition.
 
 Note: huge work done on the output, contrary to SQL. Shame it's not complete :)
+
+Note: hidden O(n^2) hidden queries.
 
 ===
 
