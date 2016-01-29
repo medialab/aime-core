@@ -40,10 +40,11 @@ body{
 
 .reveal .lang-cypher {
   /*background-color: #2C2121;*/
-  background-color: rgba(44,33,33,0.83);
+  background-color: #252525;
   font-family: 'NovelMono';
   font-size: 19px;
-  line-height: 2em;
+  line-height: 1.5em;
+  padding: 10px 20px;
 }
 
 .reveal {
@@ -109,6 +110,11 @@ body{
     background-color: #c0171d;
 }
 
+
+.reveal pre code{
+  padding: 10px 15px;
+  background: #252525;
+}
 /*
   Arrows hack
 */

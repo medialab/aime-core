@@ -125,7 +125,7 @@ Because we had to create a new frontend...
 
 ### Another MongoDB
 
-*wrapped in a python Twisted server to bibliographic references*
+wrapped in a python Twisted server for the *bibliographic references*
 
 ===
 
@@ -233,9 +233,9 @@ So how do we go from the data model we saw precedently to one that could better 
 MATCH (:Chapter)-[:STARTS_WITH]->(:SubChapter)-[:NEXT*1..]->(:SubChapter)
 ```
 
-**Advantages**: feels natural, write is often more performant than with solution n°2 (spoiler!)
+**advantages**: feels natural, write is often more performant than with solution n°2 (spoiler!)
 
-**Drawbacks**: quite slow to read and to recompose, need to use unbound `[:NEXT*1..]`.
+**drawbacks**: quite slow to read and to recompose, need to use unbound `[:NEXT*1..]`.
 
 ===
 
@@ -251,9 +251,9 @@ ORDER BY r.order
 RETURN chapter
 ```
 
-**Advantages**: easy to read and to compute.
+**advantages**: easy to read and to compute.
 
-**Drawbacks**: might get costly to write depending on where you add a new element.
+**drawbacks**: might get costly to write depending on where you add a new element.
 
 ===
 
@@ -294,7 +294,7 @@ We therefore need the proper tools.
 
 2. Trusty PHPMyAdmin & Robomongo.
 
-3. Monitoring a graph databse is another problem altogether.
+3. Monitoring a graph database is *another problem* altogether.
 
 ===
 
@@ -318,23 +318,23 @@ We therefore need the proper tools.
 
 ===
 
-## [Visual network analysis](http://www.medialab.sciences-po.fr/fr/publications/visual-network-analysis/)
+## Visual network analysis
 
 1. Graph is the very epitome of complexity.
 
 2. Humans handle complexity very badly.
 
-3. Dataviz to the rescue.
+3. Dataviz to the rescue: [Visual network analysis](http://www.medialab.sciences-po.fr/fr/publications/visual-network-analysis/)
 
 ===
 
-## [Agent Smith](https://github.com/Yomguithereal/agent-smith)
+## Agent Smith
 
 POC tool designed to visualize *large* graphs resulting from Cypher queries so we can ensure the data migration was going according to plan.
 
 Aims at being a complementary tool to the Neo4j admin.
 
-Obviously a Matrix pun.
+Obviously a Matrix pun: [Agent Smith](https://github.com/Yomguithereal/agent-smith)
 
 ===
 
@@ -362,7 +362,7 @@ Obviously a Matrix pun.
 
 But this remains a bit blurry.
 
-Let's check two different use cases to see how visual network analysis can help us spot inconsistencies in our data.
+Let's check *two different use cases* to see how visual network analysis can help us spot inconsistencies in our data.
 
 ===
 
@@ -441,18 +441,22 @@ MANYLINES POM
 
 ## First chance to see: collecting the co-occurrences
 
-Display with **agent-smith** the result of automatic disambiguation on text documents with **[yago-aida](link)**
-
-[schema]
+Display with [Agent Smith](https://github.com/Yomguithereal/agent-smith) the result of automatic disambiguation on text documents with [yago-aida](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/aida/) (@max plank institute)
 
 ===
 
+schema 
+===
 
 ```cypher
 // letters vs people mentioned
 MATCH p=(res:resource {type:'letter'})<--(per:person)
 RETURN p
 ```
+<!-- .slide: data-background="img/person-vs-letters.png" data-background-size="1024px" -->
+
+---
+
 <!-- .slide: data-background="img/person-vs-letters.png" data-background-size="1024px" -->
 
 ===
@@ -506,15 +510,27 @@ RETURN p LIMIT 10000;
 
 ===
 
+```cypher
+// annotation errors
+```
+
 <!-- .slide: data-background="img/spot-annotation-errors-in-central-position.png" data-background-size="1024px" -->
 
-annotation errors
+---
 
+<!-- .slide: data-background="img/spot-annotation-errors-in-central-position.png" data-background-size="1024px" -->
 
 ===
 
+```cypher
+// spot well placed false positives
+```
+
 <!-- .slide: data-background="img/spot-annotation-error-false-positive.png" data-background-size="1024px" -->
-spot well placed false positives
+
+---
+
+<!-- .slide: data-background="img/spot-annotation-error-false-positive.png" data-background-size="1024px" -->
 
 ===
 
@@ -526,8 +542,8 @@ spot well placed false positives
 // people co-mentions, jaccard similarity
 MATCH p=(n)-[r:`appear_in_same_document`]-(t)
 WHERE n.score > -1 AND t.score > -1
-WITH p ORDER BY r.intersections DESC, r.jaccard DESC RETURN p LIMIT 1000;
-  (image)
+WITH p ORDER BY r.intersections DESC, r.jaccard DESC
+RETURN p LIMIT 1000;
 ```
 <!-- .slide: data-background="img/generic-cooccurrence.png" data-background-size="1024px" -->
 
@@ -544,12 +560,13 @@ Recognize with the researchers *other kind of relationships*, visually.
 ===
 
 ```cypher
-// people co-mentions in "pictures", jaccard similarity
+// people co-mentions in "pictures"
 MATCH (n:person)-->(res:resource {type:'picture'})<--(t:person)
 WHERE n.score > -1 AND t.score > -1
 WITH n, t
 MATCH p=(n)-[r:`appear_in_same_document`]-(t)
-WITH p ORDER BY r.intersections DESC, r.jaccard DESC RETURN p LIMIT 1000;
+WITH p ORDER BY r.intersections DESC, r.jaccard DESC
+RETURN p LIMIT 1000;
 ```
 
 <!-- .slide: data-background="img/picture-cooccurrence.png" data-background-size="1024px" -->
@@ -562,12 +579,13 @@ WITH p ORDER BY r.intersections DESC, r.jaccard DESC RETURN p LIMIT 1000;
 
 
 ```cypher
-// people co-mentions in "letters", jaccard similarity
+// people co-mentions in "letters"
 MATCH (n:person)-->(res:resource {type:'letter'})<--(t:person)
 WHERE n.score > -1 AND t.score > -1
 WITH n, t
 MATCH p=(n)-[r:`appear_in_same_document`]-(t)
-WITH p ORDER BY r.intersections DESC, r.jaccard DESC RETURN p LIMIT 1000;
+WITH p ORDER BY r.intersections DESC, r.jaccard DESC
+RETURN p LIMIT 1000;
 ```
 
 <!-- .slide: data-background="img/letter-cooccurrence.png" data-background-size="1024px" -->
@@ -581,18 +599,10 @@ WITH p ORDER BY r.intersections DESC, r.jaccard DESC RETURN p LIMIT 1000;
 
 ## Graphs vis reveal the (ductile) structure of the data
 
-There is no difference/distance between the **represented** structure and the **db** structure
+There is (almost) no difference/distance between the **represented** structure and the **db** structure
 
 Finally, we can opened up the database *creation* process
 
-
-===
-
-## Graphs are tools
-
-shift towards idea of *networks as constructs*, merely built-up representation;
-
-Graphs not being the **final-chance-to-see**
 
 ===
 
