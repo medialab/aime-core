@@ -62,7 +62,7 @@ TODO: image de la home
 ## neat queries !
 ```SQL
 
-		
+
 
 ```
 
@@ -99,7 +99,7 @@ For full-text searching.
 
 ### A MongoDB
 
-Because we had to create a new frontend...  
+Because we had to create a new frontend...
 ...and the dev couldn't bare using PHP/MYSQL
 
 *So we added a node.js and a mongo to the stack*
@@ -549,7 +549,7 @@ Graphs not being the **final-chance-to-see**
 
 ===
 
-## Neo4j Feedback
+## Neo4j Feedback (1/3)
 
 1. Cypher is clearly the main selling point.
 
@@ -563,15 +563,24 @@ Note: hidden O(n^2) hidden queries.
 
 ===
 
-## Neo4j Feedback
+## Neo4j Feedback (2/3)
 
-* simplify plugins installation (for designers ...?): something like a package manager
-* note necessarly a performance choice but a semiotic one
-  networks are powerfull semiotic objects to think data (ADD prof IEP reference)
+1. Cypher hides a lot of complexity for you.
+
+2. Sometimes it's good for you (cardinality).
+
+3. Sometimes it's not and you have trouble handling complex queries that end up in cartesian products where they really should not.
+
+===
+
+## Neo4j Feedback (3/3)
+
+1. simplify plugins installation (for designers ...?): something like a package manager.
+
+2. Not necessarly a performance choice but a semiotic one networks are powerfull semiotic objects to think data (ADD prof IEP reference)
 
 
-Note: dani refine
-
+Note: Paul => reference
 
 ===
 
