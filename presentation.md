@@ -546,7 +546,7 @@ Note: hidden O(n^2) hidden queries.
 
 * simplify plugins installation (for designers ...?): something like a package manager
 * note necessarly a performance choice but a semiotic one
-  networks are powerfull semiotic objects to think data
+  networks are powerfull semiotic objects to think data (ADD prof IEP reference)
 
 
 Note: dani refine
