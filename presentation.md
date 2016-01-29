@@ -605,4 +605,4 @@ Note: Paul => reference
 
 2. Quinoa editor.
 
-3. TOFLIT18 & its scalability issues.
+3. TOFLIT18 & its scalability issues - Cf. Benoît Simiard FOAF @jacomyal invitaiton to talk
