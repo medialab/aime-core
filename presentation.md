@@ -14,9 +14,9 @@ the moderns.*
 
 ![Bruno Latour](img/bruno_latour.png)
 
-*a French philosopher, anthropologist and sociologist of science.
-He developed with others the “Actor **Network** Theory”.*
+A French philosopher, anthropologist and sociologist of science.
 
+He developed with others the **actor network theory**.
 
 ===
 
@@ -62,13 +62,21 @@ TODO: image de la home
 ## neat queries !
 
 ```sql
-SELECT chapter.content_fr AS chapter, subchapter.content_fr AS subchapter, paragraph.content_fr AS paragraph, group_concat(link.id), group_concat(link.to_model)
-FROM  `tbl_items` AS paragraph
-LEFT JOIN tbl_links as link ON link.from_id = paragraph.id AND link.from_model=1  AND link.type in (0,5,6)
-LEFT JOIN  `tbl_items` AS subchapter ON subchapter.id = paragraph.parent_id
-LEFT JOIN  `tbl_items` AS chapter ON chapter.id = subchapter.parent_id
-WHERE paragraph.root =36936
-AND paragraph.level =4
+SELECT
+  chapter.content_fr AS chapter,
+  subchapter.content_fr AS subchapter,
+  paragraph.content_fr AS paragraph,
+  group_concat(link.id),
+  group_concat(link.to_model)
+FROM `tbl_items` AS paragraph
+LEFT JOIN
+  tbl_links as link ON link.from_id = paragraph.id AND
+  link.from_model = 1 AND
+  link.type in (0,5,6)
+LEFT JOIN `tbl_items` AS subchapter ON subchapter.id = paragraph.parent_id
+LEFT JOIN `tbl_items` AS chapter ON chapter.id = subchapter.parent_id
+WHERE paragraph.root = 36936
+AND paragraph.level = 4
 GROUP BY paragraph.id
 ORDER BY paragraph.lft
 ```
@@ -158,6 +166,7 @@ Just kidding...
 </video>
 
 ===
+
 ## After some failed attempt towards Neo4j...
 
 * winter 2011: first try against pure Lucene for our web crawler
@@ -177,7 +186,6 @@ Just kidding...
 <!-- .slide: data-background="img/migration.png" -->
 
 <h2 class="shadowed-title">Several thousands lines of code later...</h2>
-
 
 ===
 
@@ -392,6 +400,30 @@ MATCH (n:`Mode`) WITH n LIMIT 100 MATCH (n)-[r]-(t) RETURN n,r,t;
 ===
 
 <!-- .slide: data-background="img/fixed.png" -->
+
+===
+
+So now, we have the following
+
+```cypher
+MATCH ()-[bc:HAS]->(c:Chapter)-[csc:HAS]->(sh:Subheading)-[shp:HAS]->(p:Paragraph)-[:CITES]->(t)
+WHERE c.lang = "fr"
+WITH
+  bc, csc, shp, c, sh, p, t,
+  collect(t.type) as to_type,
+  collect(t.slug_id) as to_id
+RETURN
+  c.title,
+  sh.title,
+  p.markdown,
+  to_type,
+  to_id
+ORDER BY bc.order, csc.order, shp.order
+```
+
+===
+
+MANYLINES POM
 
 ===
 
