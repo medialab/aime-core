@@ -35,7 +35,7 @@
 
 
 body{
-  background-color: #2C2121
+  background-color: #151515;
 }
 
 .reveal .lang-cypher {
@@ -71,6 +71,14 @@ body{
   text-shadow: none;
   border-bottom: 3px solid transparent;
 }
+
+.reveal section img{
+  margin: 0;      
+  background: none; 
+  border: 0px transparent; 
+  box-shadow: none; 
+}
+
 
 .reveal em{
   color: #fff;
