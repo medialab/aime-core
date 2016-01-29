@@ -545,6 +545,9 @@ Note: hidden O(n^2) hidden queries.
 ## Neo4j Feedback
 
 * simplify plugins installation (for designers ...?): something like a package manager
+* note necessarly a performance choice but a semiotic one
+  networks are powerfull semiotic objects to think data
+
 
 Note: dani refine
 
