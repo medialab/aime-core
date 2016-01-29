@@ -140,10 +140,11 @@ Just kidding... (At least not on this project)
 ===
 
 <video controls>
-  <source src="img/explaining_refacto_plan.mov" type="video/mp4"></video>
+  <source src="img/explaining_refacto_plan.mov" type="video/mp4">
+</video>
 
 ===
-## The long trip towards Neo4j
+## After some failed attempt towards Neo4j...
 
 * winter 2011: first try against pure Lucene for our web crawler
 * spring 2012: second try against MySQL for modes of existence (...)
@@ -153,9 +154,9 @@ Just kidding... (At least not on this project)
 
 ===
 
-## Towards a single database
+## ... let's use a single database
 
-Now we only have one **Neo4j** instance (mostly...) holding the whole inquiry's data.
+*Now we only have one **Neo4j** instance (mostly...) holding the whole inquiry's data.*
 
 ===
 
