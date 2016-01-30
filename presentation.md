@@ -1,5 +1,15 @@
 ## Modeling a Philosophical Inquiry:<br/>from MySQL to a graph database
-*The short story of a long refactoring process*
+
+The short story of a long *refactoring* process.
+
+<br/>
+<br/>
+<br/>  
+Paul Girard(1), Guillaume Plique(1), Daniele Guido(2)
+
+(1) [Sciences Po médialab](http://www.medialab.sciences-po.fr)
+
+(2) [DHlab CVCE](http://www.cvce.eu)
 
 ===
 
@@ -639,7 +649,7 @@ Finally, we can open up the database *creation* process
 
 ===
 
-## Neo4j Feedback (1/3)
+## Neo4j Feedbacks
 
 1. Cypher is clearly the main selling point.
 
@@ -647,33 +657,7 @@ Finally, we can open up the database *creation* process
 
 3. Lack of maintenance tools with the community edition.
 
-Note: huge work done on the output, contrary to SQL. Shame it's not complete :)
-
-Note: hidden O(n^2) hidden queries.
-
-===
-
-## Neo4j Feedback (2/3)
-
-1. Cypher hides a lot of complexity for you.
-
-2. Sometimes it's good for you (cardinality).
-
-3. Sometimes it's not and you have trouble handling complex queries that end up in cartesian products where they really should not.
-
 4. simplify plugins installation (for designers ...?): something like a package manager.
-
-===
-
-## Neo4j Feedback (3/3)
-
-Not necessarly a performance choice but a semiotic one.
-
-Networks are powerful semiotic objects to think data (Venturini 2016)
-
-A more adapted level of abastraction for those who think their data as networks.
-
-VENTURINI, T., JACOMY, M., BANEYX, A., & GIRARD, P. (2016). *Hors champs: la multipositionnalité par l’analyse des réseaux.* Working Paper to be published in Réseaux, La Découverte.
 
 ===
 
@@ -683,4 +667,18 @@ VENTURINI, T., JACOMY, M., BANEYX, A., & GIRARD, P. (2016). *Hors champs: la mul
 
 2. Quinoa editor.
 
-3. TOFLIT18 & its scalability issues - Cf. Benoît Simiard FOAF @jacomyal invitaiton to talk
+3. TOFLIT18 & its scalability issues - Cf. Benoît Simiard FOAF @jacomyal invitation to talk
+
+4. Cypher hides a lot of complexity for you.
+
+===
+
+## Conclusion
+
+Not necessarily a performance choice but a semiotic one.
+
+Networks are powerful semiotic objects to think data (Venturini 2016)
+
+A more adapted level of abastraction for those who think their data as networks.
+
+VENTURINI, T., JACOMY, M., BANEYX, A., & GIRARD, P. (2016). *Hors champs: la multipositionnalité par l’analyse des réseaux.* Working Paper to be published in Réseaux, La Découverte.
