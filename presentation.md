@@ -207,6 +207,10 @@ So how do we go from the data model we saw precedently to one that could better 
 
 ===
 
+<!-- .slide: data-background="img/neo4j-schema-updated.svg" -->
+
+===
+
 <!-- .slide: data-background="img/neo4j-schema.svg" -->
 
 ===
