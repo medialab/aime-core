@@ -146,7 +146,8 @@ The developers left, and now it restarted on its own ~127 times within 3 months.
 
 ### A Microsoft Access Database
 
-Just kidding...
+Not on this project...
+A story I might tell about at @DH2016 called RICARDO.
 
 ===
 
@@ -167,7 +168,7 @@ Just kidding...
 ===
 
 <video controls>
-  <source src="img/explaining_refacto_plan.mov" type="video/mp4">
+  <source src="img/explaining_refacto_plan.mp4" type="video/mp4">
 </video>
 
 ===
