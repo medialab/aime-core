@@ -1,4 +1,4 @@
-## Modeling a Philosophical Inquiry: from MySQL to a graph database
+## Modeling a Philosophical Inquiry:<br/>from MySQL to a graph database
 *The short story of a long refactoring process*
 
 ===
