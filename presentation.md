@@ -217,6 +217,8 @@ So how do we go from the data model we saw precedently to one that could better 
 
 2. Are some of our legacy data model's idiosyncrasies now obsolete and harmful to the new one?
 
+3. What about translation?
+
 ===
 
 ## On the subject of ordered links
@@ -276,6 +278,18 @@ MATCH (:Document)-[:HAS]->(:Slide)-[:HAS]->(:Element)
 2. Is this an artifact from both the initial design & data model?
 
 3. Should the document contains its display as whole markdown and keep links to meaningful elements for query purposes?
+
+===
+
+## What about the translation?
+
+1. We could use node properties.
+
+2. Or we could use different nodes & translation links.
+
+3. We chose n°2 because n°1 was the old way in MySQL.
+
+4. Plus this would permit versions to differ (which is already the case).
 
 ===
 
@@ -507,9 +521,9 @@ RETURN p LIMIT 10000;
 
 1. asymmetries and errors during the analysis process
 
-1. easily spot *well placed* false positives
+2. easily spot *well placed* false positives
 
-1. fulltext lucene search
+3. fulltext lucene search
 
 ===
 
