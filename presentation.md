@@ -80,7 +80,7 @@ Or you can read this *book with no footnotes nor glossary* (exists also in Engli
 
 ===
 
-## neat queries !
+## neat queries!
 
 ```sql
 SELECT
@@ -102,7 +102,7 @@ GROUP BY paragraph.id
 ORDER BY paragraph.lft
 ```
 
-*And Results come only 6 seconds later on this laptop (without indices)*
+*and it only takes 6 seconds to run on this laptop…*
 
 ===
 
@@ -163,7 +163,7 @@ The developers left, and now it restarted on its own ~127 times within 3 months.
 ### A Microsoft Access Database
 
 Not on this project...
-A story I might tell about at @DH2016 called RICARDO.
+A story I might tell at #DH2016 called RICARDO.
 
 ===
 
