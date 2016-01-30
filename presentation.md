@@ -210,7 +210,7 @@ So how do we go from the data model we saw precedently to one that could better 
 
 ===
 
-<!-- .slide: data-background="img/neo4j-schema.png" data-background-size="1000px" -->
+<!-- .slide: data-background="img/neo4j-schema.svg" -->
 
 ===
 
@@ -450,7 +450,7 @@ Display with [Agent Smith](https://github.com/Yomguithereal/agent-smith) the res
 
 ===
 
-schema 
+schema
 ===
 
 ```cypher
