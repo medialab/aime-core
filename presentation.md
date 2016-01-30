@@ -299,7 +299,7 @@ MATCH (:Document)-[:HAS]->(:Slide)-[:HAS]->(:Element)
 
 2. Is this an artifact from both the initial design & data model?
 
-3. Should the document contains its display as whole markdown and keep links to meaningful elements for query purposes?
+3. Should the document contain its display as whole markdown and keep links to meaningful elements for query purposes?
 
 ===
 
