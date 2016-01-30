@@ -443,7 +443,7 @@ ORDER BY bc.order, csc.order, shp.order
 
 ===
 ```stack
-                                                                                                        
+
                                                                             ┌──────────────────────────┐
 ┌────────────────────────┐ ┌───────────────────┐ ┌───────────────────────┐  │┌───────────────────────┐ │
 │ HTML5 - Javascript ES6 │ │HTML5 - Javascript │ │  HTML5 - Javascript   │  ││  HTML5 - Javascript   │ │
@@ -469,13 +469,13 @@ ORDER BY bc.order, csc.order, shp.order
      │                    │                                                 │                          │
      │       Biblib       │                                                 │      Ghost (forked)      │
      └────────────────────┘                                                 └──────────────────────────┘
-                                                                                                        
-                                                                                                        
-                                               AIME Stack    
 
-```                                           
-                                                                                                        
-                                                                                                        
+
+                                               AIME Stack
+
+```
+
+
 ===
 
 ## From philosophy to history: a slightly different use-case
@@ -690,10 +690,10 @@ Note: hidden O(n^2) hidden queries.
 
 1. simplify plugins installation (for designers ...?): something like a package manager.
 
-2. Not necessarly a performance choice but a semiotic one networks are powerfull semiotic objects to think data (ADD prof IEP reference)
+2. Not necessarly a performance choice but a semiotic one. Networks are powerful semiotic objects to think data (ADD prof IEP reference)
+A more adapted level of abastraction for those who think their data as networks.
 
-
-Note: Paul => reference
+ref Prof IEP
 
 ===
 
