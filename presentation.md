@@ -215,6 +215,10 @@ So how do we go from the data model we saw precedently to one that could better 
 
 ===
 
+<!-- .slide: data-background="img/neo4j-schema-updated.svg" -->
+
+===
+
 <!-- .slide: data-background="img/neo4j-schema.svg" -->
 
 ===
@@ -449,7 +453,6 @@ ORDER BY bc.order, csc.order, shp.order
 
 <!-- .slide: data-background="img/aime_stack.png" -->
                                                                       
-                                                                                                        
 ===
 
 ## From philosophy to history: a slightly different use-case
@@ -664,10 +667,10 @@ Note: hidden O(n^2) hidden queries.
 
 1. simplify plugins installation (for designers ...?): something like a package manager.
 
-2. Not necessarly a performance choice but a semiotic one networks are powerfull semiotic objects to think data (ADD prof IEP reference)
+2. Not necessarly a performance choice but a semiotic one. Networks are powerful semiotic objects to think data (ADD prof IEP reference)
+A more adapted level of abastraction for those who think their data as networks.
 
-
-Note: Paul => reference
+ref Prof IEP
 
 ===
 
