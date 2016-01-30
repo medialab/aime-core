@@ -661,16 +661,19 @@ Note: hidden O(n^2) hidden queries.
 
 3. Sometimes it's not and you have trouble handling complex queries that end up in cartesian products where they really should not.
 
+4. simplify plugins installation (for designers ...?): something like a package manager.
+
 ===
 
 ## Neo4j Feedback (3/3)
 
-1. simplify plugins installation (for designers ...?): something like a package manager.
+Not necessarly a performance choice but a semiotic one.
 
-2. Not necessarly a performance choice but a semiotic one. Networks are powerful semiotic objects to think data (ADD prof IEP reference)
+Networks are powerful semiotic objects to think data (Venturini 2016)
+
 A more adapted level of abastraction for those who think their data as networks.
 
-ref Prof IEP
+VENTURINI, T., JACOMY, M., BANEYX, A., & GIRARD, P. (2016). *Hors champs: la multipositionnalité par l’analyse des réseaux.* Working Paper to be published in Réseaux, La Découverte.
 
 ===
 
