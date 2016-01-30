@@ -47,6 +47,16 @@ body{
   padding: 10px 20px;
 }
 
+.reveal .lang-json {
+  /*background-color: #2C2121;*/
+  background-color: #252525;
+  font-family: 'NovelMono';
+  font-size: 19px;
+  line-height: 1.5em;
+  padding: 10px 20px;
+  max-height:  auto;
+}
+
 .reveal {
   font-family: 'NovelPro';
   color: #d0d0d0;

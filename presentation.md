@@ -1,4 +1,4 @@
-## Modeling a Philosophical Inquiry: from MySQL to a graph database
+## Modeling a Philosophical Inquiry:<br/>from MySQL to a graph database
 *The short story of a long refactoring process*
 
 ===
@@ -41,26 +41,26 @@ Or you can read this *book with no footnotes nor glossary* (exists also in Engli
 ===
 ## a web platform
 TODO: image de la home
-[![home page](img/home.jpg)](http://modesofexistence.org)
+[![home page](img/home.png)](http://modesofexistence.org)
 ===
 
 <!-- .slide: data-background="img/aime_screencast.gif" data-background-size="1024px" -->
 
 ===
 
-<!-- .slide: data-background="img/columns_data_model.svg" data-background-size="1024px" -->
+<!-- .slide: data-background="img/schema_book-01.png" data-background-size="1024px" -->
 
 ===
 
-<!-- .slide: data-background="img/columns_data_model_link.svg" data-background-size="1024px" -->
+<!-- .slide: data-background="img/schema_book-02.png" data-background-size="1024px" -->
 
 ===
 
-<!-- .slide: data-background="img/schéma_mysql.svg" data-background-size="1024px" -->
+<!-- .slide: data-background="img/schema_mysql_bis-01.svg" data-background-size="1024px" -->
 
 ===
 
-<!-- .slide: data-background="img/schéma_mysql_links.svg" data-background-size="1024px" -->
+<!-- .slide: data-background="img/schema_mysql_bis-02.svg" data-background-size="1024px" -->
 
 ===
 
@@ -181,7 +181,7 @@ A story I might tell about at @DH2016 called RICARDO.
 
 ## ... let's use a single database
 
-*Now we only have one **Neo4j** instance (mostly...) holding the whole inquiry's data.*
+Now we only have one **neo4j** instance (mostly...) holding the whole inquiry's data.
 
 ===
 
@@ -425,16 +425,12 @@ ORDER BY bc.order, csc.order, shp.order
 
 ===
 
-MANYLINES POM
-
-===
-
 ## From philosophy to history: a slightly different use-case
 
 
-1. *find the connections* between people, pictures, letters and official documents dealing with the *European Integration process*
+1. *find the connections* between people in pictures, letters and official documents dealing with the *European Integration process*
 
-1. Integrate graph databases and graph visualizations in the existing workflow and research practices.
+1. Integrate the *existing workflow*: exploration, data curation, publication
 
 
 
@@ -447,7 +443,8 @@ Display with [Agent Smith](https://github.com/Yomguithereal/agent-smith) the res
 
 ===
 
-schema
+<!-- .slide: data-background="img/schema_annotation-01.png" data-background-size="1024px" -->
+
 ===
 
 ```cypher
@@ -481,6 +478,10 @@ RETURN p LIMIT 10000;
 <!-- .slide: data-background="img/people-in-picture-zoomin.png" data-background-size="1024px" -->
 
 ===
+
+<!-- .slide: data-background="img/schema_annotation-03.png" data-background-size="1024px" -->
+
+---
 
 ```cypher
 // Making use of multilinguistic analysis: preliminary data curation
@@ -603,7 +604,7 @@ RETURN p LIMIT 1000;
 
 There is (almost) no difference/distance between the **represented** structure and the **db** structure
 
-Finally, we can opened up the database *creation* process
+Finally, we can open up the database *creation* process
 
 
 ===

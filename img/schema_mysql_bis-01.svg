@@ -7,7 +7,7 @@
 	.st1{fill:none;}
 	.st2{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
 	.st3{fill:#FFFFFF;}
-	.st4{font-family:'ArialMT';}
+	.st4{font-family:'sans-serif';}
 	.st5{font-size:18px;}
 	.st6{font-size:24px;}
 	.st7{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;stroke-dasharray:6,3;}
@@ -15,7 +15,7 @@
 <font horiz-adv-x="2048">
 <!-- Arial is a trademark of The Monotype Corporation. -->
 <!-- Copyright: Copyright 2016 Adobe System Incorporated. All rights reserved. -->
-<font-face font-family="ArialMT" units-per-em="2048" underline-position="-217" underline-thickness="150"/>
+<font-face font-family="sans-serif" units-per-em="2048" underline-position="-217" underline-thickness="150"/>
 <missing-glyph horiz-adv-x="1536" d="M256,0l0,1280l1024,0l0,-1280M288,32l960,0l0,1216l-960,0z"/>
 <glyph unicode=" " horiz-adv-x="569"/>
 <glyph unicode="!" horiz-adv-x="569" d="M231,364l-55,777l0,325l223,0l0,-325l-52,-777M184,0l0,205l207,0l0,-205z"/>
@@ -119,10 +119,6 @@
 </font>
 
 	<rect x="-23" y="17" class="st0" width="1045" height="719"/>
-<path class="st1" d="z"/>
-<g transform="translate(161,41)">
-</g>
-<path class="st1" d="z"/>
 <path pointer-events="none" class="st2" d="M271.5,189.5h10c6.7,0,10-3.3,10-10v-58c0-6.7-2-10-5.9-10h-5.9"/>
 <path pointer-events="none" class="st2" d="M273.7,111.5l8-2.7l-2,2.7l2,2.7L273.7,111.5z"/>
 <path pointer-events="none" class="st2" d="M131.5,215.5h-10c-6.7,0-10-3.3-10-10v-84c0-6.7,2-10,5.9-10h5.9"/>
@@ -155,116 +151,5 @@
 <text transform="matrix(1 0 0 1 145 533.495)"><tspan x="0" y="0" class="st3 st4 st5">id</tspan><tspan x="0" y="24" class="st3 st4 st5">content_fr</tspan><tspan x="0" y="48" class="st3 st4 st5">content_en</tspan><tspan x="0" y="72" class="st3 st4 st5">root</tspan><tspan x="0" y="96" class="st3 st4 st5">lft</tspan><tspan x="0" y="120" class="st3 st4 st5">rgt</tspan><tspan x="0" y="144" class="st3 st4 st5">level</tspan><tspan x="0" y="168" class="st3 st4 st5">type</tspan></text>
 <g>
 	<text transform="matrix(1 0 0 1 158.8145 498.495)" class="st3 st4 st6">docItem</text>
-</g>
-<rect x="-23" y="778.7" class="st0" width="1031" height="719"/>
-<path pointer-events="none" class="st2" d="M271.5,951.2h10c6.7,0,10-3.3,10-10v-58c0-6.7-2-10-5.9-10h-5.9"/>
-<path pointer-events="none" class="st2" d="M273.7,873.2l8-2.7l-2,2.7l2,2.7L273.7,873.2z"/>
-<path pointer-events="none" class="st2" d="M131.5,977.2h-10c-6.7,0-10-3.3-10-10v-84c0-6.7,2-10,5.9-10h5.9"/>
-<path pointer-events="none" class="st2" d="M129.3,873.2l-8,2.7l2-2.7l-2-2.7L129.3,873.2z"/>
-<path pointer-events="none" class="st2" d="M131.5,1003.2h-30c-6.7,0-10-3.3-10-10v-110c0-6.7,3.3-10,10-10h21.8"/>
-<path pointer-events="none" class="st2" d="M129.3,873.2l-8,2.7l2-2.7l-2-2.7L129.3,873.2z"/>
-<text transform="matrix(1 0 0 1 145 879.209)"><tspan x="0" y="0" class="st3 st4 st5">id</tspan><tspan x="0" y="24" class="st3 st4 st5">content_fr</tspan><tspan x="0" y="48" class="st3 st4 st5">content_en</tspan><tspan x="0" y="72" class="st3 st4 st5">root</tspan><tspan x="0" y="96" class="st3 st4 st5">lft</tspan><tspan x="0" y="120" class="st3 st4 st5">rgt</tspan><tspan x="0" y="144" class="st3 st4 st5">level</tspan><tspan x="0" y="168" class="st3 st4 st5">type</tspan></text>
-<g>
-	<text transform="matrix(1 0 0 1 152.1406 844.2089)" class="st3 st4 st6">bookItem</text>
-</g>
-<path pointer-events="none" class="st2" d="M710.5,917.7v-44.3h140v44.3H710.5z"/>
-<path pointer-events="none" class="st2" d="M131.5,859.3V815h140v44.3H131.5z"/>
-<path pointer-events="none" class="st2" d="M131.5,1275.3V1231h140v44.3H131.5z"/>
-<path pointer-events="none" class="st2" d="M342.5,1026.1v-44.3h140v44.3H342.5z"/>
-<text transform="matrix(1 0 0 1 724 967.624)"><tspan x="0" y="0" class="st3 st4 st5">id</tspan><tspan x="0" y="24" class="st3 st4 st5">from_model</tspan><tspan x="0" y="48" class="st3 st4 st5">from_id</tspan><tspan x="0" y="72" class="st3 st4 st5">from_root</tspan><tspan x="0" y="96" class="st3 st4 st5">from_start_fr</tspan><tspan x="0" y="120" class="st3 st4 st5">from_stop_fr</tspan><tspan x="0" y="144" class="st3 st4 st5">from_start_en</tspan><tspan x="0" y="168" class="st3 st4 st5">from_stop_en</tspan><tspan x="0" y="192" class="st3 st4 st5">to_model</tspan><tspan x="0" y="216" class="st3 st4 st5">to_id</tspan><tspan x="0" y="240" class="st3 st4 st5">to_root</tspan><tspan x="0" y="264" class="st3 st4 st5">type</tspan></text>
-<g>
-	<text transform="matrix(1 0 0 1 758.4863 902.6239)" class="st3 st4 st6">Link</text>
-</g>
-<path pointer-events="none" class="st2" d="M482.5,1132h10c6.7,0,10-3.3,10-10v-58c0-6.7-2-10-5.9-10h-5.9"/>
-<path pointer-events="none" class="st2" d="M484.7,1054l8-2.7l-2,2.7l2,2.7L484.7,1054z"/>
-<path pointer-events="none" class="st2" d="M342.5,1158h-10c-6.7,0-10-3.3-10-10v-84c0-6.7,2-10,5.9-10h5.9"/>
-<path pointer-events="none" class="st2" d="M340.3,1054l-8,2.7l2-2.7l-2-2.7L340.3,1054z"/>
-<path pointer-events="none" class="st2" d="M342.5,1184h-30c-6.7,0-10-3.3-10-10v-110c0-6.7,3.3-10,10-10h21.8"/>
-<path pointer-events="none" class="st2" d="M340.3,1054l-8,2.7l2-2.7l-2-2.7L340.3,1054z"/>
-<text transform="matrix(1 0 0 1 356 1059.954)"><tspan x="0" y="0" class="st3 st4 st5">id</tspan><tspan x="0" y="24" class="st3 st4 st5">content_fr</tspan><tspan x="0" y="48" class="st3 st4 st5">content_en</tspan><tspan x="0" y="72" class="st3 st4 st5">root</tspan><tspan x="0" y="96" class="st3 st4 st5">lft</tspan><tspan x="0" y="120" class="st3 st4 st5">rgt</tspan><tspan x="0" y="144" class="st3 st4 st5">level</tspan><tspan x="0" y="168" class="st3 st4 st5">type</tspan></text>
-<g>
-	<text transform="matrix(1 0 0 1 370.4883 1010.954)" class="st3 st4 st6">vocItem</text>
-</g>
-<path pointer-events="none" class="st2" d="M271.5,1367.2h10c6.7,0,10-3.3,10-10v-58c0-6.7-2-10-5.9-10h-5.9"/>
-<path pointer-events="none" class="st2" d="M273.7,1289.2l8-2.7l-2,2.7l2,2.7L273.7,1289.2z"/>
-<path pointer-events="none" class="st2" d="M131.5,1393.2h-10c-6.7,0-10-3.3-10-10v-84c0-6.7,2-10,5.9-10h5.9"/>
-<path pointer-events="none" class="st2" d="M129.3,1289.2l-8,2.7l2-2.7l-2-2.7L129.3,1289.2z"/>
-<path pointer-events="none" class="st2" d="M131.5,1419.2h-30c-6.7,0-10-3.3-10-10v-110c0-6.7,3.3-10,10-10h21.8"/>
-<path pointer-events="none" class="st2" d="M129.3,1289.2l-8,2.7l2-2.7l-2-2.7L129.3,1289.2z"/>
-<text transform="matrix(1 0 0 1 145 1295.204)"><tspan x="0" y="0" class="st3 st4 st5">id</tspan><tspan x="0" y="24" class="st3 st4 st5">content_fr</tspan><tspan x="0" y="48" class="st3 st4 st5">content_en</tspan><tspan x="0" y="72" class="st3 st4 st5">root</tspan><tspan x="0" y="96" class="st3 st4 st5">lft</tspan><tspan x="0" y="120" class="st3 st4 st5">rgt</tspan><tspan x="0" y="144" class="st3 st4 st5">level</tspan><tspan x="0" y="168" class="st3 st4 st5">type</tspan></text>
-<g>
-	<text transform="matrix(1 0 0 1 158.8145 1260.204)" class="st3 st4 st6">docItem</text>
-</g>
-<g>
-	<g>
-		<path class="st7" d="M273.7,873.2c213.5,0,237.1,162.8,434.6,164"/>
-		<g>
-			<polygon class="st3" points="701.5,1045.2 700.2,1043.7 707.6,1037.1 700.5,1030.2 701.9,1028.8 710.5,1037.2 			"/>
-		</g>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st7" d="M484.7,1054c101.6,0,112.7-42.2,223.6-42.7"/>
-		<g>
-			<polygon class="st3" points="701.9,1019.6 700.5,1018.2 707.6,1011.3 700.2,1004.7 701.5,1003.2 710.5,1011.2 			"/>
-		</g>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st7" d="M484.7,1054c101.6,0,112.7-16.5,223.6-16.7"/>
-		<g>
-			<polygon class="st3" points="701.8,1045.5 700.4,1044 707.6,1037.2 700.3,1030.6 701.6,1029.1 710.5,1037.2 			"/>
-		</g>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st7" d="M486.9,1054c100.2,1.7,111.5,123.2,223.6,123.2"/>
-		<g>
-			<polygon class="st3" points="493.2,1062.5 494.6,1061 487.7,1054.1 495.1,1047.6 493.8,1046.1 484.7,1054 			"/>
-		</g>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st7" d="M486.9,1054c100.2,2.2,111.5,153.2,223.6,153.2"/>
-		<g>
-			<polygon class="st3" points="493.2,1062.5 494.6,1061.1 487.7,1054.1 495.2,1047.7 493.9,1046.1 484.7,1054 			"/>
-		</g>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st7" d="M275.9,1289.2c430.7-0.3,321.9-82,434.6-82"/>
-		<g>
-			<polygon class="st3" points="282.6,1297.3 284,1295.8 276.7,1289.2 283.8,1282.4 282.4,1280.9 273.7,1289.2 			"/>
-		</g>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st7" d="M275.9,1289.2c392.8-0.4,321.9-112,434.6-112"/>
-		<g>
-			<polygon class="st3" points="282.6,1297.3 284,1295.8 276.7,1289.2 283.8,1282.4 282.5,1280.9 273.7,1289.2 			"/>
-		</g>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st7" d="M273.7,873.2c213.5,0,237.1,162.8,434.6,164"/>
-		<g>
-			<polygon class="st3" points="701.5,1045.2 700.2,1043.7 707.6,1037.1 700.5,1030.2 701.9,1028.8 710.5,1037.2 			"/>
-		</g>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st7" d="M273.7,873.2c213.5,0,237.1,137,434.6,138"/>
-		<g>
-			<polygon class="st3" points="701.5,1019.2 700.2,1017.7 707.6,1011.1 700.5,1004.3 701.9,1002.8 710.5,1011.2 			"/>
-		</g>
-	</g>
 </g>
 </svg>
