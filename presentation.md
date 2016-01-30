@@ -102,8 +102,6 @@ GROUP BY paragraph.id
 ORDER BY paragraph.lft
 ```
 
-*and it only takes 6 seconds to run on this laptop…*
-
 ===
 
 <!-- .slide: data-background="img/phpmyadmin.png" data-background-size="1024px" -->
@@ -154,16 +152,19 @@ wrapped in a python Twisted server for the *bibliographic references*
 
 For the Ghost blog's data.
 
-Plus, we needed custom features, so we forked.
+Plus, we needed custom features, so we forked Ghost.
 
-The developers left, and now it restarted on its own ~127 times within 3 months...
+The developers left, and Ghost restarted on its own ~127 times in production since October 2014
 
 ===
 
 ### A Microsoft Access Database
 
 Not on this project...
-A story I might tell at #DH2016 called RICARDO.
+
+But on a History of Economy one called RICARDO.
+
+I might tell this story at #DH2016 in July 2016.
 
 ===
 
@@ -189,11 +190,15 @@ A story I might tell at #DH2016 called RICARDO.
 
 ## After some failed attempt towards Neo4j...
 
-* winter 2011: first try against pure Lucene for our web crawler
-* spring 2012: second try against MySQL for modes of existence (...)
-* summer 2012: small experiments by an intern
-* summer 2013: new experiments by an other intern called yomgui
-* fall   2014: starting implementing Aime in Neo4j !
+ - winter 2011: vs. *pure Lucene* for [our web crawler Hyphe](http://hyphe.medialab.sciences-po.fr)
+ 
+ - spring 2012: vs. *MySQL* for modes of existence (...)
+ 
+ - summer 2012: an *intern* experimented it
+ 
+ - summer 2013: *an other intern* tried
+ 
+ - fall   2014: starting implementing *Aime in Neo4j* !
 
 ===
 
