@@ -163,13 +163,9 @@ A story I might tell about at @DH2016 called RICARDO.
 
 ===
 
-### Let's explain our plan to our anthropologist
+### Let's explain our plan to our scientific director
 
-===
-
-<video controls>
-  <source src="img/explaining_refacto_plan.mp4" type="video/mp4">
-</video>
+![when the devs explain the plan to their scientific director]("img/refacto_explained_framesteel.png")
 
 ===
 
