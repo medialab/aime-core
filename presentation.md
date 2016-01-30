@@ -70,7 +70,7 @@ Or you can read this *book with no footnotes nor glossary* (exists also in Engli
 
 ===
 
-## neat queries !
+## neat queries!
 
 ```sql
 SELECT
@@ -92,7 +92,7 @@ GROUP BY paragraph.id
 ORDER BY paragraph.lft
 ```
 
-*And Results come only 6 seconds later on this laptop (without indices)*
+*and it only takes 6 seconds to run on this laptop…*
 
 ===
 
