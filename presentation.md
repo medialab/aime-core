@@ -48,19 +48,19 @@ TODO: image de la home
 
 ===
 
-<!-- .slide: data-background="img/columns_data_model.svg" data-background-size="1024px" -->
+<!-- .slide: data-background="img/schema_book-01.png" data-background-size="1024px" -->
 
 ===
 
-<!-- .slide: data-background="img/columns_data_model_link.svg" data-background-size="1024px" -->
+<!-- .slide: data-background="img/schema_book-02.png" data-background-size="1024px" -->
 
 ===
 
-<!-- .slide: data-background="img/schéma_mysql.svg" data-background-size="1024px" -->
+<!-- .slide: data-background="img/schema_mysql_bis-01.svg" data-background-size="1024px" -->
 
 ===
 
-<!-- .slide: data-background="img/schéma_mysql_links.svg" data-background-size="1024px" -->
+<!-- .slide: data-background="img/schema_mysql_bis-02.svg" data-background-size="1024px" -->
 
 ===
 

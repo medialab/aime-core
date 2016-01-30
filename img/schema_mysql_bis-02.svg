@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="-10 33 1003 703" style="enable-background:new -10 33 1003 703;" xml:space="preserve">
+	 viewBox="-10 794.7 1003 703" style="enable-background:new -10 794.7 1003 703;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#151515;}
 	.st1{fill:none;}
@@ -118,45 +118,7 @@
 <glyph unicode="&#x20AC;" horiz-adv-x="1139" d="M790,1325C678,1325 584,1298 508,1244C463,1212 422,1167 385,1108C348,1047 326,990 319,935l682,0l-27,-134l-671,0C302,787 302,774 302,761C302,710 302,679 303,669l644,0l-28,-134l-595,0C352,382 419,274 526,210C603,164 686,141 775,141C900,141 997,174 1067,239l0,-206C984,-6 892,-25 791,-25C490,-25 286,100 180,351C159,402 140,463 125,535l-153,0l28,134l105,0C103,697 102,727 102,760C102,773 102,787 103,801l-131,0l28,134l116,0C157,1152 265,1308 439,1403C546,1462 665,1491 794,1491C918,1491 1022,1464 1107,1410l-40,-186C986,1291 893,1325 790,1325z"/>
 </font>
 
-	<rect x="-23" y="17" class="st0" width="1045" height="719"/>
-<path class="st1" d="z"/>
-<g transform="translate(161,41)">
-</g>
-<path class="st1" d="z"/>
-<path pointer-events="none" class="st2" d="M271.5,189.5h10c6.7,0,10-3.3,10-10v-58c0-6.7-2-10-5.9-10h-5.9"/>
-<path pointer-events="none" class="st2" d="M273.7,111.5l8-2.7l-2,2.7l2,2.7L273.7,111.5z"/>
-<path pointer-events="none" class="st2" d="M131.5,215.5h-10c-6.7,0-10-3.3-10-10v-84c0-6.7,2-10,5.9-10h5.9"/>
-<path pointer-events="none" class="st2" d="M129.3,111.5l-8,2.7l2-2.7l-2-2.7L129.3,111.5z"/>
-<path pointer-events="none" class="st2" d="M131.5,241.5h-30c-6.7,0-10-3.3-10-10v-110c0-6.7,3.3-10,10-10h21.8"/>
-<path pointer-events="none" class="st2" d="M129.3,111.5l-8,2.7l2-2.7l-2-2.7L129.3,111.5z"/>
-<text transform="matrix(1 0 0 1 145 117.5)"><tspan x="0" y="0" class="st3 st4 st5">id</tspan><tspan x="0" y="24" class="st3 st4 st5">content_fr</tspan><tspan x="0" y="48" class="st3 st4 st5">content_en</tspan><tspan x="0" y="72" class="st3 st4 st5">root</tspan><tspan x="0" y="96" class="st3 st4 st5">lft</tspan><tspan x="0" y="120" class="st3 st4 st5">rgt</tspan><tspan x="0" y="144" class="st3 st4 st5">level</tspan><tspan x="0" y="168" class="st3 st4 st5">type</tspan></text>
-<g>
-	<text transform="matrix(1 0 0 1 152.1406 82.5)" class="st3 st4 st6">bookItem</text>
-</g>
-<path pointer-events="none" class="st2" d="M131.5,97.6V53.3h140v44.3H131.5z"/>
-<path pointer-events="none" class="st2" d="M131.5,513.6v-44.3h140v44.3H131.5z"/>
-<path pointer-events="none" class="st2" d="M342.5,264.4V220h140v44.3H342.5z"/>
-<path pointer-events="none" class="st2" d="M482.5,370.2h10c6.7,0,10-3.3,10-10v-58c0-6.7-2-10-5.9-10h-5.9"/>
-<path pointer-events="none" class="st2" d="M484.7,292.2l8-2.7l-2,2.7l2,2.7L484.7,292.2z"/>
-<path pointer-events="none" class="st2" d="M342.5,396.2h-10c-6.7,0-10-3.3-10-10v-84c0-6.7,2-10,5.9-10h5.9"/>
-<path pointer-events="none" class="st2" d="M340.3,292.2l-8,2.7l2-2.7l-2-2.7L340.3,292.2z"/>
-<path pointer-events="none" class="st2" d="M342.5,422.2h-30c-6.7,0-10-3.3-10-10v-110c0-6.7,3.3-10,10-10h21.8"/>
-<path pointer-events="none" class="st2" d="M340.3,292.2l-8,2.7l2-2.7l-2-2.7L340.3,292.2z"/>
-<text transform="matrix(1 0 0 1 356 298.245)"><tspan x="0" y="0" class="st3 st4 st5">id</tspan><tspan x="0" y="24" class="st3 st4 st5">content_fr</tspan><tspan x="0" y="48" class="st3 st4 st5">content_en</tspan><tspan x="0" y="72" class="st3 st4 st5">root</tspan><tspan x="0" y="96" class="st3 st4 st5">lft</tspan><tspan x="0" y="120" class="st3 st4 st5">rgt</tspan><tspan x="0" y="144" class="st3 st4 st5">level</tspan><tspan x="0" y="168" class="st3 st4 st5">type</tspan></text>
-<g>
-	<text transform="matrix(1 0 0 1 370.4883 249.245)" class="st3 st4 st6">vocItem</text>
-</g>
-<path pointer-events="none" class="st2" d="M271.5,605.5h10c6.7,0,10-3.3,10-10v-58c0-6.7-2-10-5.9-10h-5.9"/>
-<path pointer-events="none" class="st2" d="M273.7,527.5l8-2.7l-2,2.7l2,2.7L273.7,527.5z"/>
-<path pointer-events="none" class="st2" d="M131.5,631.5h-10c-6.7,0-10-3.3-10-10v-84c0-6.7,2-10,5.9-10h5.9"/>
-<path pointer-events="none" class="st2" d="M129.3,527.5l-8,2.7l2-2.7l-2-2.7L129.3,527.5z"/>
-<path pointer-events="none" class="st2" d="M131.5,657.5h-30c-6.7,0-10-3.3-10-10v-110c0-6.7,3.3-10,10-10h21.8"/>
-<path pointer-events="none" class="st2" d="M129.3,527.5l-8,2.7l2-2.7l-2-2.7L129.3,527.5z"/>
-<text transform="matrix(1 0 0 1 145 533.495)"><tspan x="0" y="0" class="st3 st4 st5">id</tspan><tspan x="0" y="24" class="st3 st4 st5">content_fr</tspan><tspan x="0" y="48" class="st3 st4 st5">content_en</tspan><tspan x="0" y="72" class="st3 st4 st5">root</tspan><tspan x="0" y="96" class="st3 st4 st5">lft</tspan><tspan x="0" y="120" class="st3 st4 st5">rgt</tspan><tspan x="0" y="144" class="st3 st4 st5">level</tspan><tspan x="0" y="168" class="st3 st4 st5">type</tspan></text>
-<g>
-	<text transform="matrix(1 0 0 1 158.8145 498.495)" class="st3 st4 st6">docItem</text>
-</g>
-<rect x="-23" y="778.7" class="st0" width="1031" height="719"/>
+	<rect x="-23" y="778.7" class="st0" width="1031" height="719"/>
 <path pointer-events="none" class="st2" d="M271.5,951.2h10c6.7,0,10-3.3,10-10v-58c0-6.7-2-10-5.9-10h-5.9"/>
 <path pointer-events="none" class="st2" d="M273.7,873.2l8-2.7l-2,2.7l2,2.7L273.7,873.2z"/>
 <path pointer-events="none" class="st2" d="M131.5,977.2h-10c-6.7,0-10-3.3-10-10v-84c0-6.7,2-10,5.9-10h5.9"/>
@@ -183,7 +145,7 @@
 <path pointer-events="none" class="st2" d="M340.3,1054l-8,2.7l2-2.7l-2-2.7L340.3,1054z"/>
 <text transform="matrix(1 0 0 1 356 1059.954)"><tspan x="0" y="0" class="st3 st4 st5">id</tspan><tspan x="0" y="24" class="st3 st4 st5">content_fr</tspan><tspan x="0" y="48" class="st3 st4 st5">content_en</tspan><tspan x="0" y="72" class="st3 st4 st5">root</tspan><tspan x="0" y="96" class="st3 st4 st5">lft</tspan><tspan x="0" y="120" class="st3 st4 st5">rgt</tspan><tspan x="0" y="144" class="st3 st4 st5">level</tspan><tspan x="0" y="168" class="st3 st4 st5">type</tspan></text>
 <g>
-	<text transform="matrix(1 0 0 1 370.4883 1010.954)" class="st3 st4 st6">vocItem</text>
+	<text transform="matrix(1 0 0 1 370.4883 1010.9539)" class="st3 st4 st6">vocItem</text>
 </g>
 <path pointer-events="none" class="st2" d="M271.5,1367.2h10c6.7,0,10-3.3,10-10v-58c0-6.7-2-10-5.9-10h-5.9"/>
 <path pointer-events="none" class="st2" d="M273.7,1289.2l8-2.7l-2,2.7l2,2.7L273.7,1289.2z"/>
