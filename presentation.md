@@ -3,36 +3,45 @@
 
 ===
 
-## An Inquiry into Modes of Existence
-*An antropological inquiry of
-those who call themselves
-the moderns.*
-
-===
-
 ## By Bruno Latour
 
+<p align="center">
 ![Bruno Latour](img/bruno_latour.png)
-
+</p>
 A French philosopher, anthropologist and sociologist of science.
 
 He developed with others the **actor network theory**.
+===
+
+<img style="margin:auto;display:block" height="200" alt="Thank you"src="img/FP7_logo.png">
+
+The research has received funding from the *European Research Council* under the European Union’s Seventh Framework Programme (FP7/2007-2013) / erc Grant ‘IDEAS’ 2010 n° 269567”
+
+===
+
+## An Inquiry into Modes of Existence
+An antropological *inquiry* of
+those who call themselves
+the moderns.
+
+[a recent publication you can start with.](http://www.modesofexistence.org/anomalie)
+
 
 ===
 
 ## An inquiry as a paper book
 ![a book](img/aime_book.png)
 
-*With no footnotes nor glossary.*
+Or you can read this *book with no footnotes nor glossary* (exists also in English).
 
 ===
 ## a series of workshop
 ![workshops](img/workshop.jpg)
-*[POL] workshop at Goldsmith University, London (09/2014)*
+[POL] *workshop at Goldsmith University*, London (09/2014)
 ===
 ## a web platform
 TODO: image de la home
-*http://modesofexistence.org*
+[![home page](img/home.jpg)](http://modesofexistence.org)
 ===
 
 <!-- .slide: data-background="img/aime_screencast.gif" data-background-size="1024px" -->
@@ -47,13 +56,9 @@ TODO: image de la home
 
 ===
 
-## What about implementing trees using mysql ?
-
 <!-- .slide: data-background="img/schéma_mysql.svg" data-background-size="1024px" -->
 
 ===
-
-## with links ?
 
 <!-- .slide: data-background="img/schéma_mysql_links.svg" data-background-size="1024px" -->
 
