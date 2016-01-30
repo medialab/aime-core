@@ -153,7 +153,7 @@ The developers left, and now it restarted on its own ~127 times within 3 months.
 ### A Microsoft Access Database
 
 Not on this project...
-A story I might tell about at @DH2016 called RICARDO.
+A story I might tell at #DH2016 called RICARDO.
 
 ===
 
