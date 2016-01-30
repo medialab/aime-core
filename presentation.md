@@ -39,9 +39,15 @@ Or you can read this *book with no footnotes nor glossary* (exists also in Engli
 ![workshops](img/workshop.jpg)
 [POL] *workshop at Goldsmith University*, London (09/2014)
 ===
+
 ## a web platform
-TODO: image de la home
-[![home page](img/home.png)](http://modesofexistence.org)
+
+[www.modesofexistence.org](http://www.modesofexistence.org/)
+
+===
+
+<!-- .slide: data-background="img/home.png" data-background-size="1024px" -->
+
 ===
 
 <!-- .slide: data-background="img/aime_screencast.gif" data-background-size="1024px" -->
@@ -165,7 +171,9 @@ A story I might tell about at @DH2016 called RICARDO.
 
 ### Let's explain our plan to our scientific director
 
-![when the devs explain the plan to their scientific director]("img/refacto_explained_framesteel.png")
+===
+
+<!-- .slide: data-background="img/refacto_explained.png" data-background-size="1000px" -->
 
 ===
 
