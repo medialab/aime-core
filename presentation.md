@@ -34,7 +34,7 @@ An antropological *inquiry* of
 those who call themselves
 the moderns.
 
-[a recent publication you can start with.](http://www.modesofexistence.org/anomalie)
+[a recent publication you can start with.](http://www.modesofexistence.org/anomalies)
 
 
 ===
