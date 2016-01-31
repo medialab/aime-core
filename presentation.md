@@ -47,7 +47,7 @@ Or you can read this *book with no footnotes nor glossary* (exists also in Engli
 ===
 ## a series of workshop
 ![workshops](img/workshop.jpg)
-[POL] *workshop at Goldsmith University*, London (09/2014)
+[POL] *workshop at Goldsmith University*, London (2014)
 ===
 
 ## a web platform
