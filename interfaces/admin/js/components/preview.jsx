@@ -12,17 +12,30 @@ import PropTypes from 'baobab-react/prop-types';
  * Markdown rendered preview component
  */
 export default class Preview extends PureComponent {
+  static contextTypes = {
+    tree: PropTypes.baobab
+  };
+
+  fromIdToAuthor(id) {
+    const usersIndex = this.context.tree.facets.usersIndex.get();
+    const user = usersIndex[id];
+    return user.surname + ' ' + user.name;
+  }
+
   render() {
     const {html, data} = this.props.parsed,
           {docs, docItems=[]} = data;
 
     return (
-      <div className="editor-container full-height">
+      <div className="editor-container full-height preview-container">
+          <p className="title">{this.props.title}</p>
+          <p className="author">{this.fromIdToAuthor(this.props.author)}</p>
         <div className="preview" dangerouslySetInnerHTML={{__html: html}}/>
         {docItems.map((d, i) => <FootNote key={d ? d.id : i} data={d} index={i} />)}
       </div>
     );
   }
+
 }
 
 /**

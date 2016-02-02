@@ -231,18 +231,25 @@ class EditorPanel extends PureComponent {
     if(props.model === "doc") return { parsed: props.model + 'Parsed'};
     else return {};
   },
+  cursors(props) {
+    return {
+      modelState: [ 'states', props.model]
+    };
+  }
 })
 class PreviewPanel extends PureComponent {
 
   render() {
     const model = this.props.model;
-
     return (
       <div className="full-height">
         <h1 className="centered">Preview</h1>
         <div className="overflowing">
           <Preview model={this.props.model}
-                   parsed={this.props.parsed} />
+                   parsed={this.props.parsed}
+                   title={this.props.modelState.title}
+                   author={this.props.modelState.author}
+                   />
         </div>
       </div>
     );

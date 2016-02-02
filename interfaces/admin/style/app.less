@@ -294,13 +294,15 @@ textarea {
 
 .preview {
 
-  font-size: 16px;
+  font-size: 14px;
 
   padding: @m;
   padding-top: 1.5*@m;
 
   line-height: @m*2;
   font-family: "NovelPro-Regular", Times, serif;
+
+
 
   .vocabulary-item {
     padding: @m/2 0 @m/3 0;
@@ -333,7 +335,6 @@ textarea {
 
   }
 
-
   .creator {
     font-family: "NovelSansPro-Bold", Times, serif;
     .font-feature;
@@ -360,6 +361,25 @@ textarea {
 .editor-container {
   .form-group {
     margin-bottom: 12px;
+  }
+
+  &.preview-container {
+    .title {
+      // css from inquiry interface
+      font-family:'NovelSansPro-Regular';
+      font-size:13px;
+      line-height:25px;
+      text-align: left;
+      color: #373737;
+      .font-feature();
+      margin-left: @m;
+    }
+    .author {
+      color: #c0171d;
+      font-family:'NovelSansPro-Regular';
+      font-size: 11px;
+      margin-left: @m;
+    }
   }
 }
 
