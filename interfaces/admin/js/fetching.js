@@ -19,13 +19,19 @@ function compare(a1, a2) {
 // TODO: don't access API if not logged
 export default function(tree) {
 
+  let loaded = false;
+
   tree.on('get', function({data: {path, data}}) {
+
+    if (loaded) return
     if (!data && compare(path, ['data'])) {
       tree.client.book();
       tree.client.voc();
       tree.client.doc();
       tree.client.res();
       tree.client.users();
+      loaded = true;
     }
+
   });
 };
