@@ -92,7 +92,7 @@ export default class ResourceSelector extends Component {
           {result}
         </div>
         <div className="form-group">
-          <ActionButton size={6} action={dismiss} label="dismiss"/>
+          <ActionButton size={6} action={dismiss} label="close"/>
         </div>
       </Row>
     );
