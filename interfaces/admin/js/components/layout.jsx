@@ -65,22 +65,11 @@ export class Layout extends PureComponent {
           isThereAnyData = !!this.props.data,
           editionMode = isSomethingSelected && isThereAnyData && !isAModalDisplayed;
 
-    // Actions
-    const modalOpen = () => {
-      this.context.tree.emit('modal:open', {
-        model: model,
-        type: 'creation',
-        title: 'create'
-      });
-    };
-
     // NOTE: columns
     //  --1: potentially hidden column
     //  --2: list containing the items
     //  --3: the editor or a modal
     //  --4: a preview or a search helper
-
-    // TODO: refactor ListPanel
 
     const modal = model === "doc" ?
       <Modal title={MODAL_TITLES[model]} model={model} users={this.props.users} /> :
@@ -91,16 +80,8 @@ export class Layout extends PureComponent {
         <Col md={4} className={classes({hidden: editionMode || isAModalDisplayed})} />
 
         <Col md={4} className="full-height">
-
           <h1 className="centered">{this.props.title}</h1>
-
-          <div className="overflowing">
-            <ListPanel items={this.props.data} model={model} />
-          </div>
-          {((model === 'doc' || model === 'res') && isThereAnyData) &&
-            <ActionButton size={12}
-                          label="create"
-                          action={modalOpen} />}
+          <ListPanel items={this.props.data} model={model} />
         </Col>
 
         <Col md={4} className="full-height">
@@ -108,7 +89,6 @@ export class Layout extends PureComponent {
           {isAModalDisplayed ?
             modal  :
             editionMode && <EditorPanel model={model} />}
-
 
         </Col>
 
