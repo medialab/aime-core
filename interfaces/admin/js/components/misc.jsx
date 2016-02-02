@@ -38,7 +38,11 @@ export class ActionButton extends PureComponent {
       disabledLabel
     } = this.props;
 
-    const classString = classes('button', 'col-md-12', {disabled: state === 'disabled'});
+
+    const sizeClass =  'col-md-'+size;
+        console.log(sizeClass);
+
+    const classString = classes('button', sizeClass, {disabled: state === 'disabled'});
 
     if (state === 'saving')
       label = loadingLabel;

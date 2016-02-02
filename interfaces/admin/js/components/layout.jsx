@@ -207,14 +207,14 @@ class EditorPanel extends PureComponent {
         </div>
         <div className="actions">
           {this.props.model === "doc" && <ActionButton size={12} action={openSelector} label="add item" />}
-          <ActionButton size={12}
+          <ActionButton size={6}
                         action={save}
                         label="save"
                         state={saving ? 'saving' : 'normal'}
                         loadingLabel="saving document…" />
           {this.props.model === "doc" &&
             <ActionButton
-              size={12}
+              size={6}
               action={togglePublish}
               label={this.props.status === 'public' ? 'unpublish' : 'publish'} />}
         </div>
