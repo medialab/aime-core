@@ -14,22 +14,26 @@ describe('Modecross parser', function() {
       'This has no modecross.',
       'This is [POL] mode.',
       'This is [POL].\nBut multiline [REF].',
-      'This has twice [POL] and [POL]',
-      'This has [POL] and [REF-LAW]'
+      'This has twice [POL] and [POL].',
+      'This has [POL] and [REF-LAW].',
+      'This has a [DRO] French mode and [RES-POL] crossing.',
+      'This has a [REL·POL] middot.',
+      'This is not a valid [TAR] mode.'
     ];
-
-    // TODO: norm, lang translation, keep only good ones etc.
 
     var parsed = [
       [],
       ['POL'],
       ['POL', 'REF'],
       ['POL'],
-      ['POL', 'REF-LAW']
+      ['POL', 'REF-LAW'],
+      ['LAW', 'NET-POL'],
+      ['REL-POL'],
+      []
     ];
 
     texts.forEach(function(text, i) {
-      assert.deepEqual(parser(text), parsed[i]);
+      assert.deepEqual(parser(text), parsed[i], text);
     });
   });
 });
