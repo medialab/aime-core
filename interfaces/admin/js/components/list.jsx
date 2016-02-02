@@ -24,9 +24,43 @@ export default class List extends PureComponent {
     tree: PropTypes.baobab
   };
 
+  constructor (props,context) {
+    super(props,context);
+
+    this.state = {
+      filteredItems: [],
+      search: ''
+    };
+  }
+
+  renderItem(item) {
+    return <Item key={item.id}
+                 item={item}
+                 selection={this.props.selection || []} />;
+  };
+
+  search({target: {value=''}}) {
+
+    const search = value,
+          data = this.props.items;
+
+    let filteredItems;
+
+    if (search.length > 2) {
+      filteredItems = _.filter(data, function(n) {
+        return ~resourceName(n).toLowerCase().indexOf(search.toLowerCase());
+      });
+    }
+    else {
+      filteredItems = [];
+    }
+    this.setState({filteredItems: filteredItems, search: search});
+  }
+
   render() {
     const model = this.props.model,
-         isThereAnyData = true;
+         isThereAnyData = true,
+         items = this.state.filteredItems;
 
     // Actions
     const modalOpen = () => {
@@ -37,26 +71,33 @@ export default class List extends PureComponent {
       });
     };
 
-    const renderItem = (item) => {
-      return <Item key={item.id}
-                   item={item}
-                   selection={this.props.selection || []} />;
-    };
+    let result;
 
+    if (!this.state.search && !items.length)
+      result = <ul className="list">{this.props.items.map(this.renderItem, this)}</ul>;
+    else if (this.state.search.length < 3 && !items.length)
+      result = <div className="centered">type more characters</div>;
+    else if (this.state.search.length > 2 && !items.length)
+      result = <div className="centered">no results</div>;
+    else
+      result = <ul className="list">{this.state.filteredItems.map(this.renderItem, this)}</ul>;
 
     return (
-    <Row className="full-height searching">
-                <input
-         placeholder="what are you looking for?"
-         className="form-control" size="40"/>
-      <div className="overflowing">
-        <ul className="list">{this.props.items.map(renderItem)}</ul>
-      </div>
-      {((model === 'doc' || model === 'res') && isThereAnyData) &&
-        <ActionButton size={12}
-                      label="create"
-                      action={modalOpen} />}
-    </Row>);
+      <Row className="full-height searching">
+          <input placeholder="what are you looking for?"
+           onChange={(e) => this.search(e)}
+                 className="form-control" size="40"/>
+
+        <div className="overflowing">
+          <ul className="list">{result}</ul>
+        </div>
+
+        {((model === 'doc' || model === 'res') && isThereAnyData) &&
+          <ActionButton size={12}
+                        label="create"
+                        action={modalOpen} />}
+      </Row>
+    );
   }
 }
 
