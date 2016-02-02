@@ -12,19 +12,51 @@ import classes from 'classnames';
 import autobind from 'autobind-decorator';
 import {ResourceIcon} from './misc.jsx';
 import {resourceName} from '../lib/helpers.js';
+import {ActionButton} from './misc.jsx';
+import Row from 'react-bootstrap/lib/Row';
 
 /**
  * List component
  */
 export default class List extends PureComponent {
+
+  static contextTypes = {
+    tree: PropTypes.baobab
+  };
+
   render() {
+    const model = this.props.model,
+         isThereAnyData = true;
+
+    // Actions
+    const modalOpen = () => {
+      this.context.tree.emit('modal:open', {
+        model: model,
+        type: 'creation',
+        title: 'create'
+      });
+    };
+
     const renderItem = (item) => {
       return <Item key={item.id}
                    item={item}
                    selection={this.props.selection || []} />;
     };
 
-    return <ul className="list">{this.props.items.map(renderItem)}</ul>;
+
+    return (
+    <Row className="full-height searching">
+                <input
+         placeholder="what are you looking for?"
+         className="form-control" size="40"/>
+      <div className="overflowing">
+        <ul className="list">{this.props.items.map(renderItem)}</ul>
+      </div>
+      {((model === 'doc' || model === 'res') && isThereAnyData) &&
+        <ActionButton size={12}
+                      label="create"
+                      action={modalOpen} />}
+    </Row>);
   }
 }
 
