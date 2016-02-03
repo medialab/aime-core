@@ -7,6 +7,7 @@
  */
 var docModel = require('../model/document.js'),
     resModel = require('../model/resource.js'),
+    scenarioModel = require('../model/scenario.js'),
     types = require('../typology.js'),
     usersModel = require('../model/users.js'),
     _ = require('lodash');
@@ -161,20 +162,27 @@ module.exports = [
   },
 
   // Scenarios
-
-  // NOTE: figure out lang to be used
-  // NOTE: handle author
-  // NOTE: handle status
   {
     url: '/scenario',
     methods: ['POST'],
     validate: {
-      name: 'string',
+      title: 'string',
       items: 'array',
-      modecross: 'number'
+      modecross: 'string'
     },
     action: function(req, res) {
-      return res.notImplemented();
+      scenarioModel.create(
+        req.body.modecross,
+        req.session.author,
+        req.lang,
+        req.body.title,
+        req.body.items,
+        function(err) {
+          if (err) return res.serverError(err);
+
+          return res.ok();
+        }
+      );
     }
   },
 
