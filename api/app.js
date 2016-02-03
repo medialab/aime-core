@@ -5,6 +5,7 @@
  * Defining the express application aimed at serving the graph database.
  */
 var express = require('express'),
+    async = require('async'),
     ENV = process.env.NODE_ENV || 'dev',
     path = require('path'),
     url = require('url'),
@@ -183,13 +184,41 @@ app.use(function(req, res) {
  * Exporting
  */
 app.start = function(port, callback) {
-  db.query(queries.getMaximumSlugIds, function(err, maxima) {
-    if (err) return console.error(err);
 
-    cache.slug_ids = _(['voc', 'doc', 'res', 'ref'])
-      .zip(_.map(maxima, 'max'))
-      .object()
-      .value();
+  // TODO: here
+  async.parallel({
+    maxima: function(next) {
+      db.query(queries.getMaximumSlugIds, function(err, maxima) {
+        if (err) return next(err);
+
+        cache.slug_ids = _(['voc', 'doc', 'res', 'ref'])
+          .zip(_.map(maxima, 'max'))
+          .object()
+          .value();
+
+        return next();
+      });
+    },
+    nodes: function(next) {
+      db.query(queries.getAllModecross, function(err, rows) {
+        if (err) return next(err);
+
+        var nodes = cache.nodes.modecross;
+
+        rows.forEach(function(row) {
+          var s = row.name.split('-');
+
+          nodes[row.name] = row.id;
+
+          if (s.length > 1)
+            nodes[s[1] + '-' + s[0]] = row.id;
+        });
+
+        return next();
+      });
+    }
+  }, function(err) {
+    if (err) return console.error(err);
 
     app.listen(port);
     return callback();

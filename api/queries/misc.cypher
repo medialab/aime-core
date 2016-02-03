@@ -47,6 +47,13 @@ WHERE
   modecross.name = {modecross}
 RETURN modecross LIMIT 1;
 
+// name: getAllModecross
+MATCH (modecross)
+WHERE (modecross:Mode OR modecross:Crossing)
+RETURN
+  id(modecross) AS id,
+  modecross.name AS name;
+
 // name: getModecrossVoc
 MATCH (modecross)<-[:DEFINES]-(v:Vocabulary)
 WHERE

@@ -34,5 +34,8 @@ module.exports = {
     doc: 0,
     res: 0,
     ref: 0
+  },
+  nodes: {
+    modecross: {}
   }
 };
