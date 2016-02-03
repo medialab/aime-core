@@ -1,10 +1,10 @@
 /**
- * AIME-core Modecross Diff Unit Tests
- * ====================================
+ * AIME-core Diff Unit Tests
+ * ==========================
  *
  */
 var assert = require('assert'),
-    diff = require('../../lib/modecross_diff.js');
+    diff = require('../../lib/diff.js');
 
 describe('Modecross diff', function() {
 
@@ -29,7 +29,7 @@ describe('Modecross diff', function() {
     ];
 
     pairs.forEach(function(pair, i) {
-      assert.deepEqual(diff(pair[0], pair[1]), results[i]);
+      assert.deepEqual(diff.modecross(pair[0], pair[1]), results[i]);
     });
   });
 });
