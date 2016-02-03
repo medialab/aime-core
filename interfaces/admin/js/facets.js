@@ -5,6 +5,7 @@
  * Computational data flowing through the application.
  */
 import parser from './lib/parser.js';
+import {ressourceRender} from './lib/parser.js';
 import _ from 'lodash';
 
 export default {
@@ -99,6 +100,19 @@ export default {
       parsed.data.docItems = parsed.data.docs.map(d => doc[d]);
 
       return parsed;
+    }
+  },
+
+  // Resource parsed buffer
+  resParsed: {
+    cursors: {
+      edited: ['states', 'res', 'editor'],
+      state: ['states', 'res']
+    },get: function({edited, state}){
+      if (!edited && edited !== '')
+        return null;
+
+      return ressourceRender(state.editor);
     }
   },
 

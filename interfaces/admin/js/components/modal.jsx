@@ -24,7 +24,6 @@ export class Modal extends Component {
 
   constructor (props, context) {
     super(props, context);
-    console.log('user....', this.context.tree.get('user'));
     this.state = {title:'', author: this.context.tree.get('user')};
   }
 
