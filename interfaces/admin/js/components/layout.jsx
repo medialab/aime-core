@@ -78,8 +78,6 @@ export class Layout extends PureComponent {
       <Modal title={MODAL_TITLES[model]} model={model} users={this.props.users} /> :
       <ModalRessouces title={MODAL_TITLES[model]} />;
 
-
-    console.log(this.props.help)
     return (
       <Row className="full-height">
         <Col md={4} className={classes({hidden: editionMode || isAModalDisplayed})} />
@@ -109,7 +107,7 @@ export class Layout extends PureComponent {
         }
 
         <Toolbar/>
-        {!this.props.help && <Help/>}
+        {this.props.help && <Help/>}
 
       </Row>
     );
