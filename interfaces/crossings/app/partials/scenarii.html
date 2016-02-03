@@ -4,7 +4,7 @@
 		<div class="snumber" ng-show="isAdmin()">({{cells.length}})</div>
 		<div class="name" ng-click="loadScenar()">{{'Explore' | t:lang}}</div>
 	</li>
-	
+
 	<li
 		ng-repeat="s in scenars"
 		ng-show="s.status=='published' || isAdmin()"
@@ -20,10 +20,10 @@
 			<div class="action" ng-show="!s.edit" ng-click="editScenar(s)">[edit]</div>
 			<div ng-show="s.edit">
 				<form><input ng-model="s.name" value="{{s.name}}" size="10" autofocus/></form>
-				<div class="action" ng-click="togglePublic(s)">
+<!-- 				<div class="action" ng-click="togglePublic(s)">
 					<span ng-if="s.status=='published'">[unpublish]</span>
 					<span ng-if="s.status!='published'">[publish]</span>
-				</div>
+				</div> -->
 				<div class="action" ng-click="saveScenar(s)">[save]</div>
 				<div class="action" ng-click="deleteScenar(s)">[delete]</div>
 			</div>
