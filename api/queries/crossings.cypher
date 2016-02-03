@@ -31,7 +31,7 @@ WITH m, v, rp, p ORDER BY rp.order
 WITH m, v, collect(p) AS paragraphs
 OPTIONAL MATCH (m)<-[:RELATES_TO]-(s:Scenario {status: 'public', lang: {lang}})-[rs:HAS]->(i)
 WITH m, v, paragraphs, rs, s, i ORDER BY rs.order
-WITH m, v, paragraphs, {scenario: s, items: collect(i)} AS scenars
+WITH m, v, paragraphs, {id: id(s), scenario: s, items: collect(i)} AS scenars
 RETURN {
 	name: m.name,
 	type: m.type,
