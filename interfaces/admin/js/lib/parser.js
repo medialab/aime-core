@@ -36,10 +36,14 @@ renderer.image = function(src) {
   var index = tree.facets.resIndex.get(),
       res = index[src];
 
+  return ressourceRender(res);
 
+};
+
+const ressourceRender = function(res){
   if(res.type === "media") {
 
-    var ref = res.reference
+    var ref = res.reference.id !== null
               ? `<p class="caption reference ">${res.reference.html || res.reference.text}</p>` : '';
 
     switch (res.kind) {
@@ -77,14 +81,16 @@ renderer.image = function(src) {
       case "rich":
         return `<div class="resource-item ${res.type} ${res.kind}">
                  ${res.html}
-                 ${ref}
-                </div>`;
+                </div> ${ref}`;
 
       case "video":
         return `<div class="resource-item ${res.type} ${res.kind} ${res.host}">
-                  ${res.iframe || res.html}
-                  ${ref}
-                </div>`;
+                  <div class="embed-responsive embed-responsive-16by9">
+                      ${res.iframe || res.html}
+
+                  </div>
+
+                </div><div class="resource-item ${res.type} ${res.kind} ${res.host}">${ref}</div>`;
 
       default:
         return `<p class="resource-item ${res.type}">res_${res.type}</p>`;
@@ -97,9 +103,10 @@ renderer.image = function(src) {
   return `<p class="resource-item ${res.type} ${res.kind} ">
             ${res.type}_${res.slug_id}
           </p>`;
-};
+}
 
 /**
  * Creating the function
  */
 export default parser(renderer);
+export {ressourceRender};

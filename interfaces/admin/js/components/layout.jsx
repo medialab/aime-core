@@ -20,6 +20,7 @@ import {ActionButton, Toolbar} from './misc.jsx';
 import {Modal, ModalRessouces} from './modal.jsx';
 import ResourceSelector from './resourceSelector.jsx';
 import ResourceEditor from './resourceEditor.jsx';
+import ResourcePreview from './ResourcePreview.jsx';
 
 
 const MODAL_TITLES = {
@@ -93,12 +94,12 @@ export class Layout extends PureComponent {
         </Col>
 
         <Col md={4} className={classes({'full-height':true, hidden: this.props.searching})}>
-          {(editionMode && model !== "res")  && <PreviewPanel model={model} />}
+          {(editionMode)  && <PreviewPanel model={model} />}
         </Col>
 
         {this.props.searching &&
 
-          <Col md={4} className="full-height searching">
+          <Col md={4} className="searching">
             <ResourceSelector title="select ressource" model={model} />
           </Col>
         }
@@ -208,7 +209,7 @@ class EditorPanel extends PureComponent {
  */
 @branch({
   facets(props) {
-    if(props.model === "doc") return { parsed: props.model + 'Parsed'};
+    if(props.model === "doc" || props.model === "res") return { parsed: props.model + 'Parsed'};
     else return {};
   },
   cursors(props) {
@@ -221,15 +222,20 @@ class PreviewPanel extends PureComponent {
 
   render() {
     const model = this.props.model;
+    // console.log(model)
     return (
       <div className="full-height">
         <h1 className="centered">Preview</h1>
         <div className="overflowing">
+        {this.props.model === "doc" ?
           <Preview model={this.props.model}
                    parsed={this.props.parsed}
                    title={this.props.modelState.title}
                    author={this.props.modelState.author}
                    />
+            :
+          <ResourcePreview model={this.props.model} parsed={this.props.parsed}/>
+        }
         </div>
       </div>
     );
