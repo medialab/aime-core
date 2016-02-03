@@ -173,7 +173,7 @@ module.exports = [
     action: function(req, res) {
       scenarioModel.create(
         req.body.modecross,
-        req.session.author,
+        req.session.user,
         req.lang,
         req.body.title,
         req.body.items,
