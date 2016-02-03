@@ -324,7 +324,19 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
 
         var diff = modecrossDiff(beforeModecross, afterModecross);
 
-        console.log(diff);
+        diff.deletions.forEach(function(m) {
+          var query = [
+            'MATCH (d)-[r:RELATES_TO]->(m)',
+            'WHERE id(d) = ' + doc.id + ' AND id(m) = ' + MODECROSS_NODES[m],
+            'DELETE r;'
+          ];
+
+          batch.query(query.join('\n'));
+        });
+
+        diff.additions.forEach(function(m) {
+          batch.relate(docNode, 'RELATES_TO', MODECROSS_NODES[m]);
+        });
 
         return batch.commit(next);
       },
