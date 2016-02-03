@@ -73,12 +73,32 @@ angular.module('myApp.services', [])
 				}).then(function(data){callback({data: data.data.result}); });
 			},
 
+			scenarCreate: function(params,callback) {
+				$http({
+					method: 'POST',
+					url: b+'/scenario',
+					data: params
+				}).then(function(data){ callback(data.result); });
+			},
+
 			scenarUpdate: function(params,callback) {
 				$http({
-					method: 	'GET',
-					url: 		b+"/crossings/scenar/update",
-					params: 	params,
+					method: 'PUT',
+					url: b+'/scenario',
+					data: params
 				}).then(function(data){ callback(data.result); });
+			},
+
+			scenarDestroy: function(params,callback) {
+
+			},
+
+			scenarPublish: function(params,callback) {
+
+			},
+
+			scenarUnpublish: function(params,callback) {
+
 			},
 
 			elementUpdate: function(params,callback) {

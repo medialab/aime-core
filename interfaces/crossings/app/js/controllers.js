@@ -466,19 +466,19 @@ angular.module('myApp.controllers', ['underscore','config'])
 		};
 		$scope.saveScenar = function(s,flag) {
 			var list = $scope.getSelectedIds();
+
+			// TODO: if no sid here => create
+
 			if(list.length) {
 				var params = {
-					lang: 	 	$scope.lang,
 					sid: 		s.sid,
 					modecross: 	$scope.modecross,
-					action: 	'update',
-					name: 		s.name,
-					status: 	s.status,
+					title: 		s.name,
 					items:  	list,
 				};
 				console.log("will save the scenario:",params);
 
-				Api.scenarUpdate(params, function(res){
+				Api.scenarCreate(params, function(res){
 					console.log("Scenario update result:",res.data);
 					if(!res.data.success) alert(res.data.message);
 					else {

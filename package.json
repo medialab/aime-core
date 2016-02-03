@@ -6,10 +6,11 @@
   "main": "index.js",
   "scripts": {
     "biblib": "node ./scripts/biblib.js",
+    "dev": "nodemon --exec \"npm run start\"",
     "migrate": "node ./scripts/migrate.js && npm run biblib",
     "prod": "NODE_ENV=prod && pm2 start --name \"aime-api\" --node-args=\"--harmony\" ./scripts/start.js",
-    "test": "mocha -R spec ./test/endpoint.js",
     "start": "node --harmony ./scripts/start.js",
+    "test": "mocha -R spec ./test/endpoint.js",
     "ui": "concurrent --kill-others \"npm run ui:inquiry\" \"npm run ui:crossings\" \"npm run ui:admin\"",
     "ui:inquiry": "cd interfaces/inquiry && npm start",
     "ui:crossings": "cd interfaces/crossings && npm start",
@@ -57,6 +58,7 @@
   "devDependencies": {
     "concurrently": "^1.0.0",
     "mocha": "^2.0.1",
+    "nodemon": "^1.8.1",
     "pm2": "^0.15.7"
   },
   "dependencies": {
