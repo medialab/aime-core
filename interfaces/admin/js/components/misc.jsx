@@ -80,6 +80,10 @@ export class Toolbar extends PureComponent {
       this.context.tree.emit('lang:change', lang === 'en' ? 'fr' : 'en');
     };
 
+    const toogleHelp = () => {
+      this.context.tree.emit('help:toogle');
+    };
+
     const logout = () => {
       this.context.tree.emit('logout');
     };
@@ -94,6 +98,9 @@ export class Toolbar extends PureComponent {
           </button>
           <button type="button" className="btn btn-default" aria-label="Left Align" onClick={logout}>
             <span className="glyphicon glyphicon-off" aria-hidden="true" />
+          </button>
+          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={toogleHelp}>
+            <span className="glyphicon glyphicon-question-sign" aria-hidden="true" />
           </button>
       </div>
     );

@@ -18,6 +18,7 @@ import Preview from './preview.jsx';
 import List from './list.jsx';
 import {ActionButton, Toolbar} from './misc.jsx';
 import {Modal, ModalRessouces} from './modal.jsx';
+import Help from './help.jsx';
 import ResourceSelector from './resourceSelector.jsx';
 import ResourceEditor from './resourceEditor.jsx';
 import ResourcePreview from './ResourcePreview.jsx';
@@ -40,7 +41,8 @@ const MODAL_TITLES = {
       data: ['data', model],
       modal: ['states', model, 'modal'],
       selection: ['states', model, 'selection'],
-      searching: ['states', model, 'searching']
+      searching: ['states', model, 'searching'],
+      help: ['states',"help"]
     };
   }
 })
@@ -76,6 +78,8 @@ export class Layout extends PureComponent {
       <Modal title={MODAL_TITLES[model]} model={model} users={this.props.users} /> :
       <ModalRessouces title={MODAL_TITLES[model]} />;
 
+
+    console.log(this.props.help)
     return (
       <Row className="full-height">
         <Col md={4} className={classes({hidden: editionMode || isAModalDisplayed})} />
@@ -105,6 +109,8 @@ export class Layout extends PureComponent {
         }
 
         <Toolbar/>
+        {!this.props.help && <Help/>}
+
       </Row>
     );
   }

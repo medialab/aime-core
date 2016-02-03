@@ -109,4 +109,5 @@ const ressourceRender = function(res){
  * Creating the function
  */
 export default parser(renderer);
+export const rendererFromSlug = renderer.image;
 export {ressourceRender};

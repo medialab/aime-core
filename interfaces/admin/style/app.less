@@ -40,7 +40,13 @@
   font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
   -webkit-font-feature-settings: "smcp", "onum", "ss01", "ss03", "liga", "kern";
 }
-
+.shadow {
+  -moz-box-shadow: 5px 5px 20px 0px #656565;
+-webkit-box-shadow: 5px 5px 20px 0px #656565;
+-o-box-shadow: 5px 5px 20px 0px #656565;
+box-shadow: 5px 5px 20px 0px #656565;
+filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=20);
+}
 .ligned {
   background-size: 100% 2*@m;
   background-position-y: 16px;
@@ -209,6 +215,44 @@ textarea {
     margin-bottom: @m - 1;
   }
 }
+
+.help-box {
+
+  .shadow();
+  position: absolute;
+  left: @m * 6.5;
+  top: 5%;
+  width: 50%;
+  height: 90%;
+  background-color: white;
+  padding: 20px;
+
+  .button {
+    border:none;
+  }
+  .render {
+
+    background: @g4;
+    padding: @m/2;
+    margin-bottom: @m /2;
+    font-family: "NovelPro-Regular";
+  }
+  pre {
+    .ligned();
+    padding-top: @m*2;
+    border:none;
+  }
+
+  .cm-string { color: #f4bf75}
+  .cm-tag { color:#ac4142}
+
+  .preview {
+    padding: 0;
+  }
+}
+
+
+
 /*
  * Lists
  */
