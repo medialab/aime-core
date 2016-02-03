@@ -206,6 +206,14 @@ const actions = {
   },
 
   /**
+   * toogle Help
+   */
+  'help:toogle': function() {
+    this.set(['states', 'help'], !this.get(['states', 'help']) );
+  },
+
+
+  /**
    * Opening modal
    */
   'modal:open': function({data: {model,type}}) {

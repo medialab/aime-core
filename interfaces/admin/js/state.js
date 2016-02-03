@@ -35,7 +35,8 @@ export default {
       editor: null,
       selection: null,
       modal: null
-    }
+    },
+    help: false
   },
 
   // Misc data
