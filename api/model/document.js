@@ -9,6 +9,8 @@ var marked = require('marked'),
     abstract = require('./abstract.js'),
     db = require('../connection.js'),
     helpers = require('../helpers.js'),
+    modecrossParser = require('../../lib/modecross_parser.js'),
+    modecrossDiff = require('../../lib/diff.js').modecross,
     stripper = require('../../lib/markdown_stripper.js'),
     queries = require('../queries.js'),
     _ = require('lodash');
@@ -18,6 +20,8 @@ var marked = require('marked'),
  */
 var RE_SLIDES = /\n\n[-*_\s]*\n/g,
     RE_RES = /!\[.*?]\((.*?)\)/;
+
+var MODECROSS_NODES = cache.nodes.modecross;
 
 /**
  * Custom markdown parser
@@ -167,7 +171,13 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
             });
           });
 
-        // TODO: link to modes and crossings
+        // Parsing the raw text to extract linked modecross
+        var extractedModecross = modecrossParser(slidesText);
+
+        // Linking to the correct modecross
+        extractedModecross.forEach(function(modecross) {
+          batch.relate(docNode, 'RELATES_TO', MODECROSS_NODES[modecross]);
+        });
 
         // Committing
         batch.commit(next);
@@ -236,12 +246,12 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
 
 
         // Handling title
-        if (title && title !== doc.title) {
+        if (title && title !== doc.properties.title) {
           batch.save(docNode, 'title', title);
         }
 
         // Handling status
-        if (status && status !== doc.status) {
+        if (status && status !== doc.properties.status) {
           batch.save(docNode, 'status', status);
         }
 
@@ -252,22 +262,28 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
         }
 
         // TODO: beware of user bookmarks
-        // TODO: modes and crossings
         // TODO: the dedicated query here is not needed per se
 
         // Udpating the slides - a modus operandi
         // We actually need to destroy the document's slides and paragraph
         // while unlinking the proper elements to rebuild them anew.
 
+        var currentSlidesText = [];
+
         // Deleting necessary nodes & edges
         doc.children.forEach(function(slide) {
           batch.delete(slide.id, true);
 
           slide.children.forEach(function(element) {
-            if (element.type === 'paragraph')
+
+            if (element.properties.type === 'paragraph') {
               batch.delete(element.id, true);
+              currentSlidesText.push(element.properties.text);
+            }
           });
         });
+
+        currentSlidesText = currentSlidesText.join('\n');
 
         // Re-creating items from scratch
         slides.forEach(function(elements, slideIndex) {
@@ -300,6 +316,26 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
               batch.relate(slideNode, 'HAS', linkedNode, {order: elementIndex});
             }
           });
+        });
+
+        // Handling modes & crossings
+        var beforeModecross = modecrossParser(currentSlidesText),
+            afterModecross = modecrossParser(slidesText);
+
+        var diff = modecrossDiff(beforeModecross, afterModecross);
+
+        diff.deletions.forEach(function(m) {
+          var query = [
+            'MATCH (d)-[r:RELATES_TO]->(m)',
+            'WHERE id(d) = ' + doc.id + ' AND id(m) = ' + MODECROSS_NODES[m],
+            'DELETE r;'
+          ];
+
+          batch.query(query.join('\n'));
+        });
+
+        diff.additions.forEach(function(m) {
+          batch.relate(docNode, 'RELATES_TO', MODECROSS_NODES[m]);
         });
 
         return batch.commit(next);

@@ -16,7 +16,7 @@ describe('Modecross parser', function() {
       'This is [POL].\nBut multiline [REF].',
       'This has twice [POL] and [POL].',
       'This has [POL] and [REF-LAW].',
-      'This has a [DRO] French mode and [RES-POL] crossing.',
+      'This has a [DRO] French mode and [NET-POL] crossing.',
       'This has a [REL·POL] middot.',
       'This is not a valid [TAR] mode.'
     ];
@@ -26,8 +26,8 @@ describe('Modecross parser', function() {
       ['POL'],
       ['POL', 'REF'],
       ['POL'],
-      ['POL', 'REF-LAW'],
-      ['LAW', 'NET-POL'],
+      ['POL', 'REF-DRO'],
+      ['DRO', 'RES-POL'],
       ['REL-POL'],
       []
     ];
