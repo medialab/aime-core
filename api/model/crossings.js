@@ -213,7 +213,7 @@ module.exports = {
           modecross: results.info.name,
           name: s.scenario.title,
           _id: '' + i,
-          sid: '' + i,
+          sid: s.id,
           status: 'published',
           items: s.items.map(function(i) {
             return slugs[i.type] + '_' + i.slug_id;

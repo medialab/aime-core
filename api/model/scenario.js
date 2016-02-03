@@ -60,6 +60,9 @@ var model = {
       })
       .value();
 
+    // Defaults
+    items = _.extend({bsc: [], voc: [], doc: []}, items);
+
     var scenarioNode = batch.save(data);
     batch.label(scenarioNode, 'Scenario');
 
