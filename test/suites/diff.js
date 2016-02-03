@@ -6,12 +6,9 @@
 var assert = require('assert'),
     diff = require('../../lib/diff.js');
 
-describe('Modecross diff', function() {
+describe('Diff', function() {
 
-  it('should correctly find differences between sets of modecross.', function() {
-
-    // TODO: handle different ordering
-
+  it('#modecross', function() {
     var pairs = [
       [['POL'], ['POL']],
       [['POL', 'REF'], ['POL']],
@@ -30,6 +27,28 @@ describe('Modecross diff', function() {
 
     pairs.forEach(function(pair, i) {
       assert.deepEqual(diff.modecross(pair[0], pair[1]), results[i]);
+    });
+  });
+
+  it('#scenario', function() {
+    var pairs = [
+      [['bsc_12'], ['bsc_12']],
+      [['bsc_12', 'doc_24'], ['bsc_12']],
+      [['bsc_12'], ['doc_24', 'bsc_12']],
+      [['bsc_12', 'voc_45'], ['doc_24', 'bsc_12']],
+      [['doc_24', 'bsc_12'], ['bsc_12', 'doc_24']]
+    ];
+
+    var results = [
+      {additions: [], deletions: []},
+      {additions: [], deletions: ['doc_24']},
+      {additions: ['doc_24'], deletions: []},
+      {additions: ['doc_24'], deletions: ['voc_45']},
+      {additions: [], deletions: []}
+    ];
+
+    pairs.forEach(function(pair, i) {
+      assert.deepEqual(diff.scenario(pair[0], pair[1]), results[i]);
     });
   });
 });
