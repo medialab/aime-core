@@ -89,16 +89,11 @@ angular.module('myApp.services', [])
 				}).then(function(data){ callback(data.result); });
 			},
 
-			scenarDestroy: function(params,callback) {
-
-			},
-
-			scenarPublish: function(params,callback) {
-
-			},
-
-			scenarUnpublish: function(params,callback) {
-
+			scenarDestroy: function(id,callback) {
+				$http({
+					method: 'DELETE',
+					url: b+'/scenario/'+id
+				}).then(function(data) { callback(data.result); });
 			},
 
 			elementUpdate: function(params,callback) {

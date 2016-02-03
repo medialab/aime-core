@@ -87,8 +87,8 @@ var model = {
   },
 
   // Destroying an existing scenario
-  destroy: function(id) {
-
+  destroy: function(id, callback) {
+    return db.delete(id, true, callback);
   }
 };
 

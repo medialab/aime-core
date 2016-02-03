@@ -202,7 +202,11 @@ module.exports = [
     url: '/scenario/:id',
     methods: ['DELETE'],
     action: function(req, res) {
-      return res.notImplemented();
+      scenarioModel.destroy(+req.params.id, function(err) {
+        if (err) return res.serverError(err);
+
+        return res.ok();
+      });
     }
   }
 ];

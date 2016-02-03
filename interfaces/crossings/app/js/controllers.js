@@ -479,6 +479,8 @@ angular.module('myApp.controllers', ['underscore','config'])
 				console.log("will save the scenario:",params);
 
 				Api.scenarCreate(params, function(res){
+					return location.reload();
+
 					console.log("Scenario update result:",res.data);
 					if(!res.data.success) alert(res.data.message);
 					else {
@@ -505,22 +507,8 @@ angular.module('myApp.controllers', ['underscore','config'])
 			}
 		};
 		$scope.deleteScenar = function(s) {
-			var params = {
-				lang: 	 	$scope.lang,
-				sid: 	 	s.sid,
-				modecross: 	$scope.modecross,
-				action: 	'delete',
-			};
-			Api.scenarUpdate(params, function(res){
-				console.log("Scenario delete result:");
-				console.log(res.data);
-				if(!res.data.success) alert(res.data.message);
-				else {
-					$scope.scenars = _.without($scope.scenars,s);
-					$scope.editing = false;
-					// reload empty scenar
-					$scope.loadScenar();
-				}
+			Api.scenarDestroy(s.sid, function(res) {
+				location.reload();
 			});
 		};
 
