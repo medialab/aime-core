@@ -61,6 +61,8 @@ export default class ResourceEditor extends Component {
 
   render() {
 
+    const kind = this.state.item.kind;
+
     return (
       <Row className="full-height">
         <form>
@@ -74,7 +76,7 @@ export default class ResourceEditor extends Component {
           </div>
         }
 
-        {this.state.item.html &&
+        {(kind === "video" || kind === 'rich' )&&
          <div className="form-group">
             <label>html</label>
             <textarea value={this.state.item.html}
@@ -83,7 +85,7 @@ export default class ResourceEditor extends Component {
                       className="editor pre" />
           </div>}
 
-        {this.state.item.text !== null  &&
+        {kind === "quote"  &&
           <div className="form-group">
               <label>text</label>
               <textarea value={this.state.item.text}
@@ -93,7 +95,7 @@ export default class ResourceEditor extends Component {
           </div>
         }
 
-        {this.state.item.url &&
+        {(kind === "video" || kind === 'link' || kind === 'url' || kind === 'rich' ) &&
           <div className="form-group">
             <label>url</label>
             <input value={this.state.item.url}
@@ -103,7 +105,7 @@ export default class ResourceEditor extends Component {
           </div>
         }
 
-        {this.state.item.path &&
+        {(kind === "image" || kind === 'pdf') &&
           <div className="form-group">
             <label>path</label>
             <input value={this.state.item.path}
