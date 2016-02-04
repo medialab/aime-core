@@ -11,6 +11,39 @@ var jayson = require('jayson'),
 var model = {
 
   // Retrieve records by list of ids
+  search: function(callback) {
+
+    var searchParam = {filter_class: 'Document'};
+
+    client.request(
+      'search',
+      [config.corpus, searchParam],
+      function(err, response) {
+        if (err) return callback(err);
+
+        if (response.error) {
+          err = new Error('jsonrpc-fault');
+          err.data = response.error;
+          return callback(err);
+        }
+
+        return callback(null, response.result.records.map(function(rec) {
+
+          return {
+            rec_id: rec.rec_id,
+            html: rec.mla,
+            title: rec.title,
+            creators: rec.creators.map(function(creator){
+              if(creator.agent) return creator.agent.name_given + ' ' + creator.agent.name_family;
+            })
+          };
+
+        }));
+      }
+    );
+  },
+
+  // Retrieve records by list of ids
   getByIds: function(ids, callback) {
     var stringIds = ids.map(function(ids) {
       return '' + ids;
