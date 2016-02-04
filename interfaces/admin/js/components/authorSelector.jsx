@@ -15,7 +15,6 @@ export class AuthorSelector extends PureComponent {
 
   constructor(props, context) {
     super(props, context);
-    this.isLoading = false;
 
     this.getOptions = this.getOptions.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
@@ -87,7 +86,7 @@ export class AuthorSelector extends PureComponent {
     return (
       <div className="form-group author">
         <Select.Async
-          isLoading={this.isLoading}
+          isLoading={false}
           value={this.state.value}
           ignoreAccents={false}
           clearable={false}

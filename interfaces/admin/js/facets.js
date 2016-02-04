@@ -80,6 +80,16 @@ export default {
     }
   },
 
+  // References index
+  refsIndex: {
+    cursors: {
+      users: ['data', 'references']
+    },
+    get: function({users}) {
+      return _.indexBy(users, user => user.id);
+    }
+  },
+
   // Book parsed buffer
   bookParsed: {
     facets: {

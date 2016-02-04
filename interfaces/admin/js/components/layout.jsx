@@ -151,7 +151,8 @@ class ListPanel extends PureComponent {
       title: [ 'states', props.model, 'title'],
       saving: ['states', props.model, 'saving'],
       author: ['states', props.model, 'author'],
-      status: ['states', props.model, 'status']
+      status: ['states', props.model, 'status'],
+      biblib: ['data', 'ref']
     };
   }
 })
@@ -186,9 +187,8 @@ class EditorPanel extends PureComponent {
                   title={this.props.title}
                   parsed={this.props.parsed} />
           :
-          <ResourceEditor
-                  model={model}
-                  />}
+          <ResourceEditor model={model}/>}
+
         </div>
         <div className="actions">
           {this.props.model === "doc" && <ActionButton size={12} action={openSelector} label="add item" />}

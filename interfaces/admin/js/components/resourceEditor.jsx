@@ -13,6 +13,7 @@ import PureComponent from '../lib/pure.js';
 import autobind from 'autobind-decorator';
 import {ResourceIcon} from './misc.jsx';
 import {resourceName} from '../lib/helpers.js';
+import {ReferenceSelector} from './referenceSelector.jsx';
 
 /**
  * ResourceEditor component
@@ -20,7 +21,8 @@ import {resourceName} from '../lib/helpers.js';
 @branch({
   cursors: {
     data:['data', 'res'],
-    states:['states', 'res']
+    states:['states', 'res'],
+    refs:['data', 'ref']
   }
 })
 export default class ResourceEditor extends Component {
@@ -101,7 +103,7 @@ export default class ResourceEditor extends Component {
             <input value={this.state.item.url}
                    onChange={(e) => this.changeHandler({item: {url: e.target.value}}, 'url')}
                    placeholder="http://website.com/folder/file.ext"
-                   className={classes('form-control')} />
+                   className="form-control" />
           </div>
         }
 
@@ -111,18 +113,19 @@ export default class ResourceEditor extends Component {
             <input value={this.state.item.path}
                    disabled="disabled"
                    placeholder="http://website.com/folder/file.ext"
-                   className={classes('form-control')} />
+                   className="form-control" />
           </div>
         }
 
         {(this.state.item.reference || {}).text !== null &&
           <div className="form-group">
               <label>reference</label>
-              <textarea value={this.state.item.reference.text}
-                        placeholder="text …"
-                        className="editor pre"
-                        onChange={(e) => this.changeHandler({item: {reference: {text: e.target.value}}}, 'reference.text')}
-                        disabled={!!this.state.item.reference.biblib_id} />
+
+              <ReferenceSelector
+                reference={this.state.item.reference}
+                references={this.props.refs}
+                onChange={(ref) => this.context.tree.emit('ref:change', {model: this.props.model, ref: ref})} />
+
           </div>
         }
 

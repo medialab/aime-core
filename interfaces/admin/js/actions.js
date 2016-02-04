@@ -261,6 +261,13 @@ const actions = {
   },
 
   /**
+   * Updating the reference's ID
+   */
+  'ref:change': function({data: {model, refId}}) {
+    this.set(['states', model, 'reference', 'id'], refId);
+    this.commit();
+  },
+  /**
    * Updating the resource selector fields
    */
   'resource:change': function({data: {model, payload}}) {

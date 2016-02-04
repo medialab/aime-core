@@ -29,15 +29,14 @@ var model = {
 
         return callback(null, response.result.records.map(function(rec) {
 
-          return {
-            rec_id: rec.rec_id,
-            html: rec.mla,
-            title: rec.title,
-            creators: rec.creators.map(function(creator){
-              if(creator.agent) return creator.agent.name_given + ' ' + creator.agent.name_family;
-            })
-          };
+          var creators = rec.creators.map(function(creator){
+            if(creator.agent) return creator.agent.name_given + ' ' + creator.agent.name_family;
+          }).toString()
 
+          return {
+            biblib_id: parseInt(rec.rec_id),
+            text: rec.title + ' — ' + creators
+          };
         }));
       }
     );

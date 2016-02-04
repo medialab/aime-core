@@ -45,6 +45,7 @@ export default {
     book: null,
     voc: null,
     doc: null,
-    res: null
+    res: null,
+    ref: null
   }
 };

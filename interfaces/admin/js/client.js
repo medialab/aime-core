@@ -79,6 +79,14 @@ export default function(scope) {
         }
       },
 
+      // Reference data
+      ref: {
+        url: '/biblib',
+        success: function({result}) {
+          this.set(['data', 'ref'], result);
+        }
+      },
+
       // Document data
       doc: {
         url: '/doc',

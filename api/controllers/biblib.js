@@ -12,13 +12,10 @@ module.exports = [
     url: '/',
     methods: ['GET'],
     action: function(req, res) {
-
       model.search(function(err, list) {
         if (err) return res.serverError(err);
         return res.ok(list);
       });
-
-      // return res.ok("list");
     }
   }
 ];

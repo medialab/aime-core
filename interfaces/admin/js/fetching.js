@@ -30,6 +30,7 @@ export default function(tree) {
       tree.client.doc();
       tree.client.res();
       tree.client.users();
+      tree.client.ref();
       loaded = true;
     }
 
