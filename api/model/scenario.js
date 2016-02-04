@@ -5,7 +5,6 @@
  */
 var async = require('async'),
     cache = require('../cache.js'),
-    diff = require('../../lib/diff.js').scenario,
     queries = require('../queries.js').scenario,
     db = require('../connection.js'),
     _ = require('lodash');
@@ -50,6 +49,13 @@ var model = {
       status: 'public'
     };
 
+    // Keep track of items' order
+    var order = items.reduce(function(o, item, i) {
+      o[item] = i;
+      return o;
+    }, {});
+
+    // Processing items
     items = _(items)
       .map(parseItem)
       .groupBy('type')
@@ -73,11 +79,11 @@ var model = {
     batch.relate(scenarioNode, 'CREATED_BY', author.id);
 
     // Linking items
-    db.query(queries.getItems, items, function(err, data) {
+    db.query(queries.getItems, items, function(err, rows) {
       if (err) return callback(err);
 
-      _.map(data, 'id').forEach(function(id, i) {
-        batch.relate(scenarioNode, 'HAS', id, {order: i});
+      rows.forEach(function(row) {
+        batch.relate(scenarioNode, 'HAS', row.id, {order: order[row.slug_id]});
       });
 
       return batch.commit(callback);
