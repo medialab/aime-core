@@ -506,6 +506,46 @@ angular.module('myApp.controllers', ['underscore','config'])
 				alert("you need to select at least one tessel to save scenario.");
 			}
 		};
+		$scope.updateScenar = function(s) {
+			var list = $scope.getSelectedIds();
+
+			// TODO: if no sid here => create
+
+			if(list.length) {
+				var params = {
+					title: 		s.name,
+					items:  	list,
+				};
+				console.log("will save the scenario:",params);
+
+				Api.scenarUpdate(s.sid, params, function(res){
+					return location.reload();
+
+					console.log("Scenario update result:",res.data);
+					if(!res.data.success) alert(res.data.message);
+					else {
+						// lets reload page at each save.
+						$route.reload();
+
+						/*
+						// was toggled publish/unpublish ?
+						s.status = res.data.scenar.status;
+						s.items = res.data.scenar.items;
+
+						if($scope.newScenar) { // means we were saving a newly created scenario
+							// get saved scenar id returned by server & append to the local list
+							s = res.data.scenar;
+							$scope.scenar = s;
+							$scope.scenars.push(s);
+						}
+						$scope.finishedEditScenar(true); // true to reload scenar after save (will reorder)
+						*/
+					}
+				});
+			} else {
+				alert("you need to select at least one tessel to save scenario.");
+			}
+		};
 		$scope.deleteScenar = function(s) {
 			Api.scenarDestroy(s.sid, function(res) {
 				location.reload();

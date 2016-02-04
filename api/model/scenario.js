@@ -5,7 +5,6 @@
  */
 var async = require('async'),
     cache = require('../cache.js'),
-    diff = require('../../lib/diff.js').scenario,
     queries = require('../queries.js').scenario,
     db = require('../connection.js'),
     _ = require('lodash');
@@ -50,6 +49,13 @@ var model = {
       status: 'public'
     };
 
+    // Keep track of items' order
+    var order = items.reduce(function(o, item, i) {
+      o[item] = i;
+      return o;
+    }, {});
+
+    // Processing items
     items = _(items)
       .map(parseItem)
       .groupBy('type')
@@ -73,11 +79,11 @@ var model = {
     batch.relate(scenarioNode, 'CREATED_BY', author.id);
 
     // Linking items
-    db.query(queries.getItems, items, function(err, data) {
+    db.query(queries.getItems, items, function(err, rows) {
       if (err) return callback(err);
 
-      _.map(data, 'id').forEach(function(id, i) {
-        batch.relate(scenarioNode, 'HAS', id, {order: i});
+      rows.forEach(function(row) {
+        batch.relate(scenarioNode, 'HAS', row.id, {order: order[row.slug_id]});
       });
 
       return batch.commit(callback);
@@ -85,8 +91,57 @@ var model = {
   },
 
   // Updating a scenario
-  update: function() {
+  update: function(id, title, items, callback) {
+    var batch = db.batch();
 
+    // Do we need to update the title?
+    if (title)
+      batch.save(id, 'title', title);
+
+    if (items) {
+
+      // Keep track of items' order
+      var order = items.reduce(function(o, item, i) {
+        o[item] = i;
+        return o;
+      }, {});
+
+      // Processing items
+      items = _(items)
+        .map(parseItem)
+        .groupBy('type')
+        .mapValues(function(v) {
+          return _.map(v, function(i) {
+            return +i.id;
+          });
+        })
+        .value();
+
+      // Defaults
+      items = _.extend({bsc: [], voc: [], doc: []}, items);
+
+      return async.waterfall([
+        function getLinks(next) {
+          db.query(queries.getLinks, {scenario: id}, next);
+        },
+        function getLinkedItems(links, next) {
+          links.forEach(function(link) {
+            batch.rel.delete(link.id);
+          });
+
+          db.query(queries.getItems, items, next);
+        },
+        function persistLinks(rows, next) {
+          rows.forEach(function(row) {
+            batch.relate(id, 'HAS', row.id, {order: order[row.slug_id]});
+          });
+
+          return batch.commit(next);
+        }
+      ], callback);
+    }
+
+    return batch.commit(callback);
   },
 
   // Destroying an existing scenario

@@ -81,10 +81,10 @@ angular.module('myApp.services', [])
 				}).then(function(data){ callback(data.result); });
 			},
 
-			scenarUpdate: function(params,callback) {
+			scenarUpdate: function(id,params,callback) {
 				$http({
 					method: 'PUT',
-					url: b+'/scenario',
+					url: b+'/scenario/'+id,
 					data: params
 				}).then(function(data){ callback(data.result); });
 			},
