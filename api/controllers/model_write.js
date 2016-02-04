@@ -190,11 +190,23 @@ module.exports = [
     url: '/scenario/:id',
     methods: ['PUT'],
     validate: {
-      name: '?string',
+      title: '?string',
       items: '?array'
     },
     action: function(req, res) {
-      return res.notImplemented();
+      if (!req.body.title && !req.body.items)
+        return res.badRequest('Neither title or items is to be updated.');
+
+      scenarioModel.update(
+        +req.params.id,
+        req.body.title,
+        req.body.items,
+        function(err) {
+          if (err) return res.serverError(err);
+
+          return res.ok();
+        }
+      );
     }
   },
 

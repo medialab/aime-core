@@ -24,7 +24,8 @@
 					<span ng-if="s.status=='published'">[unpublish]</span>
 					<span ng-if="s.status!='published'">[publish]</span>
 				</div> -->
-				<div class="action" ng-click="saveScenar(s)">[save]</div>
+				<div ng-if="!s.sid" class="action" ng-click="saveScenar(s)">[save]</div>
+				<div ng-if="s.sid" class="action" ng-click="updateScenar(s)">[save]</div>
 				<div class="action" ng-click="deleteScenar(s)">[delete]</div>
 			</div>
 		</div>

@@ -24,3 +24,9 @@ RETURN
     WHEN true THEN "cont_" + d.slug_id
     ELSE "doc_" + d.slug_id
   END AS slug_id;
+
+// name: getLinks
+// Retrieve the given scenario's links.
+START n=node({scenario})
+MATCH (n)-[r:HAS]->()
+RETURN id(r) AS id;
