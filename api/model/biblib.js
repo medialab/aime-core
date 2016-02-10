@@ -35,7 +35,8 @@ var model = {
 
           return {
             biblib_id: parseInt(rec.rec_id),
-            text: rec.title + ' — ' + creators
+            text: rec.title + ' — ' + creators,
+            html: rec.citations.html.mla
           };
         }));
       }
