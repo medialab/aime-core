@@ -32,17 +32,7 @@ export default class ResourceEditor extends Component {
     model: React.PropTypes.string
   };
 
-  constructor(props, context) {
-    super(props, context);
-    this.state = {item: this.props.states.editor}
-  }
-
-  componentWillReceiveProps(props) {
-    this.setState({item: props.states.editor})
-  }
-
   changeHandler(newState, fieldChanged) {
-    this.setStateDeep(newState);
     if (fieldChanged) {
       const model = this.context.model;
       const value = fieldChanged.includes('reference') ?
@@ -55,23 +45,18 @@ export default class ResourceEditor extends Component {
       this.context.tree.emit('resource:change', {model, payload});
     }
   }
-
-  setStateDeep(newState){
-    newState = _.merge({}, this.state, newState);
-    this.setState(newState);
-  }
-
   render() {
 
-    const kind = this.state.item.kind;
+    const editorState = this.props.states.editor;
+    const kind = editorState.kind;
 
     return (
       <Row className="full-height">
         <form>
-        {this.state.item.title &&
+        {editorState.title &&
           <div className="form-group">
             <label>title</label>
-            <input value={this.state.item.title}
+            <input value={editorState.title}
                    onChange={(e) => this.changeHandler({item: {title:e.target.value}})}
                    placeholder="title"
                    className="form-control" />
@@ -81,7 +66,7 @@ export default class ResourceEditor extends Component {
         {(kind === "video" || kind === 'rich' )&&
          <div className="form-group">
             <label>html</label>
-            <textarea value={this.state.item.html}
+            <textarea value={editorState.html}
                       onChange={(e) => this.changeHandler({item: {html: e.target.value}}, 'html')}
                       placeholder="<html>"
                       className="editor pre" />
@@ -90,7 +75,7 @@ export default class ResourceEditor extends Component {
         {kind === "quote"  &&
           <div className="form-group">
               <label>text</label>
-              <textarea value={this.state.item.text}
+              <textarea value={editorState.text}
                         onChange={(e) => this.changeHandler({item: {text: e.target.value}}, 'text')}
                         placeholder="text …"
                         className="editor" />
@@ -100,7 +85,7 @@ export default class ResourceEditor extends Component {
         {(kind === "video" || kind === 'link' || kind === 'url' || kind === 'rich' ) &&
           <div className="form-group">
             <label>url</label>
-            <input value={this.state.item.url}
+            <input value={editorState.url}
                    onChange={(e) => this.changeHandler({item: {url: e.target.value}}, 'url')}
                    placeholder="http://website.com/folder/file.ext"
                    className="form-control" />
@@ -110,21 +95,22 @@ export default class ResourceEditor extends Component {
         {(kind === "image" || kind === 'pdf') &&
           <div className="form-group">
             <label>path</label>
-            <input value={this.state.item.path}
+            <input value={editorState.path}
                    disabled="disabled"
                    placeholder="http://website.com/folder/file.ext"
                    className="form-control" />
           </div>
         }
 
-        {(this.state.item.reference || {}).text !== null &&
+        {(editorState.reference || {}).text !== null &&
           <div className="form-group">
               <label>reference</label>
 
               <ReferenceSelector
-                reference={this.state.item.reference}
+                reference={editorState.reference}
                 references={this.props.refs}
-                onChange={(ref) => this.context.tree.emit('ref:change', {model: this.props.model, ref: ref})} />
+                onChange={ (e) => this.context.tree.emit('ref:change', {ref:e}) }
+                />
 
           </div>
         }

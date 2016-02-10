@@ -263,10 +263,11 @@ const actions = {
   /**
    * Updating the reference's ID
    */
-  'ref:change': function({data: {model, refId}}) {
-    this.set(['states', model, 'reference', 'id'], refId);
+  'ref:change': function({data: data}) {
+    this.set(['states', 'res', 'editor' ,'reference'], data.ref.value);
     this.commit();
   },
+
   /**
    * Updating the resource selector fields
    */

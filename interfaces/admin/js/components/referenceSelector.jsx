@@ -18,12 +18,10 @@ export class ReferenceSelector extends PureComponent {
     super(props, context);
 
     this.getOptions = this.getOptions.bind(this);
-    this.changeHandler = this.changeHandler.bind(this);
     this.prepareOptions = this.prepareOptions.bind(this);
     this.fromIdToRef = this.fromIdToRef.bind(this);
 
   }
-
 
   fromIdToRef(id) {
     const ref = _.filter(this.props.references, function(d){
@@ -34,7 +32,7 @@ export class ReferenceSelector extends PureComponent {
   }
 
   prepareOption(reference) {
-    if(reference) return { value: reference.biblib_id, label: reference.text };
+    if(reference) return { value: reference, label: reference.text };
   }
 
   prepareOptions(references) {
@@ -59,13 +57,6 @@ export class ReferenceSelector extends PureComponent {
     return callback(null, { options: results });
   }
 
-  changeHandler(newValue) {
-    if (newValue) {
-      const ref = this.fromIdToRef(newValue.value);
-      if (this.props.onChange) { this.props.onChange(ref); }
-    }
-  }
-
   render() {
     return (
       <div className="form-group author">
@@ -78,7 +69,7 @@ export class ReferenceSelector extends PureComponent {
           placeholder="Biblib reference"
           noResultsText="None found"
           loadOptions={this.getOptions}
-          onChange={this.changeHandler}
+          onChange={this.props.onChange}
         />
       </div>
     );
