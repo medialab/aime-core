@@ -32,7 +32,7 @@ export class ReferenceSelector extends PureComponent {
   }
 
   prepareOption(reference) {
-    if(reference) return { value: reference, label: reference.text };
+    if(reference) return { value: reference, label: _.trunc(reference.text, 80) };
   }
 
   prepareOptions(references) {
