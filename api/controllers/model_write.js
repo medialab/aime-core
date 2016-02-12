@@ -120,7 +120,7 @@ module.exports = [
     methods: ['POST'],
     validate: {
       text: 'string',
-      reference: '?bibtex|string'
+      reference: '?number'
     },
     action: createResource('quote')
   },
@@ -139,7 +139,7 @@ module.exports = [
     methods: ['POST'],
     validate: {
       url: 'url',
-      reference: '?bibtex|string'
+      reference: '?number'
     },
     action: createResource('video')
   },

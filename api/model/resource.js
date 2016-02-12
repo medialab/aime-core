@@ -52,7 +52,7 @@ var model = _.merge(abstract(queries), {
           });
         }
 
-        return next();
+        return next(null, null);
       },
       function createMedia(infos, next) {
 
@@ -130,7 +130,7 @@ var model = _.merge(abstract(queries), {
         var biblibId = data.reference;
 
         if (!biblibId)
-          return next();
+          return next(null, null);
 
         // We check the existence of the reference in the Neo4j database
         return db.query(queries.getReferenceByBiblibId, {id: biblibId}, function(err, rows) {
