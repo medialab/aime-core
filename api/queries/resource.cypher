@@ -34,8 +34,8 @@ RETURN {
 // name: getForUpdate
 // Retrieve a single resource for update purposes.
 START media=node({id})
-OPTIONAL MATCH (media)<-[:DESCRIBES]-(reference:Reference)
-RETURN media, reference LIMIT 1;
+OPTIONAL MATCH (media)<-[r:DESCRIBES]-(reference:Reference)
+RETURN media, reference.biblib_id AS referenceId, id(r) AS relationId LIMIT 1;
 
 // name: getReferenceByBiblibId
 // Retrieve a single reference by biblib id.
