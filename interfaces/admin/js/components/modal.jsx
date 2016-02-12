@@ -182,17 +182,6 @@ export class ModalRessouces extends Component {
       });
     };
 
-    // Is the given reference valid?
-    let validReference = !!reference;
-
-    try {
-      const parsed = bibtex(reference);
-      validReference = !!Object.keys(parsed).length;
-    }
-    catch (e) {
-      validReference = false;
-    }
-
     // Is the given url valid?
     let validURL = url ? isURL(url) : true;
 
