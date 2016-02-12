@@ -1,0 +1,30 @@
+<fieldset>
+  <fieldset>
+    <label class="col-3">{{t "customInputs:CreatorField.person.name_prefix" }}</label>
+    <input data-attribute="name_prefix" class="col-3" type="text" />
+  </fieldset>
+  <fieldset>
+    <label class="col-3">{{t "customInputs:CreatorField.person.name_family" }}</label>
+    <input data-attribute="name_family" class="col-3" type="text" />
+  </fieldset>
+  <fieldset>
+    <label class="col-3">{{t "customInputs:CreatorField.person.name_given" }}</label>
+    <input data-attribute="name_given" class="col-3" type="text" />
+  </fieldset>
+  <fieldset>
+    <label class="col-3">{{t "customInputs:CreatorField.person.affiliation" }}</label>
+    <input data-attribute="affiliation_name" class="col-3" type="text" />
+  </fieldset>
+  <fieldset>
+    <label class="col-3">{{t "customInputs:CreatorField.person.affiliation_role" }}</label>
+    <select class="col-3 select-affiliation-role">
+      {{#each affiliationRoles }}
+        {{#if this.separator }}
+          <option class="disabled" disabled="disabled">---</option>
+        {{else}}
+          <option value="{{ this.type_id }}">{{ this.label }}</option>
+        {{/if}}
+      {{/each}}
+    </select>
+  </fieldset>
+</fieldset>

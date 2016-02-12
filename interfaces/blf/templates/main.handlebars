@@ -1,0 +1,24 @@
+{{! Navigation header: }}
+<div id="nav" class="container">
+  <button data-mode="fields">{{t "navigation.addEntry" }}</button>
+  <button class="right" data-mode="advancedSearch">{{t "navigation.advancedSearch" }}</button>
+  <button class="right" data-action="search">{{t "navigation.search" }}</button>
+  <input class="right" type="search" id="simple-entries-search" placeholder="{{t "navigation.searchPlaceholder" }}" />
+</div>
+<hr />
+
+{{! Panels containers: }}
+<div id="panels" class="container">
+  <div data-panel="create" style="display:none;">
+    <div class="create-form"></div>
+  </div>
+  <div data-panel="fields" style="display:none;">
+    <div class="select-field"></div>
+  </div>
+  <div data-panel="advancedSearch" style="display:none;">
+    <div class="advanced-search"></div>
+  </div>
+  <div data-panel="list" style="display:none;">
+    <ul class="entries-list"></ul>
+  </div>
+</div>

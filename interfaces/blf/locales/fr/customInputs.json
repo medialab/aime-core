@@ -1,0 +1,94 @@
+{
+  "default": {
+    "errors": {
+      "exactly_one": "Il doit y avoir exactement une entrée.",
+      "at_least_one": "Vous devez ajouter au moins une entrée."
+    }
+  },
+  "CreatorField": {
+    "errors": {
+      "at_least_one": "Vous devez spécifier au moins un auteur."
+    },
+    "actions":{
+      "add":"ajouter un auteur"
+    },
+    "line": {
+      "Person": "Personne",
+      "Orgunit": "Organisation",
+      "Event": "Evénement"
+    },
+    "person": {
+      "name_prefix": "Préfixe du nom :",
+      "name_family": "Nom :",
+      "name_given": "Prénom :",
+      "date_birth": "Année de naissance :",
+      "date_death": "Année de décès :",
+      "affiliation": "Affiliation :",
+      "affiliation_role": "Role :"
+    },
+    "orgunit": {
+      "name": "Nom :"
+    },
+    "event": {
+      "title": "Titre :",
+      "number": "Numéro :",
+      "international": "International :",
+      "place": "Ville :",
+      "country": "Pays :",
+      "date_begin": "Date de début :",
+      "date_end": "Date de fin :"
+    }
+  },
+  "CharField": {
+    "errors": {
+      "exactly_one": "Il doit y avoir exactement une entrée.",
+      "at_least_one": "Vous devez ajouter au moins une entrée."
+    },
+    "actions":{
+      "add":"ajouter une entrée"
+    }
+  },
+  "KeywordField": {
+    "errors": {
+      "exactly_one": "Il doit y avoir exactement une entrée.",
+      "at_least_one": "Vous devez ajouter au moins une entrée."
+    },
+    "actions":{
+      "add":"ajouter des mots-clés dans une autre langue"
+    }
+  },
+  "IdentifierField": {
+    "errors": {
+      "exactly_one": "Il doit y avoir exactement un identifiant.",
+      "at_least_one": "Vous devez ajouter au moins un identifiant."
+    },
+    "actions":{
+      "add":"ajouter un identifiant"
+    }
+  },
+  "LanguageValueField": {
+    "errors": {
+      "at_least_one": "Vous devez ajouter au moins une entrée."
+    },
+    "actions":{
+      "add":"ajouter"
+    }
+  },
+  "TypeField": {
+    "errors": {
+      "at_least_one": "Vous devez ajouter au moins une entrée."
+    },
+    "actions":{
+      "add":"ajouter"
+    }
+  },
+  "ComponentField": {
+    "messages": {
+      "select_type": "Sélectionner un type"
+    },
+    "errors": {
+      "exactly_one": "Il doit y avoir exactement une entrée.",
+      "at_least_one": "Vous devez ajouter au moins une entrée."
+    }
+  }
+}

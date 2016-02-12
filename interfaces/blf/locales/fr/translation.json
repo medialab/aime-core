@@ -1,0 +1,24 @@
+{
+  "commons": {
+    "ellipsis": "...",
+    "between": "entre",
+    "and": "et",
+    "or": "ou"
+  },
+  "actions": {
+    "validate": "Valider",
+    "search": "Rechercher"
+  },
+  "navigation": {
+    "search": "Go",
+    "addEntry": "Ajouter une référence",
+    "advancedSearch": "Recherche avancée",
+    "searchPlaceholder": "Rechercher..."
+  },
+  "searchPanel": {
+    "search": "Rechercher",
+    "advancedSearch": "Recherche avancée",
+    "recordsType": "Type de références :"
+  }
+}
+

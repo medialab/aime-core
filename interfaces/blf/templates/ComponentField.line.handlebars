@@ -1,0 +1,25 @@
+<li data-id="{{ id }}">
+  {{#ifCond type_fields.length '>' 1}}
+    <select class="col-3 select-field">
+      {{#each type_fields}}
+        {{#if this.title }}
+          <option value="blf.placeholder" class="placeholder">{{ this.text }}</option>
+        {{else}}
+          {{#if this.separator }}
+            <option class="disabled" disabled="disabled">---</option>
+          {{else}}
+            <option value="{{ this.id }}">{{ this.label }}</option>
+          {{/if}}
+        {{/if}}
+      {{/each}}
+    </select>
+  {{/ifCond}}
+  {{#ifCond type_fields.length '<=' 1}}
+    {{#each type_fields}}
+      <span class="inline-block col-3">{{ this }}</span>
+    {{/each}}
+  {{/ifCond}}
+  <button class="remove-document">-</button>
+  <div class="col-6 custom-container">
+  </div>
+</li>
