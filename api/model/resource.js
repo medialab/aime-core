@@ -41,8 +41,8 @@ var model = _.merge(abstract(queries), {
 
     async.waterfall([
       function checkExternalResource(next) {
-        if (kind === 'video')
-          essence.extract(data.url, function(err, infos) {
+        if (kind === 'video') {
+          return essence.extract(data.url, function(err, infos) {
             if (err) return next(err);
 
             if (infos.type !== 'video')
@@ -50,8 +50,9 @@ var model = _.merge(abstract(queries), {
 
             return next(null, infos);
           });
-        else
-          process.nextTick(next.bind(null, null, null));
+        }
+
+        return next();
       },
       function createMedia(infos, next) {
 
@@ -127,6 +128,9 @@ var model = _.merge(abstract(queries), {
       },
       function createBiblibReference(next) {
         var biblibId = data.reference;
+
+        if (!biblibId)
+          return next();
 
         // We check the existence of the reference in the Neo4j database
         return db.query(queries.getReferenceByBiblibId, {id: biblibId}, function(err, rows) {

@@ -100,7 +100,7 @@ module.exports = [
     url: '/res/image',
     methods: ['POST'],
     validate: {
-      reference: '?bibtex|string',
+      reference: '?number',
       url: '?url',
       file: '?dataUrl'
     },
@@ -110,7 +110,7 @@ module.exports = [
     url: '/res/pdf',
     methods: ['POST'],
     validate: {
-      reference: '?bibtex|string',
+      reference: '?number',
       file: 'dataUrl'
     },
     action: createResource('pdf')
@@ -129,7 +129,7 @@ module.exports = [
     methods: ['POST'],
     validate: {
       url: 'url',
-      reference: '?bibtex|string',
+      reference: '?number',
       title: '?string'
     },
     action: createResource('link')
