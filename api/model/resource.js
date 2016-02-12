@@ -192,15 +192,24 @@ var model = _.merge(abstract(queries), {
           return next(null, rows[0]);
         });
       },
-      function update(data, next) {
-        var batch = db.batch();
+      function update(row, next) {
+        var batch = db.batch(),
+            mediaNode = row.media,
+            referenceNode = row.reference,
+            k;
 
-        batch.commit(next);
+        // Diffing the keys present in the payload and the node
+        for (k in mediaNode) {
+          if (k !== 'reference' && mediaNode[k] !== data[k])
+            batch.save(mediaNode, k, data[k]);
+        }
+
+        return batch.commit(next);
       },
       function retrieve(nodes, next) {
 
         // Retrieving the created item
-        model.getByIds(id, function(err, resources) {
+        model.getByIds([id], function(err, resources) {
           if (err) return callback(err);
 
           return callback(null, resources[0]);
