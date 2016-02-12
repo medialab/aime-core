@@ -123,6 +123,7 @@ const actions = {
   'modal:create': function(payload) {
     const model = payload.data.model;
 
+
     if (model === 'doc') {
       const {title, author} = payload.data;
       this.client.createDoc(
@@ -137,9 +138,13 @@ const actions = {
 
     else if (model === 'res') {
       const {data} = payload.data;
+
       this.client.createRes(
         {
-          data: data,
+          data: {
+            ...data,
+            reference: data.reference.biblib_id
+          },
           params: {
             kind: data.kind
           }
