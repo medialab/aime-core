@@ -11,6 +11,7 @@ import CodeMirror from 'codemirror';
 import PropTypes from 'baobab-react/prop-types';
 import {AuthorSelector} from './authorSelector.jsx';
 import autobind from 'autobind-decorator';
+import {branch} from 'baobab-react/decorators';
 
 // Importing needed codemirror assets
 require('../lib/custom_mode.js');
@@ -18,6 +19,12 @@ require('../lib/custom_mode.js');
 /**
  * Markdown editor component
  */
+
+ @branch({
+  cursors: {
+    states:['states', 'doc'],
+  }
+})
 export default class Editor extends PureComponent {
   static contextTypes = {
     tree: PropTypes.baobab
@@ -85,7 +92,7 @@ export default class Editor extends PureComponent {
             }
             { this.props.model === "doc" &&
               <AuthorSelector
-                author={this.props.author}
+                author={this.props.states.author}
                 users={this.props.users}
                 onChange={(author) => this.context.tree.emit('author:change', {model: this.props.model, author: author.id})} />
             }

@@ -29,6 +29,7 @@ export default {
       title: null,
       selection: null,
       modal: null,
+      author:null,
       searching: false
     },
     res: {
