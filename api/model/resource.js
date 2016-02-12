@@ -183,7 +183,30 @@ var model = _.merge(abstract(queries), {
 
   // Updating a resource
   update: function(id, data, callback) {
-    return callback(new Error('not-implemented'));
+    return async.waterfall([
+      function retrieveMedia(next) {
+        db.query(queries.getForUpdate, {id: id}, function(err, rows) {
+          if (err) return next(err);
+          if (!rows.length) return next(null, null);
+
+          return next(null, rows[0]);
+        });
+      },
+      function update(data, next) {
+        var batch = db.batch();
+
+        batch.commit(next);
+      },
+      function retrieve(nodes, next) {
+
+        // Retrieving the created item
+        model.getByIds(id, function(err, resources) {
+          if (err) return callback(err);
+
+          return callback(null, resources[0]);
+        });
+      }
+    ], callback);
   }
 });
 

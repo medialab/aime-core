@@ -19,7 +19,7 @@ RETURN {
 ORDER BY resource.properties.kind;
 
 // name: getByIds
-// Retrieve one or more document by their neo4j ids.
+// Retrieve one or more resources by their neo4j ids.
 START m=node({ids})
 OPTIONAL MATCH (m)<-[:DESCRIBES]-(r:Reference)
 
@@ -30,6 +30,12 @@ RETURN {
   properties: m,
   reference: ref
 } AS resource;
+
+// name: getForUpdate
+// Retrieve a single resource for update purposes.
+START media=node({id})
+OPTIONAL MATCH (media)<-[:DESCRIBES]-(reference:Reference)
+RETURN media, reference LIMIT 1;
 
 // name: getReferenceByBiblibId
 // Retrieve a single reference by biblib id.
