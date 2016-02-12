@@ -21,7 +21,7 @@ import {Modal, ModalRessouces} from './modal.jsx';
 import Help from './help.jsx';
 import ResourceSelector from './resourceSelector.jsx';
 import ResourceEditor from './resourceEditor.jsx';
-import ResourcePreview from './ResourcePreview.jsx';
+import ResourcePreview from './resourcePreview.jsx';
 
 
 const MODAL_TITLES = {
