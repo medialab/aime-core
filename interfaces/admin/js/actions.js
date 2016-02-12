@@ -193,11 +193,17 @@ const actions = {
 
     // Resource
     if (model === 'res') {
+
+      const editor = this.data.states[model].editor;
+
       this.client.updateRes(
         {
-          data: this.data.states[model],
+          data: {
+            ...editor,
+            reference: editor.reference.biblib_id
+          },
           params: {
-            id: this.data.states[model].editor.id
+            id: editor.id
           }
         },
         (err, data) => {
