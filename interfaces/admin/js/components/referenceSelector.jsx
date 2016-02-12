@@ -32,8 +32,10 @@ export class ReferenceSelector extends PureComponent {
   }
 
   prepareOption(reference) {
-    if(reference.id === null) return null;
-    if(reference) return { value: reference, label: _.trunc(reference.text, 80) };
+    if(reference) {
+      if(reference.id === null) return null;
+      return { value: reference, label: _.trunc(reference.text, 80) };
+    }
   }
 
   prepareOptions(references) {
