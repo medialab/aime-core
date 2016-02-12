@@ -102,7 +102,6 @@ export default class ResourceEditor extends Component {
           </div>
         }
 
-        {(editorState.reference || {}).text !== null &&
           <div className="form-group">
               <label>reference</label>
 
@@ -112,6 +111,12 @@ export default class ResourceEditor extends Component {
                 onChange={ (e) => this.context.tree.emit('ref:change', {ref:e}) }
                 />
 
+          </div>
+
+        {(!editorState.reference.biblib_id && editorState.reference.text ) &&
+          <div className="alert alert-danger" role="alert">
+            This reference was entered as full text.
+            To update it you have to create a new one in Biblib and link it from the selector.
           </div>
         }
 
