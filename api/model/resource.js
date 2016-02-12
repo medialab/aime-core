@@ -166,7 +166,8 @@ var model = _.merge(abstract(queries), {
         });
       },
       function commit(referenceNode, next) {
-        batch.relate(referenceNode, 'DESCRIBES', mediaNode);
+        if (referenceNode)
+          batch.relate(referenceNode, 'DESCRIBES', mediaNode);
         return batch.commit(next);
       },
       function retrieve(nodes, next) {
@@ -183,6 +184,8 @@ var model = _.merge(abstract(queries), {
 
   // Updating a resource
   update: function(id, data, callback) {
+    var batch = db.batch();
+
     return async.waterfall([
       function retrieveMedia(next) {
         db.query(queries.getForUpdate, {id: id}, function(err, rows) {
@@ -192,10 +195,8 @@ var model = _.merge(abstract(queries), {
           return next(null, rows[0]);
         });
       },
-      function update(row, next) {
-        var batch = db.batch(),
-            mediaNode = row.media,
-            referenceNode = row.reference,
+      function updateMedia(row, next) {
+        var mediaNode = row.media,
             k;
 
         // Diffing the keys present in the payload and the node
@@ -204,6 +205,50 @@ var model = _.merge(abstract(queries), {
             batch.save(mediaNode, k, data[k]);
         }
 
+        // Should we update the reference?
+        if (typeof data.reference === 'number' &&
+            data.reference !== row.referenceId) {
+          var biblibId = data.reference;
+
+          batch.rel.delete(row.relationId);
+
+          return db.query(queries.getReferenceByBiblibId, {id: biblibId}, function(err, rows) {
+            if (err) return next(err);
+
+            var referenceNode = rows[0];
+
+            // If the reference node does not exist, we create it
+            if (!referenceNode) {
+              var referenceData = {
+                lang: lang,
+                type: 'reference',
+                slug_id: ++cache.slug_ids.ref,
+                biblib_id: biblibId
+              };
+
+              // Fetching data from biblib
+              return biblib.getById(biblibId, function(err, record) {
+                if (err) return next(err);
+
+                referenceData.html = record.html;
+                referenceData.text = cheerio(record.html).text();
+
+                referenceNode = batch.save(referenceData);
+                batch.label(referenceNode, 'Reference');
+
+                return next(null, referenceNode);
+              });
+            }
+
+            return next(null, referenceNode);
+          });
+        }
+
+        return next(null, null);
+      },
+      function linkReference(referenceNode, next) {
+        if (referenceNode)
+          batch.relate(referenceNode, 'DESCRIBES', id);
         return batch.commit(next);
       },
       function retrieve(nodes, next) {
