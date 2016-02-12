@@ -210,7 +210,7 @@ var model = _.merge(abstract(queries), {
             data.reference !== row.referenceId) {
           var biblibId = data.reference;
 
-          batch.rel.delete(row.relationId);
+          if (row.relationId) batch.rel.delete(row.relationId);
 
           return db.query(queries.getReferenceByBiblibId, {id: biblibId}, function(err, rows) {
             if (err) return next(err);
