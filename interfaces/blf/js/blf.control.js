@@ -652,7 +652,7 @@ blf.init = function(config) {
             //-AIME-------------------------------------------------------------
             var rec_id = result.rec_id;
 
-            $.post(env.AIME_URL + '/replicate/' + rec_id);
+            $.post(env.AIME_URL + '/biblib/replicate/' + rec_id);
             //------------------------------------------------------------------
 
             this.log('Log from server after saving an entry:', result);
