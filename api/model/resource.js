@@ -261,6 +261,39 @@ var model = _.merge(abstract(queries), {
         });
       }
     ], callback);
+  },
+
+  // Replicating a biblib resource
+  replicate: function(biblibId, callback) {
+    var referenceNode;
+
+    return async.waterfall([
+      function getReference(next) {
+        return db.query(queries.getReferenceByBiblibId, {id: biblibId}, function(err, rows) {
+          if (err) return next(err);
+          if (!rows.length) return next(null, false);
+
+          referenceNode = rows[0];
+
+          return next();
+        });
+      },
+      function fetchBiblibData(next) {
+        return biblib.getById(biblibId, next);
+      },
+      function updateReference(record, next) {
+        var batch = db.batch();
+
+        referenceNode.html = record.html;
+        referenceNode.text = cheerio(record.html).text();
+
+        batch.save(referenceNode);
+        return batch.commit(function(err) {
+          if (err) return next(err);
+          return next(null, true);
+        });
+      }
+    ], callback);
   }
 });
 

@@ -116,7 +116,7 @@ var loginRouter = loadController(controllers.login),
     crossingsRouter = loadController(controllers.crossings, middlewares.authenticate),
     modelRouter = loadController(controllers.model, middlewares.authenticate),
     bookmarkRouter = loadController(controllers.bookmark, middlewares.authenticate),
-    bibLibRouter = loadController(controllers.biblib, middlewares.authenticate),
+    biblibRouter = loadController(controllers.biblib),
 
     writeModelRouter = loadController(
       controllers.model_write,
@@ -155,7 +155,7 @@ app.use(bookmarkRouter);
 app.use('/shortener', shortenerRouter);
 app.use('/crossings', crossingsRouter);
 app.use('/resources', resourcesRouter);
-app.use('/biblib', bibLibRouter);
+app.use('/biblib', biblibRouter);
 
 // Stats for the Blog
 app.get('/stats', function(req, res) {

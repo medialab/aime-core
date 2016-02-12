@@ -15,6 +15,7 @@ blf.init = function(config) {
       };
 
   env.API_URL = config.baseURL;
+  env.AIME_URL = config.aimeURL;
   env.corpus = config.corpus;
   env.rpc.type = 'POST';
   env.rpc.contentType = 'application/x-www-form-urlencoded';
@@ -647,6 +648,13 @@ blf.init = function(config) {
           },
           success: function(data, input) {
             var result = data.result;
+
+            //-AIME-------------------------------------------------------------
+            var rec_id = result.rec_id;
+
+            $.post(env.AIME_URL + '/biblib/replicate/' + rec_id);
+            //------------------------------------------------------------------
+
             this.log('Log from server after saving an entry:', result);
             if(config.back_home_on_save)
               this.update('mode', 'home');
