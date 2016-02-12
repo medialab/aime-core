@@ -12,6 +12,8 @@ import bibtex from 'bibtex-parser';
 import {isURL} from 'validator';
 import {readInputFile} from '../lib/helpers.js';
 import {AuthorSelector} from './authorSelector.jsx';
+import {ReferenceSelector} from './referenceSelector.jsx';
+import {branch} from 'baobab-react/decorators';
 
 /**
  * Generic modal component
@@ -79,6 +81,11 @@ const KINDS = [
   'video'
 ];
 
+@branch({
+  cursors: {
+    refs:['data', 'ref']
+  }
+})
 export class ModalRessouces extends Component {
   static contextTypes = {
     tree: PropTypes.baobab,
@@ -252,13 +259,16 @@ export class ModalRessouces extends Component {
 
         {kind !== null &&
           <div className="form-group">
-            <label>reference{validReference && ' - (valid bibtex)'}</label>
-            <textarea value={reference}
-                      onChange={(e) => this.setState({reference: e.target.value})}
-                      placeholder="bibtex or text …"
-                      className="editor" />
+              <label>reference</label>
+
+              <ReferenceSelector
+                reference={this.state.reference}
+                references={this.props.refs}
+                onChange={(e) => this.setState({reference: e.value})}
+              />
           </div>
         }
+
       </form>
 
         <ActionButton size={6} action={dismiss} label="dismiss" />
