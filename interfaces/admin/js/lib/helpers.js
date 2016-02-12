@@ -29,13 +29,20 @@ export function resourceName(res) {
   if (res.reference !== null && typeof res.reference !== 'undefined')
     text = res.reference.text;
 
-  return res.title ||
-         text ||
-         res.url ||
-         res.original ||
-         res.text ||
-         res.path ||
-         '?';
+
+  var values = _([
+    _.trunc(res.title),
+    _.trunc(res.text),
+    _.trunc(text),
+    res.url,
+    res.original
+  ])
+  .compact()
+  .map(function(d){ return  ' '+d })
+  .toString()
+  ;
+
+  return values || res.path || '?';
 }
 
 /**
