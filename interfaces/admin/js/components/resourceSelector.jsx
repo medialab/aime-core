@@ -119,14 +119,14 @@ class SelectorItem extends PureComponent {
 
   render() {
     const item = this.props.item;
-    let text;
+    let text = resourceName(item);
 
     return (
       <li>
-        <div className={classes('box', 'chapter', {selected: this.props.active})}
+        <div title={text} className={classes('box', 'chapter', {selected: this.props.active})}
              onClick={this.handleClick}>
           <ResourceIcon kind={item.kind} />
-          {' ' + resourceName(item)}
+          {text}
         </div>
       </li>
     );

@@ -131,7 +131,9 @@ class Item extends PureComponent {
     return (
       <li>
         <div className={classes('box', 'chapter', {selected: this.props.selection[0] === item.id})}
-             onClick={this.handleClick}>
+             onClick={this.handleClick}
+             title={text}
+          >
           {model === 'res' && <ResourceIcon kind={item.kind} />}
           {text}
         </div>

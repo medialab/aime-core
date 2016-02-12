@@ -29,20 +29,23 @@ export function resourceName(res) {
   if (res.reference !== null && typeof res.reference !== 'undefined')
     text = res.reference.text;
 
-
-  var values = _([
-    _.trunc(res.title),
-    _.trunc(res.text),
-    _.trunc(text),
+  let values = _([
+    res.title,
+    res.text,
+    text,
     res.url,
     res.original
   ])
   .compact()
-  .map(function(d){ return  ' '+d })
-  .toString()
-  ;
+  .value()
 
-  return values || res.path || '?';
+  const fragmentLength =  Math.round(240 / values.length);
+
+  let valuesShort = _(values)
+    .map(function(d){ return ' ' +  _.trunc(d, fragmentLength) })
+    .toString()
+
+  return valuesShort || res.path || '?';
 }
 
 /**
