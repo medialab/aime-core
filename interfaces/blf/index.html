@@ -1,0 +1,113 @@
+<html>
+<head>
+  <title>BibLib Front (blf)</title>
+  <meta charset="UTF-8" />
+
+  <!-- BibLib style -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/customInputs.css">
+</head>
+<body>
+  <div id="layout"></div>
+
+  <!-- configuration file (just some variables), javascript object stored at window.config.blf -->
+  <script src="config.blf.js"></script>
+
+  <!-- External JS dependencies -->
+  <script src="js/ext/jquery.min.js"></script>
+  <script src="js/ext/domino.min.js"></script>
+  <script src="js/ext/i18next.min.js"></script>
+  <script src="js/ext/handlebars.js"></script>
+
+  <!-- MédiaLab utils -->
+  <script src="js/ext/mlab.utils.js"></script>
+  <script src="js/blf.utils.js"></script>
+
+  <!-- BibLib front -->
+  <script src="js/blf.layout.js"></script>
+  <script src="js/blf.control.js"></script>
+
+  <script src="js/modules/listPanel.js"></script>
+  <script src="js/modules/createPanel.js"></script>
+  <script src="js/modules/fieldsPanel.js"></script>
+  <script src="js/modules/advancedSearchPanel.js"></script>
+
+  <script src="js/modules/customInputs/CharField.js"></script>
+  <script src="js/modules/customInputs/TypeField.js"></script>
+  <script src="js/modules/customInputs/StringField.js"></script>
+  <script src="js/modules/customInputs/BooleanField.js"></script>
+  <script src="js/modules/customInputs/CreatorField.js"></script>
+  <script src="js/modules/customInputs/KeywordField.js"></script>
+  <script src="js/modules/customInputs/CheckboxField.js"></script>
+  <script src="js/modules/customInputs/ComponentField.js"></script>
+  <script src="js/modules/customInputs/YearRangeField.js"></script>
+  <script src="js/modules/customInputs/IdentifierField.js"></script>
+  <script src="js/modules/customInputs/LanguageValueField.js"></script>
+
+  <script>
+    $(function() {
+      // We start everything from here:
+      blf.init({
+        lang: config.blf.lang,
+        baseURL: config.blf.baseURL,
+        corpus: config.blf.corpus,
+        baseDOM: $('#layout'),
+        back_home_on_save: true,
+        advancedSearchPanel: {
+          index: {
+            property_source_index: 'search_index',
+            property_source_operator: 'search_operator',
+            default_operator: 'and',
+            default_index: [
+              'title',
+              'author',
+              'keyword'
+            ]
+          },
+          filters: [
+            {
+              labels: {
+                en: 'Publication year',
+                fr: 'Année de publication'
+              },
+              property_begin: 'filter_date_begin',
+              property_end: 'filter_date_end',
+              type_ui: 'YearRangeField'
+            },
+            {
+              labels: {
+                en: 'Document types',
+                fr: 'Types de document'
+              },
+              multiple: true,
+              property: 'filter_types',
+              type_source: 'document_type',
+              type_ui: 'CheckboxField'
+            },
+            {
+              labels: {
+                en: 'Status',
+                fr: 'Statuts'
+              },
+              multiple: true,
+              property: 'filter_status',
+              type_source: 'rec_status',
+              type_ui: 'CheckboxField'
+            },
+            {
+              labels: {
+                en: 'Languages',
+                fr: 'Langues'
+              },
+              multiple: true,
+              property: 'filter_languages',
+              type_source: 'language',
+              type_ui: 'CheckboxField'
+            }
+          ]
+        }
+      });
+    });
+  </script>
+</body>
+</html>

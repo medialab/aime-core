@@ -1,0 +1,69 @@
+/* Basic custom inputs stuff */
+.customInput .container {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.customInput > div > ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.customInput li > button {
+  visibility: hidden;
+}
+
+.customInput li:hover > button {
+  visibility: visible;
+}
+
+/* CreatorField style */
+.CreatorField .creators-list li:first-child .moveup-creator,
+.CreatorField .creators-list li:last-child .movedown-creator {
+  display: none;
+}
+
+.CreatorField .creators-container .select-role {
+  max-width: 120px;
+}
+
+/* LanguageValueField style */
+.LanguageValueField .languages-list li textarea {
+  display: block;
+}
+
+/* KeywordField style */
+.KeywordField .languages-list li textarea {
+  display: block;
+}
+
+/* ComponentField style */
+.ComponentField > .documents-container > ul > li .custom-container {
+  left: -150px;
+  position: relative;
+}
+
+/* CheckboxField style */
+.CheckboxField,
+.CheckboxField fieldset.custom-container {
+  width: 100%;
+  white-space: inherit;
+}
+
+.CheckboxField .checkbox-container {
+  display: inline-block;
+  width: 30%;
+}
+
+.CheckboxField label {
+  width: auto;
+  max-width: 140px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* YearRangeField style */
+.YearRangeField input {
+  margin: 5px;
+}

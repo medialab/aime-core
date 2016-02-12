@@ -1,0 +1,23 @@
+{
+  "commons": {
+    "ellipsis": "...",
+    "between": "between",
+    "and": "and",
+    "or": "or"
+  },
+  "actions": {
+    "validate": "Validate",
+    "search": "Search"
+  },
+  "navigation": {
+    "search": "Go",
+    "addEntry": "Add entry",
+    "advancedSearch": "Advanced search",
+    "searchPlaceholder": "Search..."
+  },
+  "searchPanel": {
+    "search": "Search",
+    "advancedSearch": "Use advanced search options",
+    "recordsType": "Records type :"
+  }
+}

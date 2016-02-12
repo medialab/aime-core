@@ -1,0 +1,11 @@
+<fieldset class="customInput CheckboxField">
+  <span class="title">{{ label }} :</span>
+  <div class="custom-container">
+    {{#each values }}
+    <fieldset class="checkbox-container" id="{{ type_id }}" title="{{ label }}">
+      <input type="checkbox" data-type-id="{{ type_id }}" id="{{ ../label }}{{ type_id }}" />
+      <label for="{{ ../label }}{{ type_id }}">{{ label }}</label>
+    </fieldset>
+    {{/each}}
+  </div>
+</fieldset>

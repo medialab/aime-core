@@ -1,0 +1,21 @@
+<fieldset>
+  <ul class="indexes-list">
+  {{#each indexesArray}}
+    <li class="index">
+      <select data-type="operator">
+      {{#each ../operators}}
+        <option value="{{ type_id }}"{{#ifCond type_id '==' ../operator}} selected{{/ifCond}}>{{ label }}</option>
+      {{/each}}
+      </select>
+      <input data-type="value" type="text" placeholder="{{t "commons.ellipsis" }}" value="{{ value }}" />
+      <select data-type="index">
+      {{#each ../indexes}}
+        <option value="{{ type_id }}"{{#ifCond type_id '==' ../index}} selected{{/ifCond}}>{{ label }}</option>
+      {{/each}}
+      </select>
+      <button class="remove-index">-</button>
+    </li>
+  {{/each}}
+  </ul>
+  <button class="right add-index">+</button>
+</fieldset>

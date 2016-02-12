@@ -1,0 +1,86 @@
+<html>
+<head>
+  <title>BibLib Front | Minified test</title>
+  <meta charset="UTF-8" />
+
+  <!-- BibLib CSS bundle -->
+  <link rel="stylesheet" href="build/style.min.css">
+</head>
+<body>
+  <!-- The div where blf will be instanciated -->
+  <div id="layout"></div>
+
+  <!-- JS bundle (including dependencies + templates + localization) -->
+  <script src="build/blf.min.js"></script>
+
+  <script id="override-advancedSearchPanel" type="text/x-handlebars-template">
+    <div style="background:#fcc;height:20px;width:100%;text-align:center;line-height:20px;">C... c... c... Customized!</div>
+    <div class="index-container"></div>
+    <div class="filter-container"></div>
+    <button class="validate-advanced-search">{{t "actions.search" }}</button>
+  </script>
+
+  <script>
+    $(function() {
+      // We initialize first our custom override-advancedSearchPanel template:
+      blf.templates.override(
+        'advancedSearchPanel',
+        Handlebars.compile($('#override-advancedSearchPanel').html())
+      );
+
+      // Then we initialize the controller:
+      blf.init({
+        lang: 'fr',
+        baseURL: 'http://localhost:8080',
+        baseDOM: $('#layout'),
+        onComplete: function(controller) {
+          controller.dispatchEvent('openField', { field: 'Book' });
+        },
+        advancedSearchPanel: {
+          index: {
+            property_source_index: 'search_index',
+            property_source_operator: 'search_operator',
+            default_operator: 'and',
+            default_index: [
+              'title',
+              'author',
+              'keyword'
+            ]
+          },
+          filters: [
+            {
+              labels: {
+                en: 'Publication year',
+                fr: 'Année de publication'
+              },
+              property_begin: 'filter_date_begin',
+              property_end: 'filter_date_end',
+              type_ui: 'YearRangeField'
+            },
+            {
+              labels: {
+                en: 'Document types',
+                fr: 'Types de document'
+              },
+              multiple: true,
+              property: 'filter_types',
+              type_source: 'document_type',
+              type_ui: 'CheckboxField'
+            },
+            {
+              labels: {
+                en: 'Languages',
+                fr: 'Langues'
+              },
+              multiple: true,
+              property: 'filter_languages',
+              type_source: 'language',
+              type_ui: 'CheckboxField'
+            }
+          ]
+        }
+      });
+    });
+  </script>
+</body>
+</html>

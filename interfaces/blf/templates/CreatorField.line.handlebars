@@ -1,0 +1,21 @@
+<li data-id="{{ id }}">
+  <select class="col-3 select-type">
+    <option value="Person">{{t "customInputs:CreatorField.line.Person" }}</option>
+    <option value="Orgunit">{{t "customInputs:CreatorField.line.Orgunit" }}</option>
+    <option value="Event">{{t "customInputs:CreatorField.line.Event" }}</option>
+  </select>
+  <select class="col-3 select-role">
+    {{#each creators }}
+      {{#if this.separator }}
+        <option class="disabled" disabled="disabled">---</option>
+      {{else}}
+        <option value="{{ this.type_id }}">{{ this.label }}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <button class="remove-creator">-</button>
+  <button class="moveup-creator">↑</button>
+  <button class="movedown-creator">↓</button>
+  <div class="col-6 custom-container">
+  </div>
+</li>
