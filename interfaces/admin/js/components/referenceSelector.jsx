@@ -32,6 +32,7 @@ export class ReferenceSelector extends PureComponent {
   }
 
   prepareOption(reference) {
+    if(reference.id === null) return null;
     if(reference) return { value: reference, label: _.trunc(reference.text, 80) };
   }
 
@@ -66,8 +67,8 @@ export class ReferenceSelector extends PureComponent {
           ignoreAccents={true}
           clearable={false}
           name="select-author"
-          placeholder="Biblib reference"
-          noResultsText="None found"
+          placeholder="Search a Biblib reference"
+          noResultsText="No results, keep on typing"
           loadOptions={this.getOptions}
           onChange={this.props.onChange}
         />
