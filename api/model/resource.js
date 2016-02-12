@@ -126,39 +126,43 @@ var model = _.merge(abstract(queries), {
         next();
       },
       function createBiblibReference(next) {
-        if (data.reference && types.check(data.reference, 'bibtex'))
-          biblib.save(data.reference, function(err, rec_id) {
-            if (err) return next(err);
+        var biblibId = data.reference;
 
-            return biblib.getById(rec_id, next);
-          });
-        else
-          process.nextTick(next.bind(null, null, null));
+        // We check the existence of the reference in the Neo4j database
+        return db.query(queries.getReferenceByBiblibId, {id: biblibId}, function(err, rows) {
+          if (err) return next(err);
+
+          var referenceNode = rows[0];
+
+          // If the reference node does not exist, we create it
+          if (!referenceNode) {
+            var referenceData = {
+              lang: lang,
+              type: 'reference',
+              slug_id: ++cache.slug_ids.ref,
+              biblib_id: biblibId
+            };
+
+            // Fetching data from biblib
+            return biblib.getById(biblibId, function(err, record) {
+              if (err) return next(err);
+
+              referenceData.html = record.html;
+              referenceData.text = cheerio(record.html).text();
+
+              referenceNode = batch.save(referenceData);
+              batch.label(referenceNode, 'Reference');
+
+              return next(null, referenceNode);
+            });
+          }
+
+          // Else we just advance to the next step
+          return next(null, referenceNode);
+        });
       },
-      function createReference(record, next) {
-        var refData = {
-          lang: lang,
-          type: 'reference',
-          slug_id: ++cache.slug_ids.ref,
-        };
-
-        // Adding the reference
-        if (data.reference) {
-          if (!record) {
-            refData.text = data.reference;
-          }
-          else {
-            refData.biblib_id = record.rec_id;
-            refData.html = record.html;
-            refData.text = cheerio(record.html).text();
-            refData.id = record.id;
-          }
-
-          var refNode = batch.save(refData);
-          batch.label(refNode, 'Reference');
-          batch.relate(refNode, 'DESCRIBES', mediaNode);
-        }
-
+      function commit(referenceNode, next) {
+        batch.relate(referenceNode, 'DESCRIBES', mediaNode);
         return batch.commit(next);
       },
       function retrieve(nodes, next) {
@@ -175,50 +179,7 @@ var model = _.merge(abstract(queries), {
 
   // Updating a resource
   update: function(id, data, callback) {
-    var mediaData = {
-      id: id,
-      type: data.editor.type,
-      kind: data.editor.kind,
-      slug_id: data.editor.slug_id,
-      lang: data.editor.lang,
-      internal: data.editor.internal
-    };
-
-    async.waterfall([
-      function updateMedia(next) {
-        if (mediaData.kind === 'quote') {
-          mediaData.text = data.editor.text;
-        } else {
-          return callback(new Error('Unknown media kind'));
-        }
-
-        db.save(mediaData, function(err, result) {
-          if (err) return callback(err);
-          return next(null, result);
-        });
-      },
-      function updateReference(resource, next) {
-        if (data.editor.reference) {
-          var refData = {
-            id: data.editor.reference.id,
-            lang: data.editor.reference.lang,
-            type: data.editor.reference.type,
-            slug_id: data.editor.reference.slug_id
-          };
-
-          if (refData.record) {
-            // TODO: find out how to update biblib's refs...
-          } else {
-            refData.text = data.editor.reference.text;
-            db.save(refData, function(err, result) {
-              mediaData.reference = result;
-              if (err) return callback(err);
-              return callback(null, mediaData);
-            });
-          }
-        }
-      }
-    ], callback);
+    return callback(new Error('not-implemented'));
   }
 });
 

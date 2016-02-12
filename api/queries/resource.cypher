@@ -30,3 +30,8 @@ RETURN {
   properties: m,
   reference: ref
 } AS resource;
+
+// name: getReferenceByBiblibId
+// Retrieve a single reference by biblib id.
+MATCH (r:Reference {biblib_id: {id}})
+RETURN r LIMIT 1;
