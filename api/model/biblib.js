@@ -34,7 +34,7 @@ var model = {
           }).toString()
 
           return {
-            biblib_id: parseInt(rec.rec_id),
+            biblib_id: rec.rec_id,
             text: rec.title + ' — ' + creators,
             html: rec.citations.html.mla
           };
