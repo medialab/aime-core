@@ -11,10 +11,11 @@
     "prod": "NODE_ENV=prod && pm2 start --name \"aime-api\" --node-args=\"--harmony\" ./scripts/start.js",
     "start": "node --harmony ./scripts/start.js",
     "test": "mocha -R spec ./test/endpoint.js",
-    "ui": "concurrent --kill-others \"npm run ui:inquiry\" \"npm run ui:crossings\" \"npm run ui:admin\"",
+    "ui": "concurrent --kill-others \"npm run ui:inquiry\" \"npm run ui:crossings\" \"npm run ui:admin\" \"npm run ui:blf\"",
     "ui:inquiry": "cd interfaces/inquiry && npm start",
     "ui:crossings": "cd interfaces/crossings && npm start",
-    "ui:admin": "cd interfaces/admin && npm start"
+    "ui:admin": "cd interfaces/admin && npm start",
+    "ui:blf": "cd interfaces/blf && npm start"
   },
   "repository": {
     "type": "git",
