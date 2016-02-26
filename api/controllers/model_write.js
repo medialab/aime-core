@@ -147,7 +147,7 @@ module.exports = [
     url: '/res/:id',
     methods: ['PUT'],
     action: function(req, res) {
-      resModel.update(+req.params.id, req.body, function(err, resource) {
+      resModel.update(+req.params.id, req.lang, req.body, function(err, resource) {
         if (err) return res.serverError(err);
         return res.ok(resource);
       });

@@ -183,7 +183,7 @@ var model = _.merge(abstract(queries), {
   },
 
   // Updating a resource
-  update: function(id, data, callback) {
+  update: function(id, lang, data, callback) {
     var batch = db.batch();
 
     return async.waterfall([
@@ -206,8 +206,7 @@ var model = _.merge(abstract(queries), {
         }
 
         // Should we update the reference?
-        if (typeof data.reference === 'number' &&
-            data.reference !== row.referenceId) {
+        if (data.reference && data.reference !== row.referenceId) {
           var biblibId = data.reference;
 
           if (row.relationId) batch.rel.delete(row.relationId);
