@@ -172,7 +172,7 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
           });
 
         // Parsing the raw text to extract linked modecross
-        var extractedModecross = modecrossParser(slidesText);
+        var extractedModecross = modecrossParser(title + slidesText);
 
         // Linking to the correct modecross
         extractedModecross.forEach(function(modecross) {
@@ -319,8 +319,8 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
         });
 
         // Handling modes & crossings
-        var beforeModecross = modecrossParser(currentSlidesText),
-            afterModecross = modecrossParser(slidesText);
+        var beforeModecross = modecrossParser(doc.title + currentSlidesText),
+            afterModecross = modecrossParser(title + slidesText);
 
         var diff = modecrossDiff(beforeModecross, afterModecross);
 
