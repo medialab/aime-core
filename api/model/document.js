@@ -11,6 +11,7 @@ var marked = require('marked'),
     helpers = require('../helpers.js'),
     modecrossParser = require('../../lib/modecross_parser.js'),
     modecrossDiff = require('../../lib/diff.js').modecross,
+    reconciler = require('../../lib/reconciler.js'),
     stripper = require('../../lib/markdown_stripper.js'),
     queries = require('../queries.js'),
     _ = require('lodash');
@@ -263,17 +264,15 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
           batch.relate(doc.id, 'CREATED_BY', author);
         }
 
-        // Handling user bookmarks
-
-
-        // TODO: beware of user bookmarks
-        // TODO: the dedicated query here is not needed per se
-
         // Udpating the slides - a modus operandi
         // We actually need to destroy the document's slides and paragraph
         // while unlinking the proper elements to rebuild them anew.
 
-        var currentSlidesText = [];
+        var currentSlidesText = [],
+            currentParagraphs = [],
+            nextParagraphs = [],
+            paragraphsIndex = 0,
+            bookmarks = [];
 
         // Deleting necessary nodes & edges
         doc.children.forEach(function(slide) {
@@ -284,6 +283,14 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
             if (element.properties.type === 'paragraph') {
               batch.delete(element.id, true);
               currentSlidesText.push(element.properties.text);
+
+              currentParagraphs.push(element.properties);
+              element.bookmarks.forEach(function(bookmark) {
+                bookmark.index = paragraphsIndex;
+                bookmarks.push(bookmark);
+              });
+
+              paragraphsIndex++;
             }
           });
         });
@@ -311,6 +318,11 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
 
               batch.label(paragraphNode, 'Paragraph');
               batch.relate(slideNode, 'HAS', paragraphNode, {order: elementIndex});
+
+              // NOTE: this is relatively dirty
+              paragraphNode.type = 'paragraph';
+              paragraphNode.text = stripper(element.markdown);
+              nextParagraphs.push(paragraphNode);
             }
             else {
               var linkedNode = _.find(linkedNodes, {
@@ -321,6 +333,14 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
               batch.relate(slideNode, 'HAS', linkedNode, {order: elementIndex});
             }
           });
+        });
+
+        // Handling bookmarks
+        var operations = reconciler(bookmarks, currentParagraphs, nextParagraphs);
+
+        operations.forEach(function(operation) {
+          if (operation.type === 'rewire')
+            batch.relate(operation.bookmark.userId, 'BOOKMARKED', operation.target);
         });
 
         // Handling modes & crossings

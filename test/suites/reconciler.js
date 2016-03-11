@@ -40,7 +40,7 @@ describe('Reconciler', function() {
         bookmarks: [bookmarks.two],
         beforeItems: [text.hello, text.goodbye],
         afterItems: [text.hello, text.goodbye],
-        operations: []
+        operations: [{type: 'rewire', target: text.goodbye, bookmark: bookmarks.two}]
       },
 
       // Fuzzy same place
