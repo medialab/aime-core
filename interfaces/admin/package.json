@@ -38,7 +38,7 @@
     "autobind-decorator": "^1.2.0",
     "baobab": "^1.1.1",
     "baobab-react": "^0.1.1",
-    "baobab-router": "git+https://github.com/jacomyal/baobab-router.git",
+    "baobab-router": "git+https://github.com/jacomyal/baobab-router.git#4dcf6b52d058045c12d4801529dde0844c5e727a",
     "bibtex-parser": "0.0.0",
     "classnames": "^2.0.0",
     "codemirror": "^5.2.0",
