@@ -260,6 +260,9 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
           batch.relate(doc.id, 'CREATED_BY', author);
         }
 
+        // Handling user bookmarks
+
+
         // TODO: beware of user bookmarks
         // TODO: the dedicated query here is not needed per se
 
