@@ -270,7 +270,7 @@ var model = _.merge(abstract(queries), {
       function getReference(next) {
         return db.query(queries.getReferenceByBiblibId, {id: biblibId}, function(err, rows) {
           if (err) return next(err);
-          if (!rows.length) return next(null, false);
+          if (!rows.length) return next(new Error('not-found'));
 
           referenceNode = rows[0];
 
@@ -292,7 +292,14 @@ var model = _.merge(abstract(queries), {
           return next(null, true);
         });
       }
-    ], callback);
+    ], function(err) {
+      if (err.message === 'not-found')
+        return callback(null, false);
+      else if (err)
+        return callback(err);
+
+      return callback(null, true);
+    });
   }
 });
 
