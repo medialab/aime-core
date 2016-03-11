@@ -57,7 +57,7 @@ function loadController(routes, auth, additionalMiddlewares) {
 
     (route.methods || ['GET']).forEach(function(method) {
       router[method.toLowerCase()].apply(router, args);
-    })
+    });
   });
 
   return router;

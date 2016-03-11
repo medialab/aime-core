@@ -27,7 +27,7 @@ function parseDataUrl(dataUrl) {
   return {
     extension: matches[2],
     buffer: new Buffer(dataUrl.slice(matches[1].length), 'base64')
-  }
+  };
 }
 
 /**

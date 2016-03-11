@@ -9,8 +9,8 @@ var abstract = require('./abstract.js'),
 
 function sortingFunction(vocs) {
   return vocs.sort(function(a, b) {
-    var atitle = _.deburr(a.title).replace(/\[/,''),
-        btitle = _.deburr(b.title).replace(/\[/,'');
+    var atitle = _.deburr(a.title).replace(/\[/, ''),
+        btitle = _.deburr(b.title).replace(/\[/, '');
 
     if (atitle > btitle) return 1;
     if (atitle < btitle) return -1;

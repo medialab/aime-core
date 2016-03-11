@@ -29,9 +29,9 @@ var model = {
 
         return callback(null, response.result.records.map(function(rec) {
 
-          var creators = rec.creators.map(function(creator){
-            if(creator.agent) return creator.agent.name_given + ' ' + creator.agent.name_family;
-          }).toString()
+          var creators = rec.creators.map(function(creator) {
+            if (creator.agent) return creator.agent.name_given + ' ' + creator.agent.name_family;
+          }).toString();
 
           return {
             biblib_id: rec.rec_id,

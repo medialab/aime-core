@@ -28,7 +28,7 @@ function parseItem(string) {
   return {
     type: TYPES[m[1]],
     id: m[2]
-  }
+  };
 }
 
 /**

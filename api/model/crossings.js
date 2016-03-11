@@ -54,7 +54,7 @@ function formatDate(date) {
       m = date.slice(4, 6),
       j = date.slice(6, 8);
 
-  return (new Date(y, m, j).toISOString())
+  return (new Date(y, m, j).toISOString());
 }
 
 function getDocumentThumbnail(doc) {
@@ -179,7 +179,7 @@ module.exports = {
       };
 
       var questions = _(results.info.paragraphs.slice(1))
-        .map(function(p){
+        .map(function(p) {
           return questionTokenizer(p.text);
         })
         .flatten()
@@ -387,7 +387,7 @@ module.exports = {
             type: 'txt',
             content: truncate(b.children[0].text)
           }
-        }
+        };
       });
 
       data.related = data.related

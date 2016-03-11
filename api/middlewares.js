@@ -20,7 +20,7 @@ function param(req, key) {
     return req.query[key];
   if (key in req.params)
     return req.params[key];
-};
+}
 
 // Export
 module.exports = {
