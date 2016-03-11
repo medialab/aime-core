@@ -192,8 +192,7 @@ ORDER BY item.document.properties.date DESC, item.document.properties.title ASC
 // name: getForUpdate
 // Retrieve the necessary information to update a specific document.
 START d=node({id})
-MATCH (d)-[rs:HAS]->(s:Slide)-[re:HAS]->(e)
-OPTIONAL MATCH (d)-[ra:CREATED_BY]->(a:User)
+MATCH (a:User)<-[ra:CREATED_BY]-(d)-[rs:HAS]->(s:Slide)-[re:HAS]->(e)
 
 WITH d, rs, s, ra, a, {
   id: id(e),
