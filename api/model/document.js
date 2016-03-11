@@ -321,7 +321,7 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
         });
 
         // Handling modes & crossings
-        var beforeModecross = modecrossParser(doc.title + currentSlidesText),
+        var beforeModecross = modecrossParser(doc.properties.title + currentSlidesText),
             afterModecross = modecrossParser(title + slidesText);
 
         var diff = modecrossDiff(beforeModecross, afterModecross);
