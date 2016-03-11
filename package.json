@@ -8,6 +8,7 @@
     "biblib": "node ./scripts/biblib.js",
     "dev": "nodemon --exec \"npm run start\"",
     "migrate": "node ./scripts/migrate.js && npm run biblib",
+    "clean": "node ./scripts/clean.js",
     "prod": "NODE_ENV=prod && pm2 start --name \"aime-api\" --node-args=\"--harmony\" ./scripts/start.js",
     "start": "node --harmony ./scripts/start.js",
     "test": "mocha -R spec ./test/endpoint.js",

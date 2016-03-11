@@ -100,7 +100,7 @@ module.exports = [
     url: '/res/image',
     methods: ['POST'],
     validate: {
-      reference: '?number|string',
+      reference: '?string',
       url: '?url',
       file: '?dataUrl'
     },
@@ -110,7 +110,7 @@ module.exports = [
     url: '/res/pdf',
     methods: ['POST'],
     validate: {
-      reference: '?number|string',
+      reference: '?string',
       file: 'dataUrl'
     },
     action: createResource('pdf')
@@ -120,7 +120,7 @@ module.exports = [
     methods: ['POST'],
     validate: {
       text: 'string',
-      reference: '?number|string'
+      reference: '?string'
     },
     action: createResource('quote')
   },
@@ -129,7 +129,7 @@ module.exports = [
     methods: ['POST'],
     validate: {
       url: 'url',
-      reference: '?number|string',
+      reference: '?string',
       title: '?string'
     },
     action: createResource('link')
@@ -139,7 +139,7 @@ module.exports = [
     methods: ['POST'],
     validate: {
       url: 'url',
-      reference: '?number|string'
+      reference: '?string'
     },
     action: createResource('video')
   },
