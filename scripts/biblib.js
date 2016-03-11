@@ -1,5 +1,5 @@
 /**
- * AIME-core biblib import script
+ * AIME-core Biblib Import script
  * ===============================
  *
  * This scripts retrieves biblib's data and attach it to relevant references.

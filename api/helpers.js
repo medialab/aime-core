@@ -18,6 +18,10 @@ function now() {
   return formatDate(new Date());
 }
 
+function timestamp() {
+  return (new Date()).toISOString();
+}
+
 // Treat nested cypher results returned by typical AIME queries
 function treat(sub) {
   var item,
@@ -74,5 +78,6 @@ module.exports = {
   nested: nested,
   now: now,
   reorder: reorder,
-  searchRegex: searchRegex
+  searchRegex: searchRegex,
+  timestamp:timestamp
 };
