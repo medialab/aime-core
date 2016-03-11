@@ -9,6 +9,7 @@ import PureComponent from '../lib/pure.js';
 import Col from 'react-bootstrap/lib/Col';
 import PropTypes from 'baobab-react/prop-types';
 import {branch} from 'baobab-react/decorators';
+import config from '../../config.json';
 
 /**
  * Box generic component
@@ -70,6 +71,7 @@ export class Toolbar extends PureComponent {
   };
 
   render() {
+
     const lang = this.props.lang;
 
     const changeView = () => {
@@ -88,6 +90,10 @@ export class Toolbar extends PureComponent {
       this.context.tree.emit('logout');
     };
 
+    const openBlf = () => {
+      window.open(config.blfURL,'_blank');
+    };
+
     return (
         <div className="col-md-1" id="toolbar">
           <button type="button" className="btn btn-default" aria-label="Left Align" onClick={changeView}>
@@ -96,11 +102,16 @@ export class Toolbar extends PureComponent {
           <button type="button" className="btn btn-default" aria-label="Left Align" onClick={changeLang}>
             {lang.toUpperCase()}
           </button>
-          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={logout}>
-            <span className="glyphicon glyphicon-off" aria-hidden="true" />
+
+          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={openBlf}>
+            <span className="glyphicon glyphicon-education" aria-hidden="true" />
           </button>
           <button type="button" className="btn btn-default" aria-label="Left Align" onClick={toogleHelp}>
             <span className="glyphicon glyphicon-question-sign" aria-hidden="true" />
+          </button>
+          <hr/>
+                    <button type="button" className="btn btn-default" aria-label="Left Align" onClick={logout}>
+            <span className="glyphicon glyphicon-off" aria-hidden="true" />
           </button>
       </div>
     );

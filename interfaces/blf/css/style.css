@@ -55,6 +55,21 @@ ul ul {
   margin: auto;
 }
 
+.backToAdmin {
+
+  display: block;
+  background: black;
+  color: white;
+  text-decoration: none;
+
+  padding: 3px 8px 3px 8px;
+  border-radius: 10px;
+
+  margin-left: 55px;
+}
+
+
+
 /* 6 column grid - 340px width */
 .col-1 {
   width: 55px;

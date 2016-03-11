@@ -26,6 +26,25 @@
     }
   });
 
+
+ Handlebars.registerHelper('getConfig', function(key) {
+    return config.blf[key]; //just return global variable value
+  });
+
+ Handlebars.registerHelper("debug", function(optionalValue) {
+  console.log("Current Context");
+  console.log("====================");
+  console.log(this);
+
+  if (optionalValue) {
+    console.log("Value");
+    console.log("====================");
+    console.log(optionalValue);
+  }
+});
+
+
+
   // Templates management:
   mlab.pkg('blf.templates.preloaded');
   (function() {

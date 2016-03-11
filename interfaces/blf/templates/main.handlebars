@@ -1,9 +1,13 @@
 {{! Navigation header: }}
 <div id="nav" class="container">
+
   <button data-mode="fields">{{t "navigation.addEntry" }}</button>
+
+  <a class="right backToAdmin" target="_blank" href="{{getConfig "adminURL"}}">Back to Quinoa</a>
   <button class="right" data-mode="advancedSearch">{{t "navigation.advancedSearch" }}</button>
   <button class="right" data-action="search">{{t "navigation.search" }}</button>
   <input class="right" type="search" id="simple-entries-search" placeholder="{{t "navigation.searchPlaceholder" }}" />
+
 </div>
 <hr />
 
