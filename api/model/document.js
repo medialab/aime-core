@@ -244,7 +244,6 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
             docNode = {id: doc.id},
             lang = doc.properties.lang;
 
-
         // Handling title
         if (title && title !== doc.properties.title) {
           batch.save(docNode, 'title', title);

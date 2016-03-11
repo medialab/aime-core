@@ -193,11 +193,13 @@ ORDER BY item.document.properties.date DESC, item.document.properties.title ASC
 // Retrieve the necessary information to update a specific document.
 START d=node({id})
 MATCH (a:User)<-[ra:CREATED_BY]-(d)-[rs:HAS]->(s:Slide)-[re:HAS]->(e)
+OPTIONAL MATCH (e)<-[br:BOOKMARKED]-(ba:User)
 
 WITH d, rs, s, ra, a, {
   id: id(e),
   relId: id(re),
-  properties: e
+  properties: e,
+  bookmarks: filter(x IN collect({relId: id(br), userId: id(ba)}) WHERE x.relId IS NOT NULL)
 } AS elements
 
 WITH d, ra, a, {
