@@ -12,6 +12,7 @@ var abstract = require('./abstract.js'),
     cache = require('../cache.js'),
     queries = require('../queries.js').resource,
     types = require('../typology.js'),
+    helpers = require('../helpers.js'),
     storagePath = require('../../config.json').api.resources,
     db = require('../connection.js'),
     fse = require('fs-extra'),
@@ -60,6 +61,7 @@ var model = _.merge(abstract(queries), {
         var mediaData = {
           type: 'media',
           kind: kind,
+          last_update: helpers.timestamp(),
           slug_id: ++cache.slug_ids.res
         };
 
@@ -198,6 +200,8 @@ var model = _.merge(abstract(queries), {
       function updateMedia(row, next) {
         var mediaNode = row.media,
             k;
+
+        batch.save(mediaNode, 'last_update', helpers.timestamp());
 
         // Diffing the keys present in the payload and the node
         for (k in mediaNode) {

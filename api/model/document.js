@@ -89,6 +89,7 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
       type: 'document',
       title: title,
       date: helpers.now(),
+      last_update: helpers.timestamp(),
       status: 'private',
       source_platform: 'admin',
       original: false,
@@ -243,6 +244,8 @@ var model = _.merge(abstract(queries.document, sortingFunction), {
             linkedNodes = data.linkedNodes,
             docNode = {id: doc.id},
             lang = doc.properties.lang;
+
+        batch.save(docNode, 'last_update', helpers.timestamp());
 
         // Handling title
         if (title && title !== doc.properties.title) {
