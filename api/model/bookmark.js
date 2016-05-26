@@ -4,8 +4,7 @@
  *
  */
 var db = require('../connection.js'),
-    queries = require('../queries.js').bookmark,
-    _ = require('lodash');
+    queries = require('../queries.js').bookmark;
 
 module.exports = {
   get: function(userId, callback) {
@@ -17,8 +16,12 @@ module.exports = {
 
       var ids = result[0];
 
-      ids.voc = ids.voc.map(function(e) { return 'voc_' + e; });
-      ids.doc = ids.doc.map(function(e) { return 'doc_' + e; });
+      ids.voc = ids.voc.map(function(e) {
+        return 'voc_' + e;
+      });
+      ids.doc = ids.doc.map(function(e) {
+        return 'doc_' + e;
+      });
 
       return callback(null, ids);
     });

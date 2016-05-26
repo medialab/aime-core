@@ -8,9 +8,7 @@
 var docModel = require('../model/document.js'),
     resModel = require('../model/resource.js'),
     scenarioModel = require('../model/scenario.js'),
-    types = require('../typology.js'),
-    usersModel = require('../model/users.js'),
-    _ = require('lodash');
+    usersModel = require('../model/users.js');
 
 // Forge
 function createResource(kind) {

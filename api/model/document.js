@@ -69,7 +69,9 @@ function sortingFunction(docs) {
     docs,
     [
       'date',
-      function(doc) { return _.deburr(doc.title); }
+      function(doc) {
+        return _.deburr(doc.title);
+      }
     ],
     [false, true]
   );

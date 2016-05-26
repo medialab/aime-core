@@ -1,3 +1,4 @@
+/* eslint no-console: 0 */
 /**
  * AIME-core Express Application
  * ==============================

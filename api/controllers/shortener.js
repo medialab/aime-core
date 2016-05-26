@@ -54,8 +54,6 @@ module.exports = [
         // Redirecting
         return res.redirect(inquiryHost + '/' + hash);
       });
-
-      return res.notImplemented();
     }
   },
   {

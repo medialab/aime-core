@@ -26,7 +26,7 @@ The only different thing is that one has to also copy the new files into the pro
 They can be found by testing which slug ids are absent from the prod database.
 
 ```
-Set{slug ids of docs in pre-prod db} - Set{slug ids of docs in prod db}`.
+Set{slug ids of docs in pre-prod db} - Set{slug ids of docs in prod db}
 ```
 
 One then need to use the `create` model function found in `api/model/document` to insert them into the prod database.

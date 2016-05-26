@@ -59,8 +59,8 @@ module.exports = [
         if (err) return res.serverError(err);
 
         // Sending the mail
-        postman.registration(req.lang, user.email, user.token, function(err, info) {
-          if (err) return res.serverError(err);
+        postman.registration(req.lang, user.email, user.token, function(postmanError) {
+          if (postmanError) return res.serverError(postmanError);
 
           return res.json(user);
         });
@@ -115,8 +115,8 @@ module.exports = [
         req.session.user = user;
         req.session.authenticated = true;
 
-        return bookmarks.get(user.id, function(err, result) {
-          if (err) return res.serverError(err);
+        return bookmarks.get(user.id, function(bookmarkError, result) {
+          if (bookmarkError) return res.serverError(bookmarkError);
           return res.ok(_.merge({}, user, {bookmarks: result}));
         });
       });
@@ -167,8 +167,8 @@ module.exports = [
         if (err) return res.serverError(err);
         if (!token) return res.notFound();
 
-        return postman.reset(req.lang, req.body.email, token, function(err, info) {
-          if (err) return res.serverError(err);
+        return postman.reset(req.lang, req.body.email, token, function(postmanError) {
+          if (postmanError) return res.serverError(postmanError);
 
           return res.ok({token: token});
         });

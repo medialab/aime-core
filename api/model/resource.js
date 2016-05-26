@@ -11,7 +11,6 @@ var abstract = require('./abstract.js'),
     uuid = require('uuid'),
     cache = require('../cache.js'),
     queries = require('../queries.js').resource,
-    types = require('../typology.js'),
     helpers = require('../helpers.js'),
     storagePath = require('../../config.json').api.resources,
     db = require('../connection.js'),
@@ -65,6 +64,9 @@ var model = _.merge(abstract(queries), {
           slug_id: ++cache.slug_ids.res
         };
 
+        var hash,
+            file;
+
         // Specific to kind
         if (kind === 'image') {
           if (data.url) {
@@ -73,8 +75,8 @@ var model = _.merge(abstract(queries), {
             mediaData.html = '<img src="' + data.url + '" />';
           }
           else {
-            var hash = uuid.v4().replace(/-/g, ''),
-                file = parseDataUrl(data.file);
+            hash = uuid.v4().replace(/-/g, '');
+            file = parseDataUrl(data.file);
 
             mediaData.internal = true;
             mediaData.path = 'admin/' + hash + '.' + file.extension;
@@ -91,8 +93,8 @@ var model = _.merge(abstract(queries), {
             // TODO: ...
           }
           else {
-            var hash = uuid.v4().replace(/-/g, ''),
-                file = parseDataUrl(data.file);
+            hash = uuid.v4().replace(/-/g, '');
+            file = parseDataUrl(data.file);
 
             mediaData.internal = true;
             mediaData.path = 'admin/' + hash + '.' + file.extension;
@@ -112,7 +114,7 @@ var model = _.merge(abstract(queries), {
 
         else if (kind === 'link') {
           mediaData.internal = false;
-          mediaData.html = '<a href="' + data.url + '" target="_blank">' + (data.title || data.url) + '</a>';
+          mediaData.html = '<a href="' + data.url + '" target="_blank">' + (data.title || data.url) + '</a>';
           mediaData.url = data.url;
         }
 
@@ -150,8 +152,8 @@ var model = _.merge(abstract(queries), {
             };
 
             // Fetching data from biblib
-            return biblib.getById(biblibId, function(err, record) {
-              if (err) return next(err);
+            return biblib.getById(biblibId, function(biblibError, record) {
+              if (biblibError) return next(biblibError);
 
               referenceData.html = record.html;
               referenceData.text = cheerio(record.html).text();
@@ -178,7 +180,7 @@ var model = _.merge(abstract(queries), {
         model.getByIds([nodes[0].id], function(err, resources) {
           if (err) return callback(err);
 
-          return callback(null, resources[0]);
+          return next(null, resources[0]);
         });
       }
     ], callback);
@@ -230,8 +232,8 @@ var model = _.merge(abstract(queries), {
               };
 
               // Fetching data from biblib
-              return biblib.getById(biblibId, function(err, record) {
-                if (err) return next(err);
+              return biblib.getById(biblibId, function(biblibError, record) {
+                if (biblibError) return next(biblibError);
 
                 referenceData.html = record.html;
                 referenceData.text = cheerio(record.html).text();
@@ -260,7 +262,7 @@ var model = _.merge(abstract(queries), {
         model.getByIds([id], function(err, resources) {
           if (err) return callback(err);
 
-          return callback(null, resources[0]);
+          return next(null, resources[0]);
         });
       }
     ], callback);

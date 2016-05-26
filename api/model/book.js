@@ -5,8 +5,7 @@
  */
 var db = require('../connection.js'),
     queries = require('../queries.js').book,
-    helpers = require('../helpers.js'),
-    _ = require('lodash');
+    helpers = require('../helpers.js');
 
 module.exports = {
   getAll: function(user, lang, params, callback) {

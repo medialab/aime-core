@@ -1,3 +1,5 @@
+/* eslint no-cond-assign: 0 */
+/* eslint no-nested-ternary: 0 */
 /**
  * AIME-core Document Model
  * =========================
@@ -28,7 +30,8 @@ function truncate(str) {
 }
 
 function submatches(r, t) {
-  var m = [];
+  var m = [],
+      match;
 
   while (match = r.exec(t)) {
     m.push(match[1]);
@@ -215,8 +218,8 @@ module.exports = {
           _id: '' + i,
           sid: s.id,
           status: 'published',
-          items: s.items.map(function(i) {
-            return slugs[i.type] + '_' + i.slug_id;
+          items: s.items.map(function(item) {
+            return slugs[item.type] + '_' + item.slug_id;
           })
         };
       });
@@ -310,10 +313,7 @@ module.exports = {
           });
 
           refs.forEach(function(r) {
-            var i = r[0],
-                ref = r[1];
-
-            medias = medias.slice(0, i + 1).concat(r[1]).concat(medias.slice(i + 1));
+            medias = medias.slice(0, r[0] + 1).concat(r[1]).concat(medias.slice(r[0] + 1));
           });
 
           // DIRTY: dropping null values probably originating from bad cypher
@@ -370,7 +370,7 @@ module.exports = {
       var bookRelated = results.book.map(function(b) {
         return {
           cat: 'bsc',
-          choosen : true,
+          choosen: true,
           title: b.title,
           id: slugs[b.type] + '_' + b.slug_id,
           index: b.index,

@@ -79,5 +79,5 @@ module.exports = {
   now: now,
   reorder: reorder,
   searchRegex: searchRegex,
-  timestamp:timestamp
+  timestamp: timestamp
 };

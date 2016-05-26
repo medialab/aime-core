@@ -45,8 +45,8 @@ var model = {
 
   // Retrieve records by list of ids
   getByIds: function(ids, callback) {
-    var stringIds = ids.map(function(ids) {
-      return '' + ids;
+    var stringIds = ids.map(function(id) {
+      return '' + id;
     });
 
     client.request(
