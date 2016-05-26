@@ -13,7 +13,7 @@ It does not discuss, however, the process followed to transform the multi-databa
 
 ## Process
 
-Order is important. New resources should be handled first as the following depend on them.
+Order is important. New resources should be handled first as following steps depend on them.
 
 ### New resources & updated resources
 
