@@ -1,6 +1,6 @@
 {
-	"api": "http://localhost:7000",
-	"langs": ["en", "fr"],
+  "api": "http://localhost:7000",
+  "langs": ["en", "fr"],
   "blfURL": "http://localhost:9000/",
-	"storageKey": "aime-admin"
+  "storageKey": "aime-admin"
 }
