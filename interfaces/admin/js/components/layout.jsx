@@ -182,7 +182,7 @@ class EditorPanel extends PureComponent {
     return (
       <div className="full-height">
         <h1 className="centered">Editor</h1>
-        <div className="overflowing">
+        <div className="overflowing medium">
 
           {this.props.model === "doc" ?
           <Editor model={model}
@@ -235,7 +235,7 @@ class PreviewPanel extends PureComponent {
     return (
       <div className="full-height">
         <h1 className="centered">Preview</h1>
-        <div className="overflowing">
+        <div className="overflowing big">
         {this.props.model === "doc" ?
           <Preview model={this.props.model}
                    parsed={this.props.parsed}
