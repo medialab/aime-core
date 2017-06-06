@@ -41,7 +41,7 @@ const actions = {
     this.set('lang', data);
 
     // Clearing fetched data
-    this.set('data', {});
+    this.set('data', null);
 
     // Clearing states
     this.set('states', null);
