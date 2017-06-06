@@ -46,6 +46,13 @@ const actions = {
     // Clearing states
     this.set('states', null);
 
+    const view = this.get('view');
+    if (view === 'doc') {
+      this.client.doc();
+    } else if (view === 'res') {
+      this.client.res();
+    }
+
     // Effectively changing client's lang
     this.client.lang({params: {lang: data}});
   },
