@@ -153,6 +153,7 @@ const actions = {
         },
         (err, data) => {
           this.unshift(['data', model], data.result);
+          this.emit('selection:change', {model: model, level: 0, target: data.result.id});
         }
       );
     }
