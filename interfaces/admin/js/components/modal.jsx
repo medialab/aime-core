@@ -147,8 +147,8 @@ export class ModalResources extends Component {
       if (!state.url || !isURL(state.url))
         return false;
     }
-    else {
-      console.log('Kind not supported yet.');
+    else if (kind) {
+      console.log('Kind not supported yet.', kind);
       return false;
     }
 
