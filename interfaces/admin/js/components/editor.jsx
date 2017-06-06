@@ -71,6 +71,9 @@ export default class Editor extends PureComponent {
   }
 
   componentWillReceiveProps(props) {
+    if (this.editor === undefined) {
+      return;
+    }
     const currentValue = this.editor.doc.getValue();
 
     if (currentValue !== props.buffer)
