@@ -31,9 +31,11 @@ export default function(tree) {
   });
 
   tree.on('get', function({data: {path, data}}) {
-
-    if (loaded) return
-    if (!data && compare(path, ['data'])) {
+    if (loaded) return;
+    if (
+        (!data && 
+        compare(path, ['data']))
+      ) {
       tree.client.book();
       tree.client.voc();
       tree.client.doc();

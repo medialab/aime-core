@@ -19,7 +19,7 @@ export default class Preview extends PureComponent {
   fromIdToAuthor(id) {
     const usersIndex = this.context.tree.facets.usersIndex.get();
     const user = usersIndex[id];
-    return user.surname + ' ' + user.name;
+    return user ? user.surname + ' ' + user.name : '';
   }
 
   render() {
