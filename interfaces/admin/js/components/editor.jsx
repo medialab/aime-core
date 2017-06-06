@@ -20,7 +20,7 @@ require('../lib/custom_mode.js');
  * Constants
  */
 const RE_RES_BEFORE = /([^\n])\n?(!\[.*?]\(.*?\))/,
-      RE_RES_AFTER = /(!\[.*?]\(.*?\))\n?([^\n])/;
+      RE_RES_AFTER = /(!\[.*?]\(.*?\))(\n?)([^\n])/;
 
 /**
  * Markdown editor component
@@ -77,18 +77,23 @@ export default class Editor extends PureComponent {
 
     // Listening to changes
     this.editorListener = doc => {
-      const correction = doc.getValue()
+      let correction = doc.getValue()
         .replace(RE_RES_BEFORE, '$1\n\n$2')
-        .replace(RE_RES_AFTER, '$1\n\n$2')
+        .replace(RE_RES_AFTER, '$1\n\n$3')
 
       if (correction !== doc.getValue()) {
-        const cursor = this.editor.doc.getCursor();
+        const cursor = Object.assign({}, this.editor.doc.getCursor());
 
-        if (RE_RES_AFTER.test(doc.getValue()))
-          cursor.line += 2;
+        const m = doc.getValue().match(RE_RES_AFTER);
+
+        if (m) {
+          const increment = !!m[2] ? 1 : 2;
+          cursor.line += increment;
+        }
 
         this.editor.doc.setValue(correction);
         this.editor.setCursor(cursor);
+
         return;
       }
 
