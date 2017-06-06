@@ -21,10 +21,21 @@ export default function(tree) {
 
   let loaded = false;
 
-  tree.on('get', function({data: {path, data}}) {
+  tree.select('lang').on('update', () => {
+    tree.client.book();
+    tree.client.voc();
+    tree.client.doc();
+    tree.client.res();
+    tree.client.users();
+    tree.client.ref();
+  });
 
-    if (loaded) return
-    if (!data && compare(path, ['data'])) {
+  tree.on('get', function({data: {path = [], data}}) {
+    if (loaded) return;
+    if (
+        (!data && 
+        compare(path, ['data']))
+      ) {
       tree.client.book();
       tree.client.voc();
       tree.client.doc();
