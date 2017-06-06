@@ -189,6 +189,15 @@ textarea {
   height: calc(~"100% -" @m*15);
   overflow: scroll;
   overflow-x:hidden;
+
+  &.medium{
+    height: calc(~"100% -" @m*15);
+  }
+
+
+  &.big{
+    height: calc(~"100% -" @m*5);
+  }
 }
 
 /*
@@ -282,6 +291,10 @@ textarea {
     color: black;
   }
   .text-overflow();
+
+  &.private{
+    opacity: .5;
+  }
 }
 
 .subheading {
@@ -574,3 +587,18 @@ input, textarea, .form-group {
 
 }
 
+/**
+ * Components
+ */
+.Select
+{
+  position: relative;
+  overflow: visible;
+  .Select-menu-outer{
+    position: absolute;
+    top: @m*4;
+    left: 0;
+    z-index: 1000;
+  }
+}
+  

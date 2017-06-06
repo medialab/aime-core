@@ -128,14 +128,19 @@ class Item extends PureComponent {
     if (model === 'res')
       text = ' ' + resourceName(item);
 
+    const {
+      status
+    } = item;
+
     return (
       <li>
-        <div className={classes('box', 'chapter', {selected: this.props.selection[0] === item.id})}
+        <div className={classes('box', 'chapter', status, {selected: this.props.selection[0] === item.id})}
              onClick={this.handleClick}
              title={text}
           >
           {model === 'res' && <ResourceIcon kind={item.kind} />}
           {text}
+          {status === 'private' ? ' (unpublished)': null}
         </div>
         {model === 'book' &&
           <SubList items={item.children}
