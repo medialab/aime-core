@@ -143,7 +143,9 @@ const actions = {
         {
           data: {
             ...data,
-            reference: data.reference.biblib_id
+            reference: data.reference ?
+              data.reference.biblib_id :
+              null
           },
           params: {
             kind: data.kind
