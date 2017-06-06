@@ -20,9 +20,9 @@ import {ReferenceSelector} from './referenceSelector.jsx';
  */
 @branch({
   cursors: {
-    data:['data', 'res'],
-    states:['states', 'res'],
-    refs:['data', 'ref']
+    data: ['data', 'res'],
+    states: ['states', 'res'],
+    refs: ['data', 'ref']
   }
 })
 export default class ResourceEditor extends Component {
@@ -63,7 +63,7 @@ export default class ResourceEditor extends Component {
           </div>
         }
 
-        {(kind === "video" || kind === 'rich' )&&
+        {(kind === "video" || kind === 'rich' ) &&
          <div className="form-group">
             <label>html</label>
             <textarea value={editorState.html}
@@ -72,7 +72,7 @@ export default class ResourceEditor extends Component {
                       className="editor pre" />
           </div>}
 
-        {kind === "quote"  &&
+        {kind === "quote" &&
           <div className="form-group">
               <label>text</label>
               <textarea value={editorState.text}
