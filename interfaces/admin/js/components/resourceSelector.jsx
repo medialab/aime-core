@@ -115,6 +115,8 @@ class SelectorItem extends PureComponent {
       slug_id: this.props.item.slug_id,
       type: this.props.item.type
     });
+
+    this.context.tree.emit('resSelector:dismiss', {model: this.context.model});
   }
 
   render() {

@@ -44,17 +44,19 @@ function parseSlides(markdown) {
         .map(function(item) {
           var m = item.text.match(RE_RES);
 
-          if (!m)
+          if (!m) {
             return {
               type: 'paragraph',
               markdown: item.text
             };
-          else
+          }
+          else {
             return {
               type: m[1].slice(0, 3) === 'res' ? 'resource' : 'reference',
               slug: m[1],
               slug_id: +m[1].slice(4),
             };
+         }
         })
         .value();
     })
