@@ -49,6 +49,14 @@ export function resourceName(res) {
 }
 
 /**
+ * Asking user to confirm a dramatic operation
+ */
+export function confirmProductionOperation () {
+  const msg = 'This operation will produce direct changes on the public website. Continue ?';
+  return confirm(msg);
+}
+
+/**
  * Reading an input file
  */
 export function readInputFile(file, callback) {
