@@ -32,19 +32,23 @@ export class ActionButton extends PureComponent {
   render() {
     let {
       size,
-      action = () => console.log(this.props.label,"pressed"),
-      state='normal',
+      action = () => console.log(this.props.label, "pressed"),
+      state = 'normal',
       label,
       loadingLabel,
       disabledLabel
     } = this.props;
 
-    const sizeClass =  'col-md-'+size;
-    const classString = classes('button', sizeClass, {disabled: state === 'disabled'});
+    const sizeClass =  'col-md-' + size;
+    const classString = classes(
+      'button',
+      sizeClass,
+      {disabled: state === 'disabled'}
+    );
 
-    if (state === 'saving')
+    if (state === 'saving' && loadingLabel)
       label = loadingLabel;
-    else if (state === 'disabled')
+    else if (state === 'disabled' && disabledLabel)
       label = disabledLabel;
 
     return (

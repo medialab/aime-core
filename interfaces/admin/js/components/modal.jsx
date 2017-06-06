@@ -128,16 +128,16 @@ export class ModalResources extends Component {
       if (!state.url && !state.file)
         return false;
     }
-    if (kind === 'pdf') {
+    else if (kind === 'pdf') {
       if (!state.file)
         return false;
     }
-    if (kind === 'video') {
+    else if (kind === 'video') {
       if (!state.url)
         return false;
     }
     else if (kind === 'quote') {
-      if (!state.text)
+      if (!state.text || !state.reference)
         return false;
     }
     else if (kind === 'link') {
@@ -170,7 +170,8 @@ export class ModalResources extends Component {
     const {
       kind,
       url,
-      reference
+      reference,
+      uploading
     } = this.state;
 
     const title = this.props.title;
@@ -184,6 +185,14 @@ export class ModalResources extends Component {
 
     // Is the given url valid?
     let validURL = url ? isURL(url) : true;
+
+    // Action button state
+    let buttonState = 'normal';
+
+    if (!this.validate(this.state))
+      buttonState = 'disabled';
+    else if (uploading)
+      buttonState = 'saving';
 
     return (
       <div className='Modal'>
@@ -266,8 +275,8 @@ export class ModalResources extends Component {
           <ActionButton size={6}
                         action={(e) => this.submit(e)}
                         label="save"
-                        disabledLabel="uploading file …"
-                        state={this.state.uploading ? 'disabled' : 'normal'} />}
+                        loadingLabel="uploading file …"
+                        state={buttonState} />}
       </div>
     );
   }
