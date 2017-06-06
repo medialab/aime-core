@@ -17,7 +17,7 @@ import Editor from './editor.jsx';
 import Preview from './preview.jsx';
 import List from './list.jsx';
 import {ActionButton, Toolbar} from './misc.jsx';
-import {Modal, ModalRessouces} from './modal.jsx';
+import {Modal, ModalResources} from './modal.jsx';
 import Help from './help.jsx';
 import ResourceSelector from './resourceSelector.jsx';
 import ResourceEditor from './resourceEditor.jsx';
@@ -76,7 +76,7 @@ export class Layout extends PureComponent {
 
     const modal = model === "doc" ?
       <Modal title={MODAL_TITLES[model]} model={model} users={this.props.users} /> :
-      <ModalRessouces title={MODAL_TITLES[model]} />;
+      <ModalResources title={MODAL_TITLES[model]} />;
 
     return (
       <Row className="full-height">

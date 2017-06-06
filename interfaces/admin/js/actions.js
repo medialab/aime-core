@@ -143,7 +143,9 @@ const actions = {
         {
           data: {
             ...data,
-            reference: data.reference.biblib_id
+            reference: data.reference ?
+              data.reference.biblib_id :
+              null
           },
           params: {
             kind: data.kind
@@ -151,6 +153,7 @@ const actions = {
         },
         (err, data) => {
           this.unshift(['data', model], data.result);
+          this.emit('selection:change', {model: model, level: 0, target: data.result.id});
         }
       );
     }
