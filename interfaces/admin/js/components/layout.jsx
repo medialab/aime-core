@@ -82,14 +82,14 @@ export class Layout extends PureComponent {
 
     return (
       <Row className="full-height">
-        <Col md={4} className={classes({hidden: editionMode || isAModalDisplayed})} />
+        <Col xs={4} className={classes({hidden: editionMode || isAModalDisplayed})} />
 
-        <Col md={4} className="full-height">
+        <Col xs={4} className="full-height">
           <h1 className="centered">{this.props.title}</h1>
           <ListPanel items={this.props.data} model={model} />
         </Col>
 
-        <Col md={4} className="full-height">
+        <Col xs={4} className="full-height">
 
           {isAModalDisplayed ?
             modal  :
