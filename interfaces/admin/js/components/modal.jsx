@@ -60,10 +60,10 @@ export class Modal extends Component {
                   }}
                 />
               }
-              <ActionButton size={6} action={dismiss} label="dismiss"/>
-              {this.state.title !== "" &&
-                <ActionButton size={6} action={save} label="save"/>
-              }
+                <ActionButton size={6} action={dismiss} label="dismiss"/>
+                {this.state.title !== "" &&
+                  <ActionButton size={6} action={save} label="save"/>
+                }
           </form>
       </div>
     );

@@ -94,6 +94,11 @@ html, body {
 
   .userselection(@g14);
   overflow: hidden;
+
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
 }
 
 ul {
@@ -235,8 +240,11 @@ textarea {
   background-color: white;
   padding: 20px;
 
-  .button {
+  overflow:auto;
+
+  .btn-default {
     border:none;
+    outline:none;
   }
   .render {
 
@@ -590,15 +598,16 @@ input, textarea, .form-group {
 /**
  * Components
  */
-.Select
+
+.Modal
 {
-  position: relative;
-  overflow: visible;
-  .Select-menu-outer{
-    position: absolute;
-    top: @m*4;
-    left: 0;
-    z-index: 1000;
+  height: 100%;
+
+  overflow: auto;
+
+  form{
+    flex: 1;
+    overflow: auto;
   }
 }
   
