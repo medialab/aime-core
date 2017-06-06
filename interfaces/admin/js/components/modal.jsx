@@ -86,7 +86,7 @@ const KINDS = [
     refs:['data', 'ref']
   }
 })
-export class ModalRessouces extends Component {
+export class ModalResources extends Component {
   static contextTypes = {
     tree: PropTypes.baobab,
     model: React.PropTypes.string
