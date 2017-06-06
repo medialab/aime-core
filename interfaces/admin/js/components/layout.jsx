@@ -22,7 +22,9 @@ import Help from './help.jsx';
 import ResourceSelector from './resourceSelector.jsx';
 import ResourceEditor from './resourceEditor.jsx';
 import ResourcePreview from './resourcePreview.jsx';
-
+import {
+  confirmProductionOperation
+} from '../lib/helpers';
 
 const MODAL_TITLES = {
   doc: 'create document',
@@ -164,12 +166,15 @@ class EditorPanel extends PureComponent {
   render() {
     const {model, saving} = this.props,
           save = (e, status = ( this.props.status || 'public' ) ) => {
-            this.context.tree.emit('element:save', {model, status});
+            if (confirmProductionOperation()) {
+              this.context.tree.emit('element:save', {model, status});
+            }
           },
           openSelector = () => {
             this.context.tree.emit('resSelector:open', {model: model});
           },
           togglePublish = () => {
+            
             const status = this.props.status === 'public' ? 'private' : 'public';
             save(null, status);
           };
