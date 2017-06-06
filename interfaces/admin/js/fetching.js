@@ -30,7 +30,7 @@ export default function(tree) {
     tree.client.ref();
   });
 
-  tree.on('get', function({data: {path = [], data}}) {
+  tree.on('get', function({data: {path, data}}) {
     if (loaded) return;
     if (
         (!data && 
