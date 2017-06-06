@@ -11,6 +11,8 @@ import PropTypes from 'baobab-react/prop-types';
 import {branch} from 'baobab-react/decorators';
 import config from '../../config.json';
 
+import Tooltip from 'react-tooltip';
+
 /**
  * Box generic component
  */
@@ -82,6 +84,14 @@ export class Toolbar extends PureComponent {
       this.context.tree.emit('view:change', 'home');
     };
 
+    const goToDocuments = () => {
+      this.context.tree.emit('view:change', 'doc');
+    };
+
+    const goToResources = () => {
+      this.context.tree.emit('view:change', 'res');
+    };
+
     const changeLang = () => {
       this.context.tree.emit('lang:change', lang === 'en' ? 'fr' : 'en');
     };
@@ -100,21 +110,28 @@ export class Toolbar extends PureComponent {
 
     return (
         <div className="col-md-1" id="toolbar">
-          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={changeView}>
+            <Tooltip place="right" />
+          <button  data-tip={lang === 'fr' ? 'accueil' : 'home'} type="button" className="btn btn-default" aria-label="Left Align" onClick={changeView}>
             <span className="glyphicon glyphicon-home" aria-hidden="true" />
           </button>
-          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={changeLang}>
+          <button data-tip={lang === 'fr' ? 'documents' : 'documents'} type="button" className="btn btn-default" aria-label="Left Align" onClick={goToDocuments}>
+            <span className="glyphicon glyphicon-file" aria-hidden="true" />
+          </button>
+          <button data-tip={lang === 'fr' ? 'ressources' : 'resources'} type="button" className="btn btn-default" aria-label="Left Align" onClick={goToResources}>
+            <span className="glyphicon glyphicon-inbox" aria-hidden="true" />
+          </button>
+          <button data-tip={lang === 'fr' ? 'basculer vers l\'anglais' : 'switch to french'} type="button" className="btn btn-default" aria-label="Left Align" onClick={changeLang}>
             {lang.toUpperCase()}
           </button>
 
-          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={openBlf}>
+          <button data-tip={lang === 'fr' ? 'références' : 'references'} type="button" className="btn btn-default" aria-label="Left Align" onClick={openBlf}>
             <span className="glyphicon glyphicon-education" aria-hidden="true" />
           </button>
-          <button type="button" className="btn btn-default" aria-label="Left Align" onClick={toogleHelp}>
+          <button data-tip={lang === 'fr' ? 'aide' : 'help'} type="button" className="btn btn-default" aria-label="Left Align" onClick={toogleHelp}>
             <span className="glyphicon glyphicon-question-sign" aria-hidden="true" />
           </button>
           <hr/>
-                    <button type="button" className="btn btn-default" aria-label="Left Align" onClick={logout}>
+                    <button  data-tip={lang === 'fr' ? 'se déconnecter' : 'log out'} type="button" className="btn btn-default" aria-label="Left Align" onClick={logout}>
             <span className="glyphicon glyphicon-off" aria-hidden="true" />
           </button>
       </div>
