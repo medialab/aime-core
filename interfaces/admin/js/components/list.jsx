@@ -129,7 +129,8 @@ class Item extends PureComponent {
       text = ' ' + resourceName(item);
 
     const {
-      status
+      status,
+      author
     } = item;
 
     return (
@@ -141,6 +142,13 @@ class Item extends PureComponent {
           {model === 'res' && <ResourceIcon kind={item.kind} />}
           {text}
           {status === 'private' ? ' (unpublished)': null}
+
+          {author &&
+            <div className="item-author">
+              <span className="glyphicon glyphicon-user" />
+              {author.name} {author.surname}
+            </div>
+          }
         </div>
         {model === 'book' &&
           <SubList items={item.children}
