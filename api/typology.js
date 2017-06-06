@@ -30,6 +30,9 @@ module.exports = new Typology({
 
   // Data URL
   dataUrl: function(v) {
+    if (typeof v !== 'string')
+      return false;
+
     return /^data:.+\/.+;base64,.+/.test(v.slice(0, 50));
   },
 
