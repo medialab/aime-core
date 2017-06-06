@@ -114,6 +114,9 @@ export class ModalResources extends Component {
   }
 
   handleFile(e) {
+    if (!e.target || !e.target.files || !e.target.files.length)
+      return this.setState({file: null});
+
     this.setState({uploading: true});
     readInputFile(e.target.files[0], (err, dataUrl) => {
       this.setState({uploading: false, file: dataUrl});
@@ -171,7 +174,8 @@ export class ModalResources extends Component {
       kind,
       url,
       reference,
-      uploading
+      uploading,
+      file
     } = this.state;
 
     const title = this.props.title;
@@ -241,6 +245,7 @@ export class ModalResources extends Component {
             <label>file</label>
             <input onChange={(e) => this.handleFile(e)}
                    className="form-control"
+                   disabled={!!url}
                    type="file"
                    size={40} />
           </div>
@@ -249,6 +254,7 @@ export class ModalResources extends Component {
           <div className="form-group">
             <label>url</label>
             <input value={this.state.url}
+                   disabled={!!file}
                    onChange={(e) => this.setState({url: e.target.value})}
                    placeholder="http://website.com/folder/file.ext"
                    className={classes('form-control', {error: !validURL})} />
