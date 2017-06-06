@@ -30,12 +30,27 @@ export default class Editor extends PureComponent {
     tree: PropTypes.baobab
   };
 
-  componentWillMount(){
-    this.listener = (e) => {
-      var i =  e.data;
-      this.editor.doc.replaceSelection(`![${i.type}](res_${i.slug_id})\n`);
+  componentWillMount() {
+    this.resListener = (e) => {
+      let i =  e.data;
+
+      const cursor = this.editor.doc.getCursor(),
+            previousLine = cursor.line && this.editor.doc.getLine(cursor.line - 1).trim(),
+            line = this.editor.doc.getLine(cursor.line).trim();
+
+      let addition = '';
+
+      if (previousLine && !line)
+        addition += '\n';
+
+      if (line)
+        addition += '\n\n';
+
+      addition += `![${i.type}](res_${i.slug_id})\n`;
+
+      this.editor.doc.replaceSelection(addition);
     };
-    this.context.tree.on("resSelector:add", this.listener);
+    this.context.tree.on("resSelector:add", this.resListener);
   }
 
   componentDidMount() {
@@ -56,17 +71,20 @@ export default class Editor extends PureComponent {
     this.editor.doc.setValue(this.props.buffer);
 
     // Listening to changes
-    this.listener = doc => {
+    this.editorListener = doc => {
       this.context.tree.emit('buffer:change', {
         markdown: doc.getValue(),
         model: this.props.model
       });
     };
 
-    this.editor.on('update', this.listener);
+    this.editor.on('update', this.editorListener);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
+
+    // Cleaning up
+    this.editor.off('update', this.listener);
     this.context.tree.off("resSelector:add", this.listener);
   }
 
@@ -81,7 +99,13 @@ export default class Editor extends PureComponent {
   }
 
   render() {
-    const {vocs, docs, vocItems=[], docItems=[]} = this.props.parsed.data;
+    const {
+      vocs,
+      docs,
+      vocItems = [],
+      docItems = []
+    } = this.props.parsed.data;
+
     return (
       <div className="full-height">
         <div className="editor-container">
@@ -115,13 +139,6 @@ export default class Editor extends PureComponent {
         </div>
       </div>
     );
-  }
-
-  // TODO: clean & kill editor in some way
-  componentWillUnmount() {
-
-    // Cleaning up
-    this.editor.off('update', this.listener);
   }
 }
 
