@@ -54,7 +54,7 @@ export default class ResourceEditor extends Component {
     const kind = editorState.kind;
 
     return (
-      <Row className="full-height">
+      <Row>
         <form>
         {editorState.title &&
           <div className="form-group">
