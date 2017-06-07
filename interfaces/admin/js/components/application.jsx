@@ -6,8 +6,6 @@
  */
 import React from 'react';
 import PureComponent from '../lib/pure.js';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
 import {branch} from 'baobab-react/decorators';
 import Home from './home.jsx';
 import Login from './login.jsx';

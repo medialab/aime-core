@@ -5,8 +5,11 @@
  */
 import React, {Component} from 'react';
 import classes from 'classnames';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
+import {
+  Row,
+  Col
+} from 'react-flexbox-grid';
+
 import {ActionButton} from './misc.jsx';
 import PropTypes from 'baobab-react/prop-types';
 import {branch} from 'baobab-react/decorators';
@@ -68,7 +71,8 @@ export default class ResourceSelector extends Component {
     const items = this.state.filteredItems,
           dismiss = () => {
             this.context.tree.emit('resSelector:dismiss', {model: this.context.model})
-          };
+          },
+          lang = this.context.tree.get('lang');
 
     let result;
 
@@ -82,16 +86,16 @@ export default class ResourceSelector extends Component {
       result = <ul className="list">{items.map(this.renderItem)}</ul>;
 
     return (
-      <Row className="full-height">
+      <Row className="full-height stretched-column">
         <h1>{this.props.title}</h1>
           <input value={this.state.title}
                  onChange={this.search}
-                 placeholder="what are you looking for?"
+                 placeholder={lang === 'fr' ? 'que recherchez-vous ?' : 'what are you looking for?'}
                  className="form-control" size="40"/>
-        <div className="overflowing">
+        <div style={{flex: 1}} className="scrollable">
           {result}
         </div>
-        <div className="form-group">
+        <div className="buttons-row">
           <ActionButton size={6} action={dismiss} label="close"/>
         </div>
       </Row>

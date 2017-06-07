@@ -6,7 +6,7 @@
 import React from 'react';
 import classes from 'classnames';
 import PureComponent from '../lib/pure.js';
-import Col from 'react-bootstrap/lib/Col';
+import {Col} from 'react-flexbox-grid';
 import PropTypes from 'baobab-react/prop-types';
 import {branch} from 'baobab-react/decorators';
 import config from '../../config.json';
@@ -41,10 +41,10 @@ export class ActionButton extends PureComponent {
       disabledLabel
     } = this.props;
 
-    const sizeClass =  'col-md-' + size;
+    // const sizeClass =  'col-md-' + size;
     const classString = classes(
       'button',
-      sizeClass,
+      // sizeClass,
       {disabled: state === 'disabled'}
     );
 

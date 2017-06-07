@@ -7,8 +7,10 @@
 import React from 'react';
 import PureComponent from '../lib/pure.js';
 import {Layout} from './layout.jsx';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
+import {
+  Row,
+  Col
+} from 'react-flexbox-grid';
 import PropTypes from 'baobab-react/prop-types';
 
 

@@ -5,7 +5,7 @@
  */
 import React, {Component} from 'react';
 import classes from 'classnames';
-import Col from 'react-bootstrap/lib/Col';
+import {Col} from 'react-flexbox-grid';
 import {ActionButton} from './misc.jsx';
 import PropTypes from 'baobab-react/prop-types';
 import bibtex from 'bibtex-parser';
@@ -44,7 +44,7 @@ export class Modal extends Component {
           };
 
     return (
-      <div className='Modal'>
+      <div className='Modal stretched-column'>
         <h1>{title}</h1>
           <form>
             <label>title</label>
@@ -60,10 +60,12 @@ export class Modal extends Component {
                   }}
                 />
               }
+              <div className="buttons-row">
                 <ActionButton size={6} action={dismiss} label="dismiss"/>
                 {this.state.title !== "" &&
                   <ActionButton size={6} action={save} label="save"/>
                 }
+              </div>
           </form>
       </div>
     );
@@ -199,7 +201,7 @@ export class ModalResources extends Component {
       buttonState = 'saving';
 
     return (
-      <div className='Modal'>
+      <div className='Modal stretched-column'>
         <h1>{title}</h1>
         <form className="form-horizontal" encType="multipart/form-data">
           <div className="form-group">
@@ -278,11 +280,14 @@ export class ModalResources extends Component {
         <ActionButton size={6} action={dismiss} label="dismiss" />
 
         {kind !== null &&
-          <ActionButton size={6}
+          <div className="buttons-row">
+            <ActionButton size={6}
                         action={(e) => this.submit(e)}
                         label="save"
                         loadingLabel="uploading file …"
-                        state={buttonState} />}
+                        state={buttonState} />
+          </div>
+        }
       </div>
     );
   }

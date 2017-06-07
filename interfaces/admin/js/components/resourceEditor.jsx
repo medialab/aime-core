@@ -5,8 +5,11 @@
  */
 import React, {Component} from 'react';
 import classes from 'classnames';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
+import {
+  Row,
+  Col
+} from 'react-flexbox-grid';
+
 import PropTypes from 'baobab-react/prop-types';
 import {branch} from 'baobab-react/decorators';
 import PureComponent from '../lib/pure.js';
@@ -51,7 +54,7 @@ export default class ResourceEditor extends Component {
     const kind = editorState.kind;
 
     return (
-      <Row className="full-height">
+      <Row>
         <form>
         {editorState.title &&
           <div className="form-group">
@@ -110,7 +113,6 @@ export default class ResourceEditor extends Component {
                 references={this.props.refs}
                 onChange={ (e) => this.context.tree.emit('ref:change', {ref:e}) }
                 />
-
           </div>
 
         {(!editorState.reference.biblib_id && editorState.reference.text ) &&

@@ -13,7 +13,7 @@ import autobind from 'autobind-decorator';
 import {ResourceIcon} from './misc.jsx';
 import {resourceName} from '../lib/helpers.js';
 import {ActionButton} from './misc.jsx';
-import Row from 'react-bootstrap/lib/Row';
+import {Row} from 'react-flexbox-grid';
 
 /**
  * List component
@@ -60,7 +60,8 @@ export default class List extends PureComponent {
   render() {
     const model = this.props.model,
          isThereAnyData = true,
-         items = this.state.filteredItems;
+         items = this.state.filteredItems,
+         lang = this.context.tree.get('lang');
 
     // Actions
     const modalOpen = () => {
@@ -83,19 +84,21 @@ export default class List extends PureComponent {
       result = <ul className="list">{this.state.filteredItems.map(this.renderItem, this)}</ul>;
 
     return (
-      <Row className="full-height searching">
-          <input placeholder="what are you looking for?"
+      <Row className="full-height searching stretched-column">
+          <input placeholder={lang === 'fr' ? 'que recherchez-vous ?' : 'what are you looking for?'}
            onChange={(e) => this.search(e)}
                  className="form-control" size="40"/>
 
-        <div className="overflowing">
+        <div className="scrollable" style={{flex: 1}}>
           <ul className="list">{result}</ul>
         </div>
 
-        {((model === 'doc' || model === 'res') && isThereAnyData) &&
-          <ActionButton size={12}
-                        label="create"
-                        action={modalOpen} />}
+        <div className="buttons-row">
+          {((model === 'doc' || model === 'res') && isThereAnyData) &&
+            <ActionButton
+                          label={lang === 'fr' ? 'créer' : 'create'}
+                          action={modalOpen} />}
+        </div>
       </Row>
     );
   }

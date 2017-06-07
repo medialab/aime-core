@@ -205,6 +205,56 @@ textarea {
   }
 }
 
+.scrollable
+{
+  overflow: auto;
+}
+
+.stretched-column
+{
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+}
+
+.stretched-row
+{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+
+  .Select
+  {
+    flex: 1;
+    .Select-value{
+      height: @m * 5;
+    }
+    margin-right: @m;
+  }
+
+  .button
+  {
+    margin: 0;
+    height: unset;
+    line-height: unset;
+  }
+}
+
+.buttons-row{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  padding-top: @m/2;
+  padding-bottom: @m/2;
+  .button{
+    flex: 1;
+    &:not(:last-of-type){
+      margin-right: @m/2;
+
+    }
+  }
+}
+
 /*
  * Modal
  */
@@ -602,6 +652,10 @@ input, textarea, .form-group {
 /**
  * Components
  */
+
+form{
+  width: 100%;
+}
 
 .Modal
 {

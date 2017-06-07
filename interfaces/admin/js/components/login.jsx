@@ -7,8 +7,10 @@
 import React from 'react';
 import Input from 'react-bootstrap/lib/Input';
 import ButtonInput from 'react-bootstrap/lib/ButtonInput';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
+import {
+  Row,
+  Col
+} from 'react-flexbox-grid';
 import PureComponent, {BranchedComponent} from '../lib/pure.js';
 import PropTypes from 'baobab-react/prop-types';
 import {branch} from 'baobab-react/decorators';

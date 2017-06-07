@@ -67,7 +67,7 @@ export class ReferenceSelector extends PureComponent {
     const lang = this.context.tree.get('lang');
 
     return (
-      <div className="form-group">
+      <div className="form-group stretched-row">
         <Select.Async
           isLoading={false}
           value={this.prepareOption(this.props.reference)}
