@@ -89,7 +89,7 @@ export class Layout extends PureComponent {
       <Grid fluid className="full-height">
         <Col xs={4} className={classes({hidden: editionMode || isAModalDisplayed})} />
 
-        {!blfModal && <Col xs={4} className="full-height stretched-column">
+        {(!blfModal || model !== 'res') && <Col xs={4} className="full-height stretched-column">
           <h1 className="centered">{this.props.title}</h1>
           <ListPanel items={this.props.data} model={model} />
         </Col>}
@@ -102,9 +102,9 @@ export class Layout extends PureComponent {
 
         </Col>
 
-        <Col xs={blfModal ? 8 : 4} className={classes({'full-height':true, hidden: this.props.searching, 'stretched-column': true})}>
+        <Col xs={blfModal && model === 'res' ? 8 : 4} className={classes({'full-height':true, hidden: this.props.searching, 'stretched-column': true})}>
           {(editionMode && !blfModal)  && <PreviewPanel model={model} />}
-          {blfModal && <BlfModal />}
+          {blfModal && model === 'res' && <BlfModal />}
         </Col>
 
         {this.props.searching &&
@@ -116,10 +116,6 @@ export class Layout extends PureComponent {
 
         <Toolbar/>
         {this.props.help && <Help/>}
-
-        {
-          blfModal}
-
       </Grid>
     );
   }

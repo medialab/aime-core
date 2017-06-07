@@ -56,7 +56,6 @@ const actions = {
   'view:change': function({data}) {
     if (this.get('view') === data)
       return;
-    this.set(['states', 'res', 'blfModal'], null);
     this.set('view', data);
   },
 
