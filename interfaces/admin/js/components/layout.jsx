@@ -11,8 +11,13 @@ import classes from 'classnames';
 import {branch} from 'baobab-react/decorators';
 import PropTypes from 'baobab-react/prop-types';
 import autobind from 'autobind-decorator';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
+import {
+  Row,
+  Col,
+  Grid
+} from 'react-flexbox-grid';
+// import Row from 'react-bootstrap/lib/Row';
+// import Col from 'react-bootstrap/lib/Col';
 import Editor from './editor.jsx';
 import Preview from './preview.jsx';
 import List from './list.jsx';
@@ -81,15 +86,15 @@ export class Layout extends PureComponent {
       <ModalResources title={MODAL_TITLES[model]} />;
 
     return (
-      <Row className="full-height">
+      <Grid fluid className="full-height">
         <Col xs={4} className={classes({hidden: editionMode || isAModalDisplayed})} />
 
-        <Col xs={4} className="full-height">
+        <Col xs={4} className="full-height stretched-column">
           <h1 className="centered">{this.props.title}</h1>
           <ListPanel items={this.props.data} model={model} />
         </Col>
 
-        <Col xs={4} className="full-height">
+        <Col xs={4} className="full-height stretched-column">
 
           {isAModalDisplayed ?
             modal  :
@@ -97,7 +102,7 @@ export class Layout extends PureComponent {
 
         </Col>
 
-        <Col xs={4} className={classes({'full-height':true, hidden: this.props.searching})}>
+        <Col xs={4} className={classes({'full-height':true, hidden: this.props.searching, 'stretched-column': true})}>
           {(editionMode)  && <PreviewPanel model={model} />}
         </Col>
 
@@ -111,7 +116,7 @@ export class Layout extends PureComponent {
         <Toolbar/>
         {this.props.help && <Help/>}
 
-      </Row>
+      </Grid>
     );
   }
 }
@@ -129,7 +134,9 @@ export class Layout extends PureComponent {
 class ListPanel extends PureComponent {
   render() {
     if (!this.props.items)
-      return <div className="centered"><span className="glyphicon glyphicon-lg glyphicon-refresh spinning"></span></div>;
+      return <div className="centered">
+              <span className="glyphicon glyphicon-lg glyphicon-refresh spinning"></span>
+            </div>;
     else
       return <List {...this.props} />;
   }
@@ -180,10 +187,9 @@ class EditorPanel extends PureComponent {
           };
 
     return (
-      <div className="full-height">
+      <div className="full-height stretched-column">
         <h1 className="centered">Editor</h1>
-        <div className="overflowing medium">
-
+        <div className="scrollable" style={{flex: 1}}>
           {this.props.model === "doc" ?
           <Editor model={model}
                   author={this.props.author}
@@ -194,9 +200,12 @@ class EditorPanel extends PureComponent {
           :
           <ResourceEditor model={model}/>}
 
+          <div className="buttons-row">
+            {this.props.model === "doc" && <ActionButton size={12} action={openSelector} label="add item" />}
+          </div>
+          
         </div>
-        <div className="actions">
-          {this.props.model === "doc" && <ActionButton size={12} action={openSelector} label="add item" />}
+        <div className="actions buttons-row">
           <ActionButton size={6}
                         action={save}
                         label="save"
@@ -206,7 +215,8 @@ class EditorPanel extends PureComponent {
             <ActionButton
               size={6}
               action={togglePublish}
-              label={this.props.status === 'public' ? 'unpublish' : 'publish'} />}
+              label={this.props.status === 'public' ? 'unpublish' : 'publish'} />
+          }
         </div>
       </div>
     );

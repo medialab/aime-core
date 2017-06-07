@@ -110,7 +110,6 @@ export default class ResourceEditor extends Component {
                 references={this.props.refs}
                 onChange={ (e) => this.context.tree.emit('ref:change', {ref:e}) }
                 />
-
           </div>
 
         {(!editorState.reference.biblib_id && editorState.reference.text ) &&

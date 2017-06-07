@@ -15,7 +15,7 @@ export default class resourcePreview extends PureComponent {
   static contextTypes = {
     tree: PropTypes.baobab
   };
-
+  
   render() {
     return (
       <div className="editor-container full-height preview-container">

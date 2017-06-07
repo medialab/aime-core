@@ -26,6 +26,13 @@ module.exports = {
         test: /\.json$/,
         exclude: /node_modules/,
         loader: 'json-loader'
+      },
+
+      // flexbox grid
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader',
+        include: /flexboxgrid/
       }
     ]
   }
