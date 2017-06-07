@@ -10,7 +10,6 @@ import {Col} from 'react-flexbox-grid';
 import PropTypes from 'baobab-react/prop-types';
 import {branch} from 'baobab-react/decorators';
 import config from '../../config.json';
-
 import Tooltip from 'react-tooltip';
 
 /**
@@ -81,6 +80,8 @@ export class Toolbar extends PureComponent {
 
     const lang = this.props.lang;
 
+    const activeView = this.props.activeView;
+
     const changeView = () => {
       this.context.tree.emit('view:change', 'home');
     };
@@ -105,36 +106,36 @@ export class Toolbar extends PureComponent {
       this.context.tree.emit('logout');
     };
 
-    const openBlf = () => {
-      window.open(config.blfURL,'_blank');
-    };
+    // const openBlf = () => {
+    //   window.open(config.blfURL,'_blank');
+    // };
+
+    // <button data-tip={lang === 'fr' ? 'références' : 'references'} type="button" className="btn btn-default" aria-label="Left Align" onClick={openBlf}>
+    //   <span className="glyphicon glyphicon-education" aria-hidden="true" />
+    // </button>
 
     return (
-        <div className="col-md-1" id="toolbar">
-            <Tooltip place="right" />
-          <button  data-tip={lang === 'fr' ? 'accueil' : 'home'} type="button" className="btn btn-default" aria-label="Left Align" onClick={changeView}>
-            <span className="glyphicon glyphicon-home" aria-hidden="true" />
-          </button>
-          <button data-tip={lang === 'fr' ? 'documents' : 'documents'} type="button" className="btn btn-default" aria-label="Left Align" onClick={goToDocuments}>
-            <span className="glyphicon glyphicon-file" aria-hidden="true" />
-          </button>
-          <button data-tip={lang === 'fr' ? 'ressources' : 'resources'} type="button" className="btn btn-default" aria-label="Left Align" onClick={goToResources}>
-            <span className="glyphicon glyphicon-inbox" aria-hidden="true" />
-          </button>
-          <button data-tip={lang === 'fr' ? 'basculer vers l\'anglais' : 'switch to french'} type="button" className="btn btn-default" aria-label="Left Align" onClick={changeLang}>
-            {lang.toUpperCase()}
-          </button>
-
-          <button data-tip={lang === 'fr' ? 'références' : 'references'} type="button" className="btn btn-default" aria-label="Left Align" onClick={openBlf}>
-            <span className="glyphicon glyphicon-education" aria-hidden="true" />
-          </button>
-          <button data-tip={lang === 'fr' ? 'aide' : 'help'} type="button" className="btn btn-default" aria-label="Left Align" onClick={toogleHelp}>
-            <span className="glyphicon glyphicon-question-sign" aria-hidden="true" />
-          </button>
-          <hr/>
-                    <button  data-tip={lang === 'fr' ? 'se déconnecter' : 'log out'} type="button" className="btn btn-default" aria-label="Left Align" onClick={logout}>
-            <span className="glyphicon glyphicon-off" aria-hidden="true" />
-          </button>
+      <div className="col-md-1" id="toolbar">
+        <Tooltip place="right" />
+        <button  data-tip={lang === 'fr' ? 'accueil' : 'home'} type="button" className={classes('btn', 'btn-default', activeView === 'home' && 'active')} aria-label="Left Align" onClick={changeView}>
+          <span className="glyphicon glyphicon-home" aria-hidden="true" />
+        </button>
+        <button data-tip={lang === 'fr' ? 'documents' : 'documents'} type="button" className={classes('btn', 'btn-default', activeView === 'doc' && 'active')} aria-label="Left Align" onClick={goToDocuments}>
+          <span className="glyphicon glyphicon-file" aria-hidden="true" />
+        </button>
+        <button data-tip={lang === 'fr' ? 'ressources' : 'resources'} type="button" className={classes('btn', 'btn-default', activeView === 'res' && 'active')} aria-label="Left Align" onClick={goToResources}>
+          <span className="glyphicon glyphicon-inbox" aria-hidden="true" />
+        </button>
+        <button data-tip={lang === 'fr' ? 'basculer vers l\'anglais' : 'switch to french'} type="button" className="btn btn-default" aria-label="Left Align" onClick={changeLang}>
+          {lang.toUpperCase()}
+        </button>
+        <button data-tip={lang === 'fr' ? 'aide' : 'help'} type="button" className="btn btn-default" aria-label="Left Align" onClick={toogleHelp}>
+          <span className="glyphicon glyphicon-question-sign" aria-hidden="true" />
+        </button>
+        <hr/>
+        <button  data-tip={lang === 'fr' ? 'se déconnecter' : 'log out'} type="button" className="btn btn-default" aria-label="Left Align" onClick={logout}>
+          <span className="glyphicon glyphicon-off" aria-hidden="true" />
+        </button>
       </div>
     );
   };

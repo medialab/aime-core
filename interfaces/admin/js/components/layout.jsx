@@ -45,10 +45,11 @@ const MODAL_TITLES = {
     return {
       users: ['data', 'users'],
       data: ['data', model],
+      view: ['view'],
       modal: ['states', model, 'modal'],
       selection: ['states', model, 'selection'],
       searching: ['states', model, 'searching'],
-      help: ['states',"help"],
+      help: ['states', 'help'],
       blfModal: ['states', 'res', 'blfModal'],
     };
   }
@@ -114,7 +115,7 @@ export class Layout extends PureComponent {
           </Col>
         }
 
-        <Toolbar/>
+        <Toolbar activeView={this.props.view} />
         {this.props.help && <Help/>}
       </Grid>
     );
@@ -181,7 +182,7 @@ class EditorPanel extends PureComponent {
             this.context.tree.emit('resSelector:open', {model: model});
           },
           togglePublish = () => {
-            
+
             const status = this.props.status === 'public' ? 'private' : 'public';
             save(null, status);
           };
@@ -203,7 +204,7 @@ class EditorPanel extends PureComponent {
           <div className="buttons-row">
             {this.props.model === "doc" && <ActionButton size={12} action={openSelector} label="add item" />}
           </div>
-          
+
         </div>
         <div className="actions buttons-row">
           <ActionButton size={6}
