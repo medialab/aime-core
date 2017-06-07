@@ -75,6 +75,18 @@ export default class Editor extends PureComponent {
     // Setting initial values
     this.editor.doc.setValue(this.props.buffer);
 
+    // Binding keys
+    this.editor.setOption('extraKeys', {
+      'Enter': cm => {
+        cm.doc.replaceSelection('\n\n');
+        return;
+      },
+      'Ctrl-Enter': cm => {
+        cm.doc.replaceSelection('\n');
+        return;
+      }
+    });
+
     // Listening to changes
     this.editorListener = doc => {
       let correction = doc.getValue()
