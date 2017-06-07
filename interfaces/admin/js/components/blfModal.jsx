@@ -41,6 +41,12 @@ export default class BlfModal extends Component {
           />
         </h1>
         <iframe src="http://localhost:9000/" style={{flex: 1}} />
+        <div className="buttons-row">
+          <ActionButton 
+            label="close and refresh" 
+            action={closeBlf}
+          />
+        </div>
       </div>
     );
   }
