@@ -206,10 +206,17 @@ var model = _.merge(abstract(queries), {
 
         batch.save(mediaNode, 'last_update', helpers.timestamp());
 
-        // Diffing the keys present in the payload and the node
-        for (k in mediaNode) {
-          if (k !== 'reference' && mediaNode[k] !== data[k])
-            batch.save(mediaNode, k, data[k]);
+        if (data.kind === 'link') {
+          data.html = '<a href="' + data.url + '" target="_blank">' + (data.title || data.url) + '</a>';
+          batch.save(data);
+        }
+        else {
+
+          // Diffing the keys present in the payload and the node
+          for (k in mediaNode) {
+            if (k !== 'reference' && mediaNode[k] !== data[k])
+              batch.save(mediaNode, k, data[k]);
+          }
         }
 
         // Should we update the reference?
