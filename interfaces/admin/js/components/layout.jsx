@@ -201,10 +201,9 @@ class EditorPanel extends PureComponent {
           :
           <ResourceEditor model={model}/>}
 
-          <div className="buttons-row">
-            {this.props.model === "doc" && <ActionButton size={12} action={openSelector} label="add item" />}
-          </div>
-
+        </div>
+        <div className="buttons-row">
+          {this.props.model === "doc" && <ActionButton size={12} action={openSelector} label="add item" />}
         </div>
         <div className="actions buttons-row">
           <ActionButton size={6}

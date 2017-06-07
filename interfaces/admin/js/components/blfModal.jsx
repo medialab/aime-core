@@ -35,10 +35,6 @@ export default class BlfModal extends Component {
       <div className="full-height stretched-column">
         <h1 className="centered stretched-row">
           <span style={{flex: 1}}>{this.props.lang === 'fr' ? 'éditeur de références' : 'references editor'}</span>
-          <ActionButton 
-            label="X" 
-            action={closeBlf}
-          />
         </h1>
         <iframe src="http://localhost:9000/" style={{flex: 1}} />
         <div className="buttons-row">
