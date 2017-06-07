@@ -116,6 +116,7 @@ var model = _.merge(abstract(queries), {
           mediaData.internal = false;
           mediaData.html = '<a href="' + data.url + '" target="_blank">' + (data.title || data.url) + '</a>';
           mediaData.url = data.url;
+          mediaData.title = data.title || data.url;
         }
 
         else if (kind === 'video') {

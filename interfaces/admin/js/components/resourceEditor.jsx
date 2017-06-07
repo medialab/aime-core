@@ -56,17 +56,17 @@ export default class ResourceEditor extends Component {
     return (
       <Row>
         <form>
-        {editorState.title &&
+        {(kind === 'link') &&
           <div className="form-group">
             <label>title</label>
             <input value={editorState.title}
-                   onChange={(e) => this.changeHandler({item: {title:e.target.value}})}
+                   onChange={(e) => this.changeHandler({item: {title: e.target.value}}, 'title')}
                    placeholder="title"
                    className="form-control" />
           </div>
         }
 
-        {(kind === "video" || kind === 'rich' ) &&
+        {(kind === 'video' || kind === 'rich' ) &&
          <div className="form-group">
             <label>html</label>
             <textarea value={editorState.html}
@@ -75,7 +75,7 @@ export default class ResourceEditor extends Component {
                       className="editor pre" />
           </div>}
 
-        {kind === "quote" &&
+        {kind === 'quote' &&
           <div className="form-group">
               <label>text</label>
               <textarea value={editorState.text}
@@ -85,7 +85,7 @@ export default class ResourceEditor extends Component {
           </div>
         }
 
-        {(kind === "video" || kind === 'link' || kind === 'url' || kind === 'rich' ) &&
+        {(kind === 'video' || kind === 'link' || kind === 'url' || kind === 'rich' ) &&
           <div className="form-group">
             <label>url</label>
             <input value={editorState.url}
@@ -95,7 +95,7 @@ export default class ResourceEditor extends Component {
           </div>
         }
 
-        {(kind === "image" || kind === 'pdf') &&
+        {(kind === 'image' || kind === 'pdf') &&
           <div className="form-group">
             <label>path</label>
             <input value={editorState.path}
@@ -105,15 +105,14 @@ export default class ResourceEditor extends Component {
           </div>
         }
 
-          <div className="form-group">
-              <label>reference</label>
+        <div className="form-group">
+          <label>reference</label>
 
-              <ReferenceSelector
-                reference={editorState.reference}
-                references={this.props.refs}
-                onChange={ (e) => this.context.tree.emit('ref:change', {ref:e}) }
-                />
-          </div>
+          <ReferenceSelector
+            reference={editorState.reference}
+            references={this.props.refs}
+            onChange={e => this.context.tree.emit('ref:change', {ref:e})} />
+        </div>
 
         {(!editorState.reference.biblib_id && editorState.reference.text ) &&
           <div className="alert alert-danger" role="alert">

@@ -44,13 +44,15 @@ const ressourceRender = function(res){
   if(res.type === "media") {
 
     var ref = res.reference.id !== null
-              ? `<p class="caption reference ">${res.reference.html || res.reference.text}</p>` : '';
+              ? `<p class="caption reference">${res.reference.html || res.reference.text}</p>` : '';
 
     switch (res.kind) {
 
       case "link":
-        return  `<div class="resource-item ${res.type}
-                  <p>${res.kind}">${res.html}</p>
+
+        var link = `<a href="${res.url}" target="_blank" rel="noopener">${res.title}</a>`;
+
+        return  `<div class="resource-item ${res.type} ${res.kind}"><p>${link}</p>
                   ${ref}
                 </div>`;
 
