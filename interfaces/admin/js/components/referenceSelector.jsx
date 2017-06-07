@@ -65,7 +65,7 @@ export class ReferenceSelector extends PureComponent {
 
   render() {
     const lang = this.context.tree.get('lang');
-    console.log(this.context.tree.get());
+
     return (
       <div className="form-group">
         <Select.Async
