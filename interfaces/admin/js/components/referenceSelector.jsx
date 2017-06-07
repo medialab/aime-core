@@ -4,10 +4,13 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PureComponent from '../lib/pure.js';
 import PropTypes from 'baobab-react/prop-types';
 import Select from 'react-select';
 import _ from 'lodash';
+
+import {ActionButton} from './misc.jsx';
+import PureComponent from '../lib/pure.js';
+
 
 export class ReferenceSelector extends PureComponent {
   static contextTypes = {
@@ -61,8 +64,10 @@ export class ReferenceSelector extends PureComponent {
   }
 
   render() {
+    const lang = this.context.tree.get('lang');
+    console.log(this.context.tree.get());
     return (
-      <div className="form-group author">
+      <div className="form-group">
         <Select.Async
           isLoading={false}
           value={this.prepareOption(this.props.reference)}
@@ -73,6 +78,13 @@ export class ReferenceSelector extends PureComponent {
           noResultsText="No results, keep on typing"
           loadOptions={this.getOptions}
           onChange={this.props.onChange}
+        />
+        <ActionButton
+          action = {() => window.open('http://localhost:9000/')}
+          state = "normal"
+          label={lang === 'fr' ? 'créer ref': 'create ref'}
+          loadingLabel={false}
+          disabledLabel={true}
         />
       </div>
     );
