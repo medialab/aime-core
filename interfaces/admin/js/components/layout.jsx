@@ -16,8 +16,6 @@ import {
   Col,
   Grid
 } from 'react-flexbox-grid';
-// import Row from 'react-bootstrap/lib/Row';
-// import Col from 'react-bootstrap/lib/Col';
 import Editor from './editor.jsx';
 import Preview from './preview.jsx';
 import List from './list.jsx';

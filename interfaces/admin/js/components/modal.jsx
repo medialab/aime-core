@@ -5,7 +5,7 @@
  */
 import React, {Component} from 'react';
 import classes from 'classnames';
-import Col from 'react-bootstrap/lib/Col';
+import {Col} from 'react-flexbox-grid';
 import {ActionButton} from './misc.jsx';
 import PropTypes from 'baobab-react/prop-types';
 import bibtex from 'bibtex-parser';
@@ -60,10 +60,12 @@ export class Modal extends Component {
                   }}
                 />
               }
+              <div className="buttons-row">
                 <ActionButton size={6} action={dismiss} label="dismiss"/>
                 {this.state.title !== "" &&
                   <ActionButton size={6} action={save} label="save"/>
                 }
+              </div>
           </form>
       </div>
     );
