@@ -53,10 +53,16 @@ bindFetching(tree);
 tree.on(actions);
 
 // Debugging
-tree.on(function(e){
-  const msg = ['update', 'get', 'select', 'invalid', 'buffer:change'];
+const EVENT_BLACK_LIST = new Set([
+  'update',
+  'get',
+  'select',
+  'invalid',
+  'buffer:change'
+]);
 
-  if (!~msg.indexOf(e.type))
+tree.on(function(e){
+  if (!EVENT_BLACK_LIST.has(e.type))
     console.log(
       '[Event]',
       e.type,
