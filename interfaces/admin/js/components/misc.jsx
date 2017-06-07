@@ -45,7 +45,8 @@ export class ActionButton extends PureComponent {
     const classString = classes(
       'button',
       // sizeClass,
-      {disabled: state === 'disabled'}
+      {disabled: state === 'disabled'},
+      {active: state === 'active'}
     );
 
     if (state === 'saving' && loadingLabel)

@@ -52,7 +52,6 @@ export default class ResourceEditor extends Component {
 
     const editorState = this.props.states.editor;
     const kind = editorState.kind;
-
     return (
       <Row>
         <form>

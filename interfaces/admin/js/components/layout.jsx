@@ -25,6 +25,7 @@ import Help from './help.jsx';
 import ResourceSelector from './resourceSelector.jsx';
 import ResourceEditor from './resourceEditor.jsx';
 import ResourcePreview from './resourcePreview.jsx';
+import BlfModal from './blfModal.jsx';
 import {
   confirmProductionOperation
 } from '../lib/helpers';
@@ -47,7 +48,8 @@ const MODAL_TITLES = {
       modal: ['states', model, 'modal'],
       selection: ['states', model, 'selection'],
       searching: ['states', model, 'searching'],
-      help: ['states',"help"]
+      help: ['states',"help"],
+      blfModal: ['states', 'res', 'blfModal'],
     };
   }
 })
@@ -68,11 +70,11 @@ export class Layout extends PureComponent {
 
   render() {
     const model = this.props.model,
+          blfModal = this.props.blfModal,
           isAModalDisplayed = !!this.props.modal,
           isSomethingSelected = (this.props.selection || []).length > (1 - (model === 'doc' || model === 'res')),
           isThereAnyData = !!this.props.data,
           editionMode = isSomethingSelected && isThereAnyData && !isAModalDisplayed;
-
     // NOTE: columns
     //  --1: potentially hidden column
     //  --2: list containing the items
@@ -87,10 +89,10 @@ export class Layout extends PureComponent {
       <Grid fluid className="full-height">
         <Col xs={4} className={classes({hidden: editionMode || isAModalDisplayed})} />
 
-        <Col xs={4} className="full-height stretched-column">
+        {!blfModal && <Col xs={4} className="full-height stretched-column">
           <h1 className="centered">{this.props.title}</h1>
           <ListPanel items={this.props.data} model={model} />
-        </Col>
+        </Col>}
 
         <Col xs={4} className="full-height stretched-column">
 
@@ -100,8 +102,9 @@ export class Layout extends PureComponent {
 
         </Col>
 
-        <Col xs={4} className={classes({'full-height':true, hidden: this.props.searching, 'stretched-column': true})}>
-          {(editionMode)  && <PreviewPanel model={model} />}
+        <Col xs={blfModal ? 8 : 4} className={classes({'full-height':true, hidden: this.props.searching, 'stretched-column': true})}>
+          {(editionMode && !blfModal)  && <PreviewPanel model={model} />}
+          {blfModal && <BlfModal />}
         </Col>
 
         {this.props.searching &&
@@ -113,6 +116,9 @@ export class Layout extends PureComponent {
 
         <Toolbar/>
         {this.props.help && <Help/>}
+
+        {
+          blfModal}
 
       </Grid>
     );

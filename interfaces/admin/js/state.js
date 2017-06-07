@@ -35,7 +35,8 @@ export default {
     res: {
       editor: null,
       selection: null,
-      modal: null
+      modal: null,
+      blfModal: null,
     },
     help: false
   },

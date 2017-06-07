@@ -56,7 +56,7 @@ const actions = {
   'view:change': function({data}) {
     if (this.get('view') === data)
       return;
-
+    this.set(['states', 'res', 'blfModal'], null);
     this.set('view', data);
   },
 
@@ -236,6 +236,17 @@ const actions = {
 
   'modal:dismiss': function({data: {model}}) {
     this.set(['states', model, 'modal'], null);
+  },
+
+  /**
+   * Blf modals
+   */
+  'blfModal:open': function({data: {model,type}}) {
+    this.set(['states', model, 'blfModal'], type);
+  },
+
+  'blfModal:dismiss': function({data: {model}}) {
+    this.set(['states', model, 'blfModal'], null);
   },
 
   /**

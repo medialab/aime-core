@@ -65,9 +65,24 @@ export class ReferenceSelector extends PureComponent {
 
   render() {
     const lang = this.context.tree.get('lang');
+    const blfModal = this.context.tree.get(['states', 'res', 'blfModal'])
+
+    const onBlfModalToggle = () => {
+      if (blfModal) {
+        this.context.tree.emit('blfModal:open', {
+          model: 'res',
+          type: null
+        });
+      } else {
+        this.context.tree.emit('blfModal:open', {
+          model: 'res',
+          type: 'creation'
+        });
+      }
+    }
 
     return (
-      <div className="form-group stretched-row">
+      <div className="form-group stretched-column">
         <Select.Async
           isLoading={false}
           value={this.prepareOption(this.props.reference)}
@@ -80,9 +95,9 @@ export class ReferenceSelector extends PureComponent {
           onChange={this.props.onChange}
         />
         <ActionButton
-          action = {() => window.open('http://localhost:9000/')}
-          state = "normal"
-          label={lang === 'fr' ? 'créer ref': 'create ref'}
+          action = {onBlfModalToggle}
+          state = {blfModal ? "active" : "normal"}
+          label={lang === 'fr' ? 'créer/éditer références': 'create/edit references'}
           loadingLabel={false}
           disabledLabel={true}
         />
