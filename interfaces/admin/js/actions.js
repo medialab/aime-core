@@ -37,17 +37,18 @@ const actions = {
     if (this.get('lang') === data)
       return;
 
-    // Changing the lang
-    this.set('lang', data);
-
-    // Clearing fetched data
-    this.set('data', null);
-
-    // Clearing states
-    this.set('states', null);
-
     // Effectively changing client's lang
-    this.client.lang({params: {lang: data}});
+    this.client.lang({params: {lang: data}}, () => {
+
+      // Changing the lang
+      this.set('lang', data);
+
+      // Clearing fetched data
+      this.set('data', null);
+
+      // Clearing states
+      this.set('states', null);
+    });
   },
 
   /**
@@ -82,6 +83,8 @@ const actions = {
       parent.set('title', item.title);
       parent.set('author', item.author.id);
       parent.set('status', item.status);
+      parent.set('searching', false);
+      parent.set('linking', null);
       return parent.set('editor', item.markdown);
     }
 

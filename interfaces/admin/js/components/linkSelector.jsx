@@ -51,7 +51,7 @@ export class BookLinkSelector extends Component {
 
     return (
       <Row className="full-height stretched-column">
-        <h1>Link the book</h1>
+        <h1>Link book</h1>
         <div style={{flex: 1}} className="scrollable">
           List
         </div>
@@ -142,11 +142,11 @@ export class VocLinkSelector extends Component {
 
     return (
       <Row className="full-height stretched-column">
-        <h1>Link the voc</h1>
+        <h1>Link voc</h1>
         <input
           value={this.state.search}
           onChange={e => (this.setState({search: e.target.value}), this.searchItems())}
-          placeholder={lang === 'fr' ? 'que recherchez-vous ?' : 'what are you looking for?'}
+          placeholder={lang === 'fr' ? 'quel vocabulaire recherchez-vous ?' : 'which vocabulary are you looking for?'}
           className="form-control" size="40" />
         <div style={{flex: 1}} className="scrollable">
           <ul className="list">
