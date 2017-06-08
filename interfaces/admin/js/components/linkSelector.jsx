@@ -129,7 +129,7 @@ export class VocLinkSelector extends Component {
     if (!query || query.length < 3)
       return this.setState({filteredItems: []});
 
-    const regex = new RegExp(escapeRegexp(query), 'i');
+    const regex = new RegExp(escapeRegexp(query).replace(/\s/g, '\\s'), 'i');
 
     const filteredItems = (this.props.voc || [])
       .filter(voc => {
