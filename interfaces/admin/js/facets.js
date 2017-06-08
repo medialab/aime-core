@@ -40,6 +40,33 @@ export default {
     }
   },
 
+  // Flattened paragraphs index
+  flatParagraphs: {
+    cursors: {
+      data: ['data', 'book']
+    },
+    get: function({data}) {
+      if (!data)
+        return [];
+
+      var paragraphs = [];
+
+      data.forEach(chapter => {
+        chapter.children.forEach(subchapter => {
+          subchapter.children.forEach(paragraph => {
+            paragraphs.push({
+              chapter,
+              subchapter,
+              data: paragraph
+            });
+          });
+        });
+      });
+
+      return paragraphs;
+    }
+  },
+
   // Resources index
   resIndex: {
     cursors: {

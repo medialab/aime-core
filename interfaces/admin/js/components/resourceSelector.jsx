@@ -88,10 +88,11 @@ export default class ResourceSelector extends Component {
     return (
       <Row className="full-height stretched-column">
         <h1>{this.props.title}</h1>
-          <input value={this.state.title}
-                 onChange={this.search}
-                 placeholder={lang === 'fr' ? 'que recherchez-vous ?' : 'what are you looking for?'}
-                 className="form-control" size="40"/>
+        <input
+          value={this.state.title}
+          onChange={this.search}
+          placeholder={lang === 'fr' ? 'que recherchez-vous ?' : 'what are you looking for?'}
+          className="form-control" size="40" />
         <div style={{flex: 1}} className="scrollable">
           {result}
         </div>

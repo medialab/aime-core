@@ -21,6 +21,11 @@ import {resourceName} from '../lib/helpers.js';
 /**
  * Book Link Selector
  */
+@branch({
+  facets: {
+    paragraphs: 'flatParagraphs'
+  }
+})
 export class BookLinkSelector extends Component {
 
   static contextTypes = {
@@ -35,6 +40,7 @@ export class BookLinkSelector extends Component {
   }
 
   render() {
+    console.log(this.props);
     const dismiss = () => {
       this.context.tree.emit('linkSelector:dismiss');
     };
@@ -44,6 +50,9 @@ export class BookLinkSelector extends Component {
     return (
       <Row className="full-height stretched-column">
         <h1>Link the book</h1>
+        <div style={{flex: 1}} className="scrollable">
+          List
+        </div>
         <div className="buttons-row">
           <ActionButton size={6} action={dismiss} label="close"/>
         </div>
@@ -55,6 +64,11 @@ export class BookLinkSelector extends Component {
 /**
  * Voc Link Selector
  */
+@branch({
+  cursors: {
+    voc: ['data', 'voc']
+  }
+})
 export class VocLinkSelector extends Component {
 
   static contextTypes = {
@@ -69,6 +83,10 @@ export class VocLinkSelector extends Component {
   }
 
   render() {
+    const voc = this.props.voc;
+
+    console.log(voc);
+
     const dismiss = () => {
       this.context.tree.emit('linkSelector:dismiss');
     };
@@ -78,6 +96,9 @@ export class VocLinkSelector extends Component {
     return (
       <Row className="full-height stretched-column">
         <h1>Link the voc</h1>
+        <div style={{flex: 1}} className="scrollable">
+          List
+        </div>
         <div className="buttons-row">
           <ActionButton size={6} action={dismiss} label="close"/>
         </div>
