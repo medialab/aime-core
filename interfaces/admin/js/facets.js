@@ -40,6 +40,16 @@ export default {
     }
   },
 
+  // Doc index by id
+  docIndexById: {
+    cursors: {
+      data: ['data', 'doc']
+    },
+    get: function({data}) {
+      return _.indexBy(data, 'id');
+    }
+  },
+
   // Flattened paragraphs index
   flatParagraphs: {
     cursors: {

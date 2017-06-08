@@ -5,7 +5,7 @@
  */
 import React, {Component} from 'react';
 import classes from 'classnames';
-import tokenizer from 'talisman/tokenizers/sentences';
+import tokenizer from '../lib/tokenizer';
 import {escapeRegexp} from 'talisman/regexp';
 import {
   Row,
@@ -68,7 +68,11 @@ export class BookLinkSelector extends Component {
  */
 @branch({
   cursors: {
+    selectedDoc: ['states', 'doc', 'selection', 0],
     voc: ['data', 'voc']
+  },
+  facets: {
+    docIndex: 'docIndexById'
   }
 })
 export class VocLinkSelector extends Component {
@@ -91,18 +95,25 @@ export class VocLinkSelector extends Component {
 
   @autobind
   renderItem(data) {
+    const doc = this.props.docIndex[this.props.selectedDoc];
+    const matcher = new RegExp(`doc_${doc.slug_id}`);
+
     return (
       <li className="box-no-hover" key={data.id}>
         {data.title}
         <ul className="list">
           {data.children.map(paragraph => {
 
-            const sentences = tokenizer(paragraph.text);
-
+            const sentences = tokenizer(paragraph.text),
+                  markdownSentences = tokenizer(paragraph.markdown);
             return (
               <li key={paragraph.id} className="paragraph">
                 <p>
-                  {sentences.map((s, i) => <span key={i} className="sentence">{s}</span>)}
+                  {sentences.map((s, i) => {
+                    const match = markdownSentences[i].match(matcher);
+
+                    return <span key={i} className={classes('sentence', match && 'active')}>{s}</span>
+                  })}
                 </p>
               </li>
             );
