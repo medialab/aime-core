@@ -44,3 +44,9 @@ RETURN media, reference.biblib_id AS referenceId, id(r) AS relationId LIMIT 1;
 // Retrieve a single reference by biblib id.
 MATCH (r:Reference {biblib_id: {id}})
 RETURN r LIMIT 1;
+
+// name: getParentDocumentIds
+// Retrieve document ids which contains a resource
+MATCH (r:Media)<-[:HAS]-(:Slide)<-[:HAS]-(d:Document)
+WHERE id(r) = {id}
+RETURN collect(id(d)) as documentIds

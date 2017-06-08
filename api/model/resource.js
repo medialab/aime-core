@@ -331,6 +331,42 @@ var model = _.merge(abstract(queries), {
 
       return callback(null, true);
     });
+  },
+
+  // Destroying an existing document
+  destroy: function(id, callback) {
+    async.waterfall([
+      function getAffectedDocument(next) {
+        db.rows(queries.getParentDocumentIds, {id: id}, function(err, result) {
+          // On typical error
+          if (err) return callback(err);
+          const documentIds = result[0];
+          
+          if (documentIds.length > 0)
+            return callback(null, documentIds);
+          else
+            next(null)
+        });
+      },
+      function retrieveMedia(next) {
+        db.query(queries.getForUpdate, {id: id}, function(err, rows) {
+          if (err) return next(err);
+          if (!rows.length) return next(null, null);
+
+          return next(null, rows[0].media);
+        });
+      },
+      function deleteMedia(media,next) {
+        // remove file
+        if (media.path)
+          fse.unlinkSync(storagePath + '/' + media.kind + 's/' + media.path)
+        // detach, DELETE
+        db.delete(id,true,function(err){
+          if (err) return callback(err);
+           next(null)
+        } );
+      }
+    ],function(err){ return callback(err,[])});
   }
 });
 
