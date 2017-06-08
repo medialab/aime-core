@@ -200,6 +200,22 @@ var model = _.merge(abstract(queries), {
           return next(null, rows[0]);
         });
       },
+      function checkExternalResource(row,next) {
+        if (data.kind === 'video' && data.url !== row.media.url) {
+          console.log("updating video html")
+          return essence.extract(data.url, function(err, infos) {
+            if (err) return next(err);
+
+            if (infos.type !== 'video')
+              return next(new Error('wrong-external-resource-type'));
+
+            data.html = infos.html
+            return next(null, row);
+          });
+        }
+
+        return next(null, row);
+      },
       function updateMedia(row, next) {
         var mediaNode = row.media,
             k;
@@ -215,6 +231,7 @@ var model = _.merge(abstract(queries), {
           // Diffing the keys present in the payload and the node
           for (k in mediaNode) {
             if (k !== 'reference' && mediaNode[k] !== data[k])
+              console.log(k,mediaNode[k],data[k])
               batch.save(mediaNode, k, data[k]);
           }
         }
