@@ -28,7 +28,7 @@ var REGEX = new RegExp([
   "([.?!…]+)",
     "([" + QUOTES + "*_]?[*_]?)",
     "[\\s\\r\\n]+",
-  "(?=[" + QUOTES + SIMPLE_QUOTES + "]?[A-Z0-9])"
+  "(?=[" + QUOTES + SIMPLE_QUOTES + "]?[A-ZÀ0-9])"
 ].join(''), 'g');
 
 var QUOTE_REGEX = new RegExp('[' + QUOTES + ']', 'g'),
