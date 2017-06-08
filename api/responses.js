@@ -86,14 +86,20 @@ module.exports = function(express) {
     this.status(500).json(response);
   };
 
-  express.response.forbidden = function() {
-    this.status(403).json({
+  express.response.forbidden = function(reason) {
+
+    var response = {
       status: 'error',
       error: {
         code: 403,
         title: 'Forbidden'
       }
-    });
+    }
+
+    if (reason)
+      response.error.reason = reason;
+
+    this.status(403).json(response);
   };
 
   express.response.unauthorized = function() {

@@ -155,7 +155,13 @@ module.exports = [
     url: '/res/:id',
     methods: ['DELETE'],
     action: function(req, res) {
-      return res.notImplemented();
+      resModel.destroy(+req.params.id, function(err, linkingDocuments) {
+        if (err) return res.serverError(err);
+        if (linkingDocuments.length === 0)
+          return res.ok(linkingDocuments);
+        else
+          return res.forbidden(linkingDocuments);
+      });
     }
   },
 
