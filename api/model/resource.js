@@ -337,13 +337,13 @@ var model = _.merge(abstract(queries), {
   destroy: function(id, callback) {
     async.waterfall([
       function getAffectedDocument(next) {
-        db.rows(queries.getParentDocumentIds, {id: id}, function(err, result) {
+        db.rows(queries.getParentDocumentTitles, {id: id}, function(err, result) {
           // On typical error
           if (err) return callback(err);
-          const documentIds = result[0];
-          
-          if (documentIds.length > 0)
-            return callback(null, documentIds);
+          const documentTitles = result[0];
+
+          if (documentTitles.length > 0)
+            return callback(null, documentTitles);
           else
             next(null)
         });

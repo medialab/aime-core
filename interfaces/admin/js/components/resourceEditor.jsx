@@ -97,7 +97,7 @@ export default class ResourceEditor extends Component {
         {(kind === 'image' || kind === 'pdf') &&
           <div className="form-group">
             <label>path</label>
-            <input value={editorState.path}
+            <input value={editorState.path || editorState.url}
                    disabled="disabled"
                    placeholder="http://website.com/folder/file.ext"
                    className="form-control" />

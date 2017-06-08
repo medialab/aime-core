@@ -330,8 +330,29 @@ const actions = {
   'resource:delete': function() {
     const id = this.get('states', 'res', 'selection', 0);
 
-    this.client.deleteRes({params: {id}}, function(err, result) {
-      console.log(err, result);
+    this.client.deleteRes({params: {id}}, (err, result) => {
+      if (err) {
+
+        // Notifying the user
+        const xhr = err.xhr;
+
+        result = JSON.parse(xhr.responseText);
+
+        const docs = result.error.reason
+          .map(doc => '  - ' + doc)
+          .join('\n');
+
+        const message = `Cannot delete this resource because it is used by the following documents:\n${docs}`;
+
+        return alert(message);
+      }
+
+      const res = this.get('data', 'res');
+
+      const index = res.findIndex(r => r.id === id);
+
+      this.splice(['data', 'res'], [index, 1]);
+      this.set(['states', 'res', 'selection'], null);
     });
   }
 };
