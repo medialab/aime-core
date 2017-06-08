@@ -193,6 +193,9 @@ class EditorPanel extends PureComponent {
           openLinkSelector = type => () => {
             this.context.tree.emit('linkSelector:open', {type: type});
           },
+          deleteResource = () => {
+            this.context.tree.emit('resource:delete');
+          },
           togglePublish = () => {
 
             const status = this.props.status === 'public' ? 'private' : 'public';
@@ -214,11 +217,15 @@ class EditorPanel extends PureComponent {
           <ResourceEditor model={model}/>}
 
         </div>
-        <div className="buttons-row" style={{paddingBottom: '0px'}}>
-          {this.props.model === "doc" && <ActionButton size={4} action={openSelector} label="add item" />}
-          <ActionButton size={4} action={openLinkSelector('book')} label="link book" />
-          <ActionButton size={4} action={openLinkSelector('voc')} label="link voc" />
-        </div>
+        {this.props.model === 'doc' &&
+          (
+            <div className="buttons-row" style={{paddingBottom: '0px'}}>
+              <ActionButton size={4} action={openSelector} label="add item" />
+              <ActionButton size={4} action={openLinkSelector('book')} label="link book" />
+              <ActionButton size={4} action={openLinkSelector('voc')} label="link voc" />
+            </div>
+          )
+        }
         <div className="actions buttons-row">
           <ActionButton size={6}
                         action={save}
@@ -232,6 +239,13 @@ class EditorPanel extends PureComponent {
               label={this.props.status === 'public' ? 'unpublish' : 'publish'} />
           }
         </div>
+        {this.props.model === 'res' &&
+          (
+            <div className="buttons-row" style={{paddingTop: '0px'}}>
+              <ActionButton size={6} action={deleteResource} label="delete" />
+            </div>
+          )
+        }
       </div>
     );
   }

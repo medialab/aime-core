@@ -131,6 +131,12 @@ export default function(scope) {
       updateRes: {
         url: '/res/:id',
         type: 'PUT'
+      },
+
+      // Delete a resource
+      deleteRes: {
+        url: '/res/:id',
+        type: 'DELETE'
       }
     }
   });

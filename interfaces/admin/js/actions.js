@@ -313,6 +313,17 @@ const actions = {
     const cursor = 'states.' + model + '.editor.' + payload.fieldName;
     this.set(cursor.split('.'), payload.fieldValue);
     this.commit();
+  },
+
+  /**
+   * Deleting a resource
+   */
+  'resource:delete': function() {
+    const id = this.get('states', 'res', 'selection', 0);
+
+    this.client.deleteRes({params: {id}}, function(err, result) {
+      console.log(err, result);
+    });
   }
 };
 
