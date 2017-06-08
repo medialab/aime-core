@@ -30,7 +30,8 @@ export default {
       selection: null,
       modal: null,
       author:null,
-      searching: false
+      searching: false,
+      linking: null
     },
     res: {
       editor: null,

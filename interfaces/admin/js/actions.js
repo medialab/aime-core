@@ -253,10 +253,24 @@ const actions = {
    */
   'resSelector:open': function({data: {model}}) {
     this.set(['states', model, 'searching'], true);
+    this.set(['states', 'doc', 'linking'], null);
     this.commit();
   },
   'resSelector:dismiss': function({data: {model}}) {
     this.set(['states', model, 'searching'], false);
+    this.commit();
+  },
+
+  /**
+   * Linking documents to either book or voc
+   */
+  'linkSelector:open': function({data: {type}}) {
+    this.set(['states', 'doc', 'linking'], type);
+    this.set(['states', 'doc', 'searching'], false);
+    this.commit();
+  },
+  'linkSelector:dismiss': function() {
+    this.set(['states', 'doc', 'linking'], null);
     this.commit();
   },
 

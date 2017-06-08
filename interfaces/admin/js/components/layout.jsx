@@ -22,6 +22,7 @@ import List from './list.jsx';
 import {ActionButton, Toolbar} from './misc.jsx';
 import {Modal, ModalResources} from './modal.jsx';
 import Help from './help.jsx';
+import {BookLinkSelector, VocLinkSelector} from './linkSelector.jsx';
 import ResourceSelector from './resourceSelector.jsx';
 import ResourceEditor from './resourceEditor.jsx';
 import ResourcePreview from './resourcePreview.jsx';
@@ -49,6 +50,7 @@ const MODAL_TITLES = {
       modal: ['states', model, 'modal'],
       selection: ['states', model, 'selection'],
       searching: ['states', model, 'searching'],
+      linking: ['states', model, 'linking'],
       help: ['states', 'help'],
       blfModal: ['states', 'res', 'blfModal'],
     };
@@ -103,15 +105,22 @@ export class Layout extends PureComponent {
 
         </Col>
 
-        <Col xs={blfModal && model === 'res' ? 8 : 4} className={classes({'full-height':true, hidden: this.props.searching, 'stretched-column': true})}>
+        <Col xs={blfModal && model === 'res' ? 8 : 4} className={classes({'full-height':true, hidden: this.props.searching || this.props.linking, 'stretched-column': true})}>
           {(editionMode && !blfModal)  && <PreviewPanel model={model} />}
           {blfModal && model === 'res' && <BlfModal />}
         </Col>
 
         {this.props.searching &&
-
           <Col xs={4} className="searching full-height">
             <ResourceSelector title="select ressource" model={model} />
+          </Col>
+        }
+
+        {!this.props.searching && this.props.linking &&
+          <Col xs={4} className="linking full-height">
+            {this.props.linking === 'book' ?
+              <BookLinkSelector /> :
+              <VocLinkSelector />}
           </Col>
         }
 
@@ -181,6 +190,9 @@ class EditorPanel extends PureComponent {
           openSelector = () => {
             this.context.tree.emit('resSelector:open', {model: model});
           },
+          openLinkSelector = type => () => {
+            this.context.tree.emit('linkSelector:open', {type: type});
+          },
           togglePublish = () => {
 
             const status = this.props.status === 'public' ? 'private' : 'public';
@@ -204,8 +216,8 @@ class EditorPanel extends PureComponent {
         </div>
         <div className="buttons-row" style={{paddingBottom: '0px'}}>
           {this.props.model === "doc" && <ActionButton size={4} action={openSelector} label="add item" />}
-          <ActionButton size={4} action={Function.prototype} label="link voc" />
-          <ActionButton size={4} action={Function.prototype} label="link doc" />
+          <ActionButton size={4} action={openLinkSelector('book')} label="link book" />
+          <ActionButton size={4} action={openLinkSelector('voc')} label="link voc" />
         </div>
         <div className="actions buttons-row">
           <ActionButton size={6}
