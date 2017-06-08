@@ -9,6 +9,7 @@ var docModel = require('../model/document.js'),
     resModel = require('../model/resource.js'),
     scenarioModel = require('../model/scenario.js'),
     usersModel = require('../model/users.js');
+    linkModel = require('../model/link.js');
 
 // Forge
 function createResource(kind) {
@@ -213,7 +214,6 @@ module.exports = [
       );
     }
   },
-
   {
     url: '/scenario/:id',
     methods: ['DELETE'],
@@ -221,6 +221,46 @@ module.exports = [
       scenarioModel.destroy(+req.params.id, function(err) {
         if (err) return res.serverError(err);
 
+        return res.ok();
+      });
+    }
+  },
+  // LINK
+  {
+    url: '/link',
+    methods: ['POST'],
+    validate: {
+      idFrom: 'number',
+      idTo: 'number',
+      indexSentence: 'number'
+    },
+    action: function(req, res) {
+      linkModel.create(
+        req.body.idFrom,
+        req.body.idTo,
+        req.body.indexSentence,     
+        req.session.user,
+        function(err) {
+          if (err)
+            if (err.message === "linkExists")
+              return res.forbidden("linkExists");
+            else
+              return res.serverError(err);
+          return res.ok();
+        }
+      );
+    }
+  },
+  {
+    url: '/link',
+    methods: ['DELETE'],
+    validate: {
+      idFrom: 'number',
+      idTo: 'number'
+    },
+    action: function(req, res) {
+      linkModel.destroy(req.body.idFrom, req.body.idTo, function(err) {
+        if (err) return res.serverError(err);
         return res.ok();
       });
     }
