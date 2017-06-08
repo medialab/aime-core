@@ -248,7 +248,13 @@ const actions = {
   },
 
   'blfModal:dismiss': function({data: {model}}) {
-    this.set(['states', model, 'blfModal'], null);
+
+    this.set(['states', model, 'refreshing'], true);
+
+    this.client.ref(() => {
+      this.set(['states', model, 'refreshing'], false);
+      this.set(['states', model, 'blfModal'], null);
+    });
   },
 
   /**

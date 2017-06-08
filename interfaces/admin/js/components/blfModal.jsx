@@ -18,6 +18,7 @@ import {
 @branch({
   cursors: {
     blfModal: ['states', 'res', 'blfModal'],
+    refreshing: ['states', 'res', 'refreshing'],
     lang: ['lang']
   }
 })
@@ -30,7 +31,8 @@ export default class BlfModal extends Component {
   render() {
     const closeBlf = () => {
       this.context.tree.emit('blfModal:dismiss', {model: 'res'})
-    }
+    };
+
     return (
       <div className="full-height stretched-column">
         <h1 className="centered stretched-row">
@@ -38,8 +40,10 @@ export default class BlfModal extends Component {
         </h1>
         <iframe src="http://localhost:9000/" style={{flex: 1}} />
         <div className="buttons-row">
-          <ActionButton 
-            label="close and refresh" 
+          <ActionButton
+            label="close and refresh"
+            state={this.props.refreshing ? 'saving' : 'normal'}
+            loadingLabel="refreshing…"
             action={closeBlf}
           />
         </div>
