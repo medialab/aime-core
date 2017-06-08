@@ -277,7 +277,9 @@ export class ModalResources extends Component {
 
       </form>
 
-        <ActionButton size={6} action={dismiss} label="dismiss" />
+        <div className="buttons-row">
+          <ActionButton size={6} action={dismiss} label="dismiss" />
+        </div>
 
         {kind !== null &&
           <div className="buttons-row">

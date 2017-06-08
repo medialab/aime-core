@@ -37,17 +37,18 @@ const actions = {
     if (this.get('lang') === data)
       return;
 
-    // Changing the lang
-    this.set('lang', data);
-
-    // Clearing fetched data
-    this.set('data', null);
-
-    // Clearing states
-    this.set('states', null);
-
     // Effectively changing client's lang
-    this.client.lang({params: {lang: data}});
+    this.client.lang({params: {lang: data}}, () => {
+
+      // Changing the lang
+      this.set('lang', data);
+
+      // Clearing fetched data
+      this.set('data', null);
+
+      // Clearing states
+      this.set('states', null);
+    });
   },
 
   /**
@@ -82,6 +83,8 @@ const actions = {
       parent.set('title', item.title);
       parent.set('author', item.author.id);
       parent.set('status', item.status);
+      parent.set('searching', false);
+      parent.set('linking', null);
       return parent.set('editor', item.markdown);
     }
 
@@ -245,7 +248,13 @@ const actions = {
   },
 
   'blfModal:dismiss': function({data: {model}}) {
-    this.set(['states', model, 'blfModal'], null);
+
+    this.set(['states', model, 'refreshing'], true);
+
+    this.client.ref(() => {
+      this.set(['states', model, 'refreshing'], false);
+      this.set(['states', model, 'blfModal'], null);
+    });
   },
 
   /**
@@ -321,8 +330,29 @@ const actions = {
   'resource:delete': function() {
     const id = this.get('states', 'res', 'selection', 0);
 
-    this.client.deleteRes({params: {id}}, function(err, result) {
-      console.log(err, result);
+    this.client.deleteRes({params: {id}}, (err, result) => {
+      if (err) {
+
+        // Notifying the user
+        const xhr = err.xhr;
+
+        result = JSON.parse(xhr.responseText);
+
+        const docs = result.error.reason
+          .map(doc => '  - ' + doc)
+          .join('\n');
+
+        const message = `Cannot delete this resource because it is used by the following documents:\n${docs}`;
+
+        return alert(message);
+      }
+
+      const res = this.get('data', 'res');
+
+      const index = res.findIndex(r => r.id === id);
+
+      this.splice(['data', 'res'], [index, 1]);
+      this.set(['states', 'res', 'selection'], null);
     });
   }
 };

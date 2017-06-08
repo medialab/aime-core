@@ -23,7 +23,7 @@ import {resourceName} from '../lib/helpers.js';
  */
 @branch({
   cursors: {
-    data:['data', 'res']
+    data: ['data', 'res']
   }
 })
 export default class ResourceSelector extends Component {

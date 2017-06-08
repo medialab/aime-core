@@ -38,6 +38,7 @@ export default {
       selection: null,
       modal: null,
       blfModal: null,
+      refreshing: false
     },
     help: false
   },

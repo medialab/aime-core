@@ -117,7 +117,7 @@ export class Layout extends PureComponent {
         }
 
         {!this.props.searching && this.props.linking &&
-          <Col xs={4} className="linking full-height">
+          <Col xs={4} className="searching full-height">
             {this.props.linking === 'book' ?
               <BookLinkSelector /> :
               <VocLinkSelector />}

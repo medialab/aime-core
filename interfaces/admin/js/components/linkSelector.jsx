@@ -5,6 +5,8 @@
  */
 import React, {Component} from 'react';
 import classes from 'classnames';
+import tokenizer from '../lib/tokenizer';
+import {escapeRegexp} from 'talisman/regexp';
 import {
   Row,
   Col
@@ -17,6 +19,7 @@ import PureComponent from '../lib/pure.js';
 import autobind from 'autobind-decorator';
 import {ResourceIcon} from './misc.jsx';
 import {resourceName} from '../lib/helpers.js';
+import _ from 'lodash';
 
 /**
  * Book Link Selector
@@ -33,14 +36,13 @@ export class BookLinkSelector extends Component {
     model: React.PropTypes.string
   };
 
-  constructor (props,context) {
-    super(props,context);
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {};
   }
 
   render() {
-    console.log(this.props);
     const dismiss = () => {
       this.context.tree.emit('linkSelector:dismiss');
     };
@@ -49,7 +51,7 @@ export class BookLinkSelector extends Component {
 
     return (
       <Row className="full-height stretched-column">
-        <h1>Link the book</h1>
+        <h1>Link book</h1>
         <div style={{flex: 1}} className="scrollable">
           List
         </div>
@@ -66,7 +68,11 @@ export class BookLinkSelector extends Component {
  */
 @branch({
   cursors: {
+    selectedDoc: ['states', 'doc', 'selection', 0],
     voc: ['data', 'voc']
+  },
+  facets: {
+    docIndex: 'docIndexById'
   }
 })
 export class VocLinkSelector extends Component {
@@ -76,17 +82,69 @@ export class VocLinkSelector extends Component {
     model: React.PropTypes.string
   };
 
-  constructor (props,context) {
-    super(props,context);
+  constructor(props, context) {
+    super(props, context);
 
-    this.state = {};
+    this.state = {
+      filteredItems: [],
+      search: ''
+    };
+
+    this.searchItems = _.debounce(this.searchItems.bind(this), 300);
+  }
+
+  @autobind
+  renderItem(data) {
+    const doc = this.props.docIndex[this.props.selectedDoc];
+    const matcher = new RegExp(`doc_${doc.slug_id}`);
+
+    return (
+      <li className="box-no-hover" key={data.id}>
+        {data.title}
+        <ul className="list">
+          {data.children.map(paragraph => {
+
+            const sentences = tokenizer(paragraph.text),
+                  markdownSentences = tokenizer(paragraph.markdown);
+            return (
+              <li key={paragraph.id} className="paragraph">
+                <p>
+                  {sentences.map((s, i) => {
+                    const match = markdownSentences[i].match(matcher);
+
+                    return <span key={i} className={classes('sentence', match && 'active')}>{s}</span>
+                  })}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      </li>
+    );
+  }
+
+  searchItems() {
+    const query = this.state.search;
+
+    if (!query || query.length < 3)
+      return this.setState({filteredItems: []});
+
+    const regex = new RegExp(escapeRegexp(query).replace(/\s/g, '\\s'), 'i');
+
+    const filteredItems = (this.props.voc || [])
+      .filter(voc => {
+        if (regex.test(voc.title))
+          return true;
+
+        return voc.children.some(paragraph => {
+          return regex.test(paragraph.text);
+        });
+      });
+
+    return this.setState({filteredItems: filteredItems});
   }
 
   render() {
-    const voc = this.props.voc;
-
-    console.log(voc);
-
     const dismiss = () => {
       this.context.tree.emit('linkSelector:dismiss');
     };
@@ -95,9 +153,16 @@ export class VocLinkSelector extends Component {
 
     return (
       <Row className="full-height stretched-column">
-        <h1>Link the voc</h1>
+        <h1>Link voc</h1>
+        <input
+          value={this.state.search}
+          onChange={e => (this.setState({search: e.target.value}), this.searchItems())}
+          placeholder={lang === 'fr' ? 'quel vocabulaire recherchez-vous ?' : 'which vocabulary are you looking for?'}
+          className="form-control" size="40" />
         <div style={{flex: 1}} className="scrollable">
-          List
+          <ul className="list">
+            {this.state.filteredItems.map(this.renderItem)}
+          </ul>
         </div>
         <div className="buttons-row">
           <ActionButton size={6} action={dismiss} label="close"/>

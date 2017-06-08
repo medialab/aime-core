@@ -147,6 +147,24 @@ textarea {
     color: white;
   }
 }
+.box-no-hover {
+  .transition(background-color .2s);
+
+  padding: @m;
+  margin-bottom: @m;
+
+  cursor: pointer;
+
+  background-color: @g7;
+
+  font-family: "NovelMonoPro-RegularIt", Arial, sans-serif;
+  line-height: @m*2;
+
+  &.selected {
+    background-color: @g77;
+    color: white;
+  }
+}
 .form-control {
   min-height: @m*4;
   line-height: @m*4;
@@ -334,13 +352,34 @@ textarea {
   span.glyphicon.rich  { .glyphicon-cloud };
   span.glyphicon.video { .glyphicon-film };
 
-  .box {
+  .box, .box-no-hover {
     font-family: "NovelPro-Regular";
   }
   .glyphicon {
     margin-right: 5px;
   }
 
+  .paragraph {
+    white-space: normal;
+
+    p {
+      margin-top: 10px;
+    }
+
+    .sentence {
+      padding: 5px;
+      // border: 1px solid black;
+      margin-right: 5px;
+      // line-height: 30px;
+      margin-bottom: 10px;
+      display: block;
+
+      &:hover, &.active {
+        background-color: @g77;
+        color: white;
+      }
+    }
+  }
 }
 
 .chapter {
