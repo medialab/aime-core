@@ -9,7 +9,7 @@ import PureComponent from '../lib/pure.js';
 import {Col} from 'react-flexbox-grid';
 import PropTypes from 'baobab-react/prop-types';
 import {branch} from 'baobab-react/decorators';
-import config from '../../config.json';
+// import config from '../../config.json';
 import Tooltip from 'react-tooltip';
 
 /**
