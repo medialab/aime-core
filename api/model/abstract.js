@@ -61,10 +61,12 @@ module.exports = function(queries, sortFunction) {
       });
     },
     getAll: function(user, lang, params, callback) {
+      console.log(user)
       params = _.extend({}, {lang: lang}, {
         offset: +params.offset || 0,
         limit: +params.limit || 100000,
-        user_id: user.id
+        user_id: user.id,
+        is_admin: user.role && user.role === 'superAdmin'
       });
 
       // Executing query
