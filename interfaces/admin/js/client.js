@@ -137,6 +137,18 @@ export default function(scope) {
       deleteRes: {
         url: '/res/:id',
         type: 'DELETE'
+      },
+
+      // Create a link to a doc
+      createLink: {
+        url: '/link',
+        type: 'POST'
+      },
+
+      // Delete a link to a doc
+      deleteLink: {
+        url: '/link',
+        type: 'PUT'
       }
     }
   });
