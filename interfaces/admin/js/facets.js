@@ -67,7 +67,7 @@ export default {
             paragraphs.push({
               chapter,
               subchapter,
-              data: paragraph
+              paragraph
             });
           });
         });
