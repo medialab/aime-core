@@ -11,7 +11,7 @@ var db = require('../connection.js'),
 
 function getSlug(target){
 
-  let prefix = undefined;
+  var prefix = undefined;
   if (target.type === 'document')
       prefix =  'doc_';
   if (target.type === 'vocabulary')
@@ -25,8 +25,8 @@ function getSlug(target){
 module.exports = {
  
   create: function(idFrom, idTo, indexSentence, userId, callback) {
-    let paragraph = null;
-    let target = null;
+    var paragraph = null;
+    var target = null;
 
     async.waterfall([
       // link exists ? 
@@ -62,8 +62,8 @@ module.exports = {
     ]);
   },
   destroy: function(idFrom, idTo, indexSentence, userId, callback) {
-    let paragraph = null;
-    let target = null;
+    var paragraph = null;
+    var target = null;
 
     async.waterfall([
       // link exists ? 
