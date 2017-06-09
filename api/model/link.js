@@ -45,14 +45,19 @@ module.exports = {
         var sentences = tokenizer(paragraph.markdown);
         // ajouter le slug_id à la fin de la sentence
         var groups = sentences[indexSentence].match(MARKDOWN_LINKS_RE)
-        // links preexists, add our link
-        var links = groups[3] ? groups[3]+","+getSlug(target) : getSlug(target)
-        sentences[indexSentence] = groups[1]+'{'+links+'}'+groups[4]
-        var markdown = sentences.join(' ') 
-        db.save(paragraph, 'markdown', markdown, function(err, result){
-          if (err) next(err);
-          next(null, markdown);
-        })
+        if (groups){
+          // links preexists, add our link
+          var links = groups[3] ? groups[3]+","+getSlug(target) : getSlug(target)
+          sentences[indexSentence] = groups[1]+'{'+links+'}'+groups[4]
+          var markdown = sentences.join(' ') 
+          db.save(paragraph, 'markdown', markdown, function(err, result){
+            if (err) next(err);
+            next(null, markdown);
+          })
+        }
+        else
+          callback(new Error("Sentence couldn't been matched !"))
+
       },
       // création du lien
       function createLink(markdown,next){
@@ -81,6 +86,8 @@ module.exports = {
         var sentences = tokenizer(paragraph.markdown);
         // ajouter le slug_id à la fin de la sentence
         var groups = sentences[indexSentence].match(MARKDOWN_LINKS_RE);
+        if (!groups)
+          callback(new Error("Sentence couldn't been matched !"))
         if (groups[3]){
           // links exists, remove our link
           var links = groups[3].split(',').filter(function(l){ return l !== getSlug(target)}).join(',');
