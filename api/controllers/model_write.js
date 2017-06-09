@@ -240,7 +240,7 @@ module.exports = [
         req.body.idTo,
         req.body.indexSentence,     
         req.session.user,
-        function(err) {
+        function(err, markdown) {
           if (err){
             if (err.message === "linkDoesNotExists")
               return res.notFound();
@@ -248,7 +248,7 @@ module.exports = [
               return res.forbidden("linkExists");
             return res.serverError(err);
           }
-          return res.ok();
+          return res.ok(markdown);
         }
       );
     }
@@ -267,7 +267,7 @@ module.exports = [
         req.body.idTo,
         req.body.indexSentence,     
         req.session.user,
-        function(err) {
+        function(err, markdown) {
           if (err){
             if (err.message === "linkDoesNotExists")
               return res.notFound();
@@ -275,7 +275,7 @@ module.exports = [
               return res.forbidden("linkExists");
             return res.serverError(err);
           }
-          return res.ok();
+          return res.ok(markdown);
       });
     }
   }

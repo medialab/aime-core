@@ -48,11 +48,16 @@ module.exports = {
         // links preexists, add our link
         const links = groups[3] ? groups[3]+","+getSlug(target) : getSlug(target)
         sentences[indexSentence] = groups[1]+'{'+links+'}'+groups[4]
-        db.save(paragraph, 'markdown', sentences.join(' '), next)
+        const markdown = sentences.join(' ') 
+        db.save(paragraph, 'markdown', markdown, function(err, result){
+          if (err) next(err);
+          next(null, markdown);
+        })
       },
       // création du lien
-      function createLink(next){
-        db.query(queries.create, {idFrom: idFrom, idTo:idTo}, callback);  
+      function createLink(markdown,next){
+        db.query(queries.create, {idFrom: idFrom, idTo:idTo}, function(err){
+          callback(err,markdown)});  
       }
     ]);
   },
@@ -81,14 +86,21 @@ module.exports = {
           let links = groups[3].split(',').filter(function(l){ return l !== getSlug(target)}).join(',');
           links = links !== '' ? '{'+links+'}' : links
           sentences[indexSentence] = groups[1]+links+groups[4];
-          db.save(paragraph, 'markdown', sentences.join(' '), next);
+          const markdown = sentences.join(' ')
+          db.save(paragraph, 'markdown', markdown, function(err, result){
+            if (err) next(err)
+            next(null,markdown)
+          });
         }
-        else
-          next(null);
+        else{
+          next(null,paragraph.markdown);
+        }
       },
       // création du lien
-      function deleteLink(next){
-        db.query(queries.destroy, {idFrom: idFrom, idTo:idTo}, callback);  
+      function deleteLink(markdown,next){
+        db.query(queries.destroy, {idFrom: idFrom, idTo:idTo}, function(err){
+          callback(err, markdown)
+        });  
       }
     ]);
   }
