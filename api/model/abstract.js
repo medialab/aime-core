@@ -61,7 +61,7 @@ module.exports = function(queries, sortFunction) {
       });
     },
     getAll: function(user, lang, params, callback) {
-      console.log(user)
+
       params = _.extend({}, {lang: lang}, {
         offset: +params.offset || 0,
         limit: +params.limit || 100000,
