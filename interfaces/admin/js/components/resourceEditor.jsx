@@ -65,7 +65,7 @@ export default class ResourceEditor extends Component {
           </div>
         }
 
-        {(kind === 'video' || kind === 'rich' ) &&
+        {(kind === 'rich') &&
          <div className="form-group">
             <label>html</label>
             <textarea value={editorState.html}
@@ -89,6 +89,7 @@ export default class ResourceEditor extends Component {
             <label>url</label>
             <input value={editorState.url}
                    onChange={(e) => this.changeHandler({item: {url: e.target.value}}, 'url')}
+                   disabled
                    placeholder="http://website.com/folder/file.ext"
                    className="form-control" />
           </div>
