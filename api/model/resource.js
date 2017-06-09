@@ -202,7 +202,7 @@ var model = _.merge(abstract(queries), {
       },
       function checkExternalResource(row,next) {
         if (data.kind === 'video' && data.url !== row.media.url) {
-          console.log("updating video html")
+         
           return essence.extract(data.url, function(err, infos) {
             if (err) return next(err);
 
@@ -231,7 +231,6 @@ var model = _.merge(abstract(queries), {
           // Diffing the keys present in the payload and the node
           for (k in mediaNode) {
             if (k !== 'reference' && mediaNode[k] !== data[k])
-              console.log(k,mediaNode[k],data[k])
               batch.save(mediaNode, k, data[k]);
           }
         }
@@ -340,7 +339,7 @@ var model = _.merge(abstract(queries), {
         db.rows(queries.getParentDocumentTitles, {id: id}, function(err, result) {
           // On typical error
           if (err) return callback(err);
-          const documentTitles = result[0];
+          var documentTitles = result[0];
 
           if (documentTitles.length > 0)
             return callback(null, documentTitles);

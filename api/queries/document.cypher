@@ -1,7 +1,7 @@
 // name: getAll
 // Retrieve every document sorted alphabetically
 MATCH (a:User)<-[:CREATED_BY]-(d:Document {lang: {lang}})-[rs:HAS]-(s:Slide)-[re:HAS]-(e)
-WHERE d.status = "public" OR id(a) = {user_id}
+WHERE d.status = "public" OR id(a) = {user_id} OR {is_admin}
 
 OPTIONAL MATCH (e)<-[:DESCRIBES]-(r:Reference)
 WITH e, d, a, s, rs, re, head(collect(r)) AS ref

@@ -11,7 +11,7 @@ var db = require('../connection.js'),
 
 function getSlug(target){
 
-  let prefix = undefined;
+  var prefix = undefined;
   if (target.type === 'document')
       prefix =  'doc_';
   if (target.type === 'vocabulary')
@@ -25,8 +25,8 @@ function getSlug(target){
 module.exports = {
  
   create: function(idFrom, idTo, indexSentence, userId, callback) {
-    let paragraph = null;
-    let target = null;
+    var paragraph = null;
+    var target = null;
 
     async.waterfall([
       // link exists ? 
@@ -42,13 +42,13 @@ module.exports = {
       function editMarkdown(paragraph, target, next){
         // tokenize les sentences du markdown
        
-        const sentences = tokenizer(paragraph.markdown);
+        var sentences = tokenizer(paragraph.markdown);
         // ajouter le slug_id à la fin de la sentence
-        const groups = sentences[indexSentence].match(MARKDOWN_LINKS_RE)
+        var groups = sentences[indexSentence].match(MARKDOWN_LINKS_RE)
         // links preexists, add our link
-        const links = groups[3] ? groups[3]+","+getSlug(target) : getSlug(target)
+        var links = groups[3] ? groups[3]+","+getSlug(target) : getSlug(target)
         sentences[indexSentence] = groups[1]+'{'+links+'}'+groups[4]
-        const markdown = sentences.join(' ') 
+        var markdown = sentences.join(' ') 
         db.save(paragraph, 'markdown', markdown, function(err, result){
           if (err) next(err);
           next(null, markdown);
@@ -62,8 +62,8 @@ module.exports = {
     ]);
   },
   destroy: function(idFrom, idTo, indexSentence, userId, callback) {
-    let paragraph = null;
-    let target = null;
+    var paragraph = null;
+    var target = null;
 
     async.waterfall([
       // link exists ? 
@@ -78,15 +78,15 @@ module.exports = {
       },
       function editMarkdown(paragraph, target, next){
         // tokenize les sentences du markdown
-        const sentences = tokenizer(paragraph.markdown);
+        var sentences = tokenizer(paragraph.markdown);
         // ajouter le slug_id à la fin de la sentence
-        const groups = sentences[indexSentence].match(MARKDOWN_LINKS_RE);
+        var groups = sentences[indexSentence].match(MARKDOWN_LINKS_RE);
         if (groups[3]){
           // links exists, remove our link
-          let links = groups[3].split(',').filter(function(l){ return l !== getSlug(target)}).join(',');
+          var links = groups[3].split(',').filter(function(l){ return l !== getSlug(target)}).join(',');
           links = links !== '' ? '{'+links+'}' : links
           sentences[indexSentence] = groups[1]+links+groups[4];
-          const markdown = sentences.join(' ')
+          var markdown = sentences.join(' ')
           db.save(paragraph, 'markdown', markdown, function(err, result){
             if (err) next(err)
             next(null,markdown)
