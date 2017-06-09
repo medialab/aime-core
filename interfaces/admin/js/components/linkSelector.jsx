@@ -64,6 +64,98 @@ export class BookLinkSelector extends Component {
 }
 
 /**
+ * Voc Link Paragraph
+ */
+class VocLinkSelectorParagraph extends Component {
+
+  static contextTypes = {
+    tree: PropTypes.baobab,
+    model: React.PropTypes.string
+  };
+
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      collapsed: true
+    };
+  }
+
+  @autobind
+  addLink(idVoc, idFrom, idTo, indexSentence) {
+    this.context.tree.emit('link:add', {
+      idVoc,
+      idFrom,
+      idTo,
+      indexSentence,
+      model: 'voc'
+    });
+  }
+
+  @autobind
+  deleteLink(idVoc, idFrom, idTo, indexSentence) {
+    this.context.tree.emit('link:delete', {
+      idVoc,
+      idFrom,
+      idTo,
+      indexSentence,
+      model: 'voc'
+    });
+  }
+
+  render() {
+    const {
+      data,
+      doc,
+      matcher
+    } = this.props;
+
+    return (
+      <li className={this.state.collapsed ? 'box' : 'box-no-hover'}>
+        <div onClick={() => this.setState({collapsed: !this.state.collapsed})}>{data.title}</div>
+        <ul className={classes('list', this.state.collapsed && 'hidden')}>
+          {data.children.map(paragraph => {
+
+            const sentences = tokenizer(paragraph.text),
+                  markdownSentences = tokenizer(paragraph.markdown);
+
+            let paragraphHasMatch = false;
+
+            return (
+              <li key={paragraph.id} className="paragraph">
+                {sentences.map((s, i) => {
+                  const match = markdownSentences[i].match(matcher);
+
+                  if (match)
+                    paragraphHasMatch = true;
+
+                  return (
+                    <p
+                      key={i}
+                      className={classes('sentence', match && 'active')}
+                      onClick={() => {
+                        if (!match) {
+                          if (!paragraphHasMatch)
+                            this.addLink(data.id, paragraph.id, doc.id, i);
+                        }
+                        else {
+                          this.deleteLink(data.id, paragraph.id, doc.id, i);
+                        }
+                      }}>
+                      {s}
+                    </p>
+                  );
+                })}
+              </li>
+            );
+          })}
+        </ul>
+      </li>
+    );
+  }
+}
+
+/**
  * Voc Link Selector
  */
 @branch({
@@ -99,27 +191,11 @@ export class VocLinkSelector extends Component {
     const matcher = new RegExp(`doc_${doc.slug_id}`);
 
     return (
-      <li className="box-no-hover" key={data.id}>
-        {data.title}
-        <ul className="list">
-          {data.children.map(paragraph => {
-
-            const sentences = tokenizer(paragraph.text),
-                  markdownSentences = tokenizer(paragraph.markdown);
-            return (
-              <li key={paragraph.id} className="paragraph">
-                <p>
-                  {sentences.map((s, i) => {
-                    const match = markdownSentences[i].match(matcher);
-
-                    return <span key={i} className={classes('sentence', match && 'active')}>{s}</span>
-                  })}
-                </p>
-              </li>
-            );
-          })}
-        </ul>
-      </li>
+      <VocLinkSelectorParagraph
+        key={data.id}
+        data={data}
+        doc={doc}
+        matcher={matcher} />
     );
   }
 
@@ -142,6 +218,11 @@ export class VocLinkSelector extends Component {
       });
 
     return this.setState({filteredItems: filteredItems});
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.voc !== this.props.voc)
+      this.searchItems();
   }
 
   render() {

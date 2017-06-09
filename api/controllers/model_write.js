@@ -238,7 +238,7 @@ module.exports = [
       linkModel.create(
         req.body.idFrom,
         req.body.idTo,
-        req.body.indexSentence,     
+        req.body.indexSentence,
         req.session.user,
         function(err, markdown) {
           if (err){
@@ -255,7 +255,7 @@ module.exports = [
   },
   {
     url: '/link',
-    methods: ['DELETE'],
+    methods: ['PUT'],
     validate: {
       idFrom: 'number',
       idTo: 'number',
@@ -265,7 +265,7 @@ module.exports = [
       linkModel.destroy(
         req.body.idFrom,
         req.body.idTo,
-        req.body.indexSentence,     
+        req.body.indexSentence,
         req.session.user,
         function(err, markdown) {
           if (err){

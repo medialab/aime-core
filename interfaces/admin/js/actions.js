@@ -354,6 +354,45 @@ const actions = {
       this.splice(['data', 'res'], [index, 1]);
       this.set(['states', 'res', 'selection'], null);
     });
+  },
+
+  /**
+   * Adding a link
+   */
+  'link:add': function({data}) {
+
+    this.client.createLink({data}, (err, response) => {
+      const markdown = response.result;
+
+      if (data.model === 'voc') {
+        const finder = voc => voc.id === data.idVoc;
+
+        const voc = this.select('data', 'voc', finder);
+        voc.set(['children', p => p.id === data.idFrom, 'markdown'], markdown);
+        this.commit();
+
+        window.test = voc.select('children', p => p.id === data.idFrom);
+      }
+    });
+  },
+
+  /**
+   * Deleting a link
+   */
+  'link:delete': function({data}) {
+    this.client.deleteLink({data}, (err, response) => {
+      const markdown = response.result;
+
+      if (data.model === 'voc') {
+        const finder = voc => voc.id === data.idVoc;
+
+        const voc = this.select('data', 'voc', finder);
+        voc.set(['children', p => p.id === data.idFrom, 'markdown'], markdown);
+        this.commit();
+
+        window.test = voc.select('children', p => p.id === data.idFrom);
+      }
+    });
   }
 };
 
