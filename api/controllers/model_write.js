@@ -241,11 +241,13 @@ module.exports = [
         req.body.indexSentence,     
         req.session.user,
         function(err) {
-          if (err)
+          if (err){
+            if (err.message === "linkDoesNotExists")
+              return res.notFound();
             if (err.message === "linkExists")
               return res.forbidden("linkExists");
-            else
-              return res.serverError(err);
+            return res.serverError(err);
+          }
           return res.ok();
         }
       );
@@ -256,12 +258,24 @@ module.exports = [
     methods: ['DELETE'],
     validate: {
       idFrom: 'number',
-      idTo: 'number'
+      idTo: 'number',
+      indexSentence: 'number'
     },
     action: function(req, res) {
-      linkModel.destroy(req.body.idFrom, req.body.idTo, function(err) {
-        if (err) return res.serverError(err);
-        return res.ok();
+      linkModel.destroy(
+        req.body.idFrom,
+        req.body.idTo,
+        req.body.indexSentence,     
+        req.session.user,
+        function(err) {
+          if (err){
+            if (err.message === "linkDoesNotExists")
+              return res.notFound();
+            if (err.message === "linkExists")
+              return res.forbidden("linkExists");
+            return res.serverError(err);
+          }
+          return res.ok();
       });
     }
   }
