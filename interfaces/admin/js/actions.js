@@ -370,8 +370,15 @@ const actions = {
         const voc = this.select('data', 'voc', finder);
         voc.set(['children', p => p.id === data.idFrom, 'markdown'], markdown);
         this.commit();
+      }
+      else if (data.model === 'book') {
+        const chapterFinder = chapter => chapter.id === data.idChapter,
+              subchapterFinder = subchapter => subchapter.id === data.idSubchapter;
 
-        window.test = voc.select('children', p => p.id === data.idFrom);
+        const book = this.select('data', 'book', chapterFinder, 'children', subchapterFinder);
+
+        book.set(['children', p => p.id === data.idFrom, 'markdown'], markdown);
+        this.commit();
       }
     });
   },
@@ -389,8 +396,15 @@ const actions = {
         const voc = this.select('data', 'voc', finder);
         voc.set(['children', p => p.id === data.idFrom, 'markdown'], markdown);
         this.commit();
+      }
+      else if (data.model === 'book') {
+        const chapterFinder = chapter => chapter.id === data.idChapter,
+              subchapterFinder = subchapter => subchapter.id === data.idSubchapter;
 
-        window.test = voc.select('children', p => p.id === data.idFrom);
+        const book = this.select('data', 'book', chapterFinder, 'children', subchapterFinder);
+
+        book.set(['children', p => p.id === data.idFrom, 'markdown'], markdown);
+        this.commit();
       }
     });
   }
