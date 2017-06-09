@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import classes from 'classnames';
+import config from '../../config.json';
 import {
   Row,
   Col
@@ -38,7 +39,7 @@ export default class BlfModal extends Component {
         <h1 className="centered stretched-row">
           <span style={{flex: 1}}>{this.props.lang === 'fr' ? 'éditeur de références' : 'references editor'}</span>
         </h1>
-        <iframe src="http://localhost:9000/" style={{flex: 1}} />
+        <iframe src={config.blfURL} style={{flex: 1}} />
         <div className="buttons-row">
           <ActionButton
             label="close and refresh"
