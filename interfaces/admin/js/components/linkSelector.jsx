@@ -40,10 +40,10 @@ class BookLinkSelectorParagraph extends Component {
   }
 
   @autobind
-  addLink(idVoc, idFrom, idTo, indexSentence) {
-    return;
+  addLink(idChapter, idSubchapter, idFrom, idTo, indexSentence) {
     this.context.tree.emit('link:add', {
-      idVoc,
+      idChapter,
+      idSubchapter,
       idFrom,
       idTo,
       indexSentence,
@@ -52,10 +52,10 @@ class BookLinkSelectorParagraph extends Component {
   }
 
   @autobind
-  deleteLink(idVoc, idFrom, idTo, indexSentence) {
-    return;
+  deleteLink(idChapter, idSubchapter, idFrom, idTo, indexSentence) {
     this.context.tree.emit('link:delete', {
-      idVoc,
+      idChapter,
+      idSubchapter,
       idFrom,
       idTo,
       indexSentence,
@@ -95,10 +95,10 @@ class BookLinkSelectorParagraph extends Component {
                       onClick={() => {
                         if (!match) {
                           if (!paragraphHasMatch)
-                            this.addLink(data.id, paragraph.id, doc.id, i);
+                            this.addLink(data.chapter.id, data.subchapter.id, paragraph.id, doc.id, i);
                         }
                         else {
-                          this.deleteLink(data.id, paragraph.id, doc.id, i);
+                          this.deleteLink(data.chapter.id, data.subchapter.id, paragraph.id, doc.id, i);
                         }
                       }}>
                       {s}
