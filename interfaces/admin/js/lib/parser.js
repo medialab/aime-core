@@ -86,13 +86,14 @@ const ressourceRender = function(res){
                 </div> ${ref}`;
 
       case "video":
-        return `<div class="resource-item ${res.type} ${res.kind} ${res.host}">
+        return `<div class="resource-item ${res.type} ${res.kind}">
                   <div class="embed-responsive embed-responsive-16by9">
                       ${res.iframe || res.html}
 
                   </div>
 
-                </div><div class="resource-item ${res.type} ${res.kind} ${res.host}">${ref}</div>`;
+                </div>
+                <div class="resource-item ${res.type}">${ref}</div>`;
 
       default:
         return `<p class="resource-item ${res.type}">res_${res.type}</p>`;
