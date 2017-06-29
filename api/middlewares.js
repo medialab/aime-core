@@ -37,7 +37,7 @@ module.exports = {
   admin: function(req, res, next) {
     var user = (req.session.user || {});
 
-    if (!req.session.authenticated || !['admin', 'superAdmin'].includes(user.role))
+    if (!req.session.authenticated || !~['admin', 'superAdmin'].indexOf(user.role))
       return res.unauthorized();
     else
       return next();
