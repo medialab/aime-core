@@ -1,6 +1,10 @@
 {
   "api": {
-    "allowedOrigins": ["http://localhost:8000", "http://localhost:5000", "http://localhost:2000"],
+    "allowedOrigins": [
+      "http://localhost:8000",
+      "http://localhost:5000",
+      "http://localhost:2000"
+    ],
     "cache": true,
     "defaultLang": "en",
     "resources": "./resources",

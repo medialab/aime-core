@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  neo4j:
+    image: neo4j:2.3
+  api:
+    build: .
+    links:
+      - neo4j
+    ports:
+      - 7000:7000
