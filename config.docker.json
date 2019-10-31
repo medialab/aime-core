@@ -1,0 +1,54 @@
+{
+  "api": {
+    "allowedOrigins": [
+      "http://localhost:8000",
+      "http://localhost:5000",
+      "http://localhost:2000"
+    ],
+    "cache": true,
+    "defaultLang": "en",
+    "resources": "./resources",
+    "port": 7000,
+    "secret": "falafel",
+    "slugs": {
+      "document": "doc",
+      "vocabulary": "voc",
+      "resource": "res",
+      "reference": "ref",
+      "subheading": "bsc"
+    }
+  },
+  "biblib": {
+    "host": "http://biblio_manager",
+    "corpus": "aime_prod"
+  },
+  "dbs": {
+    "mysql": {
+      "host": "localhost",
+      "port": 3306,
+      "user": "user",
+      "password": "password",
+      "database": "database"
+    },
+    "neo4j": {
+      "host": "neo4j",
+      "port": 7474,
+      "user": "neo4j",
+      "password": "neo4j"
+    },
+    "mongo": {
+      "host": "localhost",
+      "port": 27017,
+      "database": "aime_crossings_prod"
+    }
+  },
+  "interfaces": {
+    "crossings": "http://localhost:3000",
+    "inquiry": "http://localhost:8000"
+  },
+  "mail": {
+    "host": "localhost",
+    "port": 25,
+    "from": "contact@modesofexistence.org"
+  }
+}
