@@ -43,7 +43,7 @@
     "classnames": "^2.0.0",
     "codemirror": "^5.2.0",
     "djax-client": "^0.1.0",
-    "lodash": "^3.8.0",
+    "lodash": "^4.17.19",
     "marked": "^0.3.3",
     "react": "^0.14.3",
     "react-addons-pure-render-mixin": "^0.14.3",
